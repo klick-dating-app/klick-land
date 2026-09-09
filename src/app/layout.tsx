@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Montserrat } from "next/font/google";
 
 import "./globals.css";
@@ -7,6 +7,7 @@ import { SidebarProvider } from "@/components/SidebarContext";
 import { Toaster } from "sonner";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 import OrganizationJsonLd from "@/components/seo/OrganizationJsonLd";
+import NativeShell from "@/components/native/NativeShell";
 import { rootMetadata } from "@/lib/seo";
 
 const montserrat = Montserrat({
@@ -17,6 +18,21 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = rootMetadata;
+
+/**
+ * `viewportFit: "cover"` habilita `env(safe-area-inset-*)` para el contenedor
+ * nativo de Capacitor (notch / Dynamic Island / barra de gestos Android).
+ * En web el efecto es neutro: los insets valen 0.
+ */
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#101a2e" },
+  ],
+};
 
 export default function RootLayout({
   children,
@@ -64,6 +80,7 @@ fbq('track', 'PageView');
           disableTransitionOnChange
         >
           <SidebarProvider>
+            <NativeShell />
             {children}
             <Toaster />
           </SidebarProvider>

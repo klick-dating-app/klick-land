@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Klick Land</string>
+    <string name="title_activity_main">Klick Land</string>
+    <string name="package_name">com.klickland.app</string>
+    <string name="custom_url_scheme">com.klickland.app</string>
+</resources>

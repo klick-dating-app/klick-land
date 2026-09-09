@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Colores de marca Klick Land. Referenciados por styles.xml (AppTheme). -->
+    <color name="colorPrimary">#C41236</color>
+    <color name="colorPrimaryDark">#101A2E</color>
+    <color name="colorAccent">#C41236</color>
+    <!-- Fondo del splash screen (coincide con capacitor.config.ts). -->
+    <color name="splashBackground">#101A2E</color>
+</resources>
