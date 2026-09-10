@@ -89,47 +89,43 @@ export default function MobileAppNotifications({
             Te avisamos cuando alguien hace klick contigo o te escribe.
           </p>
 
-          {/* Tarjeta con borde sutil y diseño transparente */}
-          <div className="relative p-[1px] rounded-3xl bg-white/10 shadow-2xl">
-            <div className="w-full bg-[#0c0d12] rounded-[23px] p-6 sm:p-7 flex flex-col items-center text-center">
-              
-              {/* Icono campana transparente con hover gris */}
-              <div className="w-16 h-16 rounded-full bg-white/5 border border-white/10 hover:bg-white/15 transition-colors flex items-center justify-center text-white mb-5 shadow-inner">
-                <Bell className="w-7 h-7 stroke-[2]" />
-              </div>
+          {/* Tarjeta limpia sin contenedor circular en la campana */}
+          <div className="w-full bg-[#0e0f15] border border-white/10 rounded-3xl p-7 flex flex-col items-center text-center shadow-2xl">
+            
+            {/* Icono campana standalone limpio */}
+            <Bell className="w-14 h-14 stroke-[1.8] text-white mb-5 drop-shadow-md animate-pulse" />
 
-              {/* Mensaje */}
-              <p className="text-xs sm:text-[13.5px] text-zinc-300 leading-relaxed mb-6 px-1">
-                &ldquo;Klick&rdquo; quiere enviarte notificaciones de matches, mensajes y recordatorios de citas.
-              </p>
+            {/* Mensaje */}
+            <p className="text-xs sm:text-[13.5px] text-zinc-300 leading-relaxed mb-6 px-1">
+              &ldquo;Klick&rdquo; quiere enviarte notificaciones de matches, mensajes y recordatorios de citas.
+            </p>
 
-              {/* Botones de acción dentro de la tarjeta */}
-              <div className="w-full grid grid-cols-2 gap-3">
-                <button
-                  type="button"
-                  onClick={handleDismiss}
-                  className={`h-11 rounded-full text-xs sm:text-[13px] font-semibold border transition-all duration-200 cursor-pointer ${
-                    permissionStatus === "dismissed"
-                      ? "bg-white/20 border-white/40 text-white"
-                      : "bg-transparent hover:bg-white/10 active:bg-white/15 border-white/10 text-zinc-400 hover:text-white"
-                  }`}
-                >
-                  Ahora no
-                </button>
-                <button
-                  type="button"
-                  onClick={handleAccept}
-                  className={`h-11 rounded-full text-xs sm:text-[13px] font-semibold text-white border transition-all duration-200 cursor-pointer active:scale-95 ${
-                    permissionStatus === "accepted"
-                      ? "bg-white/25 border-white/50 text-white font-bold"
-                      : "bg-white/10 hover:bg-white/20 active:bg-white/25 border-white/20 text-white"
-                  }`}
-                >
-                  {permissionStatus === "accepted" ? "Activadas ✓" : "Aceptar"}
-                </button>
-              </div>
-
+            {/* Botones de acción dentro de la tarjeta */}
+            <div className="w-full grid grid-cols-2 gap-3">
+              <button
+                type="button"
+                onClick={handleDismiss}
+                className={`h-11 rounded-full text-xs sm:text-[13px] font-semibold border transition-all duration-200 cursor-pointer ${
+                  permissionStatus === "dismissed"
+                    ? "bg-white/20 border-white/40 text-white"
+                    : "bg-transparent hover:bg-white/10 active:bg-white/15 border-white/10 text-zinc-400 hover:text-white"
+                }`}
+              >
+                Ahora no
+              </button>
+              <button
+                type="button"
+                onClick={handleAccept}
+                className={`h-11 rounded-full text-xs sm:text-[13px] font-semibold text-white border transition-all duration-200 cursor-pointer active:scale-95 ${
+                  permissionStatus === "accepted"
+                    ? "bg-blue-600 border-blue-500 text-white font-bold"
+                    : "bg-white/10 hover:bg-white/20 active:bg-white/25 border-white/20 text-white"
+                }`}
+              >
+                {permissionStatus === "accepted" ? "Activadas ✓" : "Aceptar"}
+              </button>
             </div>
+
           </div>
         </motion.div>
 

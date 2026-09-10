@@ -127,17 +127,14 @@ export default function MobileAppIcebreakers({
             Preguntas coquetas y reales para conectar desde el primer vistazo.
           </p>
 
-          {/* Lista de 3 Prompts interactivos */}
-          <div className="flex flex-col gap-3.5 pb-4">
+          {/* Lista de Prompts sin contenedores dobles */}
+          <div className="flex flex-col gap-5 pb-6">
             {selectedPrompts.map((prompt, index) => (
-              <div
-                key={index}
-                className="p-3.5 rounded-2xl bg-[#0f1016] border border-white/5 flex flex-col gap-2 shadow-sm"
-              >
+              <div key={index} className="flex flex-col gap-2">
                 {/* Header del Prompt con botón para cambiar pregunta */}
-                <div className="flex items-start justify-between gap-2">
-                  <div className="flex items-start gap-2 text-blue-400 font-medium text-xs sm:text-[13px]">
-                    <MessageSquareQuote className="w-4 h-4 shrink-0 mt-0.5 text-blue-400" />
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2 text-blue-400 font-medium text-xs sm:text-[13px]">
+                    <MessageSquareQuote className="w-4 h-4 shrink-0 text-blue-400" />
                     <span className="text-white font-semibold leading-snug">
                       {prompt}
                     </span>
@@ -145,20 +142,20 @@ export default function MobileAppIcebreakers({
                   <button
                     type="button"
                     onClick={() => handleNextPrompt(index)}
-                    className="p-1 rounded-lg bg-white/5 hover:bg-white/10 text-zinc-400 hover:text-white transition-colors shrink-0"
+                    className="p-1.5 text-zinc-400 hover:text-white transition-colors shrink-0 cursor-pointer"
                     title="Cambiar pregunta"
                   >
                     <RefreshCw className="w-3.5 h-3.5" />
                   </button>
                 </div>
 
-                {/* Textarea para escribir la respuesta */}
+                {/* Textarea limpio */}
                 <textarea
                   rows={2}
                   value={answers[prompt] || ""}
                   onChange={(e) => handleAnswerChange(prompt, e.target.value)}
-                  placeholder="Escribe algo auténtico o coqueto..."
-                  className="w-full px-3.5 py-2 rounded-xl bg-[#08080c] border border-white/5 focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/30 outline-none text-zinc-200 text-xs sm:text-[13px] placeholder:text-zinc-600 resize-none transition-all leading-relaxed"
+                  placeholder="Escribe tu respuesta aquí..."
+                  className="w-full px-4 py-3 rounded-2xl bg-[#101116] border border-white/10 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none text-zinc-100 text-xs sm:text-[13px] placeholder:text-zinc-600 resize-none transition-all leading-relaxed"
                 />
               </div>
             ))}

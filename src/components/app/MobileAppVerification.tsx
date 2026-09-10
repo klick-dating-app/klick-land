@@ -90,77 +90,69 @@ export default function MobileAppVerification({
             Un gesto rápido para confirmar que eres tú.
           </p>
 
-          {/* Tarjeta con borde gradiente multicolor */}
-          <div className="relative p-[1.5px] rounded-3xl bg-[linear-gradient(135deg,#008aff_0%,#7c3aed_35%,#ff007f_70%,#ff8c00_100%)] shadow-2xl shadow-purple-500/10">
-            <div className="w-full bg-[#0c0d12] rounded-[23px] p-7 flex flex-col items-center text-center">
-              
-              <AnimatePresence mode="wait">
-                {!isVerified ? (
-                  /* Estado 1: No verificado */
-                  <motion.div
-                    key="unverified"
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    className="w-full flex flex-col items-center"
+          {/* Tarjeta limpia sin contenedor circular de icono */}
+          <div className="w-full bg-[#0e0f15] border border-white/10 rounded-3xl p-7 flex flex-col items-center text-center shadow-2xl">
+            <AnimatePresence mode="wait">
+              {!isVerified ? (
+                /* Estado 1: No verificado */
+                <motion.div
+                  key="unverified"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  className="w-full flex flex-col items-center"
+                >
+                  {/* Icono de verificación limpio sin contenedor circular */}
+                  <BadgeCheck className="w-16 h-16 stroke-[1.5] text-blue-400 mb-4 drop-shadow-md" />
+
+                  <h3 className="text-base sm:text-lg font-bold text-white uppercase tracking-wider mb-2">
+                    Verificar Ahora
+                  </h3>
+
+                  <p className="text-xs sm:text-[13px] text-zinc-400 leading-relaxed mb-6 px-2">
+                    Tomaremos un selfie rápido y lo compararemos con tus fotos para activar tu insignia de confianza.
+                  </p>
+
+                  <button
+                    type="button"
+                    disabled={isVerifying}
+                    onClick={handleStartVerification}
+                    className="w-full h-12 rounded-full text-sm font-semibold text-white bg-blue-600 hover:bg-blue-500 active:scale-95 shadow-lg shadow-blue-500/25 transition-all duration-200 cursor-pointer flex items-center justify-center gap-2"
                   >
-                    {/* Icono de verificación circular oscuro */}
-                    <div className="w-16 h-16 rounded-full bg-[#181922] border border-white/10 flex items-center justify-center text-zinc-300 mb-5">
-                      <BadgeCheck className="w-8 h-8 stroke-[1.8]" />
-                    </div>
+                    {isVerifying ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        <span>Verificando selfie...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Camera className="w-4 h-4" />
+                        <span>Iniciar verificación</span>
+                      </>
+                    )}
+                  </button>
+                </motion.div>
+              ) : (
+                /* Estado 2: Verificado con éxito */
+                <motion.div
+                  key="verified"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="w-full flex flex-col items-center py-4"
+                >
+                  {/* Icono verificado standalone */}
+                  <BadgeCheck className="w-20 h-20 fill-blue-500 text-black mb-4 drop-shadow-xl animate-pulse" />
 
-                    <h3 className="text-base sm:text-lg font-bold text-white uppercase tracking-wider mb-2">
-                      Verificar Ahora
-                    </h3>
+                  <h3 className="text-base sm:text-lg font-bold text-white uppercase tracking-wider mb-2">
+                    Perfil Verificado
+                  </h3>
 
-                    <p className="text-xs sm:text-[13px] text-zinc-400 leading-relaxed mb-6 px-2">
-                      Tomaremos un selfie y lo compararemos con tus fotos.
-                    </p>
-
-                    <button
-                      type="button"
-                      disabled={isVerifying}
-                      onClick={handleStartVerification}
-                      className="w-full h-12 rounded-full text-sm font-semibold text-white bg-[linear-gradient(90deg,#008aff_0%,#ff007f_50%,#ff8c00_100%)] hover:opacity-95 active:scale-95 shadow-lg shadow-pink-500/25 transition-all duration-200 cursor-pointer flex items-center justify-center gap-2"
-                    >
-                      {isVerifying ? (
-                        <>
-                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                          <span>Verificando...</span>
-                        </>
-                      ) : (
-                        <>
-                          <Camera className="w-4 h-4" />
-                          <span>Iniciar verificación</span>
-                        </>
-                      )}
-                    </button>
-                  </motion.div>
-                ) : (
-                  /* Estado 2: Verificado con éxito */
-                  <motion.div
-                    key="verified"
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="w-full flex flex-col items-center"
-                  >
-                    {/* Badge circular con gradiente vibrante */}
-                    <div className="w-18 h-18 rounded-full bg-[linear-gradient(135deg,#008aff_0%,#7c3aed_35%,#ff007f_70%,#ff8c00_100%)] flex items-center justify-center text-black shadow-xl shadow-pink-500/30 mb-5 animate-pulse">
-                      <BadgeCheck className="w-9 h-9 fill-black stroke-white stroke-[2]" />
-                    </div>
-
-                    <h3 className="text-base sm:text-lg font-bold text-white uppercase tracking-wider mb-2">
-                      Perfil Verificado
-                    </h3>
-
-                    <p className="text-xs sm:text-[13px] text-zinc-300 leading-relaxed px-2">
-                      Tu insignia azul ya aparece en tu perfil.
-                    </p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-
-            </div>
+                  <p className="text-xs sm:text-[13px] text-zinc-300 leading-relaxed px-2">
+                    ¡Listo! Tu insignia azul de verificación ya está activa.
+                  </p>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </motion.div>
 
