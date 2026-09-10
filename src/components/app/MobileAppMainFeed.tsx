@@ -10,7 +10,7 @@ import {
   Sparkles,
   Flame,
   MessageCircle,
-  Calendar,
+  Flower2,
   User,
   ChevronDown,
   Edit3,
@@ -112,6 +112,7 @@ export default function MobileAppMainFeed() {
   const [photoIndex, setPhotoIndex] = useState(0);
   const [activeTab, setActiveTab] = useState<"feed" | "klicks" | "inbox" | "citas" | "perfil">("feed");
   const [matchAnimation, setMatchAnimation] = useState(false);
+  const [dateAnimation, setDateAnimation] = useState(false);
 
   // Perfil editable del usuario
   const [userProfile, setUserProfile] = useState({
@@ -152,6 +153,15 @@ export default function MobileAppMainFeed() {
       setProfileIndex((prev) => prev + 1);
       setPhotoIndex(0);
     }, 1200);
+  };
+
+  const handleDateRequest = () => {
+    setDateAnimation(true);
+    setTimeout(() => {
+      setDateAnimation(false);
+      setProfileIndex((prev) => prev + 1);
+      setPhotoIndex(0);
+    }, 1400);
   };
 
   return (
@@ -265,38 +275,48 @@ export default function MobileAppMainFeed() {
                 <span>Toca los lados para fotos · Pulsa Klick para conectar</span>
               </div>
 
-              {/* Botones Flotantes de Acción */}
-              <div className="flex items-center justify-center gap-6 pt-1 pointer-events-auto">
-                {/* Botón Siguiente / Pasar Suave (Sin rechazo directo) */}
+              {/* Botones Flotantes de Acción: Pasar, Date (Flor), Klick */}
+              <div className="flex items-center justify-center gap-4 sm:gap-5 pt-1 pointer-events-auto">
+                {/* 1. Botón Siguiente / Pasar Suave */}
                 <button
                   type="button"
                   onClick={handlePass}
-                  className="w-14 h-14 rounded-full bg-[#12131a]/90 hover:bg-[#181a24] active:scale-90 border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white shadow-xl backdrop-blur-md transition-all cursor-pointer group"
+                  className="w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-[#12131a]/90 hover:bg-[#181a24] active:scale-90 border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white shadow-xl backdrop-blur-md transition-all cursor-pointer group"
                   title="Siguiente perfil"
                 >
-                  <RotateCcw className="w-6 h-6 stroke-[2.2] group-hover:-rotate-45 transition-transform duration-200" />
+                  <RotateCcw className="w-5 h-5 sm:w-6 sm:h-6 stroke-[2.2] group-hover:-rotate-45 transition-transform duration-200" />
                 </button>
 
-                {/* Botón Principal de Klick (Con logo de Klick) */}
+                {/* 2. Botón DATE / CITA DIRECTA (Flor) */}
+                <button
+                  type="button"
+                  onClick={handleDateRequest}
+                  className="w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-[#12131a]/90 hover:bg-[#181a24] active:scale-90 border border-white/10 flex items-center justify-center text-pink-400 hover:text-pink-300 shadow-xl backdrop-blur-md transition-all cursor-pointer group"
+                  title="Tener una Date con esta persona"
+                >
+                  <Flower2 className="w-6 h-6 sm:w-7 sm:h-7 stroke-[2.2] group-hover:scale-110 transition-transform duration-200" />
+                </button>
+
+                {/* 3. Botón Principal de Klick (Icono Solo, más grande, sin fondo morado) */}
                 <button
                   type="button"
                   onClick={handleLike}
-                  className="w-16 h-16 rounded-full bg-[linear-gradient(135deg,#008aff_0%,#7c3aed_35%,#ff007f_70%,#ff8c00_100%)] active:scale-90 flex items-center justify-center text-white shadow-xl shadow-blue-500/25 transition-all cursor-pointer p-3.5 hover:opacity-95"
+                  className="w-15 h-15 sm:w-16 sm:h-16 rounded-full bg-[#12131a]/90 hover:bg-[#181a24] active:scale-90 border border-white/20 flex items-center justify-center shadow-xl backdrop-blur-md transition-all cursor-pointer p-2 hover:border-white/40"
                   title="Dar Klick"
                 >
                   <Image
                     src="/matchapp-logo-circular.png"
                     alt="Klick"
-                    width={34}
-                    height={34}
-                    className="rounded-full object-contain filter drop-shadow"
+                    width={48}
+                    height={48}
+                    className="rounded-full object-contain filter drop-shadow hover:scale-105 transition-transform"
                   />
                 </button>
               </div>
 
             </div>
 
-            {/* Animación de Match */}
+            {/* Animación de Match o Date */}
             <AnimatePresence>
               {matchAnimation && (
                 <motion.div
@@ -308,13 +328,13 @@ export default function MobileAppMainFeed() {
                   <motion.div
                     initial={{ rotate: -15, scale: 0.8 }}
                     animate={{ rotate: 0, scale: 1 }}
-                    className="w-24 h-24 rounded-full bg-[linear-gradient(135deg,#008aff_0%,#7c3aed_35%,#ff007f_70%,#ff8c00_100%)] flex items-center justify-center p-3 shadow-2xl shadow-blue-500/40 mb-4 animate-pulse"
+                    className="w-24 h-24 rounded-full bg-white/10 border border-white/20 flex items-center justify-center p-3 shadow-2xl mb-4"
                   >
                     <Image
                       src="/matchapp-logo-circular.png"
                       alt="Klick Match"
-                      width={68}
-                      height={68}
+                      width={70}
+                      height={70}
                       className="rounded-full object-contain"
                     />
                   </motion.div>
@@ -323,6 +343,29 @@ export default function MobileAppMainFeed() {
                   </h2>
                   <p className="text-sm text-zinc-300 font-medium">
                     Tú y {currentProfile.name} se han gustado mutuamente.
+                  </p>
+                </motion.div>
+              )}
+
+              {dateAnimation && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  className="absolute inset-0 z-50 bg-black/85 backdrop-blur-md flex flex-col items-center justify-center text-center p-6"
+                >
+                  <motion.div
+                    initial={{ scale: 0.8, rotate: -20 }}
+                    animate={{ scale: 1, rotate: 0 }}
+                    className="w-24 h-24 rounded-full bg-pink-500/15 border border-pink-500/30 flex items-center justify-center text-pink-400 shadow-2xl shadow-pink-500/20 mb-4 animate-pulse"
+                  >
+                    <Flower2 className="w-14 h-14 stroke-[2]" />
+                  </motion.div>
+                  <h2 className="text-3xl font-black tracking-wider text-white mb-1 uppercase">
+                    ¡Invitación a Date!
+                  </h2>
+                  <p className="text-sm text-zinc-300 font-medium">
+                    Le has enviado una flor a {currentProfile.name} para tener una cita directa.
                   </p>
                 </motion.div>
               )}
@@ -516,7 +559,7 @@ export default function MobileAppMainFeed() {
               activeTab === "citas" ? "text-blue-500" : "text-zinc-500 hover:text-zinc-300"
             }`}
           >
-            <Calendar className="w-5 h-5" />
+            <Flower2 className="w-5 h-5" />
             <span className="text-[10px] font-semibold">Citas</span>
             {activeTab === "citas" && (
               <div className="w-4 h-0.5 rounded-full bg-blue-500 absolute -bottom-1" />
