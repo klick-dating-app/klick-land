@@ -285,39 +285,39 @@ export default function MobileAppMainFeed() {
                 <span>Toca los lados para fotos · Pulsa Klick para conectar</span>
               </div>
 
-              {/* Botones Flotantes de Acción: Pasar (Izq), Klick (Centro), Date (Der) - Mismo Tamaño Uniforme */}
-              <div className="flex items-center justify-center gap-9 sm:gap-11 pt-2 pointer-events-auto">
+              {/* Botones Flotantes de Acción: Pasar (Izq), Klick (Centro - Más Grande), Date (Der - Taza Neutral) */}
+              <div className="flex items-center justify-center gap-8 sm:gap-10 pt-2 pointer-events-auto">
                 {/* 1. Botón Pasar (Izquierda) */}
                 <button
                   type="button"
                   onClick={handlePass}
-                  className="w-11 h-11 flex items-center justify-center text-zinc-400 hover:text-white active:scale-90 transition-all cursor-pointer group"
+                  className="w-12 h-12 flex items-center justify-center text-zinc-400 hover:text-white active:scale-90 transition-all cursor-pointer group"
                   title="Siguiente perfil"
                 >
                   <RotateCcw className="w-8 h-8 stroke-[2.2] group-hover:-rotate-45 transition-transform duration-200 drop-shadow-md" />
                 </button>
 
-                {/* 2. Botón Principal Klick (Centro) */}
+                {/* 2. Botón Principal Klick (Centro - Más Grande) */}
                 <button
                   type="button"
                   onClick={handleLike}
-                  className="w-11 h-11 flex items-center justify-center active:scale-90 transition-all cursor-pointer group"
+                  className="w-13 h-13 flex items-center justify-center active:scale-90 transition-all cursor-pointer group"
                   title="Dar Klick"
                 >
                   <Image
                     src="/matchapp-logo-circular.png"
                     alt="Klick"
-                    width={34}
-                    height={34}
-                    className="rounded-full object-contain filter drop-shadow-lg group-hover:scale-110 transition-transform duration-200"
+                    width={46}
+                    height={46}
+                    className="rounded-full object-contain filter drop-shadow-xl group-hover:scale-110 transition-transform duration-200"
                   />
                 </button>
 
-                {/* 3. Botón Date / Cita (Derecha) */}
+                {/* 3. Botón Date / Cita (Derecha - Taza en tono neutro blanco/zinc) */}
                 <button
                   type="button"
                   onClick={handleDateRequest}
-                  className="w-11 h-11 flex items-center justify-center text-pink-400 hover:text-pink-300 active:scale-90 transition-all cursor-pointer group"
+                  className="w-12 h-12 flex items-center justify-center text-zinc-400 hover:text-white active:scale-90 transition-all cursor-pointer group"
                   title="Invitar a una Date"
                 >
                   <Coffee className="w-8 h-8 stroke-[2.2] group-hover:scale-110 transition-transform duration-200 drop-shadow-md" />
@@ -367,7 +367,7 @@ export default function MobileAppMainFeed() {
                   <motion.div
                     initial={{ scale: 0.8, rotate: -15 }}
                     animate={{ scale: 1, rotate: 0 }}
-                    className="w-24 h-24 rounded-full bg-pink-500/15 border border-pink-500/30 flex items-center justify-center text-pink-400 shadow-2xl shadow-pink-500/20 mb-4 animate-pulse"
+                    className="w-24 h-24 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white shadow-2xl mb-4 animate-pulse"
                   >
                     <Coffee className="w-13 h-13 stroke-[2]" />
                   </motion.div>
