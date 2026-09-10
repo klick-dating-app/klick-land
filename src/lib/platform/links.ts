@@ -12,11 +12,21 @@
 import { isNative } from './index';
 
 /** Host(s) que se consideran "internos" y no deben tratarse como externos. */
-const INTERNAL_HOSTS = ['udreamms.com', 'www.udreamms.com', 'localhost'];
+const INTERNAL_HOSTS = [
+  'click-with-purpose.onrender.com',
+  'udreamms.com',
+  'www.udreamms.com',
+  'localhost',
+];
 
 export function isExternalUrl(url: string): boolean {
   try {
-    const u = new URL(url, typeof window !== 'undefined' ? window.location.href : 'https://udreamms.com');
+    const u = new URL(
+      url,
+      typeof window !== 'undefined'
+        ? window.location.href
+        : 'https://click-with-purpose.onrender.com'
+    );
     if (u.protocol !== 'http:' && u.protocol !== 'https:') return false;
     return !INTERNAL_HOSTS.includes(u.hostname);
   } catch {

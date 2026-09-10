@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
-export const SITE_URL = "https://udreamms.com";
+export const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL || "https://click-with-purpose.onrender.com";
 export const SITE_NAME = "Klick";
 
 /** URL estable del logo (Google Search favicon + schema.org). */

@@ -1,6 +1,6 @@
-# uDreamms Platform
+# Klick Dating App Platform
 
-Plataforma web para gestión de visas (turista y estudiante), pagos (Stripe + Solana) y operaciones con Firebase.
+Plataforma y aplicación de citas Klick (web + móvil con Capacitor), integración de backend en Render, pagos y servicios Firebase.
 
 ## Estructura del repositorio
 

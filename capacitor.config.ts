@@ -15,7 +15,7 @@ import type { CapacitorConfig } from '@capacitor/cli';
  * El host remoto se puede sobreescribir en build con la variable de entorno
  * `CAP_SERVER_URL` (p. ej. para apuntar a un entorno de staging).
  */
-const SERVER_URL = process.env.CAP_SERVER_URL || 'https://udreamms.com';
+const SERVER_URL = process.env.CAP_SERVER_URL || 'https://click-with-purpose.onrender.com';
 
 const config: CapacitorConfig = {
   appId: 'com.klickland.app',
@@ -23,16 +23,20 @@ const config: CapacitorConfig = {
   webDir: 'mobile/www',
   server: {
     url: SERVER_URL,
-    cleartext: false,
+    cleartext: true,
     androidScheme: 'https',
     iosScheme: 'https',
-    // Rutas que se abren DENTRO del webview (mismo dominio de producción).
+    // Rutas que se abren DENTRO del webview (mismo dominio de producción o Render).
     // Cualquier otro host se delega al navegador del sistema.
-    allowNavigation: ['udreamms.com', '*.udreamms.com'],
+    allowNavigation: [
+      'click-with-purpose.onrender.com',
+      '*.onrender.com',
+      'udreamms.com',
+      '*.udreamms.com',
+    ],
   },
   android: {
-    // El contenido remoto ya va por HTTPS; no permitimos tráfico en claro.
-    allowMixedContent: false,
+    allowMixedContent: true,
   },
   ios: {
     contentInset: 'always',
