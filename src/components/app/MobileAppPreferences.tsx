@@ -68,10 +68,10 @@ export default function MobileAppPreferences({
   };
 
   const pillClass = (selected: boolean) =>
-    `px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 cursor-pointer ${
+    `px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 cursor-pointer border ${
       selected
-        ? "bg-blue-600 text-white shadow-md shadow-blue-500/25 border border-blue-400/30"
-        : "bg-[#12131a] hover:bg-[#181a24] text-zinc-400 hover:text-white border border-white/5"
+        ? "bg-blue-600/20 border-blue-500 text-white shadow-md shadow-blue-500/10"
+        : "bg-[#101116] hover:bg-[#15161e] text-zinc-400 hover:text-white border-white/10"
     }`;
 
   return (
