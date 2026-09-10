@@ -508,11 +508,11 @@ export default function MobileAppMainFeed() {
                 title="Dar Klick"
               >
                 <Image
-                  src="/5297951-7905525-Photoroom.png"
+                  src="/matchapp-logo-circular.png"
                   alt="Klick"
                   width={52}
                   height={52}
-                  className="object-contain filter drop-shadow-lg group-hover:scale-110 transition-transform duration-200"
+                  className="rounded-full object-contain filter drop-shadow-md group-hover:scale-110 transition-transform duration-200"
                 />
               </button>
 
