@@ -15,10 +15,25 @@ import MentorshipShowcase from "@/components/landing/MentorshipShowcase";
 import FreeTrainingShowcase from "@/components/landing/FreeTrainingShowcase";
 import UdreammsTVShowcase from "@/components/landing/UdreammsTVShowcase";
 
+import { useState, useEffect } from "react";
+import { isNative } from "@/lib/platform";
+import MobileAppWelcome from "@/components/app/MobileAppWelcome";
+
 export default function Home() {
+  const [inAppMode, setInAppMode] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    setInAppMode(isNative());
+  }, []);
+
   const handleStartQuote = () => {
     window.location.href = "/#planes";
   };
+
+  // Si estamos en la App Móvil (o ?app=true), mostramos la experiencia de App sin scroll
+  if (inAppMode) {
+    return <MobileAppWelcome />;
+  }
 
   return (
     <div className="min-h-screen bg-black font-sans">
