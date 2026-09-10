@@ -128,16 +128,16 @@ export default function MobileAppIcebreakers({
           </p>
 
           {/* Lista de 3 Prompts interactivos */}
-          <div className="flex flex-col gap-4 pb-4">
+          <div className="flex flex-col gap-3.5 pb-4">
             {selectedPrompts.map((prompt, index) => (
               <div
                 key={index}
-                className="p-4 rounded-2xl bg-[#101116] border border-white/10 flex flex-col gap-2.5 shadow-md shadow-black/40"
+                className="p-3.5 rounded-2xl bg-[#0f1016] border border-white/5 flex flex-col gap-2 shadow-sm"
               >
                 {/* Header del Prompt con botón para cambiar pregunta */}
                 <div className="flex items-start justify-between gap-2">
-                  <div className="flex items-start gap-2 text-pink-500 font-medium text-xs sm:text-[13px]">
-                    <MessageSquareQuote className="w-4 h-4 shrink-0 mt-0.5 text-pink-500" />
+                  <div className="flex items-start gap-2 text-blue-400 font-medium text-xs sm:text-[13px]">
+                    <MessageSquareQuote className="w-4 h-4 shrink-0 mt-0.5 text-blue-400" />
                     <span className="text-white font-semibold leading-snug">
                       {prompt}
                     </span>
@@ -158,7 +158,7 @@ export default function MobileAppIcebreakers({
                   value={answers[prompt] || ""}
                   onChange={(e) => handleAnswerChange(prompt, e.target.value)}
                   placeholder="Escribe algo auténtico o coqueto..."
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#0a0a0f] border border-white/5 focus:border-pink-500/50 focus:ring-1 focus:ring-pink-500/30 outline-none text-zinc-200 text-xs sm:text-[13px] placeholder:text-zinc-600 resize-none transition-all leading-relaxed"
+                  className="w-full px-3.5 py-2 rounded-xl bg-[#08080c] border border-white/5 focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/30 outline-none text-zinc-200 text-xs sm:text-[13px] placeholder:text-zinc-600 resize-none transition-all leading-relaxed"
                 />
               </div>
             ))}

@@ -70,8 +70,8 @@ export default function MobileAppPreferences({
   const pillClass = (selected: boolean) =>
     `px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 cursor-pointer ${
       selected
-        ? "bg-[linear-gradient(90deg,#008aff_0%,#ff007f_50%,#ff8c00_100%)] text-white shadow-md shadow-pink-500/20"
-        : "bg-[#14151c] hover:bg-[#1a1c27] text-zinc-400 hover:text-white border border-white/5"
+        ? "bg-blue-600 text-white shadow-md shadow-blue-500/25 border border-blue-400/30"
+        : "bg-[#12131a] hover:bg-[#181a24] text-zinc-400 hover:text-white border border-white/5"
     }`;
 
   return (
@@ -116,12 +116,12 @@ export default function MobileAppPreferences({
           </div>
         </div>
 
-        {/* 2. Contenido Scrollable de Preferencias */}
+        {/* 2. Contenido Scrollable de Preferencias (Limpio y sin exceso de cajas) */}
         <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.4 }}
-          className="flex-1 flex flex-col justify-start z-10 mt-6 px-1 overflow-y-auto no-scrollbar space-y-4 pb-4"
+          className="flex-1 flex flex-col justify-start z-10 mt-6 px-1 overflow-y-auto no-scrollbar space-y-6 pb-6"
         >
           {/* Header */}
           <div>
@@ -136,8 +136,8 @@ export default function MobileAppPreferences({
             </p>
           </div>
 
-          {/* Tarjeta 1: Espiritualidad */}
-          <div className="p-4 sm:p-5 rounded-2xl bg-[#0e0f15] border border-white/10 flex flex-col gap-4">
+          {/* Sección 1: Espiritualidad */}
+          <div className="flex flex-col gap-3.5 pb-2 border-b border-white/5">
             <div className="flex items-center gap-2 text-blue-400 font-bold text-xs uppercase tracking-wider">
               <Building2 className="w-4 h-4 text-blue-400" />
               <span>Espiritualidad</span>
@@ -145,7 +145,7 @@ export default function MobileAppPreferences({
 
             {/* Recomendación para el templo */}
             <div>
-              <p className="text-[11px] text-zinc-400 font-medium mb-2">
+              <p className="text-[11px] text-zinc-400 font-medium mb-1.5">
                 Recomendación para el templo
               </p>
               <div className="flex flex-wrap gap-2">
@@ -164,7 +164,7 @@ export default function MobileAppPreferences({
 
             {/* Importancia en la pareja */}
             <div>
-              <p className="text-[11px] text-zinc-400 font-medium mb-2">
+              <p className="text-[11px] text-zinc-400 font-medium mb-1.5">
                 Importancia en la pareja
               </p>
               <div className="flex flex-wrap gap-2">
@@ -183,7 +183,7 @@ export default function MobileAppPreferences({
 
             {/* Asistencia a la iglesia */}
             <div>
-              <p className="text-[11px] text-zinc-400 font-medium mb-2">
+              <p className="text-[11px] text-zinc-400 font-medium mb-1.5">
                 Asistencia a la iglesia
               </p>
               <div className="flex flex-wrap gap-2">
@@ -202,7 +202,7 @@ export default function MobileAppPreferences({
 
             {/* ¿Has servido una misión? */}
             <div>
-              <p className="text-[11px] text-zinc-400 font-medium mb-2">
+              <p className="text-[11px] text-zinc-400 font-medium mb-1.5">
                 ¿Has servido una misión?
               </p>
               <div className="flex flex-wrap gap-2">
@@ -220,16 +220,16 @@ export default function MobileAppPreferences({
             </div>
           </div>
 
-          {/* Tarjeta 2: Familia e Intenciones */}
-          <div className="p-4 sm:p-5 rounded-2xl bg-[#0e0f15] border border-white/10 flex flex-col gap-4">
-            <div className="flex items-center gap-2 text-pink-500 font-bold text-xs uppercase tracking-wider">
-              <Heart className="w-4 h-4 text-pink-500" />
+          {/* Sección 2: Familia e Intenciones */}
+          <div className="flex flex-col gap-3.5 pb-2 border-b border-white/5">
+            <div className="flex items-center gap-2 text-blue-400 font-bold text-xs uppercase tracking-wider">
+              <Heart className="w-4 h-4 text-blue-400" />
               <span>Familia e Intenciones</span>
             </div>
 
             {/* Meta de relación */}
             <div>
-              <p className="text-[11px] text-zinc-400 font-medium mb-2">
+              <p className="text-[11px] text-zinc-400 font-medium mb-1.5">
                 Meta de relación
               </p>
               <div className="flex flex-wrap gap-2">
@@ -248,7 +248,7 @@ export default function MobileAppPreferences({
 
             {/* Hijos */}
             <div>
-              <p className="text-[11px] text-zinc-400 font-medium mb-2">
+              <p className="text-[11px] text-zinc-400 font-medium mb-1.5">
                 Hijos
               </p>
               <div className="flex flex-wrap gap-2">
@@ -267,7 +267,7 @@ export default function MobileAppPreferences({
 
             {/* Tiempo para casarse */}
             <div>
-              <p className="text-[11px] text-zinc-400 font-medium mb-2">
+              <p className="text-[11px] text-zinc-400 font-medium mb-1.5">
                 Tiempo para casarse
               </p>
               <div className="flex flex-wrap gap-2">
@@ -285,16 +285,16 @@ export default function MobileAppPreferences({
             </div>
           </div>
 
-          {/* Tarjeta 3: Logística */}
-          <div className="p-4 sm:p-5 rounded-2xl bg-[#0e0f15] border border-white/10 flex flex-col gap-4">
-            <div className="flex items-center gap-2 text-amber-400 font-bold text-xs uppercase tracking-wider">
-              <Languages className="w-4 h-4 text-amber-400" />
+          {/* Sección 3: Logística */}
+          <div className="flex flex-col gap-3.5 pb-2 border-b border-white/5">
+            <div className="flex items-center gap-2 text-blue-400 font-bold text-xs uppercase tracking-wider">
+              <Languages className="w-4 h-4 text-blue-400" />
               <span>Logística</span>
             </div>
 
             {/* Rango de edad */}
             <div>
-              <div className="flex items-center justify-between text-xs mb-2">
+              <div className="flex items-center justify-between text-xs mb-1.5">
                 <span className="text-zinc-400 font-medium">Rango de edad</span>
                 <span className="text-blue-400 font-semibold">{ageRange}</span>
               </div>
@@ -303,13 +303,13 @@ export default function MobileAppPreferences({
                 min="18"
                 max="50"
                 defaultValue="26"
-                className="w-full accent-pink-500 cursor-pointer"
+                className="w-full accent-blue-500 cursor-pointer"
               />
             </div>
 
             {/* Distancia máxima */}
             <div>
-              <div className="flex items-center justify-between text-xs mb-2">
+              <div className="flex items-center justify-between text-xs mb-1.5">
                 <span className="text-zinc-400 font-medium">Distancia máxima</span>
                 <span className="text-blue-400 font-semibold">{maxDistance}</span>
               </div>
@@ -318,13 +318,13 @@ export default function MobileAppPreferences({
                 min="5"
                 max="150"
                 defaultValue="40"
-                className="w-full accent-pink-500 cursor-pointer"
+                className="w-full accent-blue-500 cursor-pointer"
               />
             </div>
 
             {/* Idiomas */}
             <div>
-              <p className="text-[11px] text-zinc-400 font-medium mb-2">
+              <p className="text-[11px] text-zinc-400 font-medium mb-1.5">
                 Idiomas
               </p>
               <div className="flex flex-wrap gap-2">
@@ -342,16 +342,16 @@ export default function MobileAppPreferences({
             </div>
           </div>
 
-          {/* Tarjeta 4: Seguridad y Valores */}
-          <div className="p-4 sm:p-5 rounded-2xl bg-[#0e0f15] border border-white/10 flex flex-col gap-4">
-            <div className="flex items-center gap-2 text-cyan-400 font-bold text-xs uppercase tracking-wider">
-              <ShieldCheck className="w-4 h-4 text-cyan-400" />
+          {/* Sección 4: Seguridad y Valores */}
+          <div className="flex flex-col gap-3.5 pb-2 border-b border-white/5">
+            <div className="flex items-center gap-2 text-blue-400 font-bold text-xs uppercase tracking-wider">
+              <ShieldCheck className="w-4 h-4 text-blue-400" />
               <span>Seguridad y Valores</span>
             </div>
 
             {/* Valores principales */}
             <div>
-              <p className="text-[11px] text-zinc-400 font-medium mb-2">
+              <p className="text-[11px] text-zinc-400 font-medium mb-1.5">
                 Valores principales
               </p>
               <div className="flex flex-wrap gap-2">
@@ -381,7 +381,7 @@ export default function MobileAppPreferences({
                 type="button"
                 onClick={() => setOnlyVerified(!onlyVerified)}
                 className={`w-11 h-6 rounded-full transition-colors relative p-0.5 cursor-pointer ${
-                  onlyVerified ? "bg-pink-600" : "bg-zinc-700"
+                  onlyVerified ? "bg-blue-600" : "bg-zinc-700"
                 }`}
               >
                 <div
@@ -400,7 +400,7 @@ export default function MobileAppPreferences({
                 type="button"
                 onClick={() => setSafeFirstDate(!safeFirstDate)}
                 className={`w-11 h-6 rounded-full transition-colors relative p-0.5 cursor-pointer ${
-                  safeFirstDate ? "bg-pink-600" : "bg-zinc-700"
+                  safeFirstDate ? "bg-blue-600" : "bg-zinc-700"
                 }`}
               >
                 <div
@@ -412,16 +412,16 @@ export default function MobileAppPreferences({
             </div>
           </div>
 
-          {/* Tarjeta 5: Afinidad */}
-          <div className="p-4 sm:p-5 rounded-2xl bg-[#0e0f15] border border-white/10 flex flex-col gap-4">
-            <div className="flex items-center gap-2 text-amber-400 font-bold text-xs uppercase tracking-wider">
-              <Sparkles className="w-4 h-4 text-amber-400" />
+          {/* Sección 5: Afinidad */}
+          <div className="flex flex-col gap-3.5 pb-2">
+            <div className="flex items-center gap-2 text-blue-400 font-bold text-xs uppercase tracking-wider">
+              <Sparkles className="w-4 h-4 text-blue-400" />
               <span>Afinidad</span>
             </div>
 
             {/* Intereses */}
             <div>
-              <p className="text-[11px] text-zinc-400 font-medium mb-2">
+              <p className="text-[11px] text-zinc-400 font-medium mb-1.5">
                 Intereses
               </p>
               <div className="flex flex-wrap gap-2">
@@ -445,11 +445,11 @@ export default function MobileAppPreferences({
 
             {/* Compatibilidad mínima */}
             <div>
-              <div className="flex items-center justify-between text-xs mb-2">
+              <div className="flex items-center justify-between text-xs mb-1.5">
                 <span className="text-zinc-400 font-medium">
                   Nivel de compatibilidad mínimo
                 </span>
-                <span className="text-pink-400 font-semibold">{compatibilityMin}%</span>
+                <span className="text-blue-400 font-semibold">{compatibilityMin}%</span>
               </div>
               <input
                 type="range"
@@ -457,7 +457,7 @@ export default function MobileAppPreferences({
                 max="95"
                 value={compatibilityMin}
                 onChange={(e) => setCompatibilityMin(Number(e.target.value))}
-                className="w-full accent-pink-500 cursor-pointer"
+                className="w-full accent-blue-500 cursor-pointer"
               />
             </div>
           </div>
