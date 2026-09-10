@@ -23,49 +23,34 @@ export default function MobileAppWelcome({
         <div className="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[350px] h-[350px] bg-gradient-to-b from-purple-900/20 via-pink-900/10 to-transparent rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[250px] h-[250px] bg-cyan-900/15 rounded-full blur-3xl pointer-events-none" />
 
-        {/* 1. Header / Top bar con mini logo */}
-        <motion.div 
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="w-full flex items-center justify-center pt-2 z-10"
-        >
-          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
-            <Image
-              src="/matchapp-logo-circular.png"
-              alt="Klick Logo"
-              width={20}
-              height={20}
-              className="rounded-full object-cover"
-              priority
-            />
-            <span className="text-xs font-semibold tracking-wider text-zinc-300">
-              Klick
-            </span>
-          </div>
-        </motion.div>
-
-        {/* 2. Centro: Brand name & Slogan */}
-        <div className="flex flex-col items-center justify-center text-center my-auto z-10 px-2">
-          <motion.h1 
+        {/* Centro ópticamente perfecto: Logo + Klick Dating + Slogan */}
+        <div className="flex-1 flex flex-col items-center justify-center text-center z-10 px-2 gap-4 my-auto">
+          <motion.div 
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-5xl sm:text-6xl font-black tracking-wider text-white drop-shadow-md mb-3"
+            transition={{ duration: 0.5 }}
+            className="flex items-center justify-center gap-3 px-4 py-1.5 bg-transparent"
           >
-            KLICK
-          </motion.h1>
+            <Image
+              src="/matchapp-logo-circular.png"
+              alt="Klick Dating Logo"
+              width={40}
+              height={40}
+              className="rounded-full object-cover shrink-0 shadow-md"
+              priority
+            />
+            <span className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+              Klick Dating
+            </span>
+          </motion.div>
           
           <motion.p 
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-base sm:text-lg font-medium text-zinc-300"
+            transition={{ duration: 0.6, delay: 0.15 }}
+            className="text-lg sm:text-xl font-medium tracking-tight bg-[linear-gradient(90deg,#008aff_0%,#7c3aed_24%,#ff007f_48%,#ff1744_72%,#ff8c00_100%)] bg-clip-text text-transparent"
           >
-            <span className="text-cyan-400 font-semibold">Make klick</span>{" "}
-            <span className="bg-gradient-to-r from-pink-500 via-rose-400 to-amber-400 bg-clip-text text-transparent font-bold">
-              with someone real
-            </span>
+            Make klick with someone real
           </motion.p>
         </div>
 
@@ -110,9 +95,9 @@ export default function MobileAppWelcome({
             type="button"
             className="w-full h-14 bg-[#181920] hover:bg-[#20222c] active:scale-[0.98] border border-white/10 text-white font-semibold text-[15px] rounded-full flex items-center justify-center gap-3 shadow-lg transition-all duration-200 cursor-pointer"
           >
-            {/* SVG Apple Icon */}
-            <svg className="w-5 h-5 fill-current" viewBox="0 0 170 170">
-              <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.69-3.04-7.67-7.81-11.96-14.32-6.19-9.51-11.04-20.2-14.55-32.07-3.51-11.87-5.27-23.01-5.27-33.43 0-14.07 3.73-25.75 11.19-35.04 7.46-9.29 16.71-14.05 27.75-14.28 4.36 0 9.29 1.16 14.79 3.49 5.5 2.33 9.4 3.55 11.71 3.66 2.31-.11 6.33-1.39 12.06-3.86 5.73-2.47 10.37-3.64 13.91-3.5 10.23.58 18.73 4.44 25.5 11.59-8.49 5.18-12.71 12.35-12.66 21.51.05 7.15 2.76 13.19 8.13 18.12 5.37 4.93 11.77 7.74 19.2 8.44-2.14 6.3-4.83 12.63-8.08 19-.94 1.83-1.91 3.65-2.91 5.47zM119.22 31.84c0-7.38 2.65-14.19 7.95-20.44 5.3-6.25 11.74-10.38 19.33-12.4 0 .97.05 1.95.05 2.94 0 7.23-2.77 14.18-8.31 20.85-5.54 6.67-12.18 10.63-19.92 11.89-.28-.95-.42-1.9-.42-2.84z"/>
+            {/* SVG Apple Icon Oficial */}
+            <svg className="w-5 h-5 fill-current mb-0.5 shrink-0" viewBox="0 0 24 24">
+              <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.62-.75 1.04-1.8.92-2.85-.9.04-1.99.6-2.61 1.34-.55.63-1.03 1.67-.9 2.69 1 .08 2.02-.43 2.59-1.18Z" />
             </svg>
             <span>Continue with Apple ID</span>
           </button>

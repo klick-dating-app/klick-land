@@ -17,7 +17,7 @@ import UdreammsTVShowcase from "@/components/landing/UdreammsTVShowcase";
 
 import { useState, useEffect } from "react";
 import { isNative } from "@/lib/platform";
-import MobileAppWelcome from "@/components/app/MobileAppWelcome";
+import MobileAppContainer from "@/components/app/MobileAppContainer";
 
 export default function Home() {
   const [inAppMode, setInAppMode] = useState<boolean | null>(null);
@@ -30,9 +30,9 @@ export default function Home() {
     window.location.href = "/#planes";
   };
 
-  // Si estamos en la App Móvil (o ?app=true), mostramos la experiencia de App sin scroll
+  // Si estamos en la App Móvil (o ?app=true), mostramos el flujo de la App
   if (inAppMode) {
-    return <MobileAppWelcome />;
+    return <MobileAppContainer />;
   }
 
   return (
