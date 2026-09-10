@@ -13,9 +13,22 @@ export type AppPlatform = 'web' | 'ios' | 'android';
 
 const hasWindow = typeof window !== 'undefined';
 
-/** `true` solo dentro del contenedor nativo de Capacitor (Android/iOS). */
+function isDevAppPreview(): boolean {
+  if (!hasWindow) return false;
+  try {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('app') === 'true' || params.get('mode') === 'app') return true;
+    if (window.localStorage && window.localStorage.getItem('preview_app') === 'true') return true;
+  } catch {
+    // Ignore in case of iframe/storage restrictions
+  }
+  return false;
+}
+
+/** `true` dentro de Capacitor o en localhost con ?app=true */
 export function isNative(): boolean {
   if (!hasWindow) return false;
+  if (isDevAppPreview()) return true;
   try {
     return Capacitor.isNativePlatform();
   } catch {
@@ -26,6 +39,7 @@ export function isNative(): boolean {
 /** `'web' | 'ios' | 'android'`. En servidor siempre `'web'`. */
 export function getPlatform(): AppPlatform {
   if (!hasWindow) return 'web';
+  if (isDevAppPreview()) return 'android';
   try {
     return Capacitor.getPlatform() as AppPlatform;
   } catch {
@@ -41,7 +55,7 @@ export function isAndroid(): boolean {
   return getPlatform() === 'android';
 }
 
-/** `true` en navegador normal (no contenedor nativo). */
+/** `true` en navegador normal (no contenedor nativo ni modo preview app). */
 export function isWeb(): boolean {
   return getPlatform() === 'web';
 }
