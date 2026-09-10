@@ -89,13 +89,13 @@ export default function MobileAppNotifications({
             Te avisamos cuando alguien hace klick contigo o te escribe.
           </p>
 
-          {/* Tarjeta con borde gradiente multicolor */}
-          <div className="relative p-[1.5px] rounded-3xl bg-[linear-gradient(135deg,#008aff_0%,#7c3aed_35%,#ff007f_70%,#ff8c00_100%)] shadow-2xl shadow-pink-500/10">
+          {/* Tarjeta con borde sutil y diseño transparente */}
+          <div className="relative p-[1px] rounded-3xl bg-white/10 shadow-2xl">
             <div className="w-full bg-[#0c0d12] rounded-[23px] p-6 sm:p-7 flex flex-col items-center text-center">
               
-              {/* Icono campana con gradiente circular */}
-              <div className="w-16 h-16 rounded-full bg-[linear-gradient(135deg,#008aff_0%,#7c3aed_35%,#ff007f_70%,#ff8c00_100%)] flex items-center justify-center text-white shadow-lg shadow-pink-500/25 mb-5">
-                <Bell className="w-7 h-7 stroke-[2.2]" />
+              {/* Icono campana transparente con hover gris */}
+              <div className="w-16 h-16 rounded-full bg-white/5 border border-white/10 hover:bg-white/15 transition-colors flex items-center justify-center text-white mb-5 shadow-inner">
+                <Bell className="w-7 h-7 stroke-[2]" />
               </div>
 
               {/* Mensaje */}
@@ -110,8 +110,8 @@ export default function MobileAppNotifications({
                   onClick={handleDismiss}
                   className={`h-11 rounded-full text-xs sm:text-[13px] font-semibold border transition-all duration-200 cursor-pointer ${
                     permissionStatus === "dismissed"
-                      ? "bg-white/15 border-white/30 text-white"
-                      : "bg-[#16171f] hover:bg-[#1f202b] border-white/10 text-zinc-400 hover:text-white"
+                      ? "bg-white/20 border-white/40 text-white"
+                      : "bg-transparent hover:bg-white/10 active:bg-white/15 border-white/10 text-zinc-400 hover:text-white"
                   }`}
                 >
                   Ahora no
@@ -119,10 +119,10 @@ export default function MobileAppNotifications({
                 <button
                   type="button"
                   onClick={handleAccept}
-                  className={`h-11 rounded-full text-xs sm:text-[13px] font-semibold text-white shadow-lg transition-all duration-200 cursor-pointer active:scale-95 ${
+                  className={`h-11 rounded-full text-xs sm:text-[13px] font-semibold text-white border transition-all duration-200 cursor-pointer active:scale-95 ${
                     permissionStatus === "accepted"
-                      ? "bg-gradient-to-r from-blue-500 to-green-500 shadow-green-500/20"
-                      : "bg-[linear-gradient(90deg,#008aff_0%,#ff007f_50%,#ff8c00_100%)] hover:opacity-95 shadow-pink-500/20"
+                      ? "bg-white/25 border-white/50 text-white font-bold"
+                      : "bg-white/10 hover:bg-white/20 active:bg-white/25 border-white/20 text-white"
                   }`}
                 >
                   {permissionStatus === "accepted" ? "Activadas ✓" : "Aceptar"}
@@ -133,7 +133,7 @@ export default function MobileAppNotifications({
           </div>
         </motion.div>
 
-        {/* 3. Botón Continuar */}
+        {/* 3. Botón Continuar (Blanco Sólido) */}
         <div className="w-full z-10 pb-2">
           <button
             onClick={onContinue}

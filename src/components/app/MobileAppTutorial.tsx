@@ -140,12 +140,12 @@ export default function MobileAppTutorial({
           </div>
         </div>
 
-        {/* 3. Botón Entrar a Klick */}
+        {/* 3. Botón Entrar a Klick (Blanco Sólido) */}
         <div className="w-full z-10 pb-2">
           <button
             onClick={handleNextSlide}
             type="button"
-            className="w-full h-14 rounded-full bg-[linear-gradient(90deg,#008aff_0%,#ff007f_50%,#ff8c00_100%)] hover:opacity-95 text-white active:scale-[0.98] shadow-xl shadow-pink-500/25 text-[15px] font-semibold transition-all duration-200 cursor-pointer flex items-center justify-center gap-2"
+            className="w-full h-14 rounded-full bg-white hover:bg-zinc-100 text-black active:scale-[0.98] shadow-xl shadow-white/10 text-[15px] font-semibold transition-all duration-200 cursor-pointer flex items-center justify-center"
           >
             <span>{currentSlide === TUTORIAL_SLIDES.length - 1 ? "Entrar a Klick" : "Siguiente"}</span>
           </button>

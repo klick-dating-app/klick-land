@@ -463,12 +463,12 @@ export default function MobileAppPreferences({
           </div>
         </motion.div>
 
-        {/* 3. Botón Continuar */}
+        {/* 3. Botón Continuar (Blanco Sólido) */}
         <div className="w-full z-10 pb-2 pt-2">
           <button
             onClick={handleSubmit}
             type="button"
-            className="w-full h-14 rounded-full bg-[linear-gradient(90deg,#008aff_0%,#ff007f_50%,#ff8c00_100%)] hover:opacity-95 text-white active:scale-[0.98] shadow-xl shadow-pink-500/20 text-[15px] font-semibold transition-all duration-200 cursor-pointer flex items-center justify-center"
+            className="w-full h-14 rounded-full bg-white hover:bg-zinc-100 text-black active:scale-[0.98] shadow-xl shadow-white/10 text-[15px] font-semibold transition-all duration-200 cursor-pointer flex items-center justify-center"
           >
             <span>Continuar</span>
           </button>

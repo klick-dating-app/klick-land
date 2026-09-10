@@ -164,16 +164,12 @@ export default function MobileAppVerification({
           </div>
         </motion.div>
 
-        {/* 3. Botón Continuar (Con gradiente vibrante al estar verificado) */}
+        {/* 3. Botón Continuar (Blanco Sólido) */}
         <div className="w-full z-10 pb-2">
           <button
             onClick={onFinish}
             type="button"
-            className={`w-full h-14 rounded-full text-[15px] font-semibold transition-all duration-200 cursor-pointer flex items-center justify-center shadow-xl ${
-              isVerified
-                ? "bg-[linear-gradient(90deg,#008aff_0%,#ff007f_50%,#ff8c00_100%)] text-white shadow-pink-500/25 hover:opacity-95 active:scale-[0.98]"
-                : "bg-white hover:bg-zinc-100 text-black shadow-white/10 active:scale-[0.98]"
-            }`}
+            className="w-full h-14 rounded-full bg-white hover:bg-zinc-100 text-black active:scale-[0.98] shadow-xl shadow-white/10 text-[15px] font-semibold transition-all duration-200 cursor-pointer flex items-center justify-center"
           >
             <span>Continuar</span>
           </button>
