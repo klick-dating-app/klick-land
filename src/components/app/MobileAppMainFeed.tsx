@@ -381,7 +381,7 @@ export default function MobileAppMainFeed() {
             </div>
 
             {/* Sección de Información Detallada del Perfil (Scrollable) */}
-            <div className="px-5 py-4 flex flex-col gap-5 bg-[#070709] border-t border-white/5 pb-28">
+            <div className="px-5 py-4 flex flex-col gap-5 bg-[#070709] pb-28">
               
               {/* Biografía */}
               <div className="flex flex-col gap-1.5">
@@ -489,7 +489,7 @@ export default function MobileAppMainFeed() {
             </div>
 
             {/* Barra Flotante de Acciones Fija al Pie: Pasar (Izq), Klick (Centro - Grande), Date (Der) */}
-            <div className="sticky bottom-0 z-30 w-full px-6 py-3 bg-gradient-to-t from-black via-black/95 to-transparent backdrop-blur-md flex items-center justify-center gap-10 sm:gap-12 border-t border-white/5">
+            <div className="sticky bottom-0 z-30 w-full px-6 py-2 bg-transparent flex items-center justify-center gap-10 sm:gap-12">
               {/* 1. Botón Pasar (Izquierda) */}
               <button
                 type="button"
@@ -500,7 +500,7 @@ export default function MobileAppMainFeed() {
                 <RotateCcw className="w-8 h-8 stroke-[2.2] group-hover:-rotate-45 transition-transform duration-200 drop-shadow-md" />
               </button>
 
-              {/* 2. Botón Principal Klick (Centro - Grande y Destacado) */}
+              {/* 2. Botón Principal Klick (Centro - Grande y Destacado sin fondo oscuro) */}
               <button
                 type="button"
                 onClick={handleLike}
@@ -508,11 +508,11 @@ export default function MobileAppMainFeed() {
                 title="Dar Klick"
               >
                 <Image
-                  src="/matchapp-logo-circular.png"
+                  src="/5297951-7905525-Photoroom.png"
                   alt="Klick"
                   width={52}
                   height={52}
-                  className="rounded-full object-contain filter drop-shadow-2xl group-hover:scale-110 transition-transform duration-200"
+                  className="object-contain filter drop-shadow-lg group-hover:scale-110 transition-transform duration-200"
                 />
               </button>
 
