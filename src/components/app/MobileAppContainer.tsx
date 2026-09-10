@@ -28,9 +28,9 @@ export default function MobileAppContainer() {
   const [currentStep, setCurrentStep] = useState<AppStep>("welcome");
 
   const [formData, setFormData] = useState({
-    firstName: "Kevin",
+    firstName: "Juan Carlos",
     lastName: "Morales",
-    nickname: "kevin_m",
+    nickname: "juancarlos_m",
     birthday: "",
     height: "5' 10\"",
     gender: "Hombre",
@@ -55,7 +55,7 @@ export default function MobileAppContainer() {
       ...prev,
       firstName: data.firstName,
       lastName: data.lastName,
-      nickname: data.nickname || "kevin_m",
+      nickname: data.nickname || "juancarlos_m",
       birthday: data.birthday,
       height: data.heightValue,
       gender: data.gender,

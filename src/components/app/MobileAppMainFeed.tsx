@@ -192,8 +192,8 @@ export default function MobileAppMainFeed() {
 
   // Perfil editable del usuario conectado
   const [userProfile, setUserProfile] = useState({
-    name: "Kevin",
-    nickname: "kevin_m",
+    name: "Juan Carlos",
+    nickname: "juancarlos_m",
     age: 24,
     height: "5' 10\"",
     bio: "Ingeniero de software, apasionado por el piano, el senderismo en las montañas y las buenas conversaciones.",

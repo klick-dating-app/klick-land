@@ -24,9 +24,9 @@ export default function MobileAppBasicInfo({
   onBack,
   onContinue,
 }: MobileAppBasicInfoProps) {
-  const [firstName, setFirstName] = useState("Kevin");
+  const [firstName, setFirstName] = useState("Juan Carlos");
   const [lastName, setLastName] = useState("Morales");
-  const [nickname, setNickname] = useState("kevin_m");
+  const [nickname, setNickname] = useState("juancarlos_m");
   const [birthday, setBirthday] = useState("");
   const [heightUnit, setHeightUnit] = useState<"ft" | "cm">("ft");
   const [heightFeet, setHeightFeet] = useState("5");
