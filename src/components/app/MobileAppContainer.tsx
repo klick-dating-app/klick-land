@@ -30,6 +30,7 @@ export default function MobileAppContainer() {
   const [formData, setFormData] = useState({
     firstName: "Kevin",
     lastName: "Morales",
+    nickname: "kevin_m",
     birthday: "",
     height: "5' 10\"",
     gender: "Hombre",
@@ -54,6 +55,7 @@ export default function MobileAppContainer() {
       ...prev,
       firstName: data.firstName,
       lastName: data.lastName,
+      nickname: data.nickname || "kevin_m",
       birthday: data.birthday,
       height: data.heightValue,
       gender: data.gender,

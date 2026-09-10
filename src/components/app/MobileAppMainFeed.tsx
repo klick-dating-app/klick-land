@@ -10,7 +10,7 @@ import {
   Sparkles,
   Flame,
   MessageCircle,
-  Flower2,
+  Coffee,
   User,
   ChevronDown,
   Edit3,
@@ -25,6 +25,7 @@ import { motion, AnimatePresence } from "framer-motion";
 interface Profile {
   id: string;
   name: string;
+  nickname: string;
   age: number;
   location: string;
   distance: string;
@@ -41,34 +42,11 @@ interface Profile {
   };
 }
 
-function RoseIcon({ className = "w-9 h-9" }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-    >
-      {/* Rosa elegante: pétalos */}
-      <path d="M12 4c2-2 5.5-1.5 6 1.5.5 3-2.5 4.5-4 5.5" />
-      <path d="M12 4C10 2 6.5 2.5 6 5.5c-.5 3 2.5 4.5 4 5.5" />
-      <path d="M10 11c1.2 1 2.8 1 4 0" />
-      <path d="M12 7c1-.8 2.5-.5 2.8.8.3 1.2-.8 2-1.8 2.5" />
-      {/* Tallo y hojas */}
-      <path d="M12 11v9" />
-      <path d="M12 14.5c2.5-1 5 0 5.5 1.5-.8 1-3.5 1-5.5-.5z" />
-      <path d="M12 17c-2.5-1-5 0-5.5 1.5.8 1 3.5 1 5.5-.5z" />
-    </svg>
-  );
-}
-
 const SAMPLE_PROFILES: Profile[] = [
   {
     id: "1",
-    name: "CAMILA",
+    name: "Camila",
+    nickname: "cami_v",
     age: 24,
     location: "Provo, Utah",
     distance: "a 4 km",
@@ -90,7 +68,8 @@ const SAMPLE_PROFILES: Profile[] = [
   },
   {
     id: "2",
-    name: "SOFÍA",
+    name: "Sofía",
+    nickname: "sofi_spark",
     age: 23,
     location: "Salt Lake City, UT",
     distance: "a 12 km",
@@ -111,7 +90,8 @@ const SAMPLE_PROFILES: Profile[] = [
   },
   {
     id: "3",
-    name: "VALENTINA",
+    name: "Valentina",
+    nickname: "vale_m",
     age: 25,
     location: "Orem, Utah",
     distance: "a 6 km",
@@ -141,6 +121,7 @@ export default function MobileAppMainFeed() {
   // Perfil editable del usuario
   const [userProfile, setUserProfile] = useState({
     name: "Alex",
+    nickname: "alex_v",
     age: 24,
     height: "5' 10\"",
     bio: "Amante de la música, el aire libre y conversaciones profundas.",
@@ -263,16 +244,21 @@ export default function MobileAppMainFeed() {
             {/* 2. Información del perfil y Icebreaker */}
             <div className="relative z-20 px-5 pb-4 flex flex-col gap-3 pointer-events-none">
               
-              {/* Nombre, edad y verificación */}
-              <div className="flex flex-col gap-1 pointer-events-auto">
+              {/* Nombre, Nickname, Edad y Verificación */}
+              <div className="flex flex-col gap-0.5 pointer-events-auto">
                 <div className="flex items-center gap-2">
-                  <h2 className="text-3xl font-extrabold tracking-tight text-white drop-shadow-md">
+                  <h2 className="text-2xl sm:text-[27px] font-semibold tracking-tight text-white drop-shadow-md">
                     {currentProfile.name}, {currentProfile.age}
                   </h2>
                   {currentProfile.verified && (
-                    <BadgeCheck className="w-6 h-6 fill-blue-500 text-white shrink-0 shadow-sm" />
+                    <BadgeCheck className="w-5 h-5 fill-blue-500 text-white shrink-0 shadow-sm" />
                   )}
                 </div>
+
+                {/* Nickname / Alias del usuario */}
+                <span className="text-[12px] sm:text-[13px] text-blue-400 font-medium tracking-wide mb-0.5">
+                  @{currentProfile.nickname}
+                </span>
 
                 {/* Ubicación */}
                 <div className="flex items-center gap-1.5 text-xs text-zinc-300 font-medium">
@@ -299,42 +285,42 @@ export default function MobileAppMainFeed() {
                 <span>Toca los lados para fotos · Pulsa Klick para conectar</span>
               </div>
 
-              {/* Botones Flotantes de Acción: Pasar (Izq), Klick (Centro), Rosa (Der) - Sin Contenedores, Mismo Tamaño */}
-              <div className="flex items-center justify-center gap-10 sm:gap-12 pt-2 pointer-events-auto">
+              {/* Botones Flotantes de Acción: Pasar (Izq), Klick (Centro), Date (Der) - Mismo Tamaño Uniforme */}
+              <div className="flex items-center justify-center gap-9 sm:gap-11 pt-2 pointer-events-auto">
                 {/* 1. Botón Pasar (Izquierda) */}
                 <button
                   type="button"
                   onClick={handlePass}
-                  className="p-1 text-zinc-400 hover:text-white active:scale-90 transition-all cursor-pointer group flex items-center justify-center"
+                  className="w-11 h-11 flex items-center justify-center text-zinc-400 hover:text-white active:scale-90 transition-all cursor-pointer group"
                   title="Siguiente perfil"
                 >
-                  <RotateCcw className="w-9 h-9 sm:w-10 sm:h-10 stroke-[2] group-hover:-rotate-45 transition-transform duration-200 drop-shadow-md" />
+                  <RotateCcw className="w-8 h-8 stroke-[2.2] group-hover:-rotate-45 transition-transform duration-200 drop-shadow-md" />
                 </button>
 
                 {/* 2. Botón Principal Klick (Centro) */}
                 <button
                   type="button"
                   onClick={handleLike}
-                  className="p-1 active:scale-90 transition-all cursor-pointer group flex items-center justify-center"
+                  className="w-11 h-11 flex items-center justify-center active:scale-90 transition-all cursor-pointer group"
                   title="Dar Klick"
                 >
                   <Image
                     src="/matchapp-logo-circular.png"
                     alt="Klick"
-                    width={40}
-                    height={40}
+                    width={34}
+                    height={34}
                     className="rounded-full object-contain filter drop-shadow-lg group-hover:scale-110 transition-transform duration-200"
                   />
                 </button>
 
-                {/* 3. Botón Date / Rosa (Derecha) */}
+                {/* 3. Botón Date / Cita (Derecha) */}
                 <button
                   type="button"
                   onClick={handleDateRequest}
-                  className="p-1 text-rose-400 hover:text-rose-300 active:scale-90 transition-all cursor-pointer group flex items-center justify-center"
-                  title="Tener una Date con esta persona"
+                  className="w-11 h-11 flex items-center justify-center text-pink-400 hover:text-pink-300 active:scale-90 transition-all cursor-pointer group"
+                  title="Invitar a una Date"
                 >
-                  <RoseIcon className="w-9 h-9 sm:w-10 sm:h-10 stroke-[2] group-hover:scale-110 transition-transform duration-200 drop-shadow-md" />
+                  <Coffee className="w-8 h-8 stroke-[2.2] group-hover:scale-110 transition-transform duration-200 drop-shadow-md" />
                 </button>
               </div>
 
@@ -379,17 +365,17 @@ export default function MobileAppMainFeed() {
                   className="absolute inset-0 z-50 bg-black/85 backdrop-blur-md flex flex-col items-center justify-center text-center p-6"
                 >
                   <motion.div
-                    initial={{ scale: 0.8, rotate: -20 }}
+                    initial={{ scale: 0.8, rotate: -15 }}
                     animate={{ scale: 1, rotate: 0 }}
-                    className="w-24 h-24 rounded-full bg-rose-500/15 border border-rose-500/30 flex items-center justify-center text-rose-400 shadow-2xl shadow-rose-500/20 mb-4 animate-pulse"
+                    className="w-24 h-24 rounded-full bg-pink-500/15 border border-pink-500/30 flex items-center justify-center text-pink-400 shadow-2xl shadow-pink-500/20 mb-4 animate-pulse"
                   >
-                    <RoseIcon className="w-14 h-14 stroke-[2]" />
+                    <Coffee className="w-13 h-13 stroke-[2]" />
                   </motion.div>
                   <h2 className="text-3xl font-black tracking-wider text-white mb-1 uppercase">
                     ¡Invitación a Date!
                   </h2>
                   <p className="text-sm text-zinc-300 font-medium">
-                    Le has enviado una rosa a {currentProfile.name} para tener una cita directa.
+                    Le has enviado una propuesta de cita a {currentProfile.name}.
                   </p>
                 </motion.div>
               )}
@@ -449,8 +435,8 @@ export default function MobileAppMainFeed() {
             <p className="text-xs text-zinc-400 mb-6">Ideas de citas seguras e invitaciones activas</p>
 
             <div className="p-4 rounded-2xl bg-[#0e0f15] border border-white/10 flex flex-col gap-3 mb-4">
-              <div className="flex items-center gap-2 text-rose-400 font-bold text-xs">
-                <RoseIcon className="w-4 h-4" />
+              <div className="flex items-center gap-2 text-pink-400 font-bold text-xs">
+                <Coffee className="w-4 h-4" />
                 <span>Primera Cita Segura</span>
               </div>
               <p className="text-xs text-zinc-300">
@@ -489,12 +475,18 @@ export default function MobileAppMainFeed() {
                   <Edit3 className="w-3.5 h-3.5" />
                 </button>
               </div>
-              <h2 className="text-lg font-bold text-white">{userProfile.name}, {userProfile.age}</h2>
-              <p className="text-xs text-zinc-400">Estatura: {userProfile.height}</p>
+              <h2 className="text-lg font-semibold text-white">{userProfile.name}, {userProfile.age}</h2>
+              <span className="text-xs text-blue-400 font-medium">@{userProfile.nickname}</span>
+              <p className="text-xs text-zinc-400 mt-0.5">Estatura: {userProfile.height}</p>
             </div>
 
             {/* Datos Editables */}
             <div className="space-y-3 pb-6">
+              <div className="p-3.5 rounded-2xl bg-[#0e0f15] border border-white/10 flex flex-col gap-1.5">
+                <span className="text-[10px] font-bold text-zinc-400 uppercase">Apodo / Nickname</span>
+                <p className="text-xs text-blue-400 font-medium">@{userProfile.nickname}</p>
+              </div>
+
               <div className="p-3.5 rounded-2xl bg-[#0e0f15] border border-white/10 flex flex-col gap-1.5">
                 <span className="text-[10px] font-bold text-zinc-400 uppercase">Biografía</span>
                 <p className="text-xs text-zinc-200">{userProfile.bio}</p>
@@ -575,7 +567,7 @@ export default function MobileAppMainFeed() {
             )}
           </button>
 
-          {/* Citas con Icono de Rosa */}
+          {/* Citas con Icono de Date / Coffee */}
           <button
             type="button"
             onClick={() => setActiveTab("citas")}
@@ -583,7 +575,7 @@ export default function MobileAppMainFeed() {
               activeTab === "citas" ? "text-blue-500" : "text-zinc-500 hover:text-zinc-300"
             }`}
           >
-            <RoseIcon className="w-5 h-5" />
+            <Coffee className="w-5 h-5" />
             <span className="text-[10px] font-semibold">Citas</span>
             {activeTab === "citas" && (
               <div className="w-4 h-0.5 rounded-full bg-blue-500 absolute -bottom-1" />

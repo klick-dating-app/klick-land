@@ -13,6 +13,7 @@ interface MobileAppBasicInfoProps {
 export interface BasicInfoData {
   firstName: string;
   lastName: string;
+  nickname?: string;
   birthday: string;
   heightValue: string;
   heightUnit: "ft" | "cm";
@@ -25,6 +26,7 @@ export default function MobileAppBasicInfo({
 }: MobileAppBasicInfoProps) {
   const [firstName, setFirstName] = useState("Kevin");
   const [lastName, setLastName] = useState("Morales");
+  const [nickname, setNickname] = useState("kevin_m");
   const [birthday, setBirthday] = useState("");
   const [heightUnit, setHeightUnit] = useState<"ft" | "cm">("ft");
   const [heightFeet, setHeightFeet] = useState("5");
@@ -40,6 +42,7 @@ export default function MobileAppBasicInfo({
     onContinue({
       firstName,
       lastName,
+      nickname,
       birthday,
       heightValue,
       heightUnit,
@@ -139,6 +142,23 @@ export default function MobileAppBasicInfo({
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
                 placeholder="Tu apellido"
+                className="w-full h-12 px-4 rounded-xl bg-[#101116] border border-white/10 focus:border-blue-400 outline-none text-white text-sm transition-all"
+              />
+            </div>
+
+            {/* Nickname / Apodo */}
+            <div>
+              <div className="flex items-center justify-between mb-1.5">
+                <label className="text-[11px] font-bold uppercase tracking-wider text-zinc-400">
+                  Apodo / Nickname
+                </label>
+                <span className="text-[10px] text-zinc-500 font-normal">Opcional</span>
+              </div>
+              <input
+                type="text"
+                value={nickname}
+                onChange={(e) => setNickname(e.target.value)}
+                placeholder="@tu_apodo"
                 className="w-full h-12 px-4 rounded-xl bg-[#101116] border border-white/10 focus:border-blue-400 outline-none text-white text-sm transition-all"
               />
             </div>
