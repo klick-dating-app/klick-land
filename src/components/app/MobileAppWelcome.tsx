@@ -4,6 +4,7 @@ import React from "react";
 import Image from "next/image";
 import { ShieldCheck } from "lucide-react";
 import { motion } from "framer-motion";
+import KlickLogo from "@/components/ui/KlickLogo";
 
 interface MobileAppWelcomeProps {
   onGoogleLogin?: () => void;
@@ -31,14 +32,7 @@ export default function MobileAppWelcome({
             transition={{ duration: 0.5 }}
             className="flex items-center justify-center gap-3 px-4 py-1.5 bg-transparent"
           >
-            <Image
-              src="/klick-logo-circular.png"
-              alt="Klick Dating Logo"
-              width={40}
-              height={40}
-              className="rounded-full object-cover shrink-0 shadow-md"
-              priority
-            />
+            <KlickLogo size={48} priority />
             <span className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
               Klick Dating
             </span>

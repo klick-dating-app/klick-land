@@ -4,6 +4,7 @@ import React, { useState, useRef } from "react";
 import Image from "next/image";
 import { ChevronLeft, Camera, Video, Sparkles, X, Plus, Play, Check } from "lucide-react";
 import { motion } from "framer-motion";
+import KlickLogo from "@/components/ui/KlickLogo";
 
 interface MobileAppPhotosProps {
   onBack: () => void;
@@ -106,14 +107,7 @@ export default function MobileAppPhotos({
           </div>
 
           <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/5 border border-white/10 shrink-0">
-            <Image
-              src="/klick-logo-circular.png"
-              alt="Klick"
-              width={18}
-              height={18}
-              className="rounded-full object-cover"
-              priority
-            />
+            <KlickLogo size={18} priority />
             <span className="text-[11px] font-semibold text-zinc-300">Klick</span>
           </div>
         </div>

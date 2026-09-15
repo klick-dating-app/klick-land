@@ -43,6 +43,8 @@ import {
   Sliders,
   AlertTriangle,
   Star,
+  Flag,
+  UserX,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -59,6 +61,7 @@ import {
   UTAH_SAFE_FIRST_DATE_VENUES,
   type UtahSafeVenue,
 } from "@/lib/klick/mock-profiles";
+import KlickLogo from "@/components/ui/KlickLogo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
@@ -98,6 +101,10 @@ export default function MobileAppMainFeed() {
   const [showFilterModal, setShowFilterModal] = useState(false);
   const [showSafeDateModal, setShowSafeDateModal] = useState(false);
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  const [showCandidateProfileModal, setShowCandidateProfileModal] = useState(false);
+  const [showEditProfileModal, setShowEditProfileModal] = useState(false);
+  const [showReportModal, setShowReportModal] = useState(false);
+  const [reportReason, setReportReason] = useState("");
 
   // Chat activo
   const [activeChatThread, setActiveChatThread] = useState<ChatThread | null>(
@@ -113,6 +120,13 @@ export default function MobileAppMainFeed() {
   const [dateTimeText, setDateTimeText] = useState("Sábado, 5:00 PM");
   const [guardianName, setGuardianName] = useState("");
   const [guardianPhone, setGuardianPhone] = useState("");
+
+  // Estado editable de mi perfil
+  const [editBio, setEditBio] = useState(currentUser.bio);
+  const [editOccupation, setEditOccupation] = useState(currentUser.occupation);
+  const [editTemple, setEditTemple] = useState(currentUser.templeRecommend);
+  const [editMission, setEditMission] = useState(currentUser.servedMission);
+  const [editTimeline, setEditTimeline] = useState(currentUser.marriageTimeline);
 
   const activeCandidates = candidatesWithScore;
   const currentCandidateEntry =
@@ -132,6 +146,7 @@ export default function MobileAppMainFeed() {
   };
 
   const handlePrevPhoto = () => {
+    if (!currentCandidate) return;
     if (photoIndex > 0) {
       setPhotoIndex((prev) => prev - 1);
     }
@@ -205,6 +220,25 @@ export default function MobileAppMainFeed() {
     setActiveTab("citas");
   };
 
+  const handleBlockCurrentCandidate = () => {
+    if (!currentCandidate) return;
+    blockUser(currentCandidate.id, "Bloqueado por el usuario");
+    setShowReportModal(false);
+    setShowCandidateProfileModal(false);
+    toast.success("Usuario bloqueado y excluido de tus recomendaciones.");
+    handlePass();
+  };
+
+  const handleReportCurrentCandidate = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!currentCandidate) return;
+    reportUser(currentCandidate.id, "Reporte de seguridad", reportReason || "Infracción de normas comunitarias");
+    setShowReportModal(false);
+    setShowCandidateProfileModal(false);
+    toast.success("Reporte enviado a Trust & Safety de Klick.");
+    handlePass();
+  };
+
   return (
     <div className="min-h-screen w-full bg-black flex items-center justify-center overflow-hidden select-none">
       {/* Contenedor simulador móvil */}
@@ -215,7 +249,7 @@ export default function MobileAppMainFeed() {
         {activeTab === "feed" && currentCandidate && currentCompatibility && (
           <div className="relative flex-1 w-full overflow-y-auto no-scrollbar flex flex-col justify-between bg-zinc-950">
             {/* Header Flotante del Feed con Logo y Filtros */}
-            <div className="sticky top-0 z-30 w-full px-4 pt-10 pb-2 bg-gradient-to-b from-black/95 via-black/80 to-transparent backdrop-blur-md flex flex-col gap-2">
+            <div className="sticky top-0 z-30 w-full px-4 pt-10 pb-2 bg-gradient-to-b from-black/95 via-black/85 to-transparent backdrop-blur-md flex flex-col gap-2">
               {/* Barra de progreso de fotos */}
               <div className="w-full flex items-center gap-1.5">
                 {currentCandidate.photos.map((_, idx) => (
@@ -239,17 +273,7 @@ export default function MobileAppMainFeed() {
               {/* Logo y Botón de Ajustes */}
               <div className="flex items-center justify-between mt-1">
                 <div className="flex items-center gap-2">
-                  <Image
-                    src="/klick-logo-circular.png"
-                    alt="Klick"
-                    width={28}
-                    height={28}
-                    className="rounded-full"
-                    priority
-                  />
-                  <span className="font-extrabold tracking-tight text-base bg-[linear-gradient(90deg,#008aff_0%,#7c3aed_24%,#ff007f_48%,#ff1744_72%,#ff8c00_100%)] bg-clip-text text-transparent">
-                    KLICK!
-                  </span>
+                  <KlickLogo size={28} showText textClassName="font-black tracking-tight text-base" priority />
                 </div>
 
                 <div className="flex items-center gap-2">
@@ -276,28 +300,32 @@ export default function MobileAppMainFeed() {
             {/* Tarjeta de Foto Principal con Zonas Táctiles */}
             <div className="relative w-full aspect-[4/5] shrink-0 overflow-hidden -mt-16">
               <div
-                className="absolute inset-0 bg-cover bg-center transition-all duration-300"
+                className="absolute inset-0 bg-cover bg-center transition-all duration-300 cursor-pointer"
                 style={{
                   backgroundImage: `url(${currentCandidate.photos[photoIndex]})`,
                 }}
+                onClick={() => setShowCandidateProfileModal(true)}
               >
                 <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/95" />
               </div>
 
               {/* Zonas táctiles para pasar fotos */}
-              <div className="absolute inset-0 z-10 flex">
+              <div className="absolute inset-0 z-10 flex pointer-events-none">
                 <div
-                  className="w-1/2 h-full cursor-pointer"
+                  className="w-1/2 h-full pointer-events-auto cursor-pointer"
                   onClick={handlePrevPhoto}
                 />
                 <div
-                  className="w-1/2 h-full cursor-pointer"
+                  className="w-1/2 h-full pointer-events-auto cursor-pointer"
                   onClick={handleNextPhoto}
                 />
               </div>
 
               {/* Nombre y datos rápidos superpuestos al pie de la foto */}
-              <div className="absolute bottom-4 left-5 right-5 z-20 pointer-events-none flex flex-col gap-0.5">
+              <div
+                className="absolute bottom-4 left-5 right-5 z-20 flex flex-col gap-0.5 cursor-pointer"
+                onClick={() => setShowCandidateProfileModal(true)}
+              >
                 <div className="flex items-center gap-2">
                   <h2 className="text-2xl sm:text-[28px] font-bold tracking-tight text-white drop-shadow-lg">
                     {currentCandidate.name}, {currentCandidate.age}
@@ -332,13 +360,16 @@ export default function MobileAppMainFeed() {
             </div>
 
             {/* Hint de deslizamiento */}
-            <div className="flex items-center justify-center gap-1.5 py-2 text-[11px] text-zinc-400 font-normal bg-[#070709]">
+            <div
+              onClick={() => setShowCandidateProfileModal(true)}
+              className="flex items-center justify-center gap-1.5 py-2 text-[11px] text-zinc-400 font-normal bg-[#070709] cursor-pointer hover:text-white transition-colors"
+            >
               <ChevronDown className="w-3.5 h-3.5 animate-bounce text-blue-400" />
-              <span>Desliza hacia abajo para ver el perfil completo</span>
+              <span>Toca o desliza para ver perfil completo LDS</span>
             </div>
 
             {/* Sección de Información Detallada del Perfil LDS */}
-            <div className="px-5 py-4 flex flex-col gap-5 bg-[#070709] pb-28">
+            <div className="px-5 py-4 flex flex-col gap-5 bg-[#070709] pb-32">
               {/* Common Ground (Puntos en Común) */}
               <div className="p-4 rounded-2xl bg-gradient-to-br from-blue-950/30 to-purple-950/20 border border-blue-500/20 flex flex-col gap-2">
                 <div className="flex items-center justify-between">
@@ -443,38 +474,34 @@ export default function MobileAppMainFeed() {
             </div>
 
             {/* Barra Flotante de Acciones Fija al Pie: Pasar (Izq), Klick (Centro), Date (Der) */}
-            <div className="sticky bottom-0 z-30 w-full px-6 py-2 bg-transparent flex items-center justify-center gap-10 sm:gap-12">
+            <div className="sticky bottom-0 z-30 w-full px-6 pt-3 pb-3 bg-gradient-to-t from-black via-black/95 to-black/30 backdrop-blur-md flex items-center justify-center gap-10 sm:gap-12 border-t border-white/5">
               <button
                 type="button"
                 onClick={handlePass}
-                className="w-12 h-12 flex items-center justify-center text-zinc-400 hover:text-white active:scale-90 transition-all cursor-pointer group"
+                className="w-12 h-12 rounded-full bg-zinc-900/80 border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white active:scale-90 transition-all cursor-pointer group shadow-lg"
                 title="Siguiente candidato"
               >
-                <RotateCcw className="w-8 h-8 stroke-[2.2] group-hover:-rotate-45 transition-transform duration-200 drop-shadow-md" />
+                <RotateCcw className="w-6 h-6 stroke-[2.2] group-hover:-rotate-45 transition-transform duration-200" />
               </button>
 
               <button
                 type="button"
                 onClick={handleLike}
-                className="w-14 h-14 flex items-center justify-center active:scale-90 transition-all cursor-pointer group"
+                className="w-16 h-16 rounded-full bg-gradient-to-tr from-pink-500 via-purple-600 to-blue-500 p-[2px] shadow-xl shadow-pink-500/25 active:scale-90 hover:scale-105 transition-all cursor-pointer flex items-center justify-center group"
                 title="Dar Klick!"
               >
-                <Image
-                  src="/klick-logo-circular.png"
-                  alt="Klick"
-                  width={52}
-                  height={52}
-                  className="rounded-full object-contain filter drop-shadow-md group-hover:scale-110 transition-transform duration-200"
-                />
+                <div className="w-full h-full rounded-full bg-[#0d0e15] flex items-center justify-center group-hover:bg-transparent transition-colors">
+                  <KlickLogo size={42} priority />
+                </div>
               </button>
 
               <button
                 type="button"
                 onClick={handleDateRequest}
-                className="w-12 h-12 flex items-center justify-center text-zinc-400 hover:text-white active:scale-90 transition-all cursor-pointer group"
+                className="w-12 h-12 rounded-full bg-zinc-900/80 border border-white/10 flex items-center justify-center text-blue-400 hover:text-white active:scale-90 transition-all cursor-pointer group shadow-lg"
                 title="Proponer Safe First Date"
               >
-                <Coffee className="w-8 h-8 stroke-[2.2] group-hover:scale-110 transition-transform duration-200 drop-shadow-md" />
+                <Coffee className="w-6 h-6 stroke-[2.2] group-hover:scale-110 transition-transform duration-200" />
               </button>
             </div>
 
@@ -492,13 +519,7 @@ export default function MobileAppMainFeed() {
                     animate={{ rotate: 0, scale: 1 }}
                     className="w-24 h-24 rounded-full bg-white/10 border border-white/20 flex items-center justify-center p-3 shadow-2xl mb-4"
                   >
-                    <Image
-                      src="/klick-logo-circular.png"
-                      alt="Klick Match"
-                      width={70}
-                      height={70}
-                      className="rounded-full object-contain"
-                    />
+                    <KlickLogo size={70} priority />
                   </motion.div>
                   <h2 className="text-3xl font-black tracking-wider text-white mb-1 uppercase">
                     ¡Hicieron Klick!
@@ -657,8 +678,7 @@ export default function MobileAppMainFeed() {
                         {activeChatThread.candidate.name}
                       </h3>
                       <span className="text-[10px] text-blue-400">
-                        {activeChatThread.compatibility.score}%
-                        Compatibilidad
+                        {activeChatThread.compatibility.score}% Compatibilidad
                       </span>
                     </div>
                   </div>
@@ -898,8 +918,15 @@ export default function MobileAppMainFeed() {
                 <BadgeCheck className="w-5 h-5 fill-blue-500 text-white" />
               </div>
               <span className="text-xs text-zinc-400">
-                {currentUser.city}, {currentUser.state} · {currentUser.occupation}
+                {currentUser.city}, {currentUser.state} · {editOccupation}
               </span>
+              <button
+                type="button"
+                onClick={() => setShowEditProfileModal(true)}
+                className="mt-2 text-xs font-semibold px-3 py-1 rounded-full bg-white/10 hover:bg-white/20 text-zinc-300 flex items-center gap-1 cursor-pointer"
+              >
+                <Edit3 className="w-3.5 h-3.5" /> Editar Mi Perfil LDS
+              </button>
             </div>
 
             {/* Simulador de Rol de Género & Monetización */}
@@ -980,10 +1007,10 @@ export default function MobileAppMainFeed() {
                 <Church className="w-6 h-6 text-blue-400 shrink-0" />
                 <div>
                   <span className="text-xs font-bold text-white block">
-                    Recomendación para el Templo
+                    Recomendación para el Templo ({editTemple})
                   </span>
                   <span className="text-[10px] text-zinc-400">
-                    Vigente · Meta de matrimonio eterno sellado.
+                    Meta de matrimonio eterno sellado · {editTimeline}
                   </span>
                 </div>
               </div>
@@ -1070,6 +1097,241 @@ export default function MobileAppMainFeed() {
         </div>
 
         {/* ========================================================= */}
+        {/* MODAL PERFIL COMPLETO DEL CANDIDATO                       */}
+        {/* ========================================================= */}
+        <AnimatePresence>
+          {showCandidateProfileModal && currentCandidate && currentCompatibility && (
+            <motion.div
+              initial={{ opacity: 0, y: 100 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 100 }}
+              className="absolute inset-0 z-50 bg-[#070709] flex flex-col overflow-y-auto no-scrollbar"
+            >
+              {/* Header con botón cerrar */}
+              <div className="sticky top-0 z-20 w-full px-4 pt-10 pb-3 bg-black/80 backdrop-blur-md flex items-center justify-between border-b border-white/10">
+                <button
+                  type="button"
+                  onClick={() => setShowCandidateProfileModal(false)}
+                  className="p-1 rounded-full bg-white/10 hover:bg-white/20 text-zinc-300"
+                >
+                  <ChevronLeft className="w-6 h-6" />
+                </button>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-bold text-white">{currentCandidate.name}</span>
+                  <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-400">
+                    {currentCompatibility.score}% Klick
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setShowReportModal(true)}
+                  className="p-1.5 rounded-full bg-white/5 hover:bg-rose-500/20 text-zinc-400 hover:text-rose-400"
+                  title="Reportar o Bloquear"
+                >
+                  <Flag className="w-4 h-4" />
+                </button>
+              </div>
+
+              {/* Galería completa */}
+              <div className="px-4 py-4 flex flex-col gap-4">
+                <div className="grid grid-cols-1 gap-3">
+                  {currentCandidate.photos.map((p, idx) => (
+                    <div key={idx} className="relative aspect-[4/5] rounded-3xl overflow-hidden shadow-xl border border-white/10">
+                      <Image src={p} alt={currentCandidate.name} fill className="object-cover" />
+                    </div>
+                  ))}
+                </div>
+
+                <div className="p-4 rounded-2xl bg-white/5 border border-white/10 flex flex-col gap-3">
+                  <h3 className="text-lg font-bold text-white">{currentCandidate.name}, {currentCandidate.age}</h3>
+                  <p className="text-xs text-zinc-300 leading-relaxed">{currentCandidate.bio}</p>
+
+                  <div className="flex flex-col gap-2 pt-2 border-t border-white/10">
+                    <span className="text-xs font-bold text-blue-400 uppercase">Detalles de Fe & Vida LDS</span>
+                    <div className="flex flex-wrap gap-2 text-xs">
+                      <span className="px-3 py-1 rounded-full bg-blue-500/20 text-blue-300">Templo: {currentCandidate.templeRecommend}</span>
+                      <span className="px-3 py-1 rounded-full bg-white/5 text-zinc-300">Misión: {currentCandidate.servedMission}</span>
+                      <span className="px-3 py-1 rounded-full bg-white/5 text-zinc-300">Meta: {currentCandidate.marriageTimeline}</span>
+                      <span className="px-3 py-1 rounded-full bg-white/5 text-zinc-300">Ocupación: {currentCandidate.occupation}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Botones de acción dentro del modal */}
+                <div className="grid grid-cols-2 gap-3 pb-8">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowCandidateProfileModal(false);
+                      handleDateRequest();
+                    }}
+                    className="h-12 rounded-full bg-blue-600/20 border border-blue-500/40 text-blue-400 font-bold text-xs flex items-center justify-center gap-2 cursor-pointer"
+                  >
+                    <Coffee className="w-4 h-4" /> Proponer Safe Date
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowCandidateProfileModal(false);
+                      handleLike();
+                    }}
+                    className="h-12 rounded-full bg-blue-600 text-white font-bold text-xs flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-blue-500/25"
+                  >
+                    <Heart className="w-4 h-4 fill-white" /> Dar Klick!
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* ========================================================= */}
+        {/* MODAL EDITAR MI PERFIL LDS                                */}
+        {/* ========================================================= */}
+        <AnimatePresence>
+          {showEditProfileModal && (
+            <motion.div
+              initial={{ opacity: 0, y: 100 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 100 }}
+              className="absolute inset-0 z-50 bg-black/95 backdrop-blur-xl flex flex-col p-6 overflow-y-auto no-scrollbar"
+            >
+              <div className="flex items-center justify-between pb-4 border-b border-white/10">
+                <div className="flex items-center gap-2">
+                  <Edit3 className="w-5 h-5 text-blue-400" />
+                  <h2 className="text-base font-bold text-white">
+                    Editar Mi Perfil LDS
+                  </h2>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setShowEditProfileModal(false)}
+                  className="p-1 rounded-full bg-white/10 hover:bg-white/20 text-zinc-300"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              <div className="flex flex-col gap-4 py-4">
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-xs font-semibold text-zinc-300">Biografía</label>
+                  <textarea
+                    value={editBio}
+                    onChange={(e) => setEditBio(e.target.value)}
+                    rows={3}
+                    className="p-3 rounded-xl bg-[#14151f] border border-white/10 text-xs text-white outline-none resize-none"
+                  />
+                </div>
+
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-xs font-semibold text-zinc-300">Ocupación / Carrera</label>
+                  <input
+                    type="text"
+                    value={editOccupation}
+                    onChange={(e) => setEditOccupation(e.target.value)}
+                    className="h-11 px-3 rounded-xl bg-[#14151f] border border-white/10 text-xs text-white outline-none"
+                  />
+                </div>
+
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-xs font-semibold text-zinc-300">Recomendación para el Templo</label>
+                  <select
+                    value={editTemple}
+                    onChange={(e) => setEditTemple(e.target.value as any)}
+                    className="h-11 px-3 rounded-xl bg-[#14151f] border border-white/10 text-xs text-white outline-none"
+                  >
+                    <option value="Sí">Sí (Recomendación Vigente)</option>
+                    <option value="En proceso">En proceso</option>
+                    <option value="No">No por el momento</option>
+                  </select>
+                </div>
+
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-xs font-semibold text-zinc-300">Meta de Matrimonio Eterno</label>
+                  <select
+                    value={editTimeline}
+                    onChange={(e) => setEditTimeline(e.target.value as any)}
+                    className="h-11 px-3 rounded-xl bg-[#14151f] border border-white/10 text-xs text-white outline-none"
+                  >
+                    <option value="<1 año">Dentro de 1 año</option>
+                    <option value="1-2 años">1 a 2 años</option>
+                    <option value="2+ años">2+ años</option>
+                    <option value="Flexible">Flexible</option>
+                  </select>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setShowEditProfileModal(false);
+                  toast.success("¡Perfil LDS actualizado correctamente!");
+                }}
+                className="w-full h-12 rounded-full bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs mt-auto cursor-pointer"
+              >
+                Guardar Cambios
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* ========================================================= */}
+        {/* MODAL REPORTAR / BLOQUEAR USUARIO                         */}
+        {/* ========================================================= */}
+        <AnimatePresence>
+          {showReportModal && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              className="absolute inset-0 z-50 bg-black/95 backdrop-blur-xl flex flex-col p-6 items-center justify-center text-center"
+            >
+              <div className="w-14 h-14 rounded-full bg-rose-500/20 border border-rose-500/30 flex items-center justify-center mb-3">
+                <AlertTriangle className="w-7 h-7 text-rose-400" />
+              </div>
+              <h2 className="text-lg font-bold text-white mb-1">Centro de Seguridad & Confianza</h2>
+              <p className="text-xs text-zinc-400 mb-4 max-w-xs">
+                Klick mantiene una comunidad respetuosa con verificación estricta.
+              </p>
+
+              <div className="w-full flex flex-col gap-2.5">
+                <button
+                  type="button"
+                  onClick={handleBlockCurrentCandidate}
+                  className="w-full h-11 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-white/10 text-xs font-semibold text-zinc-200 flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <UserX className="w-4 h-4 text-rose-400" /> Bloquear a este usuario
+                </button>
+
+                <form onSubmit={handleReportCurrentCandidate} className="w-full flex flex-col gap-2 pt-2">
+                  <input
+                    type="text"
+                    value={reportReason}
+                    onChange={(e) => setReportReason(e.target.value)}
+                    placeholder="Motivo del reporte (ej. conducta inapropiada)..."
+                    className="w-full h-11 px-3 rounded-xl bg-[#14151f] border border-white/10 text-xs text-white outline-none"
+                  />
+                  <button
+                    type="submit"
+                    className="w-full h-11 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold flex items-center justify-center gap-1.5 cursor-pointer"
+                  >
+                    <Flag className="w-4 h-4" /> Enviar Reporte a Seguridad
+                  </button>
+                </form>
+
+                <button
+                  type="button"
+                  onClick={() => setShowReportModal(false)}
+                  className="w-full h-10 rounded-xl bg-transparent text-xs text-zinc-500 hover:text-zinc-300 mt-2 cursor-pointer"
+                >
+                  Cancelar
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* ========================================================= */}
         {/* MODAL RADAR DE COMPATIBILIDAD (10 Categorías 0-100%)      */}
         {/* ========================================================= */}
         <AnimatePresence>
@@ -1148,7 +1410,7 @@ export default function MobileAppMainFeed() {
               <button
                 type="button"
                 onClick={() => setShowRadarModal(false)}
-                className="w-full h-12 rounded-full bg-white text-black font-semibold text-xs mt-auto"
+                className="w-full h-12 rounded-full bg-white text-black font-semibold text-xs mt-auto cursor-pointer"
               >
                 Cerrar Radar
               </button>
