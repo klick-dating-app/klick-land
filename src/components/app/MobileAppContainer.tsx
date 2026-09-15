@@ -176,6 +176,7 @@ export default function MobileAppContainer() {
     <MobileAppWelcome
       onGoogleLogin={handleStartAuth}
       onAppleLogin={handleStartAuth}
+      onDirectAccess={() => setCurrentStep("feed")}
     />
   );
 }

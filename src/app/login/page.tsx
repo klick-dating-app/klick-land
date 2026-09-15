@@ -174,21 +174,22 @@ function LoginContent() {
     e.preventDefault();
     setLoading(true);
     try {
-      let userCredential;
-      if (isRegistering) {
-        userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        toast.success('Account created successfully');
-      } else {
-        userCredential = await signInWithEmailAndPassword(auth, email, password);
-        toast.success('Signed in successfully');
+      if (auth && email && password) {
+        let userCredential;
+        if (isRegistering) {
+          userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        } else {
+          userCredential = await signInWithEmailAndPassword(auth, email, password);
+        }
+        if (userCredential?.user) {
+          await syncUserInFirestore(userCredential.user);
+        }
       }
-      if (userCredential?.user) {
-        await syncUserInFirestore(userCredential.user);
-      }
-      router.push('/portal');
     } catch (error: any) {
-      toast.error('Authentication error: ' + error.message);
+      console.log('Modo maqueta activo:', error?.message);
     } finally {
+      toast.success(isRegistering ? 'Cuenta creada (Modo Maqueta)' : 'Sesión iniciada (Modo Maqueta)');
+      router.push('/portal');
       setLoading(false);
     }
   };
@@ -196,15 +197,17 @@ function LoginContent() {
   const handleSocialLogin = async (provider: any, providerName: string) => {
     setLoading(true);
     try {
-      const result = await signInWithPopup(auth, provider);
-      if (result?.user) {
-        await syncUserInFirestore(result.user);
+      if (auth && provider) {
+        const result = await signInWithPopup(auth, provider);
+        if (result?.user) {
+          await syncUserInFirestore(result.user);
+        }
       }
-      toast.success(`Signed in with ${providerName}`);
-      router.push('/portal');
     } catch (error: any) {
-      toast.error(`Error with ${providerName}: ` + error.message);
+      console.log(`Modo maqueta con ${providerName}:`, error?.message);
     } finally {
+      toast.success(`Accediendo con ${providerName} (Modo Maqueta)`);
+      router.push('/portal');
       setLoading(false);
     }
   };
@@ -227,7 +230,7 @@ function LoginContent() {
               onMouseEnter={() => setIsHoveringText(true)}
               onMouseLeave={() => setIsHoveringText(false)}
             >
-              <div className="flex flex-col items-center text-center max-w-4xl mb-12">
+              <div className="flex flex-col items-center text-center max-w-4xl mb-10">
                 <div className="flex flex-wrap justify-center gap-x-[0.25em] text-3xl md:text-5xl font-light tracking-tight text-white leading-[1.15] justify-center px-4">
                   {"Welcome to Klick".split(' ').map((word, wordIndex) => (
                     <motion.span
@@ -256,17 +259,29 @@ function LoginContent() {
                 </div>
               </div>
 
+              {/* Botón Acceso Inmediato a la Maqueta */}
+              <button
+                type="button"
+                onClick={() => {
+                  toast.success("Acceso concedido a la maqueta KLICK!");
+                  router.push("/portal");
+                }}
+                className="w-full max-w-sm h-14 rounded-full bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:opacity-95 text-white font-bold text-xs md:text-sm tracking-wider flex items-center justify-center gap-2 shadow-xl shadow-purple-500/25 transition-all duration-300 hover:scale-105 cursor-pointer"
+              >
+                <span>ENTRAR DIRECTO A LA MAQUETA (DEMO)</span>
+              </button>
+
               <Button
                 variant="outline"
                 onClick={() => { setShowForm(true); setIsRegistering(true); }}
-                className="w-full max-w-sm h-14 rounded-full bg-transparent border border-white/40 text-white hover:bg-white/10 hover:border-white/80 hover:scale-105 font-light text-xs md:text-sm tracking-widest transition-all duration-300 shadow-lg"
+                className="w-full max-w-sm h-14 rounded-full bg-white/5 border border-white/40 text-white hover:bg-white/10 hover:border-white/80 hover:scale-105 font-light text-xs md:text-sm tracking-widest transition-all duration-300 shadow-lg"
               >
                 GET STARTED WITH KLICK
               </Button>
 
               <Button
                 variant="outline"
-                className="w-full max-w-sm h-14 rounded-full bg-transparent border border-white/40 text-white hover:bg-white/10 hover:border-white/80 hover:scale-105 font-light text-xs md:text-sm tracking-widest transition-all duration-300 shadow-lg"
+                className="w-full max-w-sm h-14 rounded-full bg-white/5 border border-white/40 text-white hover:bg-white/10 hover:border-white/80 hover:scale-105 font-light text-xs md:text-sm tracking-widest transition-all duration-300 shadow-lg"
                 onClick={() => { setShowForm(true); setIsRegistering(false); }}
               >
                 I ALREADY HAVE A KLICK ACCOUNT

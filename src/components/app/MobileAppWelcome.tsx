@@ -9,11 +9,13 @@ import KlickLogo from "@/components/ui/KlickLogo";
 interface MobileAppWelcomeProps {
   onGoogleLogin?: () => void;
   onAppleLogin?: () => void;
+  onDirectAccess?: () => void;
 }
 
 export default function MobileAppWelcome({
   onGoogleLogin,
   onAppleLogin,
+  onDirectAccess,
 }: MobileAppWelcomeProps) {
   return (
     <div className="min-h-screen w-full bg-black flex items-center justify-center overflow-hidden select-none">
@@ -53,15 +55,23 @@ export default function MobileAppWelcome({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="w-full flex flex-col items-center gap-3.5 z-10 pb-2"
+          className="w-full flex flex-col items-center gap-3 z-10 pb-2"
         >
+          {/* Botón Demo Directo Maqueta */}
+          <button
+            onClick={onDirectAccess || onGoogleLogin}
+            type="button"
+            className="w-full h-13 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:opacity-95 active:scale-[0.98] text-white font-bold text-xs sm:text-sm rounded-full flex items-center justify-center gap-2 shadow-lg shadow-purple-500/25 transition-all duration-200 cursor-pointer"
+          >
+            <span>⚡ Entrar Directo a la Maqueta (Demo)</span>
+          </button>
+
           {/* Botón Google */}
           <button
             onClick={onGoogleLogin}
             type="button"
-            className="w-full h-14 bg-white hover:bg-zinc-100 active:scale-[0.98] text-black font-semibold text-[15px] rounded-full flex items-center justify-center gap-3 shadow-lg shadow-white/5 transition-all duration-200 cursor-pointer"
+            className="w-full h-13 bg-white hover:bg-zinc-100 active:scale-[0.98] text-black font-semibold text-[14px] rounded-full flex items-center justify-center gap-3 shadow-lg shadow-white/5 transition-all duration-200 cursor-pointer"
           >
-            {/* SVG Google Color Icon */}
             <svg className="w-5 h-5" viewBox="0 0 24 24">
               <path
                 fill="#4285F4"
@@ -80,24 +90,23 @@ export default function MobileAppWelcome({
                 d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.34 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98Z"
               />
             </svg>
-            <span>Continue with Google</span>
+            <span>Iniciar Registro Guiado (Google)</span>
           </button>
 
           {/* Botón Apple */}
           <button
             onClick={onAppleLogin}
             type="button"
-            className="w-full h-14 bg-[#181920] hover:bg-[#20222c] active:scale-[0.98] border border-white/10 text-white font-semibold text-[15px] rounded-full flex items-center justify-center gap-3 shadow-lg transition-all duration-200 cursor-pointer"
+            className="w-full h-13 bg-[#181920] hover:bg-[#20222c] active:scale-[0.98] border border-white/10 text-white font-semibold text-[14px] rounded-full flex items-center justify-center gap-3 shadow-lg transition-all duration-200 cursor-pointer"
           >
-            {/* SVG Apple Icon Oficial */}
             <svg className="w-5 h-5 fill-current mb-0.5 shrink-0" viewBox="0 0 24 24">
               <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.62-.75 1.04-1.8.92-2.85-.9.04-1.99.6-2.61 1.34-.55.63-1.03 1.67-.9 2.69 1 .08 2.02-.43 2.59-1.18Z" />
             </svg>
-            <span>Continue with Apple ID</span>
+            <span>Continuar con Apple ID</span>
           </button>
 
           {/* Subtexto de confianza */}
-          <div className="flex items-center justify-center gap-1.5 text-[11px] sm:text-xs text-zinc-400 mt-1 font-medium">
+          <div className="flex items-center justify-center gap-1.5 text-[11px] sm:text-xs text-zinc-400 mt-0.5 font-medium">
             <ShieldCheck className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
             <span>Comunidad SUD verificada · Solo mayores de 18</span>
           </div>
