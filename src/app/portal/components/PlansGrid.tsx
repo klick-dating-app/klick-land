@@ -6,30 +6,30 @@ import { Button } from "@/components/ui/button";
 import { usePortal, studentPlans, touristPlans } from "../PortalContext";
 
 interface PlansGridProps {
-  variant: 'estudiante' | 'turista';
+  variant: 'vip' | 'basico';
 }
 
 export default function PlansGrid({ variant }: PlansGridProps) {
   const { isPlanPurchased, cart, addToCart, setIsCartOpen } = usePortal();
-  const isStudent = variant === 'estudiante';
-  const plans = isStudent ? studentPlans : touristPlans;
+  const isVip = variant === 'vip';
+  const plans = isVip ? studentPlans : touristPlans;
 
   return (
     <div className="space-y-6">
       <div>
         <h2 className="text-2xl md:text-3xl font-normal tracking-tight">
-          {isStudent ? 'Visa de Estudiante F-1' : 'Visa de Turista B-2'}
+          {isVip ? 'Membresía VIP' : 'Membresía Básica B-2'}
         </h2>
         <p className="text-sm text-white/50">
-          {isStudent
-            ? 'Elige uno de los 4 planes de asesoría para tu visa F-1. Paga con tarjeta o crypto y desbloquea tu proceso al instante.'
-            : 'Elige tu plan de visa turista B-2. Paga con tarjeta o crypto y desbloquea tu proceso al instante.'}
+          {isVip
+            ? 'Elige uno de los 4 planes de asesoría para tu membresía VIP. Paga con tarjeta o crypto y desbloquea tu proceso al instante.'
+            : 'Elige tu plan de membresía membresía básica. Paga con tarjeta o crypto y desbloquea tu proceso al instante.'}
         </p>
       </div>
 
       <div
         className={`grid grid-cols-1 gap-6 items-stretch w-full ${
-          isStudent ? 'md:grid-cols-2 xl:grid-cols-4' : 'md:grid-cols-2 xl:grid-cols-3'
+          isVip ? 'md:grid-cols-2 xl:grid-cols-4' : 'md:grid-cols-2 xl:grid-cols-3'
         }`}
       >
         {plans.map((plan) => (
@@ -60,7 +60,7 @@ export default function PlansGrid({ variant }: PlansGridProps) {
               <div className="flex flex-col items-center text-center mt-6 mb-6">
                 <h3 className="text-md font-semibold text-white tracking-wider mb-2">{plan.name}</h3>
                 <div className="flex flex-col items-center justify-center min-h-[56px]">
-                  {plan.id === 'plan-esencial' || plan.id === 'plan-pro' || plan.id === 'plan-turista-basico' ? (
+                  {plan.id === 'plan-esencial' || plan.id === 'plan-pro' || plan.id === 'plan-basico-basico' ? (
                     <div className="space-y-0.5">
                       <span className="text-xl font-normal text-white tracking-tight block">
                         ${plan.price.toFixed(2)}{' '}
@@ -68,7 +68,7 @@ export default function PlansGrid({ variant }: PlansGridProps) {
                       </span>
                       <span className="text-lg font-normal text-purple-400 tracking-tight block">
                         $
-                        {(plan.id === 'plan-esencial' || plan.id === 'plan-turista-basico' ? 299.99 : 449.0).toFixed(2)}{' '}
+                        {(plan.id === 'plan-esencial' || plan.id === 'plan-basico-basico' ? 299.99 : 449.0).toFixed(2)}{' '}
                         <span className="text-[8px] text-purple-400/60 uppercase font-light">Crypto</span>
                       </span>
                     </div>

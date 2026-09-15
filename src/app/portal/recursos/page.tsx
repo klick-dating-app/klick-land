@@ -8,7 +8,7 @@ import { usePortal } from "../PortalContext";
 export default function RecursosPage() {
   const { activeTopSection } = usePortal();
 
-  const isStudent = activeTopSection === 'visa-estudiante';
+  const isVip = activeTopSection === 'membresia-vip';
 
   return (
     <div className="space-y-6">
@@ -24,10 +24,10 @@ export default function RecursosPage() {
           <FileText className="w-6 h-6 text-white transition-transform group-hover:scale-110" />
           <div className="space-y-1">
             <h3 className="text-md font-normal">
-              {isStudent ? "Guía de Entrevista Consular" : "Guía de Entrevista Consular (Turismo)"}
+              {isVip ? "Guía de Primera Cita de Compatibilidad" : "Guía de Primera Cita de Compatibilidad (Turismo)"}
             </h3>
             <p className="text-xs text-white/50 leading-relaxed">
-              {isStudent 
+              {isVip 
                 ? "Recopilación de las preguntas más frecuentes del cónsul y consejos prácticos para responder con seguridad."
                 : "Recopilación de las preguntas frecuentes sobre turismo, fondos económicos e intenciones de retorno."}
             </p>
@@ -43,10 +43,10 @@ export default function RecursosPage() {
           <Sparkles className="w-6 h-6 text-white transition-transform group-hover:scale-110" />
           <div className="space-y-1">
             <h3 className="text-md font-normal">
-              {isStudent ? "Plantilla de Carta de Intención" : "Plantilla de Lazos de Arraigo"}
+              {isVip ? "Plantilla de Carta de Intención" : "Plantilla de Lazos de Arraigo"}
             </h3>
             <p className="text-xs text-white/50 leading-relaxed">
-              {isStudent
+              {isVip
                 ? "Formato sugerido y redactado profesionalmente para demostrar tus lazos con tu país de origen."
                 : "Modelo de redacción y documentos de soporte sugeridos para probar tus vínculos de arraigo."}
             </p>
@@ -62,10 +62,10 @@ export default function RecursosPage() {
           <UserCheck className="w-6 h-6 text-white transition-transform group-hover:scale-110" />
           <div className="space-y-1">
             <h3 className="text-md font-normal">
-              {isStudent ? "Checklist de Requisitos Consulares" : "Checklist de Requisitos Turísticos"}
+              {isVip ? "Checklist de Requisitos de Compatibilidades" : "Checklist de Verificación de Perfil"}
             </h3>
             <p className="text-xs text-white/50 leading-relaxed">
-              {isStudent
+              {isVip
                 ? "Lista de verificación interactiva de documentos indispensables que debes presentar el día de tu cita."
                 : "Lista de verificación interactiva de lazos familiares, financieros y laborales para tu cita."}
             </p>

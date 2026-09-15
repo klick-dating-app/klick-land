@@ -19,7 +19,7 @@ La app en Vercel es **cliente + servidor ligero**:
 | Páginas con `"use client"` | `src/lib/firebase.ts` (SDK público) |
 | `/api/payments/*`, `/api/whatsapp/*` | `src/backend/firebase/admin.ts` (service account env vars) |
 
-El proyecto Firebase sigue siendo **`udreamms-platform-1`**.
+El proyecto Firebase sigue siendo **`klick-platform-1`**.
 
 ## Variables de entorno en Vercel
 
@@ -31,7 +31,7 @@ Mínimo para pagos + API:
 
 | Variable | Entorno | Descripción |
 |----------|---------|-------------|
-| `FIREBASE_PROJECT_ID` | Production, Preview | `udreamms-platform-1` |
+| `FIREBASE_PROJECT_ID` | Production, Preview | `klick-platform-1` |
 | `FIREBASE_CLIENT_EMAIL` | Production, Preview | Service account |
 | `FIREBASE_PRIVATE_KEY` | Production, Preview | Clave privada (pegar con `\n` o multilínea) |
 | `NEXT_PUBLIC_TREASURY_WALLET` | Production | Wallet Solana recepción |
@@ -62,7 +62,7 @@ npx vercel --prod
 
 ## Dominios
 
-Ejemplo producción: `udreamms-land.vercel.app`.
+Ejemplo producción: `klick-land.vercel.app`.
 
 Añadir dominio custom en Vercel y en Firebase Auth → Authorized domains.
 
@@ -76,8 +76,8 @@ Añadir dominio custom en Vercel y en Firebase Auth → Authorized domains.
 ## Verificación post-deploy
 
 1. `GET /` carga sin error.
-2. `/visas/tourist` y planes visibles.
-3. `/instructions-payment-tourist?plan=premium` — flujo UI.
+2. `/membership/basic` y planes visibles.
+3. `/instructions-payment-basic?plan=premium` — flujo UI.
 4. `POST /api/payments/qr/create` — 200 con body válido (probar en staging).
 5. `/portal` — login Firebase.
 

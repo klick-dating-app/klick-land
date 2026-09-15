@@ -12,7 +12,7 @@ import {
 } from 'lucide-react';
 
 interface PortalSidebarProps {
-  activeTopSection: 'visa-estudiante' | 'visa-turista' | 'experto';
+  activeTopSection: 'membresia-vip' | 'membresia-basica' | 'experto';
   activeSection: string;
   isSidebarCollapsed: boolean;
 }
@@ -22,18 +22,18 @@ export default function PortalSidebar({
   activeSection,
   isSidebarCollapsed,
 }: PortalSidebarProps) {
-  if (activeTopSection !== 'visa-estudiante' && activeTopSection !== 'visa-turista') {
+  if (activeTopSection !== 'membresia-vip' && activeTopSection !== 'membresia-basica') {
     return null;
   }
 
-  const isStudent = activeTopSection === 'visa-estudiante';
-  const plansHref = isStudent ? '/portal/visa-estudiante' : '/portal/visa-turista';
-  const plansLabel = isStudent ? 'Planes Visa F-1' : 'Planes Visa B-2';
-  const procesoLabel = isStudent ? 'Mi proceso de admisión' : 'Mi proceso de solicitud';
-  const sectionLabel = isStudent ? 'Visa de Estudiante F-1' : 'Visa de Turista B-2';
-  const landingHref = isStudent
-    ? 'https://www.udreamms.com/visas/student'
-    : 'https://www.udreamms.com/visas/tourist';
+  const isVip = activeTopSection === 'membresia-vip';
+  const plansHref = isVip ? '/portal/membresía-vip' : '/portal/membresía-basico';
+  const plansLabel = isVip ? 'Planes Membresía VIP' : 'Planes Membresía B-2';
+  const procesoLabel = isVip ? 'Mi proceso de admisión' : 'Mi proceso de solicitud';
+  const sectionLabel = isVip ? 'Membresía VIP' : 'Membresía Básica B-2';
+  const landingHref = isVip
+    ? 'https://www.klick.com/membership/vip'
+    : 'https://www.klick.com/membership/basic';
 
   const linkClass = (isActive: boolean) =>
     `px-4 py-2.5 md:py-3 text-[10px] md:text-xs font-normal tracking-widest md:tracking-wider uppercase rounded-full md:rounded-xl shrink-0 transition-all duration-300 flex items-center gap-3 ${
@@ -61,7 +61,7 @@ export default function PortalSidebar({
         title={isSidebarCollapsed ? procesoLabel : undefined}
         className={linkClass(activeSection === 'proceso')}
       >
-        {isStudent ? (
+        {isVip ? (
           <GraduationCap className="w-4 h-4 shrink-0" />
         ) : (
           <Briefcase className="w-4 h-4 shrink-0" />
@@ -72,7 +72,7 @@ export default function PortalSidebar({
       <Link
         href={plansHref}
         title={isSidebarCollapsed ? plansLabel : undefined}
-        className={linkClass(activeSection === 'visa-estudiante' || activeSection === 'visa-turista')}
+        className={linkClass(activeSection === 'membresia-vip' || activeSection === 'membresia-basica')}
       >
         <ShoppingBag className="w-4 h-4 shrink-0" />
         {!isSidebarCollapsed && <span>{plansLabel}</span>}

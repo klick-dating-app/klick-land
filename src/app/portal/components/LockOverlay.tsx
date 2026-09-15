@@ -9,7 +9,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 interface LockOverlayProps {
-  itemId: 'curso-estudiante' | 'libro-estudiante' | 'curso-turista' | 'libro-turista' | 'proceso-estudiante' | 'proceso-turista';
+  itemId: 'curso-vip' | 'libro-vip' | 'curso-basico' | 'libro-basico' | 'proceso-vip' | 'proceso-basico';
 }
 
 export default function LockOverlay({ itemId }: LockOverlayProps) {
@@ -36,8 +36,8 @@ export default function LockOverlay({ itemId }: LockOverlayProps) {
           <h3 className="text-lg md:text-xl font-normal text-white uppercase tracking-wider">{itemInfo.name}</h3>
           <p className="text-[11px] md:text-xs text-white/50 leading-relaxed">
             {isProceso
-              ? "Este módulo de seguimiento y preparación consular requiere la contratación de un plan de asesoría activo."
-              : "Este contenido exclusivo está bloqueado. Adquiere el acceso permanente para comenzar tu preparación consular con nuestros mentores autorizados."}
+              ? "Este módulo de seguimiento y preparación para citas y matching requiere la contratación de un plan de asesoría activo."
+              : "Este contenido exclusivo está bloqueado. Adquiere el acceso permanente para comenzar tu preparación para citas y matching con nuestros mentores autorizados."}
           </p>
         </div>
 
@@ -51,8 +51,8 @@ export default function LockOverlay({ itemId }: LockOverlayProps) {
           {isProceso ? (
             <Button
               onClick={() => {
-                const isTourist = itemId.includes('turista');
-                router.push(isTourist ? '/portal/visa-turista' : '/portal/visa-estudiante');
+                const isTourist = itemId.includes('basico');
+                router.push(isTourist ? '/portal/membresía-basico' : '/portal/membresía-vip');
                 toast.info("Por favor, selecciona y añade un plan al carrito para desbloquear tu proceso de asesoría.");
               }}
               className="w-full h-10 md:h-12 rounded-full bg-transparent border border-white/40 text-white hover:bg-white/10 hover:border-white/60 hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg text-xs font-normal tracking-widest uppercase flex items-center justify-center gap-2"

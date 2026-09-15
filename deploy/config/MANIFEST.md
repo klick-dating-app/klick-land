@@ -7,7 +7,7 @@ Estos archivos **deben permanecer en la raíz** para que Firebase CLI y Next.js 
 | Archivo | Despliegue | Descripción |
 |---------|------------|-------------|
 | `firebase.json` | `firebase deploy` | Functions, Firestore, Storage, Hosting SSR, emulators |
-| `.firebaserc` | CLI | Proyecto `udreamms-platform-1` |
+| `.firebaserc` | CLI | Proyecto `klick-platform-1` |
 | `firestore.rules` | `firestore` | Reglas de seguridad BD |
 | `firestore.indexes.json` | `firestore` | Índices |
 | `storage.rules` | `storage` | Reglas archivos |

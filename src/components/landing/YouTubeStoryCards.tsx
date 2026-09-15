@@ -155,7 +155,7 @@ export default function YouTubeStoryCards({
                 <div className="absolute bottom-0 left-0 right-0 p-6 text-white pointer-events-none z-10">
                   <div className="flex items-center gap-2 mb-3">
                     <img
-                      src="/icons/new-icon-udreamms.png"
+                      src="/icons/new-icon-klick.png"
                       alt="Klick"
                       width={20}
                       height={20}

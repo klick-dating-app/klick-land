@@ -118,10 +118,10 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
-  // Determinar si es una página de "landing de visa"
+  // Determinar si es una página de "landing de membresía"
   const isVisaLandingPage = [
-    "/visas/student",
-    "/visas/tourist"
+    "/membership/vip",
+    "/membership/basic"
   ].includes(pathname);
 
   useEffect(() => {
@@ -133,7 +133,7 @@ export default function Header() {
   }, []);
 
   const handleMouseEnter = (label: string) => {
-    if (isVisaLandingPage) return; // No mostrar mega menu en landings de visa
+    if (isVisaLandingPage) return; // No mostrar mega menu en landings de membresía
     setActiveMenu(label);
   };
 
@@ -161,7 +161,7 @@ export default function Header() {
               <span className="text-lg font-medium tracking-tight text-white group-hover:text-white transition-colors">Klick</span>
             </Link>
 
-            {/* DESKTOP NAV - Ocultar en landings de visa */}
+            {/* DESKTOP NAV - Ocultar en landings de membresía */}
             {!isVisaLandingPage && (
               <nav className="hidden lg:flex items-center h-full">
                 {menuData.map((item) => (
@@ -192,7 +192,7 @@ export default function Header() {
 
           {/* GRUPO DERECHA: ACCIONES */}
           <div className="hidden lg:flex items-center gap-3 z-50">
-            {/* Solo mostrar Staff si NO es landing de visa, o podrías dejarlo oculto si quieres algo más limpio */}
+            {/* Solo mostrar Staff si NO es landing de membresía, o podrías dejarlo oculto si quieres algo más limpio */}
             {!isVisaLandingPage && (
               <Link href="/portal" className="text-[10px] font-medium text-gray-400 hover:text-white transition-colors uppercase tracking-widest flex items-center gap-1.5 opacity-80 hover:opacity-100 mr-1">
                 <Lock className="w-3 h-3" /> Staff
@@ -258,21 +258,21 @@ export default function Header() {
 
                         {/* COL 2: ITEMS (Width depends on socials presence) */}
                         <div className={`${item.megaMenu.socials ? 'col-span-7 border-r border-white/5 pr-8' : 'col-span-9'}`}>
-                          <div className={`${item.label === 'Visas' ? 'grid grid-cols-3 gap-6' : 'grid grid-cols-2 gap-8'}`}>
+                          <div className={`${item.label === 'Membresías' ? 'grid grid-cols-3 gap-6' : 'grid grid-cols-2 gap-8'}`}>
                             {item.megaMenu.items.map((subItem, idx) => (
                               <Link
                                 key={idx}
                                 href={subItem.href}
-                                className={`group flex items-start ${item.label === 'Visas' ? 'gap-4 p-4 rounded-2xl' : 'gap-5 p-5 rounded-[1.5rem]'} transition-all duration-300 hover:bg-white/[0.03] border border-transparent hover:border-white/5 bg-white/[0.01]`}
+                                className={`group flex items-start ${item.label === 'Membresías' ? 'gap-4 p-4 rounded-2xl' : 'gap-5 p-5 rounded-[1.5rem]'} transition-all duration-300 hover:bg-white/[0.03] border border-transparent hover:border-white/5 bg-white/[0.01]`}
                               >
-                                <div className={`${item.label === 'Visas' ? 'w-10 h-10 rounded-xl' : 'w-12 h-12 rounded-2xl'} flex items-center justify-center shrink-0 border border-white/5 transition-transform group-hover:scale-110 duration-300 ${subItem.colorClass}`}>
-                                  <subItem.icon className={`${item.label === 'Visas' ? 'w-5 h-5' : 'w-6 h-6'}`} strokeWidth={2} />
+                                <div className={`${item.label === 'Membresías' ? 'w-10 h-10 rounded-xl' : 'w-12 h-12 rounded-2xl'} flex items-center justify-center shrink-0 border border-white/5 transition-transform group-hover:scale-110 duration-300 ${subItem.colorClass}`}>
+                                  <subItem.icon className={`${item.label === 'Membresías' ? 'w-5 h-5' : 'w-6 h-6'}`} strokeWidth={2} />
                                 </div>
                                 <div className="flex flex-col">
-                                  <div className={`text-white font-medium ${item.label === 'Visas' ? 'text-sm mb-0.5' : 'text-lg mb-1'} group-hover:text-white transition-colors flex items-center gap-2`}>
+                                  <div className={`text-white font-medium ${item.label === 'Membresías' ? 'text-sm mb-0.5' : 'text-lg mb-1'} group-hover:text-white transition-colors flex items-center gap-2`}>
                                     {subItem.title}
                                   </div>
-                                  <p className={`text-gray-500 font-medium leading-tight group-hover:text-gray-400 ${item.label === 'Visas' ? 'text-xs' : 'text-sm leading-normal'}`}>
+                                  <p className={`text-gray-500 font-medium leading-tight group-hover:text-gray-400 ${item.label === 'Membresías' ? 'text-xs' : 'text-sm leading-normal'}`}>
                                     {subItem.desc}
                                   </p>
                                 </div>

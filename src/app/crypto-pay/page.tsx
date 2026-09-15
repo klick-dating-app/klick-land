@@ -9,7 +9,7 @@ import {
   normalizeTouristPlanParam,
   normalizeStudentPlanParam,
   type VisaPlanId,
-} from "@/components/payments/visa-plan-types";
+} from "@/components/payments/membership-plan-types";
 import {
   CheckCircle2, ArrowLeft, ShieldCheck, MessageCircle, Mail
 } from "lucide-react";

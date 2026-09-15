@@ -25,30 +25,30 @@ export default function Services({ onStartQuote, onAppClick }: ServicesProps) {
   const services = [
     {
       category: "Servicio Migratorio",
-      title: "Tu Visa F-1 Aprobada",
-      description: "Expertos en formulario I-20 y preparación para la entrevista consular. 95% de aprobación.",
-      image: "/assets/services/migratorio.jpg",
+      title: "Tu Membresía VIP Aprobada",
+      description: "Expertos en verificación de identidad KYC y preparación para la primera cita segura. 95% de aprobación.",
+      image: "/assets/features/migratorio.jpg",
       icon: Shield,
     },
     {
       category: "Programas de Inglés",
       title: "Inglés de Alto Nivel",
       description: "Cursos intensivos, preparación TOEFL/IELTS e inglés de negocios en las mejores escuelas.",
-      image: "/assets/services/ingles.png",
+      image: "/assets/features/ingles.png",
       icon: GraduationCap,
     },
     {
       category: "Servicio Aeropuerto",
       title: "Llega conectado",
       description: "Recogida en aeropuerto, SIM Card activa y cuenta bancaria lista desde el día 1.",
-      image: "/assets/services/aeropuerto.png",
+      image: "/assets/features/aeropuerto.png",
       icon: Globe,
     },
     {
       category: "Servicio Vivienda",
       title: "Hogar lejos de casa",
       description: "Homestays con familias americanas o residencias estudiantiles modernas y seguras.",
-      image: "/assets/services/vivienda.png",
+      image: "/assets/features/vivienda.png",
       icon: Users,
     }
   ];

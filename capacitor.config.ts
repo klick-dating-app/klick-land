@@ -32,8 +32,8 @@ const config: CapacitorConfig = {
       'klickdating.app',
       '*.klickdating.app',
       'www.klickdating.app',
-      'udreamms.com',
-      '*.udreamms.com',
+      'klickdating.com',
+      '*.klickdating.com',
     ],
   },
   android: {

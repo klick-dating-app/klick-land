@@ -8,21 +8,21 @@ import LockOverlay from "../components/LockOverlay";
 export default function ProcesoPage() {
   const { activeTopSection, isUnlocked } = usePortal();
   
-  const isStudent = activeTopSection === 'visa-estudiante';
-  const unlocked = isUnlocked('proceso', isStudent ? 'estudiante' : 'turista');
+  const isVip = activeTopSection === 'membresia-vip';
+  const unlocked = isUnlocked('proceso', isVip ? 'vip' : 'basico');
 
   return (
     <div className="space-y-6">
       <div>
         <h2 className="text-2xl md:text-3xl font-normal tracking-tight">
-          {isStudent ? "Mi Proceso de Admisión" : "Mi Proceso de Solicitud"}
+          {isVip ? "Mi Proceso de Admisión" : "Mi Proceso de Solicitud"}
         </h2>
-        <p className="text-sm text-white/50">Monitorea y gestiona el avance de tu trámite de visa en tiempo real.</p>
+        <p className="text-sm text-white/50">Monitorea y gestiona el avance de tu proceso de verificación y matching en tiempo real.</p>
       </div>
 
       <div className="relative min-h-[450px]">
         {!unlocked && (
-          <LockOverlay itemId={isStudent ? 'proceso-estudiante' : 'proceso-turista'} />
+          <LockOverlay itemId={isVip ? 'proceso-vip' : 'proceso-basico'} />
         )}
 
         <div className={`w-full bg-[#0d0d11]/80 backdrop-blur-md border border-white/5 rounded-3xl p-6 md:p-8 space-y-8 ${!unlocked ? 'filter blur-sm select-none pointer-events-none' : ''}`}>
@@ -30,10 +30,10 @@ export default function ProcesoPage() {
             <div className="space-y-1">
               <span className="px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-[10px] font-normal uppercase tracking-widest">Servicio Activo</span>
               <h3 className="text-xl font-normal pt-1">
-                {isStudent ? "Asesoría de Visa de Estudiante F-1" : "Asesoría de Visa de Turista B-2"}
+                {isVip ? "Asesoría de Membresía VIP" : "Asesoría de Membresía Básica B-2"}
               </h3>
             </div>
-            {isStudent ? (
+            {isVip ? (
               <GraduationCap className="w-8 h-8 text-purple-400 shrink-0" />
             ) : (
               <Briefcase className="w-8 h-8 text-purple-400 shrink-0" />
@@ -64,10 +64,10 @@ export default function ProcesoPage() {
               </div>
               <div className="space-y-1">
                 <h4 className="text-sm font-normal text-white">
-                  {isStudent ? "Evaluación de Perfil Académico" : "Evaluación de Perfil Turístico"}
+                  {isVip ? "Evaluación de Perfil Académico" : "Evaluación de Perfil Turístico"}
                 </h4>
                 <p className="text-xs text-white/50">
-                  {isStudent 
+                  {isVip 
                     ? "Nuestros expertos están validando tus datos e institución recomendada." 
                     : "Nuestros expertos están validando tus lazos familiares, económicos y laborales."}
                 </p>
@@ -81,11 +81,11 @@ export default function ProcesoPage() {
                 <span className="text-xs font-normal">3</span>
               </div>
               <div className="space-y-1 opacity-50">
-                <h4 className="text-sm font-normal text-white">Preparación de Documentación y Formulario DS-160</h4>
+                <h4 className="text-sm font-normal text-white">Preparación de Documentación y Formulario cuestionario de compatibilidad</h4>
                 <p className="text-xs text-white/50">
-                  {isStudent
-                    ? "Llenado y recopilación de documentos financieros y formularios consulares."
-                    : "Llenado y recopilación de lazos en tu país y formulario consular DS-160."}
+                  {isVip
+                    ? "Llenado y recopilación de documentos financieros y cuestionarios de compatibilidad."
+                    : "Llenado y recopilación de lazos en tu país y cuestionario de compatibilidad cuestionario de compatibilidad."}
                 </p>
                 <span className="text-[10px] font-normal text-white/30 uppercase tracking-widest">Pendiente</span>
               </div>
@@ -97,7 +97,7 @@ export default function ProcesoPage() {
                 <span className="text-xs font-normal">4</span>
               </div>
               <div className="space-y-1 opacity-50">
-                <h4 className="text-sm font-normal text-white">Simulacro y Cita Consular</h4>
+                <h4 className="text-sm font-normal text-white">Coordinación y Safe First Date</h4>
                 <p className="text-xs text-white/50">Capacitación intensiva para tu entrevista presencial con el cónsul.</p>
                 <span className="text-[10px] font-normal text-white/30 uppercase tracking-widest">Pendiente</span>
               </div>

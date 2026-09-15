@@ -1,99 +1,77 @@
-# uDreamms — Resumen para inversores
+# 💼 KLICK! — Resumen para Inversores y Visión de Negocio
 
-## Qué es
+> **Empresa:** SafeMeet.Ut LLC  
+> **Producto:** KLICK! Dating & Relationship Platform  
+> **Fundador y CEO:** Juan Carlos Llumipanta  
+> **Mercado Objetivo:** Comunidad LDS de Utah $\longrightarrow$ Expansión Nacional e Internacional  
 
-**uDreamms** es una plataforma digital de servicios migratorios y experiencias en Estados Unidos. Combina:
+---
 
-1. **Marketing y conversión** — landings de visa turista (B1/B2) y estudiante (F-1), home corporativo, brochures y contacto.
-2. **Pagos** — Stripe (tarjeta) y cripto (Solana: USDC, USDT, SOL, LXR) con QR y confirmación en Firestore.
-3. **Operaciones** — formularios de aplicación, onboarding por enlace, portal con autenticación Firebase.
-4. **Automatización** — Firebase Functions (WhatsApp Cloud API, webhooks de Google Forms, acciones de kanban).
+## 1. Oportunidad de Mercado
 
-## Propuesta de valor
+El mercado de aplicaciones de citas está saturado de soluciones superficiales basadas en swipes rápidos y perfiles sin verificar, lo que genera:
+- Altas tasas de perfiles falsos y desconfianza.
+- Estafas y falta de seguridad en encuentros presenciales.
+- Bajas tasas de relaciones a largo plazo.
 
-- Reduce fricción entre **descubrimiento → elección de plan → pago → seguimiento**.
-- Catálogo de planes con precios públicos y descuentos por pago en crypto.
-- Infraestructura lista para escalar campañas (múltiples landings, A/B de secciones ocultas sin tocar producción).
+**KLICK! resuelve este problema mediante:**
+1. **Verificación KYC Obligatoria:** Perfiles 100% reales.
+2. **Motor de Compatibilidad Profunda (0–100%):** Con 10 categorías ponderadas y filtros indispensables.
+3. **Protocolo Safe First Date:** Seguridad activa en la primera cita presencial (lugares públicos, horarios diurnos y check-in).
+4. **Educación Relacional:** Recursos para construir relaciones duraderas y saludables.
 
-## Cómo interactúa el producto (flujo principal)
+---
+
+## 2. Flujo Principal del Producto
 
 ```mermaid
 flowchart LR
-  subgraph Frontend["Frontend (Next.js)"]
-    Home["/"]
-    Tourist["/visas/tourist"]
-    Student["/visas/student"]
-    PayT["/instructions-payment-tourist"]
-    PayS["/instructions-payment-student"]
-    Portal["/portal"]
-    AppForm["/application/:id"]
-  end
+    subgraph Adquisición["Adquisición & Landing"]
+        Home["/"]
+        BasicPlan["/membership/basic"]
+        VipPlan["/membership/vip"]
+    end
 
-  subgraph Backend["Backend"]
-    API["API Routes /api/*"]
-    FS["Firestore"]
-    Fn["Firebase Functions"]
-    Stripe["Stripe"]
-    Solana["Solana RPC"]
-    WA["WhatsApp API"]
-  end
+    subgraph Conversión["Conversión & Pagos"]
+        PayBasic["/instructions-payment-basic"]
+        PayVip["/instructions-payment-vip"]
+        Portal["/portal"]
+    end
 
-  Home --> Tourist
-  Home --> Student
-  Tourist --> PayT
-  Student --> PayS
-  PayT --> API
-  PayS --> Stripe
-  API --> FS
-  API --> Solana
-  PayT --> Stripe
-  Portal --> FS
-  AppForm --> FS
-  Fn --> WA
-  Fn --> FS
+    subgraph Backend["Infraestructura & Plataforma"]
+        API["API Routes /api/payments/*"]
+        FS["Cloud Firestore"]
+        Fn["Cloud Functions (Match 0-100%)"]
+        Stripe["Stripe Checkout"]
+        Solana["Solana Pay / USDC"]
+    end
+
+    Home --> BasicPlan
+    Home --> VipPlan
+    BasicPlan --> PayBasic
+    VipPlan --> PayVip
+    PayBasic --> Stripe
+    PayBasic --> API
+    PayVip --> Stripe
+    PayVip --> API
+    API --> FS
+    API --> Solana
+    Portal --> FS
+    Fn --> FS
 ```
 
-### Paso a paso (cliente turista)
+---
 
-1. Entra a `/visas/tourist`, compara planes y hace clic en **Elegir plan**.
-2. Llega a `/instructions-payment-tourist?plan=...`, elige crypto o tarjeta.
-3. **Crypto:** API crea sesión + QR → cliente paga en Phantom → estado en Firestore → comprobante y contacto de asesor.
-4. **Tarjeta:** redirección a Stripe Checkout (enlace por plan).
+## 3. Modelo de Monetización
 
-### Paso a paso (cliente estudiante)
+| Segmento de Usuario | Acceso Gratuito | Funciones Monetizadas / Premium |
+| :--- | :--- | :--- |
+| **Mujeres** | ✅ **100% Gratuito** en todas las funciones esenciales y chats. | Servicios VIP opcionales y boosts destacados. |
+| **Hombres** | ✅ Búsqueda, perfiles básicos, score de compatibilidad y 3 coincidencias de Common Ground. | 💳 **Suscripción Premium / Pago por interacción**: Iniciar chats, desbloquear detalles profundos (fe, matrimonio, educación) y planificar *Safe First Date*. |
 
-Mismo patrón en `/visas/student` → `/instructions-payment-student`.
+---
 
-## Stack tecnológico
+## 4. Estrategia Tecnológica en 2 Fases
 
-| Capa | Tecnología |
-|------|------------|
-| Web | Next.js 16, React 18, Tailwind, shadcn/ui |
-| Auth / DB | Firebase Auth, Firestore, Storage |
-| Pagos fiat | Stripe |
-| Pagos crypto | Solana Pay, SPL tokens |
-| Serverless | Firebase Functions (`functions/`) |
-| Deploy | Vercel (web) + Firebase (rules, functions, hosting opcional) |
-
-## Modelo de ingresos (referencia en producto)
-
-Planes publicados en landings (ej. turista básico ~$380 crypto / $494 tarjeta; premium y VIP a mayor ticket). El código centraliza montos en `src/backend/payments/payment-config.ts`.
-
-## Diferenciadores técnicos
-
-- **Secciones modulares** con carpeta `secciones-ocultar` por ruta para activar funnels sin redeploy masivo de lógica.
-- **Backend separado** en `src/backend/` (pagos, admin Firebase) vs **frontend** en `src/app` + `src/components` + `src/frontend/modules`.
-- Documentación de arquitectura en `docs/ARCHITECTURE.md`.
-
-## Riesgos y deuda conocida
-
-- Módulo **legacy suite** (automatización CSO / React Flow) sin rutas activas; conservado en `src/frontend/legacy/suite/`.
-- Redirects en `next.config` a `/suite/*` sin páginas implementadas.
-- Parte de la lógica de aplicación/onboarding vive en componentes cliente con Firestore directo (candidato a extraer a servicios backend).
-
-## Documentación relacionada
-
-- [ARCHITECTURE.md](./ARCHITECTURE.md) — estructura de carpetas y módulos
-- [../deploy/README.md](../deploy/README.md) — despliegue Vercel + Firebase (Studio, BD, Functions)
-- [../src/backend/README.md](../src/backend/README.md) — API y pagos
-- [../src/frontend/README.md](../src/frontend/README.md) — UI y módulos visibles/ocultos
+- **Fase 1 (Web2):** Producto completo, rápido y seguro sobre Google Cloud / Firebase + Stripe.
+- **Fase 2 (Web3 Solana Híbrido):** Identidad soberana on-chain (Phantom / Solflare), pagos en USDC con costos de transacción mínimos ($<\$0.001$) y reputación portable, **manteniendo los datos sensibles y chats estrictamente off-chain**.

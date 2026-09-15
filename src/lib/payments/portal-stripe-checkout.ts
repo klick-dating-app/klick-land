@@ -1,4 +1,4 @@
-const STRIPE_CHECKOUT_STORAGE_KEY = 'udreamms_stripe_checkout';
+const STRIPE_CHECKOUT_STORAGE_KEY = 'klick_stripe_checkout';
 
 export interface StoredStripeCheckout {
   itemIds: string[];

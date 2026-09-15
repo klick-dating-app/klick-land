@@ -2,7 +2,7 @@
 
 import type { LucideIcon } from "lucide-react";
 
-/** Estilos alineados con /visas/tourist: fondo negro, tipografía ligera, iconos sin contenedor ni color. */
+/** Estilos alineados con /membership/basic: fondo negro, tipografía ligera, iconos sin contenedor ni color. */
 export const instructionsPageClass = {
   root: "min-h-screen bg-black font-sans text-white flex flex-col selection:bg-blue-500 selection:text-white",
   main: "flex-grow pt-20 pb-16 relative z-10",

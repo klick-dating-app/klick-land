@@ -1,4 +1,4 @@
-# Despliegue — uDreamms
+# Despliegue — Klick
 
 Punto de entrada para **todo lo que se publica en producción**. El código de la app sigue en `src/`; aquí está **cómo y dónde** se despliega cada pieza.
 
@@ -7,7 +7,7 @@ Punto de entrada para **todo lo que se publica en producción**. El código de l
 | Plataforma | Qué despliega | Proyecto / cuenta |
 |------------|---------------|-------------------|
 | **Vercel** | Sitio Next.js (UI + API Routes `/api/*`) | Proyecto Vercel enlazado al repo |
-| **Firebase** | Firestore, Storage, Cloud Functions, (opcional) Hosting con SSR | `udreamms-platform-1` |
+| **Firebase** | Firestore, Storage, Cloud Functions, (opcional) Hosting con SSR | `klick-platform-1` |
 
 La **base de datos, Auth y Storage** viven en **Firebase** (consola o Firebase Studio / IDX).  
 La **web pública** suele ir en **Vercel**, pero usa Firebase como backend de datos y pagos.

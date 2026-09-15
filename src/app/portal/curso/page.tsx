@@ -15,8 +15,8 @@ export default function CursoPage() {
     setActiveTouristStep
   } = usePortal();
 
-  const isStudent = activeTopSection === 'visa-estudiante';
-  const unlocked = isUnlocked('curso', isStudent ? 'estudiante' : 'turista');
+  const isVip = activeTopSection === 'membresia-vip';
+  const unlocked = isUnlocked('curso', isVip ? 'vip' : 'basico');
 
   return (
     <div className="space-y-6">
@@ -29,14 +29,14 @@ export default function CursoPage() {
 
       <div className="relative min-h-[450px]">
         {!unlocked && (
-          <LockOverlay itemId={isStudent ? 'curso-estudiante' : 'curso-turista'} />
+          <LockOverlay itemId={isVip ? 'curso-vip' : 'curso-basico'} />
         )}
 
         <div className={`grid grid-cols-1 lg:grid-cols-3 gap-6 ${!unlocked ? 'filter blur-sm select-none pointer-events-none' : ''}`}>
           
           {/* Video Player Area */}
           <div className="lg:col-span-2 bg-[#0d0d11] border border-white/5 rounded-3xl overflow-hidden flex flex-col">
-            {isStudent ? (
+            {isVip ? (
               <div className="aspect-video bg-zinc-950 w-full relative flex items-center justify-center border-b border-white/5">
                 <video
                   key={studentModules[activeStudentStep].videoUrl}
@@ -65,12 +65,12 @@ export default function CursoPage() {
             )}
             <div className="p-6 space-y-2">
               <h3 className="text-lg font-normal">
-                {isStudent 
+                {isVip 
                   ? studentModules[activeStudentStep].title 
                   : touristModules[activeTouristStep].title}
               </h3>
               <p className="text-xs text-white/50 leading-relaxed">
-                {isStudent
+                {isVip
                   ? studentModules[activeStudentStep].description
                   : touristModules[activeTouristStep].description}
               </p>
@@ -82,7 +82,7 @@ export default function CursoPage() {
             <h3 className="text-md font-normal tracking-wide border-b border-white/5 pb-2">Módulos del Curso</h3>
             
             <div className="space-y-2 overflow-y-auto max-h-[350px] pr-2 no-scrollbar">
-              {isStudent ? (
+              {isVip ? (
                 studentModules.map((mod, index) => {
                   const isActive = activeStudentStep === index;
                   return (

@@ -1,4 +1,4 @@
-# Firestore: pagos crypto visa (QR Solana Pay)
+# Firestore: pagos crypto membresía (QR Solana Pay)
 
 Estructura para checkout invitado, sesiones QR pendientes y comprobantes pagados consultables por email o fecha.
 

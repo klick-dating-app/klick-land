@@ -1,68 +1,56 @@
 "use client";
 
-import { Instagram, ChevronLeft, ChevronRight, Volume2, VolumeX, Youtube, Play } from "lucide-react";
+import { Instagram, ChevronLeft, ChevronRight, Heart } from "lucide-react";
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 
-// YouTube Shorts IDs provided by user
-const baseVideos = [
-  "BMUmTjVBqxI",
-  "4VLdkd8Slko",
-  "YqSJmu3Au0k",
-  "_YjuuYRG08c"
-];
-
-// Recycling videos to fill 7 slots
-const studentVideos = [
+const communityStories = [
   {
     id: 1,
-    videoId: baseVideos[0],
-    handle: "@udreamms",
-    title: "Cumpliendo metas en USA 🇺🇸"
+    handle: "@klickdating",
+    title: "Conexiones reales basadas en valores LDS.",
+    thumb: "/assets/about-community.jpg",
+    video: "/assets/chatbot_media/9.mp4"
   },
   {
     id: 2,
-    videoId: baseVideos[1],
-    handle: "@udreamms",
-    title: "Tu futuro empieza aquí ✨"
+    handle: "@klickdating",
+    title: "Nuestra primera cita segura en Salt Lake City.",
+    thumb: "/assets/hero-newyork.jpg",
+    video: "/assets/chatbot_media/8.mp4"
   },
   {
     id: 3,
-    videoId: baseVideos[2],
-    handle: "@udreamms",
-    title: "Experiencias inolvidables 🎓"
+    handle: "@klickdating",
+    title: "Perfiles 100% verificados y sin sorpresas.",
+    thumb: "/assets/hero-living-space.jpg",
+    video: "/assets/chatbot_media/7.mp4"
   },
   {
     id: 4,
-    videoId: baseVideos[3],
-    handle: "@udreamms",
-    title: "Viviendo el sueño americano 🗽"
+    handle: "@klickdating",
+    title: "Compatibilidad profunda que sí funciona.",
+    thumb: "/assets/about-community.jpg",
+    video: "/assets/chatbot_media/6.mp4"
   },
   {
     id: 5,
-    videoId: baseVideos[0],
-    handle: "@udreamms",
-    title: "Explorando nuevas ciudades 🌆"
+    handle: "@klickdating",
+    title: "Encontrando a la persona adecuada en Utah.",
+    thumb: "/assets/hero-newyork.jpg",
+    video: "/assets/chatbot_media/9.mp4"
   },
   {
     id: 6,
-    videoId: baseVideos[1],
-    handle: "@udreamms",
-    title: "Comunidad Udreamms 🤝"
-  },
-  {
-    id: 7,
-    videoId: baseVideos[2],
-    handle: "@udreamms",
-    title: "Historias que inspiran 🚀"
+    handle: "@klickdating",
+    title: "Educación y respeto para construir una relación sólida.",
+    thumb: "/assets/hero-living-space.jpg",
+    video: "/assets/chatbot_media/8.mp4"
   }
 ];
 
-export default function JoinOurStudents() {
+export default function JoinOurCommunity() {
   const scrollRef = useRef<HTMLDivElement>(null);
-  // Track which video is currently unmuted (active). Null means all are muted.
-  const [activeVideoId, setActiveVideoId] = useState<number | null>(null);
-  // Track which video card is currently hovered
   const [hoveredCardId, setHoveredCardId] = useState<number | null>(null);
 
   const scroll = (direction: 'left' | 'right') => {
@@ -75,178 +63,79 @@ export default function JoinOurStudents() {
     }
   };
 
-  const getEmbedUrl = (videoId: string, isUnmuted: boolean) => {
-    // Basic params for both states
-    // mute=1 is standard for autoplay. mute=0 enables sound.
-    // We add a random param to force iframe refresh if needed, but changing src usually does it.
-    let params = `autoplay=1&loop=1&playlist=${videoId}&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1&playsinline=1&controls=0`;
-
-    if (isUnmuted) {
-      params += `&mute=0`;
-    } else {
-      params += `&mute=1`;
-    }
-
-    return `https://www.youtube.com/embed/${videoId}?${params}`;
-  };
-
-  const toggleAudio = (id: number) => {
-    if (activeVideoId === id) {
-      setActiveVideoId(null); // Mute if already active
-    } else {
-      setActiveVideoId(id); // Set new active (unmutes this one, mutes others)
-    }
-  };
-
   return (
-    <section className="py-24 bg-white overflow-hidden w-full">
-      <div className="container px-6 md:px-12 mx-auto">
-
-        {/* Header */}
-        <div className="mb-12 flex flex-col md:flex-row justify-between items-end gap-8">
-          <div className="max-w-3xl">
-            <h2 className="text-3xl md:text-5xl font-medium tracking-tight mb-4 text-black">
-              Historias de Éxito Reales
+    <section className="py-24 bg-black text-white overflow-hidden relative" id="historias-comunidad">
+      <div className="container mx-auto px-6">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6">
+          <div>
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-pink-500/10 border border-pink-500/20 text-pink-400 text-xs font-bold uppercase tracking-wider mb-4">
+              <Heart className="w-3.5 h-3.5 fill-current" /> Comunidad KLICK!
+            </div>
+            <h2 className="text-3xl md:text-5xl font-black tracking-tight">
+              Únete a Nuestra <span className="bg-clip-text text-transparent bg-gradient-to-r from-pink-400 to-[#9b4dca]">Comunidad de Parejas Reales</span>
             </h2>
-            <p className="text-lg text-black font-normal leading-relaxed">
-              Descubre por qué cientos de estudiantes confían en nosotros para su futuro.
+            <p className="text-slate-400 font-medium max-w-2xl mt-4 text-base md:text-lg">
+              Descubre experiencias auténticas de miembros que encontraron a su pareja ideal con nuestra tecnología de compatibilidad y seguridad.
             </p>
           </div>
 
-          {/* Desktop Navigation Arrows */}
-          <div className="hidden md:flex gap-3">
-            <button
+          <div className="flex items-center gap-3">
+            <Button
+              variant="outline"
+              size="icon"
               onClick={() => scroll('left')}
-              className="w-12 h-12 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center hover:bg-gray-200 transition-colors"
+              className="rounded-full bg-white/5 border-white/10 hover:bg-white/10 text-white w-12 h-12"
+              aria-label="Scroll izquierda"
             >
               <ChevronLeft className="w-6 h-6" />
-            </button>
-            <button
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
               onClick={() => scroll('right')}
-              className="w-12 h-12 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center hover:bg-gray-200 transition-colors"
+              className="rounded-full bg-white/5 border-white/10 hover:bg-white/10 text-white w-12 h-12"
+              aria-label="Scroll derecha"
             >
               <ChevronRight className="w-6 h-6" />
-            </button>
+            </Button>
           </div>
         </div>
 
-        {/* Stories Grid/Scroll */}
         <div
           ref={scrollRef}
-          className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-12 -mx-6 px-6 md:mx-0 md:px-0 scrollbar-hide"
-          style={{
-            scrollbarWidth: 'none',
-            msOverflowStyle: 'none',
-          }}
+          className="flex gap-6 overflow-x-auto pb-8 pt-2 snap-x snap-mandatory scrollbar-none"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
-          {studentVideos.map((story) => {
-            const isUnmuted = activeVideoId === story.id;
+          {communityStories.map((story) => (
+            <div
+              key={story.id}
+              className="min-w-[280px] md:min-w-[320px] max-w-[320px] rounded-3xl overflow-hidden bg-slate-900 border border-white/10 snap-start flex flex-col justify-between group relative"
+              onMouseEnter={() => setHoveredCardId(story.id)}
+              onMouseLeave={() => setHoveredCardId(null)}
+            >
+              <div className="relative aspect-[9/14] w-full overflow-hidden">
+                <img
+                  src={story.thumb}
+                  alt={story.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
 
-            return (
-              <div
-                key={story.id}
-                onClick={() => toggleAudio(story.id)}
-                onMouseEnter={() => setHoveredCardId(story.id)}
-                onMouseLeave={() => setHoveredCardId(null)}
-                className="relative shrink-0 snap-center w-[220px] md:w-[260px] aspect-[9/16] rounded-[2rem] overflow-hidden group cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500 bg-black"
-              >
-                {/* YouTube Embed / Thumbnail Image */}
-                <div className="absolute inset-0 bg-black pointer-events-none">
-                  {hoveredCardId === story.id ? (
-                    <iframe
-                      key={`${story.id}-${isUnmuted ? 'sound' : 'muted'}`}
-                      src={getEmbedUrl(story.videoId, isUnmuted)}
-                      className="w-[300%] h-full -ml-[100%] object-cover pointer-events-none opacity-100 transition-opacity duration-500"
-                      title={`YouTube Short ${story.id}`}
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      frameBorder="0"
-                    />
-                  ) : (
-                    <img
-                      src={`https://img.youtube.com/vi/${story.videoId}/hqdefault.jpg`}
-                      alt={story.title}
-                      className="w-full h-full object-cover opacity-85 group-hover:opacity-100 transition-all duration-500 scale-105 group-hover:scale-100"
-                    />
-                  )}
-                  {/* Gradient Overlay for Text Visibility */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent pointer-events-none" />
+                <div className="absolute top-4 left-4 right-4 flex items-center justify-between text-xs font-semibold">
+                  <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-white border border-white/10 flex items-center gap-1.5">
+                    <Instagram className="w-3.5 h-3.5 text-pink-400" /> {story.handle}
+                  </span>
                 </div>
 
-                {/* Play Icon overlay when not playing */}
-                {hoveredCardId !== story.id && (
-                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <div className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30 text-white shadow-xl transition-all group-hover:scale-110 group-hover:bg-white/35">
-                      <Play className="w-6 h-6 fill-white text-white ml-1" />
-                    </div>
-                  </div>
-                )}
-
-                {/* Volume Control Icon (Visual Cue) */}
-                <div className="absolute top-6 right-6 flex items-center justify-center z-10 transition-transform duration-300 transform scale-0 group-hover:scale-100 mobile-visible">
-                  <div className="w-10 h-10 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center transition-colors hover:bg-black/60">
-                    {isUnmuted ? (
-                      <Volume2 className="w-5 h-5 text-white" />
-                    ) : (
-                      <VolumeX className="w-5 h-5 text-white/70" />
-                    )}
-                  </div>
-                </div>
-
-                {/* Content Overlay */}
-                <div className="absolute bottom-0 left-0 right-0 p-6 text-white translate-y-2 group-hover:translate-y-0 transition-transform duration-300 pointer-events-none">
-                  <div className="flex items-center gap-2 mb-3">
-                    <img
-                      src="/icons/new-icon-udreamms.png"
-                      alt="Udreamms Logo"
-                      className="w-5 h-5 object-contain"
-                    />
-                    <span className="font-medium text-sm tracking-wide">{story.handle}</span>
-                  </div>
-
-                  <p className="font-medium text-base leading-snug text-white/90">
+                <div className="absolute bottom-6 left-6 right-6">
+                  <h3 className="text-lg font-bold text-white leading-snug">
                     {story.title}
-                  </p>
+                  </h3>
                 </div>
               </div>
-            );
-          })}
+            </div>
+          ))}
         </div>
-
-        {/* Mobile Navigation Arrows */}
-        <div className="md:hidden flex justify-center gap-4 mt-2 mb-12">
-          <button
-            onClick={() => scroll('left')}
-            className="w-12 h-12 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center hover:bg-gray-200 transition-colors"
-          >
-            <ChevronLeft className="w-6 h-6" />
-          </button>
-          <button
-            onClick={() => scroll('right')}
-            className="w-12 h-12 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center hover:bg-gray-200 transition-colors"
-          >
-            <ChevronRight className="w-6 h-6" />
-          </button>
-        </div>
-
-        {/* Bottom CTA */}
-        <div className="flex justify-center">
-          <Button
-            className="rounded-full bg-gradient-to-r from-purple-600 to-orange-500 hover:from-purple-700 hover:to-orange-600 text-white font-medium px-8 py-5 text-base shadow-xl shadow-orange-500/20 transition-all hover:scale-105 flex items-center gap-2"
-            onClick={() => window.open('https://www.instagram.com/match_app_/', '_blank')}
-          >
-            Ver más en Instagram
-            <Instagram className="w-5 h-5" />
-          </Button>
-        </div>
-
-        <style jsx>{`
-          @media (hover: none) {
-            .mobile-visible {
-              transform: scale(1) !important;
-            }
-          }
-        `}</style>
-
       </div>
     </section>
   );

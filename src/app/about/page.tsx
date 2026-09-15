@@ -66,7 +66,7 @@ const AboutPage = () => {
                   transition={{ delay: 0.2 }}
                   className="text-xl md:text-2xl text-[#86868b] font-medium max-w-3xl leading-relaxed"
                 >
-                  Klick LLC is the bridge between international talent and academic opportunities in the United States, removing barriers with honesty and strategy.
+                  SafeMeet.Ut LLC (KLICK!) is the bridge between international talent and academic opportunities in the United States, removing barriers with honesty and strategy.
                 </motion.p>
                 <motion.a
                   initial={{ opacity: 0 }}
@@ -138,7 +138,7 @@ const AboutPage = () => {
                     </div>
                     <h4 className="text-2xl font-medium text-[#1d1d1f] mb-4 tracking-tight">Radical Transparency</h4>
                     <p className="text-[#86868b] text-lg font-medium leading-relaxed">
-                      Klick LLC is a private company. We are not government agents, which is why we guarantee honest information without confusing jargon about your visa and admission.
+                      SafeMeet.Ut LLC (KLICK!) is a private company. We are not government agents, which is why we guarantee honest information without confusing jargon about your membresía and admission.
                     </p>
                   </div>
 

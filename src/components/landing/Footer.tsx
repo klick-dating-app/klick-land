@@ -82,7 +82,7 @@ const Footer = () => {
                   </a>
                 </span>
                 <span className="text-gray-400 block mt-1">
-                  ✉️ <a href="https://mail.google.com/mail/?view=cm&fs=1&to=services@udreamms.com" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">services@udreamms.com</a>
+                  ✉️ <a href="https://mail.google.com/mail/?view=cm&fs=1&to=services@klick.com" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">services@klick.com</a>
                 </span>
                 <span className="text-gray-400 block">📍 Salt Lake City, Utah, USA</span>
               </li>
@@ -116,7 +116,7 @@ const Footer = () => {
             <Link href="/terminos" className="text-gray-400 hover:text-white transition-colors text-xs">Terms & Conditions</Link>
           </div>
           <div className="text-gray-500 text-xs w-full text-center md:text-right">
-            © {new Date().getFullYear()} Klick LLC. All rights reserved.
+            © {new Date().getFullYear()} SafeMeet.Ut LLC (KLICK!). All rights reserved.
           </div>
         </div>
       </div>

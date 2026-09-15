@@ -30,7 +30,7 @@ const steps = [
     title: "Fase 2",
     subtitle: "Iniciando tu proceso migratorio",
     icon: GraduationCap,
-    description: "Gestionamos tu admisión escolar y te preparamos para la entrevista consular.",
+    description: "Gestionamos tu admisión escolar y te preparamos para la primera cita segura.",
     color: "text-white",
     bg: "bg-[#D31245]",
     border: "border-red-500/20",
@@ -222,7 +222,7 @@ export default function Roadmap() {
                  {/* Video posicionado de forma absoluta para no empujar el texto hacia abajo */}
                  <div className="absolute bottom-full mb-4 w-36 h-24 rounded-xl overflow-hidden shadow-[0_0_30px_rgba(155,77,202,0.4)] border border-white/20 transition-transform duration-300 group-hover:scale-105">
                      <video 
-                        src="https://firebasestorage.googleapis.com/v0/b/udreamms-platform-1.firebasestorage.app/o/New%20version%2F5.mp4?alt=media&token=86eaddf6-c81d-477f-89b5-a8b2231d48dd"
+                        src="https://firebasestorage.googleapis.com/v0/b/klick-platform-1.firebasestorage.app/o/New%20version%2F5.mp4?alt=media&token=86eaddf6-c81d-477f-89b5-a8b2231d48dd"
                         autoPlay muted loop playsInline
                         className="absolute inset-0 w-full h-full object-cover"
                      />
@@ -303,7 +303,7 @@ export default function Roadmap() {
                       {/* Video */}
                       <div className="w-full aspect-video mb-4 rounded-xl overflow-hidden border border-white/20 shadow-lg">
                          <video 
-                            src="https://firebasestorage.googleapis.com/v0/b/udreamms-platform-1.firebasestorage.app/o/New%20version%2F5.mp4?alt=media&token=86eaddf6-c81d-477f-89b5-a8b2231d48dd"
+                            src="https://firebasestorage.googleapis.com/v0/b/klick-platform-1.firebasestorage.app/o/New%20version%2F5.mp4?alt=media&token=86eaddf6-c81d-477f-89b5-a8b2231d48dd"
                             autoPlay muted loop playsInline
                             className="w-full h-full object-cover"
                          />

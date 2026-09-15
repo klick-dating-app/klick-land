@@ -5,7 +5,7 @@ import { Wallet } from 'lucide-react';
 import BillingForm, { BillingData } from './BillingForm';
 import CryptoPaymentTabs from './CryptoPaymentTabs';
 import { PLAN_DISPLAY_TITLES, VISA_PLAN_CATALOG_USD } from '@/lib/payments/payment-config';
-import type { VisaPlanId } from './visa-plan-types';
+import type { VisaPlanId } from './membership-plan-types';
 
 export interface CryptoCheckoutPanelProps {
   planId: VisaPlanId;

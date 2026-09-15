@@ -16,13 +16,13 @@ Variable opcional en Vercel: `NEXT_PUBLIC_GA_MEASUREMENT_ID`
 ## Comprobar que funciona
 
 1. Instala la extensión [Google Analytics Debugger](https://chrome.google.com/webstore) o usa **GA4 → Informes → Tiempo real**
-2. Abre `https://www.udreamms.com` en otra pestaña
+2. Abre `https://www.klick.com` en otra pestaña
 3. Deberías ver 1 usuario activo en unos segundos
 
 ## Campañas (UTM)
 
 Usa URLs con parámetros, por ejemplo:
 
-`https://www.udreamms.com/visas/student?utm_source=instagram&utm_medium=paid&utm_campaign=f1-2026`
+`https://www.klick.com/membership/vip?utm_source=instagram&utm_medium=paid&utm_campaign=f1-2026`
 
 GA4 los mostrará en Adquisición → Tráfico de campañas.

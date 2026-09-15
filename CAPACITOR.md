@@ -21,10 +21,10 @@ Solución adoptada (patrón oficial de Capacitor
 ["Loading remote content"](https://capacitorjs.com/docs/guides/live-reload#using-with-framework-clis)):
 
 ```
-Next.js SSR (https://udreamms.com)  ← se sigue desplegando igual que hoy
+Next.js SSR (https://klickdating.com)  ← se sigue desplegando igual que hoy
         │
         ▼
-Capacitor WebView  ── server.url = https://udreamms.com
+Capacitor WebView  ── server.url = https://klickdating.com
         │
         ├── Android  (android/)
         └── iOS      (ios/)
@@ -51,7 +51,7 @@ Capacitor WebView  ── server.url = https://udreamms.com
 `server.url` se puede sobreescribir en build:
 
 ```bash
-CAP_SERVER_URL=https://staging.udreamms.com npx cap sync
+CAP_SERVER_URL=https://staging.klickdating.com npx cap sync
 ```
 
 ---
@@ -113,8 +113,8 @@ klick-land/
 | `appId` | `com.klickland.app` |
 | `appName` | `Klick Land` |
 | `webDir` | `mobile/www` |
-| `server.url` | `https://udreamms.com` (o `CAP_SERVER_URL`) |
-| `server.allowNavigation` | `udreamms.com`, `*.udreamms.com` (resto → navegador del sistema) |
+| `server.url` | `https://klickdating.com` (o `CAP_SERVER_URL`) |
+| `server.allowNavigation` | `klickdating.com`, `*.klickdating.com` (resto → navegador del sistema) |
 | `server.cleartext` | `false` (solo HTTPS) |
 | `plugins.SplashScreen` | fondo `#101A2E`, 1.5 s, autohide |
 | `plugins.StatusBar` | estilo `DARK`, fondo `#101A2E` |
@@ -149,7 +149,7 @@ npm run build      # y desplegar como siempre (Vercel / Firebase App Hosting)
 ```
 
 ### App móvil — al cambiar la web
-Como la app carga `https://udreamms.com`, **normalmente basta con desplegar la
+Como la app carga `https://klickdating.com`, **normalmente basta con desplegar la
 web**: la app se actualiza sola al abrirla.
 
 Solo hay que re-sincronizar y recompilar el binario cuando cambies:
@@ -343,11 +343,11 @@ abre en el navegador in-app, para que una URL externa nunca “secuestre” la a
 ## 11. Seguridad / variables de entorno
 
 - **No se copió ningún secreto** a `android/` ni `ios/`. El binario solo contiene
-  la URL pública `https://udreamms.com` y la pantalla offline.
+  la URL pública `https://klickdating.com` y la pantalla offline.
 - Las claves privadas (`STRIPE_SECRET_KEY`, `FIREBASE_PRIVATE_KEY`,
   `WHATSAPP_ACCESS_TOKEN`, `JUPITER_API_KEY`, `META_CAPI_ACCESS_TOKEN`…) viven
   **solo en el servidor** (Vercel / Firebase App Hosting) y se ejecutan en las
-  API Routes. La app móvil las consume a través de `https://udreamms.com/api/**`,
+  API Routes. La app móvil las consume a través de `https://klickdating.com/api/**`,
   igual que la web.
 - Las variables `NEXT_PUBLIC_*` ya son públicas por diseño (van al cliente web).
 - `capacitor.config.json` generado dentro de `android/`/`ios/` está en
@@ -397,7 +397,7 @@ abre en el navegador in-app, para que una URL externa nunca “secuestre” la a
 
 ## 14. Checklist antes de publicar
 
-- [ ] Web desplegada y estable en `https://udreamms.com`.
+- [ ] Web desplegada y estable en `https://klickdating.com`.
 - [ ] Probar la app en emulador Android real (`npm run android`).
 - [ ] Probar en dispositivo iOS real desde un Mac.
 - [ ] Revisar safe-areas en dispositivo con notch / Dynamic Island / barra de gestos.

@@ -1,6 +1,6 @@
 import type { CryptoPaymentMethod } from './payment-config';
 
-/** Root collection for guest checkout sessions (visa crypto QR flow). */
+/** Root collection for guest checkout sessions (membresía crypto QR flow). */
 export const VISA_CRYPTO_SESSIONS_COLLECTION = 'visaCryptoSessions';
 
 /** Subcollection under a session: pending / paid / expired QR payment requests. */

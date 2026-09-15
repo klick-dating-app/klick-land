@@ -10,17 +10,17 @@ frontend/
 │   ├── marketing/
 │   │   └── home/
 │   │       └── secciones-ocultar/   # Home: Services, WhyChooseUs, etc.
-│   └── visas/                       # Documentación; páginas en app/visas/*
+│   └── membresías/                       # Documentación; páginas en app/membership/*
 └── legacy/
     └── suite/                       # Automatización CSO (sin rutas activas)
 ```
 
-## Secciones visibles vs ocultas (visas)
+## Secciones visibles vs ocultas (membresías)
 
 | Ruta app | Componentes activos | Ocultas |
 |----------|---------------------|---------|
-| `app/visas/tourist` | `_components/` | `secciones-ocultar/` |
-| `app/visas/student` | `_components/` | `secciones-ocultar/` |
+| `app/membership/basic` | `_components/` | `secciones-ocultar/` |
+| `app/membership/vip` | `_components/` | `secciones-ocultar/` |
 
 ## UI compartida
 

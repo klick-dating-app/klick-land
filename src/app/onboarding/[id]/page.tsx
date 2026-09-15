@@ -332,7 +332,7 @@ export default function OnboardingPage() {
 
                         <div className="md:col-span-2 space-y-4">
                             <label className="text-sm font-medium text-neutral-300 uppercase tracking-wider flex items-center gap-2">
-                                <Send size={16} className="text-pink-400" /> ¿A qué tipo de visa deseas aplicar?
+                                <Send size={16} className="text-pink-400" /> ¿A qué tipo de membresía deseas aplicar?
                             </label>
                             <div className="relative">
                                 <select
@@ -341,10 +341,10 @@ export default function OnboardingPage() {
                                     onChange={handleChange}
                                     className="h-14 w-full bg-black/20 border border-white/10 rounded-2xl text-lg px-4 appearance-none focus:outline-none focus:border-pink-500/50 text-white transition-all cursor-pointer"
                                 >
-                                    <option value="" className="bg-neutral-900">Selecciona el tipo de visa</option>
-                                    <option value="Turismo" className="bg-neutral-900">Visa de Turismo B1/B2</option>
-                                    <option value="Estudiante" className="bg-neutral-900">Visa de Estudiante F1/M1</option>
-                                    <option value="Trabajo" className="bg-neutral-900">Visa de Trabajo</option>
+                                    <option value="" className="bg-neutral-900">Selecciona el tipo de membresía</option>
+                                    <option value="Turismo" className="bg-neutral-900">Membresía de Turismo B1/B2</option>
+                                    <option value="VIP" className="bg-neutral-900">Membresía VIP F1/M1</option>
+                                    <option value="Trabajo" className="bg-neutral-900">Membresía de Trabajo</option>
                                     <option value="Residencia" className="bg-neutral-900">Residencia / Green Card</option>
                                     <option value="Otro" className="bg-neutral-900">Otro trámite</option>
                                 </select>
@@ -380,7 +380,7 @@ export default function OnboardingPage() {
                 </motion.form>
 
                 <p className="text-center text-neutral-600 text-xs mt-8 font-medium uppercase tracking-widest">
-                    Secured by Udreamms Platform · {new Date().getFullYear()}
+                    Secured by Klick Platform · {new Date().getFullYear()}
                 </p>
             </div>
         </div>

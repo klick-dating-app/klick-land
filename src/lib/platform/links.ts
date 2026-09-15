@@ -14,8 +14,8 @@ import { isNative } from './index';
 /** Host(s) que se consideran "internos" y no deben tratarse como externos. */
 const INTERNAL_HOSTS = [
   'click-with-purpose.onrender.com',
-  'udreamms.com',
-  'www.udreamms.com',
+  'klick.com',
+  'www.klick.com',
   'localhost',
 ];
 

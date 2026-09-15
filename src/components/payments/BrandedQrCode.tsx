@@ -2,7 +2,7 @@
 
 import { QRCodeSVG } from 'qrcode.react';
 
-const UDreammsLogo = '/icons/new-icon-udreamms.png';
+const KlickLogo = '/icons/new-icon-klick.png';
 
 interface BrandedQrCodeProps {
   value: string;
@@ -27,7 +27,7 @@ export default function BrandedQrCode({ value, size = 280, className = '' }: Bra
           fgColor="#0f172a"
           title="Código QR de pago"
           imageSettings={{
-            src: UDreammsLogo,
+            src: KlickLogo,
             height: logoSize,
             width: logoSize,
             excavate: true,

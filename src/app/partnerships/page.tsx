@@ -43,7 +43,7 @@ export default function PartnershipsPage() {
                 transition={{ delay: 0.2 }}
                 className="text-xl md:text-2xl text-[#86868b] font-medium max-w-3xl leading-relaxed"
               >
-                Colaboramos con instituciones educativas y organizaciones para facilitar el camino de los estudiantes hacia el éxito en Estados Unidos.
+                Colaboramos con alianzas comunitarias y organizaciones para facilitar el camino de los vips hacia el éxito en Estados Unidos.
               </motion.p>
             </div>
           </div>
@@ -56,7 +56,7 @@ export default function PartnershipsPage() {
               {/* Left Column: Benefits */}
               <div className="space-y-12">
                 <div>
-                  <h2 className="text-3xl font-medium text-[#1d1d1f] mb-6">¿Por qué aliarse con Udreamms?</h2>
+                  <h2 className="text-3xl font-medium text-[#1d1d1f] mb-6">¿Por qué aliarse con Klick?</h2>
                   <p className="text-[#86868b] text-lg font-medium leading-relaxed">
                     Ofrecemos una infraestructura sólida para que las escuelas y agencias puedan brindar un servicio de relocalización y soporte académico de primer nivel.
                   </p>
@@ -64,7 +64,7 @@ export default function PartnershipsPage() {
 
                 <div className="space-y-8">
                   {[
-                    { title: "Integración Fluida", desc: "Soporte técnico y logístico para tus estudiantes.", icon: Globe2, color: "text-blue-500" },
+                    { title: "Integración Fluida", desc: "Soporte técnico y logístico para tus vips.", icon: Globe2, color: "text-blue-500" },
                     { title: "Soporte 24/7", desc: "Equipo local en USA disponible para cualquier emergencia.", icon: ShieldCheck, color: "text-emerald-500" },
                     { title: "Red de Expertos", desc: "Acceso a consultores especializados en el sistema americano.", icon: Target, color: "text-purple-500" }
                   ].map((item, idx) => (

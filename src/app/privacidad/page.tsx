@@ -39,7 +39,7 @@ export default function PrivacyPage() {
                 transition={{ delay: 0.2 }}
                 className="text-xl md:text-2xl text-[#86868b] font-medium max-w-2xl leading-relaxed"
               >
-                At Klick LLC, we value your trust. That is why we are transparent about how we handle your personal information throughout your matching process.
+                At SafeMeet.Ut LLC (KLICK!), we value your trust. That is why we are transparent about how we handle your personal information throughout your matching process.
               </motion.p>
 
               <motion.div
@@ -65,7 +65,7 @@ export default function PrivacyPage() {
                   Introduction
                 </h2>
                 <p className="text-[#86868b] font-medium leading-relaxed text-lg">
-                  At Klick LLC ("we", "our", or "the Company"), we value your privacy and are committed to protecting your personal information. This Privacy Policy details how we collect, use, share, and protect information from users who use our matchmaking, membership, and coaching services.
+                  At SafeMeet.Ut LLC (KLICK!) ("we", "our", or "the Company"), we value your privacy and are committed to protecting your personal information. This Privacy Policy details how we collect, use, share, and protect information from users who use our matchmaking, membership, and coaching services.
                 </p>
               </div>
 

@@ -51,7 +51,7 @@ export default function ApplicationPage({ params }: ApplicationPageProps) {
         address: '',
         postalCode: '',
 
-        // 2. Estudiante
+        // 2. VIP
         birthDate: '',
         birthPlace: '',
         nationality: '',
@@ -405,7 +405,7 @@ export default function ApplicationPage({ params }: ApplicationPageProps) {
                                     </div>
                                 </div>
 
-                                {/* Section 2: Personal Details (Estudiante) */}
+                                {/* Section 2: Personal Details (VIP) */}
                                 <div className="space-y-6">
                                     <div className="flex items-center gap-3 border-b border-white/10 pb-2">
                                         <div className="p-2 bg-pink-500/10 rounded-lg text-pink-400">
@@ -491,7 +491,7 @@ export default function ApplicationPage({ params }: ApplicationPageProps) {
                                             <Input value={form.passportLost} onChange={e => setForm(prev => ({ ...prev, passportLost: e.target.value }))} placeholder="Sí/No" className="h-12 bg-black/40 border-white/10 rounded-xl focus:border-blue-500/50 transition-all text-white" />
                                         </div>
                                         <div className="space-y-2">
-                                            <Label className="text-xs font-bold uppercase tracking-widest text-neutral-500 ml-1">¿Tienes visa americana vigente?</Label>
+                                            <Label className="text-xs font-bold uppercase tracking-widest text-neutral-500 ml-1">¿Tienes membresía americana vigente?</Label>
                                             <Input value={form.hasTouristVisa} onChange={e => setForm(prev => ({ ...prev, hasTouristVisa: e.target.value }))} placeholder="Sí/No" className="h-12 bg-black/40 border-white/10 rounded-xl focus:border-blue-500/50 transition-all text-white" />
                                         </div>
                                     </div>
@@ -565,16 +565,16 @@ export default function ApplicationPage({ params }: ApplicationPageProps) {
                                         <h2 className="text-xl font-bold tracking-tight text-white">ÚLTIMOS DETALLES</h2>
                                     </div>
                                     <div className="space-y-2">
-                                        <Label className="text-xs font-bold uppercase tracking-widest text-neutral-500 ml-1">¿A qué tipo de visa deseas aplicar?</Label>
+                                        <Label className="text-xs font-bold uppercase tracking-widest text-neutral-500 ml-1">¿A qué tipo de membresía deseas aplicar?</Label>
                                         <Select value={form.visaType} onValueChange={val => setForm(prev => ({ ...prev, visaType: val }))}>
                                             <SelectTrigger className="h-12 bg-black/40 border-white/10 rounded-xl focus:ring-1 focus:ring-blue-500/50 text-neutral-200">
-                                                <SelectValue placeholder="Selecciona el tipo de visa" />
+                                                <SelectValue placeholder="Selecciona el tipo de membresía" />
                                             </SelectTrigger>
                                             <SelectContent className="bg-neutral-900 border-white/10 text-white rounded-xl">
-                                                <SelectItem value="F1">Visa de Estudiante (F1)</SelectItem>
-                                                <SelectItem value="B1/B2">Visa de Turismo/Negocios (B1/B2)</SelectItem>
-                                                <SelectItem value="J1">Visa de Intercambio (J1)</SelectItem>
-                                                <SelectItem value="H1B">Visa de Trabajo (H1B)</SelectItem>
+                                                <SelectItem value="F1">Membresía VIP (F1)</SelectItem>
+                                                <SelectItem value="B1/B2">Membresía de Turismo/Negocios (B1/B2)</SelectItem>
+                                                <SelectItem value="J1">Membresía de Intercambio (J1)</SelectItem>
+                                                <SelectItem value="H1B">Membresía de Trabajo (H1B)</SelectItem>
                                                 <SelectItem value="M1">Estudios Vocacionales (M1)</SelectItem>
                                             </SelectContent>
                                         </Select>
@@ -622,7 +622,7 @@ export default function ApplicationPage({ params }: ApplicationPageProps) {
             {/* Footer logo/info */}
             <footer className="absolute bottom-8 left-0 right-0 text-center animate-fade-in pointer-events-none">
                 <p className="text-[10px] font-bold text-neutral-600 uppercase tracking-[0.3em]">
-                    Powered by uDreamms © 2024
+                    Powered by Klick © 2024
                 </p>
             </footer>
 

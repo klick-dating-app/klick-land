@@ -10,7 +10,7 @@ export default function TestPixelPage() {
     setStatus('Enviando evento de prueba a Facebook...');
     try {
       // Reemplaza 'TEST63740' por el código que te da Facebook si cambia
-      await sendMetaEvent('Lead', { test_value: '123' }, { email: 'test@udreamms.com' }, 'TEST63740');
+      await sendMetaEvent('Lead', { test_value: '123' }, { email: 'test@klick.com' }, 'TEST63740');
       setStatus('¡Evento de prueba enviado! Revisa la pestaña de "Probar Eventos" en Facebook.');
     } catch (error) {
       setStatus('Error al enviar el evento.');

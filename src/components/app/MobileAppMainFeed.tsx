@@ -115,7 +115,7 @@ const SAMPLE_PROFILES: Profile[] = [
     distance: "a 12 km",
     verified: true,
     compatibility: 92,
-    bio: "Estudiante de Comunicación. Fan de los museos, los viajes espontáneos y los atardeceres en las montañas.",
+    bio: "VIP de Comunicación. Fan de los museos, los viajes espontáneos y los atardeceres en las montañas.",
     photos: [
       "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=800&q=80",

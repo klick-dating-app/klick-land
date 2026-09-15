@@ -10,25 +10,25 @@ export interface ProductCatalogEntry {
 }
 
 export const PRODUCT_CATALOG: Record<string, ProductCatalogEntry> = {
-  'curso-estudiante': {
+  'curso-vip': {
     name: 'Express Masterclass - F-1 Student',
     cardPriceUsd: 9.99,
     cryptoPriceUsd: 9.99,
     stripePaymentLink: null,
   },
-  'libro-estudiante': {
+  'libro-vip': {
     name: 'Digital Book - F-1 Student',
     cardPriceUsd: 29.99,
     cryptoPriceUsd: 29.99,
     stripePaymentLink: 'https://buy.stripe.com/bJeeVdckP87851w2HxenS0D',
   },
-  'curso-turista': {
+  'curso-basico': {
     name: 'Express Masterclass - B-2 Tourist',
     cardPriceUsd: 9.99,
     cryptoPriceUsd: 9.99,
     stripePaymentLink: null,
   },
-  'libro-turista': {
+  'libro-basico': {
     name: 'Digital Book - B-2 Tourist',
     cardPriceUsd: 29.99,
     cryptoPriceUsd: 29.99,
@@ -58,19 +58,19 @@ export const PRODUCT_CATALOG: Record<string, ProductCatalogEntry> = {
     cryptoPriceUsd: null,
     stripePaymentLink: 'https://buy.stripe.com/bJeeVddoTafgeC695VenS0I',
   },
-  'plan-turista-basico': {
+  'plan-basico-basico': {
     name: 'Plan 1: Basic Tourist - B-2',
     cardPriceUsd: 380,
     cryptoPriceUsd: 299.99,
     stripePaymentLink: 'https://buy.stripe.com/6oU14n84zcnoalQci7enS0F',
   },
-  'plan-turista-premium': {
+  'plan-basico-premium': {
     name: 'Plan 2: Premium Tourist - B-2',
     cardPriceUsd: 3250,
     cryptoPriceUsd: null,
     stripePaymentLink: 'https://buy.stripe.com/9B67sL3OjafgalQ2HxenS0H',
   },
-  'plan-turista-vip': {
+  'plan-basico-vip': {
     name: 'Plan 3: VIP Experience - B-2',
     cardPriceUsd: 13000,
     cryptoPriceUsd: null,

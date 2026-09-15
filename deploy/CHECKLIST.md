@@ -8,7 +8,7 @@ Usar antes de cada release a producción.
 - [ ] Sin secretos nuevos en el repositorio
 - [ ] Cambios en `firestore.rules` / `storage.rules` revisados por alguien con contexto de seguridad
 
-## 2. Firebase (`udreamms-platform-1`)
+## 2. Firebase (`klick-platform-1`)
 
 - [ ] `npm run deploy:firebase:rules` (si cambiaron reglas o índices)
 - [ ] `npm run deploy:functions` (si cambió `functions/`)
@@ -27,8 +27,8 @@ Usar antes de cada release a producción.
 ## 4. Smoke tests (producción)
 
 - [ ] `/` — home carga
-- [ ] `/visas/tourist` — planes y CTAs
-- [ ] `/instructions-payment-tourist?plan=premium` — UI pago
+- [ ] `/membership/basic` — planes y CTAs
+- [ ] `/instructions-payment-basic?plan=premium` — UI pago
 - [ ] Crear sesión QR crypto (API 200)
 - [ ] `/portal` — login
 - [ ] Webhook WhatsApp (si se tocó functions) — mensaje de prueba
@@ -41,5 +41,5 @@ Usar antes de cada release a producción.
 
 ## Contactos / enlaces
 
-- Consola Firebase: https://console.firebase.google.com/project/udreamms-platform-1
+- Consola Firebase: https://console.firebase.google.com/project/klick-platform-1
 - Documentación pagos: [docs/firestore-crypto-payments.md](../docs/firestore-crypto-payments.md)

@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Valid email is required' }, { status: 400 });
     }
 
-    const session = await findPaidSessionForItem(email, 'libro-estudiante');
+    const session = await findPaidSessionForItem(email, 'libro-vip');
     if (!session) {
       return NextResponse.json(
         {
@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const unlock = await unlockPurchaseByEmail(email, 'libro-estudiante', {
+    const unlock = await unlockPurchaseByEmail(email, 'libro-vip', {
       type: 'stripe',
       referenceId: session.id,
     });

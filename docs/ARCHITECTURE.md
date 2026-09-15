@@ -1,156 +1,111 @@
-# Arquitectura del proyecto uDreamms
+# 🏛️ Arquitectura del Sistema KLICK!
 
-## Principio de organización
+> **Empresa:** SafeMeet.Ut LLC  
+> **Producto:** KLICK! Dating & Relationship Platform  
+> **Stack:** Next.js (App Router) + Firebase + Tailwind CSS / shadcn/ui + Capacitor + Stripe + Solana (Fase 2)
 
-El repositorio es una **aplicación Next.js única** con backend embebido (API Routes + Firebase). No es un monorepo npm, pero sí una **separación lógica por carpetas**:
+---
+
+## 1. Principio de Organización y Estructura del Repositorio
+
+El repositorio está estructurado con una clara **separación lógica por responsabilidades**:
 
 ```
-udreamms/
-├── deploy/                        # Despliegue: Vercel, Firebase, env, checklist
-├── docs/                          # Documentación (inversores, pagos Firestore)
-├── functions/                     # Backend desplegable: WhatsApp, webhooks, callables
-├── public/                        # Assets estáticos
+klick/
+├── deploy/                        # Guías y configuración de despliegue: Vercel, Firebase, env
+├── docs/                          # Documentación ejecutiva, técnica, diagramas y especificación
+├── functions/                     # Backend serverless Firebase: Matching engine, notificaciones FCM
+├── public/                        # Assets estáticos, logos y multimedia
 ├── src/
 │   ├── app/                       # CAPA DE RUTAS (Next.js App Router)
-│   ├── backend/                   # CAPA SERVIDOR (sin UI)
-│   ├── frontend/                  # Módulos UI organizados + legacy
-│   ├── components/                # UI compartida (landing, payments, ui)
-│   ├── hooks/
-│   └── lib/                       # Utilidades cliente + re-exports de compatibilidad
+│   ├── backend/                   # CAPA SERVIDOR: Pagos, Firebase Admin, Entitlements
+│   ├── frontend/                  # Módulos UI organizados y secciones experimentales
+│   ├── components/                # Biblioteca UI compartida (landing, membership, shadcn/ui)
+│   ├── hooks/                     # Custom React Hooks
+│   └── lib/                       # Utilidades cliente, validación Zod y helpers de pagos
 └── firebase.json, firestore.rules, storage.rules
 ```
 
-## Capas y responsabilidades
+---
 
-### 1. `src/app/` — Enrutamiento
+## 2. Capas del Sistema y Responsabilidades
 
-Solo **páginas finas** y **API Routes**:
+### A. Capa de Rutas (`src/app/`)
 
-| Ruta | Módulo |
-|------|--------|
-| `/` | Marketing home |
-| `/visas/tourist` | Landing turista |
-| `/visas/student` | Landing estudiante |
-| `/instructions-payment-*` | Checkout instructivo |
-| `/portal` | Auth usuarios |
-| `/application/[id]`, `/onboarding/[id]` | Formularios operativos |
-| `/api/payments/qr/*` | Backend pagos crypto |
-| `/api/whatsapp/send` | Envío WhatsApp desde web |
+| Ruta | Módulo / Función |
+| :--- | :--- |
+| `/` | Landing page principal de KLICK! (propuesta de valor, compatibilidad, testimonios, CTA) |
+| `/membership/basic` | Landing de Membresía Básica y Verificación de Identidad |
+| `/membership/vip` | Landing de Membresía VIP y Experiencia de Matching Completa |
+| `/instructions-payment-basic` | Checkout e instrucciones de pago para Membresía Básica (Stripe / Solana QR) |
+| `/instructions-payment-vip` | Checkout e instrucciones de pago para Membresía VIP (Stripe / Solana QR) |
+| `/education` | Módulo de Educación para las Relaciones y Citas Saludables |
+| `/safe-dates` | Guía y catálogo de lugares públicos y seguros para *Safe First Date* |
+| `/guides` | Guías de seguridad, comunicación y citas en la comunidad |
+| `/features` | Catálogo de funciones: KYC, Algoritmo 0–100%, Common Ground, Safe First Date |
+| `/portal` | Portal privado del usuario autenticado (perfil, estado de membresía, recursos) |
+| `/portal/membresia-basica` | Área de usuario con membresía básica activa |
+| `/portal/membresia-vip` | Área de usuario con membresía VIP activa |
+| `/application/[id]` | Formulario de registro y cuestionario de compatibilidad |
+| `/onboarding/[id]` | Flujo de bienvenida y verificación de perfil |
+| `/api/payments/qr/*` | Endpoints backend para pagos en criptoactivos (Solana Pay / USDC / LXR) |
 
-Cada landing de visa tiene:
+---
 
-- `_components/` — secciones **visibles**
-- `secciones-ocultar/` — secciones **guardadas**, no montadas (ver README en cada carpeta)
+### B. Capa de Servidor (`src/backend/`)
 
-### 2. `src/backend/` — Lógica de servidor
+| Archivo / Carpeta | Responsabilidad |
+| :--- | :--- |
+| `firebase/admin.ts` | Inicialización de Firebase Admin SDK con credenciales de servicio |
+| `payments/payment-config.ts` | Catálogo de precios USD/Crypto, configuración de wallets y tokens SPL |
+| `payments/firestore-schema.ts` | Esquemas tipados de sesiones de pago, comprobantes y transacciones |
+| `payments/qr-payment.ts` | Generación de sesiones y códigos QR Solana Pay |
+| `payments/verify-payment.ts` | Verificación server-side de firmas de transacción en la blockchain |
 
-| Ruta | Contenido |
-|------|-----------|
-| `firebase/admin.ts` | Firebase Admin SDK |
-| `payments/` | Catálogo de planes, esquema Firestore, QR Solana, verificación |
+---
 
-Las rutas en `src/app/api/` deben importar desde `@/backend/...`.
+### C. Biblioteca de Componentes (`src/components/`)
 
-`src/lib/payments/*` y `src/lib/firebase-admin.ts` re-exportan por **compatibilidad** con imports antiguos.
+- `landing/`: Componentes de marketing (Hero, Header, Footer, BasicPlanShowcase, VipPlanShowcase, KlickStoriesShowcase, Roadmap).
+- `payments/`: Componentes interactivos de checkout (CryptoCheckoutPanel, BrandedQrCode, BookCheckoutFlow, instructions-payment-ui).
+- `ui/`: Componentes base accesibles de diseño (shadcn/ui, Radix UI).
 
-### 3. `src/frontend/` — Organización de producto
+---
 
-| Ruta | Contenido |
-|------|-----------|
-| `modules/marketing/home/secciones-ocultar/` | Bloques del home comentados |
-| `modules/visas/` | Documentación de módulo (las páginas viven en `app/`) |
-| `legacy/suite/` | React Flow, chatbot builder CSO (sin rutas activas) |
-
-`src/components/` sigue siendo la biblioteca UI principal (landing, payments, shadcn).
-
-### 4. `functions/` — Backend Firebase
-
-Paquete Node independiente (`npm run deploy:functions`):
-
-- Webhooks WhatsApp y Google Forms
-- Callables de mensajería
-- Acciones kanban (`moveCard`)
-
-Comunicación con el mismo proyecto Firebase que la web.
-
-## Flujo de datos — Pagos crypto
-
-1. Cliente abre checkout en página de instrucciones.
-2. `POST /api/payments/qr/create` → `backend/payments/qr-payment` crea sesión en Firestore.
-3. Cliente escanea QR (Solana Pay URL).
-4. `GET /api/payments/qr/status` consulta confirmación on-chain / Firestore.
-5. Comprobante y notificación interna (email / WhatsApp según configuración).
-
-Detalle de colecciones: `docs/firestore-crypto-payments.md`.
-
-## Flujo de datos — Auth y aplicaciones
-
-- **Portal:** Firebase Auth en cliente (`src/lib/firebase.ts`).
-- **Application / Onboarding:** lectura/escritura Firestore desde páginas cliente.
-
-## Alias TypeScript
-
-```json
-"@/*"        → src/*
-"@/frontend/*" → src/frontend/*
-"@/backend/*"  → src/backend/*
-```
-
-## Convenciones para el equipo
-
-1. **Nueva lógica de servidor** → `src/backend/`, nunca en componentes `.tsx` de marketing.
-2. **Nueva sección experimental** → `secciones-ocultar/` de la ruta; activar en `page.tsx` cuando esté lista.
-3. **UI reutilizable** → `src/components/` (o subcarpeta `ui/` para primitivos).
-4. **No borrar legacy suite** sin decisión de producto; está aislado en `frontend/legacy/suite/`.
-
-## Diagrama de módulos de negocio
+## 3. Flujo de Datos y Pipeline de Matching
 
 ```mermaid
-graph TB
-  subgraph Marketing
-    M1[Home]
-    M2[Visa Tourist]
-    M3[Visa Student]
-  end
-  subgraph Conversion
-    C1[Instructions Payment]
-    C2[Brochures / Contact]
-  end
-  subgraph Operations
-    O1[Application]
-    O2[Onboarding]
-    O3[Portal]
-  end
-  subgraph Platform
-    P1[API QR Payments]
-    P2[Firebase Functions]
-    P3[Firestore]
-  end
-  M2 --> C1
-  M3 --> C1
-  C1 --> P1 --> P3
-  O1 --> P3
-  O3 --> P3
-  P2 --> P3
+flowchart TD
+    subgraph Client["Cliente (Web & Móvil Capacitor)"]
+        UI["UI / PWA"]
+    end
+
+    subgraph BackendNext["Backend Next.js API Routes"]
+        AuthAPI["Firebase Auth"]
+        PayAPI["Stripe / Solana Pay Engine"]
+    end
+
+    subgraph CloudEngine["Google Cloud / Firebase Platform"]
+        FS["Cloud Firestore (Perfiles & Citas)"]
+        FCM["Firebase Cloud Messaging"]
+        Storage["Cloud Storage (Fotos cifradas)"]
+        Vertex["Vertex AI (Moderación & Asistente)"]
+        Fn["Cloud Functions (Match 0-100%)"]
+    end
+
+    UI --> AuthAPI
+    UI --> PayAPI
+    PayAPI --> FS
+    AuthAPI --> FS
+    Fn --> FS
+    Fn --> FCM
+    Vertex --> FS
 ```
 
-## Despliegue (separado del código de producto)
+---
 
-Toda la guía operativa está en **`deploy/`** (no mezclar con `src/`):
+## 4. Convenciones de Desarrollo
 
-| Plataforma | Contenido desplegado | Documentación |
-|------------|----------------------|---------------|
-| **Vercel** | Next.js + API Routes | [deploy/platforms/vercel.md](../deploy/platforms/vercel.md) |
-| **Firebase** | Firestore, Auth, Storage, Functions | [deploy/platforms/firebase.md](../deploy/platforms/firebase.md) |
-| **Firebase Studio / IDX** | Solo desarrollo (`.idx/dev.nix`) | [deploy/platforms/firebase.md](../deploy/platforms/firebase.md) |
-
-Variables: [deploy/env/](../deploy/env/) · Checklist: [deploy/CHECKLIST.md](../deploy/CHECKLIST.md).
-
-Los archivos `firebase.json`, `firestore.rules` y `functions/` permanecen en la **raíz** por requisito del CLI de Firebase; `deploy/config/MANIFEST.md` los cataloga.
-
-## Próximos pasos recomendados (escalabilidad)
-
-- Agrupar rutas con `(marketing)` / `(product)` en App Router.
-- Extraer servicios Firestore de application/onboarding a `backend/services/`.
-- Proyecto Firebase de **staging** separado de `udreamms-platform-1`.
-- Monorepo opcional: `apps/web` + `packages/backend` si se separan equipos.
+1. **Lógica de Servidor Estricta:** Toda validación de entitlements, cobros y moderación se ejecuta en `src/backend/` o `src/app/api/`, nunca en el cliente.
+2. **Secciones Modulares:** Cada landing mantiene su carpeta `secciones-ocultar/` para realizar pruebas A/B y activar módulos sin alterar producción.
+3. **Privacidad de Geolocalización:** Nunca se almacena ni comparte la dirección exacta ni coordenadas GPS precisas; únicamente ciudad y código postal aproximado.

@@ -39,7 +39,7 @@ export default function TermsPage() {
                 transition={{ delay: 0.2 }}
                 className="text-xl md:text-2xl text-[#86868b] font-medium max-w-2xl leading-relaxed"
               >
-                Welcome to Klick LLC. By using our services, you agree to the terms described in this document.
+                Welcome to SafeMeet.Ut LLC (KLICK!). By using our services, you agree to the terms described in this document.
               </motion.p>
 
               <motion.div
@@ -69,8 +69,8 @@ export default function TermsPage() {
                     <h2 className="text-2xl font-medium text-amber-900 uppercase tracking-wider">Important Legal Disclaimer</h2>
                   </div>
                   <div className="grid gap-6 text-amber-800/80 font-medium">
-                    <p><strong className="text-amber-900">Not Government:</strong> Klick LLC is a private entity. We are NOT affiliated with USCIS or any US government agency.</p>
-                    <p><strong className="text-amber-900">No Visa Guarantee:</strong> Visa approval is at the sole discretion of consular officers. We do not offer refunds based on visa denials.</p>
+                    <p><strong className="text-amber-900">Not Government:</strong> SafeMeet.Ut LLC (KLICK!) is a private entity. We are NOT affiliated with USCIS or any US government agency.</p>
+                    <p><strong className="text-amber-900">Satisfaction & Safety Policy:</strong> Membresía approval is at the sole discretion of Trust & Safety team. Refunds are subject to terms of service and verified safety policies.</p>
                     <p><strong className="text-amber-900">Not Legal Advice:</strong> Our guidance is strictly educational and logistical assistance.</p>
                   </div>
                 </div>
@@ -105,7 +105,7 @@ export default function TermsPage() {
                 <div className="p-10 rounded-[3rem] border border-slate-100 bg-white shadow-sm">
                   <div className="flex gap-6 items-start mb-8">
                     <CreditCard className="w-8 h-8 text-primary shrink-0" />
-                    <p className="text-[#86868b] font-medium leading-relaxed">Fees for Klick LLC guidance services are non-refundable once the service has begun (e.g., after the first consultation or form completion).</p>
+                    <p className="text-[#86868b] font-medium leading-relaxed">Fees for SafeMeet.Ut LLC (KLICK!) guidance services are non-refundable once the service has begun (e.g., after the first consultation or form completion).</p>
                   </div>
                   <div className="flex gap-6 items-start">
                     <FileWarning className="w-8 h-8 text-primary shrink-0" />

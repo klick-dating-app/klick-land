@@ -124,7 +124,7 @@ export default function LuxorPage() {
             {/* Columna Derecha: Imagen */}
             <div className="lg:w-1/2 w-full flex justify-center lg:justify-start">
               <img 
-                src="https://firebasestorage.googleapis.com/v0/b/udreamms-platform-1.firebasestorage.app/o/Gemini_Generated_Image_ywjuiywjuiywjuiy.png?alt=media&token=586e7830-e75e-4dee-b6fc-56131cc20bc5" 
+                src="https://firebasestorage.googleapis.com/v0/b/klick-platform-1.firebasestorage.app/o/Gemini_Generated_Image_ywjuiywjuiywjuiy.png?alt=media&token=586e7830-e75e-4dee-b6fc-56131cc20bc5" 
                 alt="Luxor Coin" 
                 className="w-[80%] sm:w-[70%] lg:w-[85%] max-w-[450px] h-auto rounded-[2rem] object-cover border border-white/5 shadow-2xl"
               />
@@ -156,8 +156,8 @@ export default function LuxorPage() {
                 </p>
               </div>
               <div className="md:w-1/2 w-full flex gap-4 justify-center">
-                <img src="https://firebasestorage.googleapis.com/v0/b/udreamms-platform-1.firebasestorage.app/o/Phantom%2F1.jpeg?alt=media&token=a2a4339f-a54a-428d-945b-52a15753d88b" alt="Phantom app" className="w-[45%] max-w-[220px] rounded-2xl border border-white/10 shadow-lg object-contain" />
-                <img src="https://firebasestorage.googleapis.com/v0/b/udreamms-platform-1.firebasestorage.app/o/Phantom%2F2.jpeg?alt=media&token=8be6669d-b9c2-4d4d-bcce-85e1f3748eb2" alt="Crear billetera" className="w-[45%] max-w-[220px] rounded-2xl border border-white/10 shadow-lg object-contain" />
+                <img src="https://firebasestorage.googleapis.com/v0/b/klick-platform-1.firebasestorage.app/o/Phantom%2F1.jpeg?alt=media&token=a2a4339f-a54a-428d-945b-52a15753d88b" alt="Phantom app" className="w-[45%] max-w-[220px] rounded-2xl border border-white/10 shadow-lg object-contain" />
+                <img src="https://firebasestorage.googleapis.com/v0/b/klick-platform-1.firebasestorage.app/o/Phantom%2F2.jpeg?alt=media&token=8be6669d-b9c2-4d4d-bcce-85e1f3748eb2" alt="Crear billetera" className="w-[45%] max-w-[220px] rounded-2xl border border-white/10 shadow-lg object-contain" />
               </div>
             </div>
 
@@ -177,8 +177,8 @@ export default function LuxorPage() {
                 </div>
               </div>
               <div className="md:w-1/2 w-full flex gap-4 justify-center">
-                <img src="https://firebasestorage.googleapis.com/v0/b/udreamms-platform-1.firebasestorage.app/o/Phantom%2F3.jpeg?alt=media&token=16db46e2-3bd9-4105-a3d3-72514fe9e121" alt="Buscar moneda" className="w-[45%] max-w-[220px] rounded-2xl border border-white/10 shadow-lg object-contain" />
-                <img src="https://firebasestorage.googleapis.com/v0/b/udreamms-platform-1.firebasestorage.app/o/Phantom%2F4.jpeg?alt=media&token=226b935d-1ea2-4020-9a73-6934efe2cd1f" alt="Contrato oficial" className="w-[45%] max-w-[220px] rounded-2xl border border-white/10 shadow-lg object-contain" />
+                <img src="https://firebasestorage.googleapis.com/v0/b/klick-platform-1.firebasestorage.app/o/Phantom%2F3.jpeg?alt=media&token=16db46e2-3bd9-4105-a3d3-72514fe9e121" alt="Buscar moneda" className="w-[45%] max-w-[220px] rounded-2xl border border-white/10 shadow-lg object-contain" />
+                <img src="https://firebasestorage.googleapis.com/v0/b/klick-platform-1.firebasestorage.app/o/Phantom%2F4.jpeg?alt=media&token=226b935d-1ea2-4020-9a73-6934efe2cd1f" alt="Contrato oficial" className="w-[45%] max-w-[220px] rounded-2xl border border-white/10 shadow-lg object-contain" />
               </div>
             </div>
 
@@ -188,12 +188,12 @@ export default function LuxorPage() {
                 <div className="text-blue-500 font-semibold text-[10px] md:text-xs tracking-[0.2em] uppercase mb-3">Paso 3</div>
                 <h3 className="text-xl md:text-2xl font-medium text-white mb-4">Escanea el código de tu servicio y paga con descuento</h3>
                 <p className="text-white/70 text-xs md:text-sm mb-4 font-light leading-relaxed">
-                  Escanea el código del servicio que elegiste aquí en la plataforma de Udreamms y paga tu servicio con el descuento adquirido utilizando tus monedas LUXOR.
+                  Escanea el código del servicio que elegiste aquí en la plataforma de Klick y paga tu servicio con el descuento adquirido utilizando tus monedas LUXOR.
                 </p>
               </div>
               <div className="md:w-1/2 w-full flex gap-4 justify-center">
-                <img src="https://firebasestorage.googleapis.com/v0/b/udreamms-platform-1.firebasestorage.app/o/Phantom%2F5.jpeg?alt=media&token=03c30daf-a2d6-416b-8c07-a53bad22121e" alt="Monto de Swap" className="w-[45%] max-w-[220px] rounded-2xl border border-white/10 shadow-lg object-contain" />
-                <img src="https://firebasestorage.googleapis.com/v0/b/udreamms-platform-1.firebasestorage.app/o/Phantom%2F6.jpeg?alt=media&token=e0a6af33-c6df-4798-89d1-3f2c6b637d3c" alt="Confirmar Swap" className="w-[45%] max-w-[220px] rounded-2xl border border-white/10 shadow-lg object-contain" />
+                <img src="https://firebasestorage.googleapis.com/v0/b/klick-platform-1.firebasestorage.app/o/Phantom%2F5.jpeg?alt=media&token=03c30daf-a2d6-416b-8c07-a53bad22121e" alt="Monto de Swap" className="w-[45%] max-w-[220px] rounded-2xl border border-white/10 shadow-lg object-contain" />
+                <img src="https://firebasestorage.googleapis.com/v0/b/klick-platform-1.firebasestorage.app/o/Phantom%2F6.jpeg?alt=media&token=e0a6af33-c6df-4798-89d1-3f2c6b637d3c" alt="Confirmar Swap" className="w-[45%] max-w-[220px] rounded-2xl border border-white/10 shadow-lg object-contain" />
               </div>
             </div>
 
@@ -203,11 +203,11 @@ export default function LuxorPage() {
                 <div className="text-blue-500 font-semibold text-[10px] md:text-xs tracking-[0.2em] uppercase mb-3">Paso 4</div>
                 <h3 className="text-xl md:text-2xl font-medium text-white mb-4">Recibe tus accesos y comienza</h3>
                 <p className="text-white/70 text-xs md:text-sm mb-4 font-light leading-relaxed">
-                  Después de pagar y que en Phantom veas el mensaje de pago realizado, regresa a tu plataforma y abre tu correo electrónico. Te llegará el usuario y contraseña para que ingreses a tu portal, donde podrás adjuntar documentos, recibir notificaciones de cómo está tu proceso y adquirir videos de preparación, productos de Udreamms y acceso a miles de herramientas para ser exitoso al llegar a Estados Unidos.
+                  Después de pagar y que en Phantom veas el mensaje de pago realizado, regresa a tu plataforma y abre tu correo electrónico. Te llegará el usuario y contraseña para que ingreses a tu portal, donde podrás adjuntar documentos, recibir notificaciones de cómo está tu proceso y adquirir videos de preparación, productos de Klick y acceso a miles de herramientas para ser exitoso al llegar a Estados Unidos.
                 </p>
               </div>
               <div className="md:w-1/2 w-full flex gap-4 justify-center">
-                <img src="https://firebasestorage.googleapis.com/v0/b/udreamms-platform-1.firebasestorage.app/o/Phantom%2F7.jpeg?alt=media&token=37b84958-fe14-4282-972f-53cf1691fcee" alt="Enviar pago" className="w-[45%] max-w-[220px] rounded-2xl border border-white/10 shadow-lg object-contain" />
+                <img src="https://firebasestorage.googleapis.com/v0/b/klick-platform-1.firebasestorage.app/o/Phantom%2F7.jpeg?alt=media&token=37b84958-fe14-4282-972f-53cf1691fcee" alt="Enviar pago" className="w-[45%] max-w-[220px] rounded-2xl border border-white/10 shadow-lg object-contain" />
               </div>
             </div>
 

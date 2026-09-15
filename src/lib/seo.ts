@@ -9,7 +9,7 @@ export const SITE_LOGO_PATH = "/matchapp-logo-circular.png";
 export const SITE_LOGO_URL = `${SITE_URL}${SITE_LOGO_PATH}`;
 
 export const DEFAULT_DESCRIPTION =
-  "Expert guidance for visas, studies, and a new life in the United States. Technology and human support in one place.";
+  "Expert guidance for membresías, studies, and a new life in the United States. Technology and human support in one place.";
 
 export const NOINDEX_ROBOTS: Metadata["robots"] = {
   index: false,
@@ -26,13 +26,13 @@ export type SitemapEntry = {
 /** Rutas públicas indexables (sitemap + SEO). */
 export const PUBLIC_SITEMAP_ROUTES: SitemapEntry[] = [
   { path: "", changeFrequency: "weekly", priority: 1 },
-  { path: "/visas/student", changeFrequency: "weekly", priority: 0.95 },
-  { path: "/visas/tourist", changeFrequency: "weekly", priority: 0.95 },
+  { path: "/membership/vip", changeFrequency: "weekly", priority: 0.95 },
+  { path: "/membership/basic", changeFrequency: "weekly", priority: 0.95 },
   { path: "/about", changeFrequency: "monthly", priority: 0.8 },
-  { path: "/destinos", changeFrequency: "monthly", priority: 0.8 },
-  { path: "/courses", changeFrequency: "monthly", priority: 0.8 },
-  { path: "/services", changeFrequency: "monthly", priority: 0.75 },
-  { path: "/brochures", changeFrequency: "monthly", priority: 0.7 },
+  { path: "/safe-dates", changeFrequency: "monthly", priority: 0.8 },
+  { path: "/education", changeFrequency: "monthly", priority: 0.8 },
+  { path: "/features", changeFrequency: "monthly", priority: 0.75 },
+  { path: "/guides", changeFrequency: "monthly", priority: 0.7 },
   { path: "/contact", changeFrequency: "monthly", priority: 0.7 },
   { path: "/partnerships", changeFrequency: "monthly", priority: 0.65 },
   { path: "/referrals", changeFrequency: "monthly", priority: 0.65 },
@@ -54,22 +54,22 @@ const PAGE_SEO: Record<
     description:
       "Learn about the history, values, and team behind Klick. Transparency and guidance throughout your experience.",
   },
-  "/destinos": {
+  "/safe-dates": {
     title: "US Destinations",
     description:
       "Explore popular cities and destinations to study, work, and live with Klick.",
   },
-  "/courses": {
+  "/education": {
     title: "English Courses in USA",
     description:
       "English programs at partner schools in the United States. Plan your education with Klick guidance.",
   },
-  "/services": {
+  "/features": {
     title: "Services in USA",
     description:
       "Housing, banking, SIM cards, transport, and more. Essential services for your arrival.",
   },
-  "/brochures": {
+  "/guides": {
     title: "Brochures and Guides",
     description:
       "Download informational materials and take the first step in your process with Klick.",
@@ -77,7 +77,7 @@ const PAGE_SEO: Record<
   "/contact": {
     title: "Contact Us",
     description:
-      "Speak with the Klick team. We resolve doubts about visas, studies, and your plan.",
+      "Speak with the Klick team. We resolve doubts about membresías, studies, and your plan.",
   },
   "/partnerships": {
     title: "Institutional Partnerships",
@@ -92,7 +92,7 @@ const PAGE_SEO: Record<
   "/faqs": {
     title: "Frequently Asked Questions",
     description:
-      "Answers about visas, payments, processes, and support.",
+      "Answers about membresías, payments, processes, and support.",
   },
   "/privacidad": {
     title: "Privacy Policy",
@@ -102,15 +102,15 @@ const PAGE_SEO: Record<
     title: "Terms and Conditions",
     description: "Terms and conditions of use for Klick services.",
   },
-  "/visas/student": {
-    title: "F-1 Student Visa",
+  "/membership/vip": {
+    title: "F-1 Student Membresía",
     description:
-      "Plans and guidance for F-1 student visas. Study in the US with expert Klick support.",
+      "Plans and guidance for F-1 student membresías. Study in the US with expert Klick support.",
   },
-  "/visas/tourist": {
-    title: "B1/B2 Tourist Visa",
+  "/membership/basic": {
+    title: "B1/B2 Tourist Membresía",
     description:
-      "Guidance for B1/B2 tourist visas. Prepare your trip to the United States with confidence.",
+      "Guidance for B1/B2 tourist membresías. Prepare your trip to the United States with confidence.",
   },
 };
 

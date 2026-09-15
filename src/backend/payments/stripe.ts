@@ -95,7 +95,7 @@ export async function findPaidSessionsForItems(email: string, itemIds: string[])
   return results;
 }
 
-/** @deprecated Use findPaidSessionForItem(email, 'libro-estudiante') */
+/** @deprecated Use findPaidSessionForItem(email, 'libro-vip') */
 export async function findPaidLibroSessionByEmail(email: string) {
-  return findPaidSessionForItem(email, 'libro-estudiante');
+  return findPaidSessionForItem(email, 'libro-vip');
 }

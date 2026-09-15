@@ -32,29 +32,29 @@ import {
   PRODUCT_CATALOG,
 } from "@/lib/payments/product-catalog";
 
-const CART_STORAGE_PREFIX = 'udreamms_cart_';
+const CART_STORAGE_PREFIX = 'klick_cart_';
 
 function buildCartItemsConfig() {
   const typeMap: Record<string, 'curso' | 'libro' | 'plan'> = {
-    'curso-estudiante': 'curso',
-    'curso-turista': 'curso',
-    'libro-estudiante': 'libro',
-    'libro-turista': 'libro',
+    'curso-vip': 'curso',
+    'curso-basico': 'curso',
+    'libro-vip': 'libro',
+    'libro-basico': 'libro',
   };
-  const visaMap: Record<string, 'estudiante' | 'turista'> = {
-    'curso-estudiante': 'estudiante',
-    'libro-estudiante': 'estudiante',
-    'plan-esencial': 'estudiante',
-    'plan-pro': 'estudiante',
-    'plan-elite': 'estudiante',
-    'plan-allinclusive': 'estudiante',
-    'proceso-estudiante': 'estudiante',
-    'curso-turista': 'turista',
-    'libro-turista': 'turista',
-    'plan-turista-basico': 'turista',
-    'plan-turista-premium': 'turista',
-    'plan-turista-vip': 'turista',
-    'proceso-turista': 'turista',
+  const visaMap: Record<string, 'vip' | 'basico'> = {
+    'curso-vip': 'vip',
+    'libro-vip': 'vip',
+    'plan-esencial': 'vip',
+    'plan-pro': 'vip',
+    'plan-elite': 'vip',
+    'plan-allinclusive': 'vip',
+    'proceso-vip': 'vip',
+    'curso-basico': 'basico',
+    'libro-basico': 'basico',
+    'plan-basico-basico': 'basico',
+    'plan-basico-premium': 'basico',
+    'plan-basico-vip': 'basico',
+    'proceso-basico': 'basico',
   };
 
   return Object.fromEntries(
@@ -64,7 +64,7 @@ function buildCartItemsConfig() {
         name: entry.name,
         price: entry.cardPriceUsd,
         type: typeMap[id] || 'plan',
-        visa: visaMap[id] || 'estudiante',
+        membresia: visaMap[id] || 'vip',
       },
     ])
   );
@@ -75,35 +75,35 @@ export const cartItemsConfig = buildCartItemsConfig();
 export const studentModules = [
   {
     title: "PASO 1: APLICA A UNA ESCUELA DE INGLES EN USA",
-    description: "Aprende el proceso detallado para seleccionar, aplicar y ser admitido en una escuela de inglés autorizada en los Estados Unidos para obtener tu formulario I-20.",
-    videoUrl: "https://firebasestorage.googleapis.com/v0/b/udreamms-platform-1.firebasestorage.app/o/Curso%20Digital%2F1.mp4?alt=media&token=44dbb5ff-96d5-4843-b719-190391776999"
+    description: "Aprende el proceso detallado para seleccionar, aplicar y ser admitido en una comunidad de citas autorizada en los Estados Unidos para obtener tu verificación de identidad KYC.",
+    videoUrl: "https://firebasestorage.googleapis.com/v0/b/klick-platform-1.firebasestorage.app/o/Curso%20Digital%2F1.mp4?alt=media&token=44dbb5ff-96d5-4843-b719-190391776999"
   },
   {
     title: "PASO 2: COMPRA TU TARIFA SEVIS",
-    description: "Te guiamos paso a paso para realizar el pago de tu tasa SEVIS I-901, un requisito indispensable antes de tu cita en la embajada.",
-    videoUrl: "https://firebasestorage.googleapis.com/v0/b/udreamms-platform-1.firebasestorage.app/o/Curso%20Digital%2F2.mp4?alt=media&token=59db6b37-2f47-403d-a93d-052b08a0a1f2"
+    description: "Te guiamos paso a paso para realizar el pago de tu tasa SEVIS I-901, un requisito indispensable antes de tu cita en tu primera cita segura.",
+    videoUrl: "https://firebasestorage.googleapis.com/v0/b/klick-platform-1.firebasestorage.app/o/Curso%20Digital%2F2.mp4?alt=media&token=59db6b37-2f47-403d-a93d-052b08a0a1f2"
   },
   {
     title: "PASO 3: COMPLETA TU FORMULARIO DS160",
-    description: "Instrucciones precisas para completar el formulario consular DS-160 sin cometer errores críticos que puedan comprometer tu visa de estudiante.",
-    videoUrl: "https://firebasestorage.googleapis.com/v0/b/udreamms-platform-1.firebasestorage.app/o/Curso%20Digital%2F3.mp4?alt=media&token=ac30bc0f-fef5-4edc-bee8-62af82952803"
+    description: "Instrucciones precisas para completar el cuestionario de compatibilidad cuestionario de compatibilidad sin cometer errores críticos que puedan comprometer tu membresía VIP.",
+    videoUrl: "https://firebasestorage.googleapis.com/v0/b/klick-platform-1.firebasestorage.app/o/Curso%20Digital%2F3.mp4?alt=media&token=ac30bc0f-fef5-4edc-bee8-62af82952803"
   },
   {
-    title: "PASO 4: COMO COMPRAR TU CITA EN LA EMBAJADA AMERICANA",
-    description: "Descubre cómo navegar el portal de citas consulares, realizar el pago del arancel de visa (MRV) y programar tus citas en el CAS y la Embajada.",
-    videoUrl: "https://firebasestorage.googleapis.com/v0/b/udreamms-platform-1.firebasestorage.app/o/Curso%20Digital%2F4.mp4?alt=media&token=7fab24dd-0b89-4dfb-a3cb-3af7d4751755"
+    title: "PASO 4: CÓMO COORDINAR TU PRIMERA CITA SEGURA",
+    description: "Descubre cómo navegar el protocolo de Safe First Date, verificar tu identidad KYC y coordinar tu encuentro en lugares públicos seguros.",
+    videoUrl: "https://firebasestorage.googleapis.com/v0/b/klick-platform-1.firebasestorage.app/o/Curso%20Digital%2F4.mp4?alt=media&token=7fab24dd-0b89-4dfb-a3cb-3af7d4751755"
   }
 ];
 
 export const touristModules = [
   {
-    title: "1. Requisitos y Pilares de la Visa B-2",
-    description: "Entiende los criterios de evaluación del cónsul para la visa de turismo B-2.",
+    title: "1. Requisitos y Pilares de la Membresía B-2",
+    description: "Entiende los criterios de evaluación del cónsul para la membresía de turismo B-2.",
     videoUrl: ""
   },
   {
-    title: "2. Llenado del Formulario DS-160",
-    description: "Cómo responder a las preguntas del DS-160 enfocado en turismo y arraigo.",
+    title: "2. Llenado del Formulario cuestionario de compatibilidad",
+    description: "Cómo responder a las preguntas del cuestionario de compatibilidad enfocado en turismo y arraigo.",
     videoUrl: ""
   },
   {
@@ -135,8 +135,8 @@ export const studentPlans = [
     highlight: false,
     features: [
       { name: "Servicios Básicos", icon: CheckCircle2 },
-      { name: "Aplicación escuela + I-20", icon: School },
-      { name: "DS-160 + SEVIS + Cita", icon: FileText },
+      { name: "Aplicación escuela + verificación KYC", icon: School },
+      { name: "cuestionario de compatibilidad + SEVIS + Cita", icon: FileText },
       { name: "Simulacro de Entrevista (3 sesiones)", icon: MessageSquare },
     ]
   },
@@ -150,8 +150,8 @@ export const studentPlans = [
     highlight: true,
     features: [
       { name: "Servicios Básicos", icon: CheckCircle2 },
-      { name: "Aplicación escuela + I-20", icon: School },
-      { name: "DS-160 + SEVIS + Cita", icon: FileText },
+      { name: "Aplicación escuela + verificación KYC", icon: School },
+      { name: "cuestionario de compatibilidad + SEVIS + Cita", icon: FileText },
       { name: "Simulacro de Entrevista (3 sesiones)", icon: MessageSquare },
       { name: "Link vuelos / Seguro Médico", icon: Plane },
       { name: "Pick-up Aeropuerto (UT)", icon: Car },
@@ -167,8 +167,8 @@ export const studentPlans = [
     highlight: false,
     features: [
       { name: "Servicios Básicos", icon: CheckCircle2 },
-      { name: "Aplicación escuela + I-20", icon: School },
-      { name: "DS-160 + SEVIS + Cita", icon: FileText },
+      { name: "Aplicación escuela + verificación KYC", icon: School },
+      { name: "cuestionario de compatibilidad + SEVIS + Cita", icon: FileText },
       { name: "Simulacro de Entrevista (3 sesiones)", icon: MessageSquare },
       { name: "Link tickets aéreos", icon: Plane },
       { name: "Pick-up Aeropuerto (UT)", icon: Car },
@@ -187,8 +187,8 @@ export const studentPlans = [
     highlight: false,
     features: [
       { name: "Servicios Básicos", icon: CheckCircle2 },
-      { name: "Aplicación escuela + I-20", icon: School },
-      { name: "DS-160 + SEVIS + Cita", icon: FileText },
+      { name: "Aplicación escuela + verificación KYC", icon: School },
+      { name: "cuestionario de compatibilidad + SEVIS + Cita", icon: FileText },
       { name: "Simulacro de Entrevista (Ilimitadas)", icon: MessageSquare },
       { name: "Tickets aéreos a USA (incluidos)", icon: Plane },
       { name: "Pick-up Aeropuerto (UT)", icon: Car },
@@ -202,8 +202,8 @@ export const studentPlans = [
 
 export const touristPlans = [
   {
-    id: "plan-turista-basico",
-    name: "PLAN 1: TURISTA BÁSICO",
+    id: "plan-basico-basico",
+    name: "PLAN 1: MEMBRESÍA BÁSICA",
     price: 380,
     originalPrice: "$494",
     discount: "30% OFF",
@@ -211,14 +211,14 @@ export const touristPlans = [
     highlight: false,
     features: [
       { name: "Auditoría de Perfil Migratorio", icon: FileText },
-      { name: "Gestión de Visa B1/B2", icon: CheckCircle2 },
+      { name: "Gestión de Membresía Básica", icon: CheckCircle2 },
       { name: "Preparación para la Entrevista", icon: Users },
       { name: "Guía general para el día de la entrevista", icon: Video },
     ]
   },
   {
-    id: "plan-turista-premium",
-    name: "PLAN 2: TURISTA PREMIUM",
+    id: "plan-basico-premium",
+    name: "PLAN 2: MEMBRESÍA PREMIUM",
     price: 3500,
     originalPrice: "$4,550",
     discount: "30% OFF",
@@ -236,7 +236,7 @@ export const touristPlans = [
     ]
   },
   {
-    id: "plan-turista-vip",
+    id: "plan-basico-vip",
     name: "PLAN 3: EXPERIENCIA VIP",
     price: 4990,
     originalPrice: "$6,500",
@@ -260,8 +260,8 @@ interface PortalContextType {
   user: any;
   dbUser: any;
   loading: boolean;
-  activeTopSection: 'visa-estudiante' | 'visa-turista' | 'experto';
-  setActiveTopSection: (val: 'visa-estudiante' | 'visa-turista' | 'experto') => void;
+  activeTopSection: 'membresia-vip' | 'membresia-basica' | 'experto';
+  setActiveTopSection: (val: 'membresia-vip' | 'membresia-basica' | 'experto') => void;
   activeSection: string;
   activeStudentStep: number;
   setActiveStudentStep: (val: number) => void;
@@ -313,7 +313,7 @@ interface PortalContextType {
   handleApplyUnlockCode: () => void;
   handleClearBypass: () => void;
   handleResetDbPurchased: () => void;
-  isUnlocked: (type: 'curso' | 'libro' | 'proceso', visa: 'estudiante' | 'turista') => boolean;
+  isUnlocked: (type: 'curso' | 'libro' | 'proceso', membresía: 'vip' | 'basico') => boolean;
   isPlanPurchased: (planId: string) => boolean;
   handleSignOut: () => Promise<void>;
   handleUpdateProfile: (e: React.FormEvent) => Promise<void>;
@@ -330,7 +330,7 @@ export function PortalProvider({ children }: { children: ReactNode }) {
 
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [activeTopSection, setActiveTopSection] = useState<'visa-estudiante' | 'visa-turista' | 'experto'>('visa-estudiante');
+  const [activeTopSection, setActiveTopSection] = useState<'membresia-vip' | 'membresia-basica' | 'experto'>('membresia-vip');
   const [activeStudentStep, setActiveStudentStep] = useState(0);
   const [activeTouristStep, setActiveTouristStep] = useState(0);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -354,7 +354,7 @@ export function PortalProvider({ children }: { children: ReactNode }) {
   const [unlockCodeInput, setUnlockCodeInput] = useState("");
   const [isBypassActive, setIsBypassActive] = useState(() => {
     if (typeof window !== 'undefined') {
-      return localStorage.getItem('udreamms_bypass') === '@Udreamms2026';
+      return localStorage.getItem('klick_bypass') === '@Klick2026';
     }
     return false;
   });
@@ -407,17 +407,17 @@ export function PortalProvider({ children }: { children: ReactNode }) {
       const updates: Record<string, boolean> = {};
       
       itemsToUnlock.forEach((itemId) => {
-        if (itemId === 'curso-estudiante') updates.purchased_curso_estudiante = true;
-        if (itemId === 'libro-estudiante') updates.purchased_libro_estudiante = true;
-        if (itemId === 'curso-turista') updates.purchased_curso_turista = true;
-        if (itemId === 'libro-turista') updates.purchased_libro_turista = true;
+        if (itemId === 'curso-vip') updates.purchased_curso_vip = true;
+        if (itemId === 'libro-vip') updates.purchased_libro_vip = true;
+        if (itemId === 'curso-basico') updates.purchased_curso_basico = true;
+        if (itemId === 'libro-basico') updates.purchased_libro_basico = true;
         if (itemId === 'plan-esencial') updates.purchased_plan_esencial = true;
         if (itemId === 'plan-pro') updates.purchased_plan_pro = true;
         if (itemId === 'plan-elite') updates.purchased_plan_elite = true;
         if (itemId === 'plan-allinclusive') updates.purchased_plan_allinclusive = true;
-        if (itemId === 'plan-turista-basico') updates.purchased_plan_turista_basico = true;
-        if (itemId === 'plan-turista-premium') updates.purchased_plan_turista_premium = true;
-        if (itemId === 'plan-turista-vip') updates.purchased_plan_turista_vip = true;
+        if (itemId === 'plan-basico-basico') updates.purchased_plan_basico_basico = true;
+        if (itemId === 'plan-basico-premium') updates.purchased_plan_basico_premium = true;
+        if (itemId === 'plan-basico-vip') updates.purchased_plan_basico_vip = true;
       });
 
       await updateDoc(userRef, updates);
@@ -443,8 +443,8 @@ export function PortalProvider({ children }: { children: ReactNode }) {
   };
 
   const handleApplyUnlockCode = () => {
-    if (unlockCodeInput === '@Udreamms2026') {
-      localStorage.setItem('udreamms_bypass', '@Udreamms2026');
+    if (unlockCodeInput === '@Klick2026') {
+      localStorage.setItem('klick_bypass', '@Klick2026');
       setIsBypassActive(true);
       toast.success("Código correcto. Todos los contenidos han sido desbloqueados para pruebas.");
       setUnlockCodeInput("");
@@ -454,7 +454,7 @@ export function PortalProvider({ children }: { children: ReactNode }) {
   };
 
   const handleClearBypass = () => {
-    localStorage.removeItem('udreamms_bypass');
+    localStorage.removeItem('klick_bypass');
     setIsBypassActive(false);
     toast.info("Acceso especial desactivado. Los contenidos se han bloqueado de nuevo.");
   };
@@ -465,20 +465,20 @@ export function PortalProvider({ children }: { children: ReactNode }) {
     try {
       const userRef = doc(db, 'users', user.uid);
       const updates = {
-        purchased_curso_estudiante: false,
-        purchased_libro_estudiante: false,
-        purchased_curso_turista: false,
-        purchased_libro_turista: false,
+        purchased_curso_vip: false,
+        purchased_libro_vip: false,
+        purchased_curso_basico: false,
+        purchased_libro_basico: false,
         purchased_plan_esencial: false,
         purchased_plan_pro: false,
         purchased_plan_elite: false,
         purchased_plan_allinclusive: false,
-        purchased_plan_turista_basico: false,
-        purchased_plan_turista_premium: false,
-        purchased_plan_turista_vip: false,
+        purchased_plan_basico_basico: false,
+        purchased_plan_basico_premium: false,
+        purchased_plan_basico_vip: false,
       };
       await updateDoc(userRef, updates);
-      localStorage.removeItem('udreamms_bypass');
+      localStorage.removeItem('klick_bypass');
       setIsBypassActive(false);
       toast.success("Se han restablecido todas las compras en la Base de Datos. Todos los contenidos están bloqueados.");
     } catch (err: any) {
@@ -488,16 +488,16 @@ export function PortalProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const isUnlocked = (type: 'curso' | 'libro' | 'proceso', visa: 'estudiante' | 'turista') => {
+  const isUnlocked = (type: 'curso' | 'libro' | 'proceso', membresía: 'vip' | 'basico') => {
     if (isBypassActive) return true;
-    if (typeof window !== 'undefined' && localStorage.getItem('udreamms_bypass') === '@Udreamms2026') {
+    if (typeof window !== 'undefined' && localStorage.getItem('klick_bypass') === '@Klick2026') {
       return true;
     }
 
     if (!dbUser) return false;
-    if (visa === 'estudiante') {
-      if (type === 'curso') return !!dbUser.purchased_curso_estudiante;
-      if (type === 'libro') return !!dbUser.purchased_libro_estudiante;
+    if (membresía === 'vip') {
+      if (type === 'curso') return !!dbUser.purchased_curso_vip;
+      if (type === 'libro') return !!dbUser.purchased_libro_vip;
       if (type === 'proceso') {
         return (
           !!dbUser.purchased_plan_esencial ||
@@ -507,13 +507,13 @@ export function PortalProvider({ children }: { children: ReactNode }) {
         );
       }
     } else {
-      if (type === 'curso') return !!dbUser.purchased_curso_turista;
-      if (type === 'libro') return !!dbUser.purchased_libro_turista;
+      if (type === 'curso') return !!dbUser.purchased_curso_basico;
+      if (type === 'libro') return !!dbUser.purchased_libro_basico;
       if (type === 'proceso') {
         return (
-          !!dbUser.purchased_plan_turista_basico ||
-          !!dbUser.purchased_plan_turista_premium ||
-          !!dbUser.purchased_plan_turista_vip
+          !!dbUser.purchased_plan_basico_basico ||
+          !!dbUser.purchased_plan_basico_premium ||
+          !!dbUser.purchased_plan_basico_vip
         );
       }
     }
@@ -526,9 +526,9 @@ export function PortalProvider({ children }: { children: ReactNode }) {
     if (planId === 'plan-pro') return !!dbUser.purchased_plan_pro;
     if (planId === 'plan-elite') return !!dbUser.purchased_plan_elite;
     if (planId === 'plan-allinclusive') return !!dbUser.purchased_plan_allinclusive;
-    if (planId === 'plan-turista-basico') return !!dbUser.purchased_plan_turista_basico;
-    if (planId === 'plan-turista-premium') return !!dbUser.purchased_plan_turista_premium;
-    if (planId === 'plan-turista-vip') return !!dbUser.purchased_plan_turista_vip;
+    if (planId === 'plan-basico-basico') return !!dbUser.purchased_plan_basico_basico;
+    if (planId === 'plan-basico-premium') return !!dbUser.purchased_plan_basico_premium;
+    if (planId === 'plan-basico-vip') return !!dbUser.purchased_plan_basico_vip;
     return false;
   };
 
@@ -601,14 +601,14 @@ export function PortalProvider({ children }: { children: ReactNode }) {
     }
   }, [user, loading, router]);
 
-  // Sync visa context from URL when visiting plan or support routes
+  // Sync membresía context from URL when visiting plan or support routes
   useEffect(() => {
     if (pathname.includes('/soporte')) {
       setActiveTopSection('experto');
-    } else if (pathname.includes('/visa-turista')) {
-      setActiveTopSection('visa-turista');
-    } else if (pathname.includes('/visa-estudiante') || pathname.includes('/servicios')) {
-      setActiveTopSection('visa-estudiante');
+    } else if (pathname.includes('/membresía-basico')) {
+      setActiveTopSection('membresia-basica');
+    } else if (pathname.includes('/membresía-vip') || pathname.includes('/servicios')) {
+      setActiveTopSection('membresia-vip');
     }
   }, [pathname]);
 

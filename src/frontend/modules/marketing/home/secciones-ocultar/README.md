@@ -6,8 +6,8 @@ Bloques comentados en `src/app/page.tsx`.
 |------------|-----|
 | `Services` | Flujo “qué hacemos” |
 | `ExperienceSection` | Experiencia / diferencial |
-| `WhyChooseUs` | Por qué Udreamms |
-| `JoinOurStudents` | Comunidad estudiantes |
+| `WhyChooseUs` | Por qué Klick |
+| `JoinOurCommunity` | Comunidad vips |
 | `YouTubeSubscription` | Suscripción YouTube |
 
 Import sugerido en `page.tsx`:

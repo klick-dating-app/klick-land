@@ -40,7 +40,7 @@ export default function SoportePage() {
             <Calendar className="w-6 h-6 text-white" />
             <h3 className="text-xl font-normal">Agendar Videollamada</h3>
             <p className="text-xs text-white/50 leading-relaxed">
-              Programa tus simulacros de entrevista consular presenciales o llamadas de orientación técnica con nuestro equipo. Selecciona la fecha y el horario que mejor te convenga.
+              Programa tus simulacros de primera cita segura presenciales o llamadas de orientación técnica con nuestro equipo. Selecciona la fecha y el horario que mejor te convenga.
             </p>
           </div>
 

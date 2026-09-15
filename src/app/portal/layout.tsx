@@ -251,15 +251,15 @@ function PortalLayoutContent({ children }: { children: React.ReactNode }) {
           <nav className="hidden md:flex items-center gap-1">
             <button
               onClick={() => {
-                setActiveTopSection('visa-estudiante');
-                router.push('/portal/visa-estudiante');
+                setActiveTopSection('membresia-vip');
+                router.push('/portal/membresía-vip');
               }}
               className={`relative px-4 py-2 text-xs font-normal tracking-wider uppercase rounded-full transition-all duration-300 ${
-                activeTopSection === 'visa-estudiante' ? "text-purple-400 bg-white/5" : "text-white/60 hover:text-white hover:bg-white/5"
+                activeTopSection === 'membresia-vip' ? "text-purple-400 bg-white/5" : "text-white/60 hover:text-white hover:bg-white/5"
               }`}
             >
-              F-1 Student Visa
-              {activeTopSection === 'visa-estudiante' && (
+              F-1 Student Membresía
+              {activeTopSection === 'membresia-vip' && (
                 <motion.div 
                   layoutId="activeTabIndicator" 
                   className="absolute bottom-0 left-4 right-4 h-[2px] bg-purple-500"
@@ -269,15 +269,15 @@ function PortalLayoutContent({ children }: { children: React.ReactNode }) {
             </button>
             <button
               onClick={() => {
-                setActiveTopSection('visa-turista');
-                router.push('/portal/visa-turista');
+                setActiveTopSection('membresia-basica');
+                router.push('/portal/membresía-basico');
               }}
               className={`relative px-4 py-2 text-xs font-normal tracking-wider uppercase rounded-full transition-all duration-300 ${
-                activeTopSection === 'visa-turista' ? "text-purple-400 bg-white/5" : "text-white/60 hover:text-white hover:bg-white/5"
+                activeTopSection === 'membresia-basica' ? "text-purple-400 bg-white/5" : "text-white/60 hover:text-white hover:bg-white/5"
               }`}
             >
-              B-2 Tourist Visa
-              {activeTopSection === 'visa-turista' && (
+              B-2 Tourist Membresía
+              {activeTopSection === 'membresia-basica' && (
                 <motion.div 
                   layoutId="activeTabIndicator" 
                   className="absolute bottom-0 left-4 right-4 h-[2px] bg-purple-500"
@@ -465,25 +465,25 @@ function PortalLayoutContent({ children }: { children: React.ReactNode }) {
       <div className="md:hidden w-full bg-[#070709] border-b border-white/5 overflow-x-auto no-scrollbar shrink-0 flex items-center py-2 px-4 gap-2 z-30">
         <button
           onClick={() => {
-            setActiveTopSection('visa-estudiante');
-            router.push('/portal/visa-estudiante');
+            setActiveTopSection('membresia-vip');
+            router.push('/portal/membresía-vip');
           }}
           className={`px-4 py-1.5 text-[10px] font-normal tracking-widest uppercase rounded-full shrink-0 transition-all ${
-            activeTopSection === 'visa-estudiante' ? "text-purple-400 bg-transparent border border-purple-500/40" : "text-white/40 border border-transparent"
+            activeTopSection === 'membresia-vip' ? "text-purple-400 bg-transparent border border-purple-500/40" : "text-white/40 border border-transparent"
           }`}
         >
-          F-1 Student Visa
+          F-1 Student Membresía
         </button>
         <button
           onClick={() => {
-            setActiveTopSection('visa-turista');
-            router.push('/portal/visa-turista');
+            setActiveTopSection('membresia-basica');
+            router.push('/portal/membresía-basico');
           }}
           className={`px-4 py-1.5 text-[10px] font-normal tracking-widest uppercase rounded-full shrink-0 transition-all ${
-            activeTopSection === 'visa-turista' ? "text-purple-400 bg-transparent border border-purple-500/40" : "text-white/40 border border-transparent"
+            activeTopSection === 'membresia-basica' ? "text-purple-400 bg-transparent border border-purple-500/40" : "text-white/40 border border-transparent"
           }`}
         >
-          B-2 Tourist Visa
+          B-2 Tourist Membresía
         </button>
         <button
           onClick={() => {
@@ -502,7 +502,7 @@ function PortalLayoutContent({ children }: { children: React.ReactNode }) {
       <main className="flex-1 overflow-y-auto relative z-10 py-8 px-4 md:px-8 w-full">
         <div className="flex flex-col md:flex-row gap-8 items-start w-full">
           
-          {(activeTopSection === 'visa-estudiante' || activeTopSection === 'visa-turista') && (
+          {(activeTopSection === 'membresia-vip' || activeTopSection === 'membresia-basica') && (
             <PortalSidebar
               activeTopSection={activeTopSection}
               activeSection={activeSection}
@@ -650,15 +650,15 @@ function PortalLayoutContent({ children }: { children: React.ReactNode }) {
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <p className="text-white/70 font-semibold mb-0.5 border-b border-white/5 pb-0.5">F-1</p>
-                        <p>Curso: {dbUser?.purchased_curso_estudiante ? "Libre" : "Bloqueado"}</p>
-                        <p>Libro: {dbUser?.purchased_libro_estudiante ? "Libre" : "Bloqueado"}</p>
+                        <p>Curso: {dbUser?.purchased_curso_vip ? "Libre" : "Bloqueado"}</p>
+                        <p>Libro: {dbUser?.purchased_libro_vip ? "Libre" : "Bloqueado"}</p>
                         <p>Proceso: {dbUser?.purchased_plan_esencial || dbUser?.purchased_plan_pro || dbUser?.purchased_plan_elite || dbUser?.purchased_plan_allinclusive ? "Libre" : "Bloqueado"}</p>
                       </div>
                       <div>
                         <p className="text-white/70 font-semibold mb-0.5 border-b border-white/5 pb-0.5">B-2</p>
-                        <p>Curso: {dbUser?.purchased_curso_turista ? "Libre" : "Bloqueado"}</p>
-                        <p>Libro: {dbUser?.purchased_libro_turista ? "Libre" : "Bloqueado"}</p>
-                        <p>Proceso: {dbUser?.purchased_plan_turista_basico || dbUser?.purchased_plan_turista_premium || dbUser?.purchased_plan_turista_vip ? "Libre" : "Bloqueado"}</p>
+                        <p>Curso: {dbUser?.purchased_curso_basico ? "Libre" : "Bloqueado"}</p>
+                        <p>Libro: {dbUser?.purchased_libro_basico ? "Libre" : "Bloqueado"}</p>
+                        <p>Proceso: {dbUser?.purchased_plan_basico_basico || dbUser?.purchased_plan_basico_premium || dbUser?.purchased_plan_basico_vip ? "Libre" : "Bloqueado"}</p>
                       </div>
                     </div>
                   </div>
@@ -806,7 +806,7 @@ function PortalLayoutContent({ children }: { children: React.ReactNode }) {
                             <CreditCard className="w-4 h-4 text-purple-400" />
                             <span className="text-xs font-semibold text-white">Pay with Card</span>
                           </div>
-                          <p className="text-[9px] text-white/50 leading-relaxed">Visa, Mastercard, Amex</p>
+                          <p className="text-[9px] text-white/50 leading-relaxed">Membresía, Mastercard, Amex</p>
                         </button>
                       </div>
                     </div>

@@ -57,8 +57,8 @@ const nextConfig = {
       { source: '/index.php', destination: '/', permanent: true },
       // Spanish URL aliases
       { source: '/contacto', destination: '/contact', permanent: true },
-      { source: '/servicios', destination: '/services', permanent: true },
-      { source: '/destino', destination: '/destinos', permanent: true },
+      { source: '/servicios', destination: '/features', permanent: true },
+      { source: '/destino', destination: '/safe-dates', permanent: true },
       { source: '/preguntas-frecuentes', destination: '/faqs', permanent: true },
       { source: '/privacidad.html', destination: '/privacidad', permanent: true },
       { source: '/terminos.html', destination: '/terminos', permanent: true },

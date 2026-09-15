@@ -7,13 +7,13 @@ import Footer from "@/components/landing/Footer";
 import Hero from "@/components/landing/Hero";
 import ChooseYourPath from "@/components/landing/ChooseYourPath";
 import Stats from "@/components/landing/Stats";
-import UdreammsAppShowcase from "@/components/landing/UdreammsAppShowcase";
+import KlickAppShowcase from "@/components/landing/KlickAppShowcase";
 import FAQsSection from "@/components/landing/FAQsSection";
-import TouristShowcase from "@/components/landing/TouristShowcase";
-import StudentShowcase from "@/components/landing/StudentShowcase";
+import BasicPlanShowcase from "@/components/landing/BasicPlanShowcase";
+import VipPlanShowcase from "@/components/landing/VipPlanShowcase";
 import MentorshipShowcase from "@/components/landing/MentorshipShowcase";
 import FreeTrainingShowcase from "@/components/landing/FreeTrainingShowcase";
-import UdreammsTVShowcase from "@/components/landing/UdreammsTVShowcase";
+import KlickStoriesShowcase from "@/components/landing/KlickStoriesShowcase";
 
 import { useState, useEffect } from "react";
 import { isNative } from "@/lib/platform";
@@ -45,13 +45,13 @@ export default function Home() {
         {/* Bloque de Planes y App Showcase (Fondo Oscuro Continuo sin barra blanca) */}
         <div className="bg-[#050507] [&>section]:scroll-mt-28">
           <ChooseYourPath />
-          <UdreammsAppShowcase />
+          <KlickAppShowcase />
         </div>
 
         {/* Bloque Secciones Claras (Fondo Blanco) */}
         <div className="flex flex-col gap-16 md:gap-20 lg:gap-24 bg-white [&>section]:scroll-mt-28 py-12 md:py-16">
-          <StudentShowcase />
-          <TouristShowcase />
+          <VipPlanShowcase />
+          <BasicPlanShowcase />
           
           <div className="w-full flex justify-center px-6">
             <a 
@@ -74,7 +74,7 @@ export default function Home() {
 
         {/* Sección oscura inferior */}
         <div className="flex flex-col gap-16 md:gap-20 lg:gap-24 bg-black [&>section]:scroll-mt-28">
-          <UdreammsTVShowcase />
+          <KlickStoriesShowcase />
           <Stats />
           <FAQsSection />
         </div>

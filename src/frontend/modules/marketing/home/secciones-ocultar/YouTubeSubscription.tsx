@@ -24,7 +24,7 @@ export default function YouTubeSubscription() {
           </div>
 
           <a
-            href="https://www.youtube.com/@udreamms"
+            href="https://www.youtube.com/@klick"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center px-8 py-4 text-base font-medium bg-white text-primary rounded-lg shadow-2xl hover:scale-105 transition-all hover:shadow-[0_20px_60px_-10px_rgba(255,255,255,0.5)] group"
@@ -38,7 +38,7 @@ export default function YouTubeSubscription() {
           <div className="mt-8 flex items-center justify-center gap-8 text-white">
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 bg-white rounded-full animate-pulse" />
-              <span className="text-sm font-medium">Tips de Visa</span>
+              <span className="text-sm font-medium">Tips de Membresía</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 bg-white rounded-full animate-pulse" style={{ animationDelay: '0.3s' }} />

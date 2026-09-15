@@ -84,15 +84,15 @@ export default function BookCheckoutFlow({ formData, autoStart = false, onReset 
     setStripeError(null);
     try {
       const origin = window.location.origin;
-      const successUrl = `${origin}/visas/student/book?stripe=success&session_id={CHECKOUT_SESSION_ID}`;
-      const cancelUrl = `${origin}/visas/student/book?stripe=cancelled`;
+      const successUrl = `${origin}/membership/vip/book?stripe=success&session_id={CHECKOUT_SESSION_ID}`;
+      const cancelUrl = `${origin}/membership/vip/book?stripe=cancelled`;
 
       const response = await fetch('/api/payments/stripe/create-session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email: email || '',
-          itemIds: ['libro-estudiante'],
+          itemIds: ['libro-vip'],
           successUrl,
           cancelUrl,
         }),
@@ -181,7 +181,7 @@ export default function BookCheckoutFlow({ formData, autoStart = false, onReset 
             <CreditCard className="w-6 h-6 text-blue-400" />
             <div>
               <p className="font-semibold text-white">Pagar con Tarjeta (Stripe)</p>
-              <p className="text-xs text-slate-400 mt-1">Visa · Mastercard · Amex · Apple Pay</p>
+              <p className="text-xs text-slate-400 mt-1">Membresía · Mastercard · Amex · Apple Pay</p>
             </div>
           </button>
         </div>
@@ -215,7 +215,7 @@ export default function BookCheckoutFlow({ formData, autoStart = false, onReset 
 
             {paymentMethod === 'crypto' && checkoutSessionId ? (
               <CryptoCheckoutPanel
-                planId="libro-estudiante"
+                planId="libro-vip"
                 sessionId={checkoutSessionId}
                 onSuccess={handleCryptoSuccess}
                 compact
