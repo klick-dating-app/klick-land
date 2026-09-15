@@ -32,7 +32,7 @@ export default function MobileAppWelcome({
             className="flex items-center justify-center gap-3 px-4 py-1.5 bg-transparent"
           >
             <Image
-              src="/matchapp-logo-circular.png"
+              src="/klick-logo-circular.png"
               alt="Klick Dating Logo"
               width={40}
               height={40}

@@ -28,7 +28,7 @@ const stages = [
   {
     id: 2,
     tag: "STAGE 2",
-    title: "Algorithm & Matching",
+    title: "Algoritmo Klick!",
     description: "Our system matches values, lifestyle, and shared passions.",
     icon: Sparkles,
     supportText: "How does Klick support you in this stage?",

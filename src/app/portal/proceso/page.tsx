@@ -17,7 +17,7 @@ export default function ProcesoPage() {
         <h2 className="text-2xl md:text-3xl font-normal tracking-tight">
           {isVip ? "Mi Proceso de Admisión" : "Mi Proceso de Solicitud"}
         </h2>
-        <p className="text-sm text-white/50">Monitorea y gestiona el avance de tu proceso de verificación y matching en tiempo real.</p>
+        <p className="text-sm text-white/50">Monitorea y gestiona el avance de tu proceso de verificación y conexión Klick en tiempo real.</p>
       </div>
 
       <div className="relative min-h-[450px]">

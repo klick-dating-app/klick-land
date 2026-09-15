@@ -7,7 +7,7 @@
 
 ## 📌 00. Principios del Sistema y Reglas Críticas
 
-1. **Pipeline de Matching Determinista:**
+1. **Pipeline de Conexión Klick Determinista:**
    $$\text{Safety Gate} \longrightarrow \text{Hard Compatibility} \longrightarrow \text{Weighted Score} \longrightarrow \text{60\% Threshold} \longrightarrow \text{Common Ground} \longrightarrow \text{Connection}$$
 2. **Regla de Oro:** Un score del $85\%$ o superior **nunca anula** una falla en los filtros de seguridad o en un requisito marcado como *Indispensable*.
 3. **Escala de Compatibilidad:**
@@ -123,7 +123,7 @@ $$\text{Peso Total} = 6 + 5 + 5 + 5 + 4 + 4 + 4 + 4 + 3 + 3 = 43$$
 | **DEV-004** | Search Engine | Preferencias de usuario | Query combinada con filtros básicos de radio, edad y género. | Lista Candidatos | **P0** |
 | **DEV-005** | Safety Gate | Bloqueos / Restricciones | Evaluación de listas de exclusión previas al matching. | `PASS` / `EXCLUDE` | **P0** |
 | **DEV-006** | Hard Compatibility | Requisitos `Indispensable` | Evaluación booleana estricta de requisitos excluyentes. | `PASS` / `EXCLUDE` | **P0** |
-| **DEV-007** | Match Engine | Perfiles A y B | Algoritmo de 10 categorías ponderadas y normalización. | Score (0–100%) | **P0** |
+| **DEV-007** | Klick Engine | Perfiles A y B | Algoritmo de 10 categorías ponderadas y normalización. | Score (0–100%) | **P0** |
 | **DEV-008** | Threshold Evaluator | Score numérico | Regla de corte en $60.00\%$. | `PASS` / `BLOCK` | **P0** |
 | **DEV-009** | Common Ground | Datos autorizados A y B | Extracción de 3 a 7 elementos coincidentes. | Array Coincidencias | **P0** |
 | **DEV-010** | Connection Manager | Estado de Gates y Score | Habilitación de interacción y creación de hilo de chat. | `ALLOW` / `DENY` | **P0** |
@@ -174,7 +174,7 @@ $$\text{Peso Total} = 6 + 5 + 5 + 5 + 4 + 4 + 4 + 4 + 3 + 3 = 43$$
 | **AT-002** | Puntaje en el umbral exacto | Score = $60.00\%$; todos los demás gates aprobados. | Conexión **AUTORIZADA**; se presenta Common Ground y opción de match. | **P0** |
 | **AT-003** | Requisito Indispensable insatisfecho | Score = $88.00\%$; un requisito *Indispensable* no coincide. | Perfil **EXCLUIDO** completamente de los resultados. | **P0** |
 | **AT-004** | Usuario bloqueado | Usuario A tiene bloqueado a Usuario B. | Ninguno puede ver el perfil ni comunicarse con el otro. | **P0** |
-| **AT-005** | Usuario restringido | Usuario B tiene estado `Restricted` por seguridad. | Excluido de todo el motor de matching. | **P0** |
+| **AT-005** | Usuario restringido | Usuario B tiene estado `Restricted` por seguridad. | Excluido de todo el motor de conexión Klick. | **P0** |
 | **AT-006** | Usuario no verificado | Usuario B tiene estado KYC `Pending` o `Failed`. | Restricciones de interacción aplicadas según política. | **P0** |
 | **AT-007** | Distancia excedida | Distancia aproximada = 45 mi; límite de búsqueda = 30 mi. | Perfil **EXCLUIDO** de los resultados de búsqueda. | **P0** |
 | **AT-008** | Extracción de Common Ground | Usuarios coinciden en Senderismo, Español y Matrimonio. | Se muestran exactamente las 3 coincidencias reales autorizadas. | **P0** |

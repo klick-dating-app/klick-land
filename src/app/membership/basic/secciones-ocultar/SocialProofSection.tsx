@@ -81,7 +81,7 @@ export default function SocialProofSection() {
                             </div>
                         </div>
                         <p className="text-slate-600 text-sm flex-grow font-medium leading-relaxed">
-                            "Había sido rechazado 2 veces antes. Con KLICK! SafeMatch entendí mis errores. La inversión valió cada centavo solo por la tranquilidad."
+                            "Había sido rechazado 2 veces antes. Con KLICK! KLICK! entendí mis errores. La inversión valió cada centavo solo por la tranquilidad."
                         </p>
                         <div className="mt-4 pt-4 border-t border-slate-50 text-xs text-slate-400">
                             Hace 1 semana • Renovación

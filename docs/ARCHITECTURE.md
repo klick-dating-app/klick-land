@@ -36,7 +36,7 @@ klick/
 | :--- | :--- |
 | `/` | Landing page principal de KLICK! (propuesta de valor, compatibilidad, testimonios, CTA) |
 | `/membership/basic` | Landing de Membresía Básica y Verificación de Identidad |
-| `/membership/vip` | Landing de Membresía VIP y Experiencia de Matching Completa |
+| `/membership/vip` | Landing de Membresía VIP y Experiencia Klick Completa |
 | `/instructions-payment-basic` | Checkout e instrucciones de pago para Membresía Básica (Stripe / Solana QR) |
 | `/instructions-payment-vip` | Checkout e instrucciones de pago para Membresía VIP (Stripe / Solana QR) |
 | `/education` | Módulo de Educación para las Relaciones y Citas Saludables |
@@ -72,7 +72,7 @@ klick/
 
 ---
 
-## 3. Flujo de Datos y Pipeline de Matching
+## 3. Flujo de Datos y Pipeline de Conexión Klick
 
 ```mermaid
 flowchart TD
@@ -90,7 +90,7 @@ flowchart TD
         FCM["Firebase Cloud Messaging"]
         Storage["Cloud Storage (Fotos cifradas)"]
         Vertex["Vertex AI (Moderación & Asistente)"]
-        Fn["Cloud Functions (Match 0-100%)"]
+        Fn["Cloud Functions (Klick Score 0-100%)"]
     end
 
     UI --> AuthAPI

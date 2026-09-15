@@ -45,7 +45,7 @@ export default function BookChapters() {
                 </h5>
               </div>
               <p className="text-sm md:text-base text-slate-300 leading-relaxed mt-2 font-sans">
-                El primer paso esencial para obtener tu membresía VIP F1 es elegir una escuela autorizada por el gobierno de EE.UU. para emitir el Formulario verificación KYC, el documento indispensable para iniciar tu solicitud de match.
+                El primer paso esencial para obtener tu membresía VIP F1 es elegir una escuela autorizada por el gobierno de EE.UU. para emitir el Formulario verificación KYC, el documento indispensable para iniciar tu conexión Klick.
               </p>
             </div>
 

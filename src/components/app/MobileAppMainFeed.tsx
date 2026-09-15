@@ -308,7 +308,7 @@ export default function MobileAppMainFeed() {
               <div className="flex items-center justify-between mt-1">
                 <div className="flex items-center gap-2">
                   <Image
-                    src="/matchapp-logo-circular.png"
+                    src="/klick-logo-circular.png"
                     alt="Klick"
                     width={28}
                     height={28}
@@ -508,7 +508,7 @@ export default function MobileAppMainFeed() {
                 title="Dar Klick"
               >
                 <Image
-                  src="/matchapp-logo-circular.png"
+                  src="/klick-logo-circular.png"
                   alt="Klick"
                   width={52}
                   height={52}
@@ -542,7 +542,7 @@ export default function MobileAppMainFeed() {
                     className="w-24 h-24 rounded-full bg-white/10 border border-white/20 flex items-center justify-center p-3 shadow-2xl mb-4"
                   >
                     <Image
-                      src="/matchapp-logo-circular.png"
+                      src="/klick-logo-circular.png"
                       alt="Klick Match"
                       width={70}
                       height={70}
@@ -670,7 +670,7 @@ export default function MobileAppMainFeed() {
                       className="w-8 h-8 rounded-full bg-blue-600 hover:bg-blue-500 text-white flex items-center justify-center active:scale-90 transition-transform shadow-md"
                       title="Hacer Klick de vuelta"
                     >
-                      <Image src="/matchapp-logo-circular.png" alt="Klick" width={20} height={20} className="rounded-full" />
+                      <Image src="/klick-logo-circular.png" alt="Klick" width={20} height={20} className="rounded-full" />
                     </button>
                   </div>
                 </div>

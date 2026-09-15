@@ -39,7 +39,7 @@ export default function PrivacyPage() {
                 transition={{ delay: 0.2 }}
                 className="text-xl md:text-2xl text-[#86868b] font-medium max-w-2xl leading-relaxed"
               >
-                At SafeMeet.Ut LLC (KLICK!), we value your trust. That is why we are transparent about how we handle your personal information throughout your matching process.
+                At SafeMeet.Ut LLC (KLICK!), we value your trust. That is why we are transparent about how we handle your personal information throughout your proceso de conexión Klick.
               </motion.p>
 
               <motion.div

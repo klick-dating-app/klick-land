@@ -127,7 +127,7 @@ export default function PlansSection() {
                             Elige tu Plan Ideal
                         </h2>
                         <p className="text-base text-slate-400 max-w-2xl mx-auto leading-relaxed">
-                            Integramos compatibilidad de valores y objetivos y preparación para citas y matching estratégica en un solo lugar.
+                            Integramos compatibilidad de valores y objetivos y preparación para tus conexiones Klick estratégica en un solo lugar.
                         </p>
                     </FadeIn>
                 </div>

@@ -23,7 +23,7 @@ const paths = [
     subtitle: "The simple and authentic way to meet like-minded people safely.",
     features: [
       { text: "360° Complete Profile Creation", icon: Activity },
-      { text: "Affinity Matching Algorithm", icon: Sparkles },
+      { text: "Affinity Algoritmo Klick!", icon: Sparkles },
       { text: "Daily Likes & Connections", icon: Heart },
       { text: "Direct Chat with your Matches", icon: MessageSquare },
       { text: "Basic Location & Age Filters", icon: MapPin },

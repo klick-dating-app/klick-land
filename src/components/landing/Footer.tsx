@@ -16,7 +16,7 @@ const Footer = () => {
               Connecting people authentically and honestly
             </p>
             <div className="mt-6">
-              <img src="/matchapp-logo-circular.png" alt="Klick Logo" className="w-16 h-16 object-cover rounded-full opacity-90 mb-4" />
+              <img src="/klick-logo-circular.png" alt="Klick Logo" className="w-16 h-16 object-cover rounded-full opacity-90 mb-4" />
               <p className="text-gray-400 text-xs leading-relaxed">
                 Klick - The dating and matchmaking platform based on honesty, shared interests, and cultural exchange.
               </p>

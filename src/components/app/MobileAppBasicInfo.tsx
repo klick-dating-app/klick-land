@@ -81,7 +81,7 @@ export default function MobileAppBasicInfo({
 
           <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/5 border border-white/10 shrink-0">
             <Image
-              src="/matchapp-logo-circular.png"
+              src="/klick-logo-circular.png"
               alt="Klick"
               width={18}
               height={18}

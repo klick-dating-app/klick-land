@@ -5,7 +5,7 @@ export const SITE_URL =
 export const SITE_NAME = "Klick";
 
 /** URL estable del logo (Google Search favicon + schema.org). */
-export const SITE_LOGO_PATH = "/matchapp-logo-circular.png";
+export const SITE_LOGO_PATH = "/klick-logo-circular.png";
 export const SITE_LOGO_URL = `${SITE_URL}${SITE_LOGO_PATH}`;
 
 export const DEFAULT_DESCRIPTION =

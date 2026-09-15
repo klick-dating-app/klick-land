@@ -10,7 +10,7 @@ Toda la especificación técnica, ejecutiva y de diseño está centralizada en l
 
 1. **[Resumen Ejecutivo del Proyecto](docs/01_RESUMEN_EJECUTIVO_KLICK.md)** — Visión del CEO Juan Carlos Llumipanta, mercado LDS en Utah, modelo de negocio e impacto.
 2. **[Documento de Alcanzables y Entregables por Fases](docs/02_ALCANZABLES_Y_ENTREGABLES_FASES.md)** — Alcance exacto de la **Fase 1 (Web2 Google Cloud / Firebase)** y la **Fase 2 (Web3 Solana Híbrido)**.
-3. **[Diagramas de Funciones, Flujos y Arquitectura](docs/03_DIAGRAMA_DE_FUNCIONES_Y_ARQUITECTURA.md)** — Diagramas de flujo (Mermaid): motor de matching, Safe First Date, arquitectura y entitlements.
+3. **[Diagramas de Funciones, Flujos y Arquitectura](docs/03_DIAGRAMA_DE_FUNCIONES_Y_ARQUITECTURA.md)** — Diagramas de flujo (Mermaid): motor de conexión Klick, Safe First Date, arquitectura y entitlements.
 4. **[Especificación Técnica de Desarrollo (Dev Specs)](docs/04_ESPECIFICACION_TECNICA_DEV_SPECS.md)** — Especificación exhaustiva (Hojas 00 a 10 de Excel): filtros F-001..031, módulos DEV-001..020, controles de seguridad y pruebas de aceptación AT-001..015.
 
 ---

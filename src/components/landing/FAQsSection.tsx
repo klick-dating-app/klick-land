@@ -15,7 +15,7 @@ const categories = [
         answer: "Klick is a dating and matchmaking platform designed to connect people seeking honest, authentic, and meaningful relationships. We combine a smart compatibility algorithm with profile verification and constant guidance."
       },
       {
-        question: "How does the matching algorithm work?",
+        question: "How does the algoritmo Klick work?",
         answer: "Our algorithm analyzes your values, hobbies, lifestyle, and personal goals to suggest truly compatible people. We prioritize real compatibility over superficial matches."
       },
       {
@@ -83,7 +83,7 @@ export default function FAQsSection() {
             <span className="text-gray-400">transparently</span>
           </h2>
           <p className="text-lg text-gray-400 font-normal leading-relaxed max-w-2xl mx-auto">
-            Find clarity about our plans, verified profiles, and matching process. Total honesty from day one.
+            Find clarity about our plans, verified profiles, and proceso de conexión Klick. Total honesty from day one.
           </p>
         </div>
 

@@ -47,7 +47,7 @@ funnel
     "1. Registro & Onboarding" : 100
     "2. Verificación KYC Aprobada" : 85
     "3. Cuestionario de Compatibilidad Completo" : 75
-    "4. Primer Match Compatible (Score >= 60%)" : 55
+    "4. Primer Klick! Compatible (Score >= 60%)" : 55
     "5. Conversión a Suscripción Premium (Hombres)" : 18
     "6. Coordinación de Safe First Date" : 12
 ```

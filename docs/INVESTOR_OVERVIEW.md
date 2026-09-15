@@ -41,7 +41,7 @@ flowchart LR
     subgraph Backend["Infraestructura & Plataforma"]
         API["API Routes /api/payments/*"]
         FS["Cloud Firestore"]
-        Fn["Cloud Functions (Match 0-100%)"]
+        Fn["Cloud Functions (Klick Score 0-100%)"]
         Stripe["Stripe Checkout"]
         Solana["Solana Pay / USDC"]
     end

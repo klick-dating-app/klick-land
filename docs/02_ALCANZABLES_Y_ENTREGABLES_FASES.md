@@ -47,7 +47,7 @@ En esta fase se entrega un producto 100% funcional, seguro, escalable y con cump
 | **Base de Datos** | **Cloud Firestore** | Perfiles, cuestionarios de compatibilidad, likes, matches y estados de seguridad. |
 | **Almacenamiento Multimedia** | **Cloud Storage + CDN** | Fotos de perfil y evidencias de verificación (cifrado en reposo). |
 | **Chat en Tiempo Real** | **Cloud Firestore / Realtime DB** | Mensajería privada y cifrada en tránsito entre matches autorizados. |
-| **Motor de Matching** | **Cloud Functions + Índices Firestore** | Cálculo de compatibilidad (0–100%), regla del 60% y Common Ground. |
+| **Motor de Conexión Klick** | **Cloud Functions + Índices Firestore** | Cálculo de compatibilidad (0–100%), regla del 60% y Common Ground. |
 | **Notificaciones Push** | **Firebase Cloud Messaging (FCM)** | Alertas instantáneas de matches, mensajes, recordatorios y *Safe First Date*. |
 | **Moderación & Seguridad** | **Vertex AI + Reglas de Moderación Humana** | Análisis de imágenes, biografía y texto; cola de moderación y reportes. |
 | **Pasarela de Pagos** | **Stripe Billing / Checkout** | Suscripciones mensuales/anuales y cobros para hombres; mujeres gratis. |

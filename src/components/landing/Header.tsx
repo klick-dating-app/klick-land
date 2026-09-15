@@ -48,11 +48,11 @@ const menuData: MenuItemData[] = [
     href: "/#descubrir",
     megaMenu: {
       title: "Discover Klick",
-      description: "Learn how the platform and matching algorithm work.",
+      description: "Learn how the platform and algoritmo Klick work.",
       actionText: "Learn more",
       actionHref: "/#descubrir",
       items: [
-        { title: "Matching Algorithm", desc: "Smart compatibility based on real affinities and interests", href: "/#descubrir", icon: Sparkles, colorClass: "text-[#9b4dca] bg-[#9b4dca]/10" },
+        { title: "Algoritmo Klick!", desc: "Smart compatibility based on real affinities and interests", href: "/#descubrir", icon: Sparkles, colorClass: "text-[#9b4dca] bg-[#9b4dca]/10" },
         { title: "How the Platform Works", desc: "Step-by-step to create your profile and find matches", href: "/#descubrir", icon: Compass, colorClass: "text-pink-400 bg-pink-500/10" }
       ]
     }
@@ -156,7 +156,7 @@ export default function Header() {
           <div className="flex items-center gap-4 lg:gap-12 h-full">
             <Link href="/" className="flex items-center gap-2 z-50 shrink-0 group">
               <div className="w-7 h-7 relative transition-transform duration-300 group-hover:scale-110">
-                <img src="/matchapp-logo-circular.png" alt="Klick" className="object-cover w-full h-full rounded-full drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]" />
+                <img src="/klick-logo-circular.png" alt="Klick" className="object-cover w-full h-full rounded-full drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]" />
               </div>
               <span className="text-lg font-medium tracking-tight text-white group-hover:text-white transition-colors">Klick</span>
             </Link>

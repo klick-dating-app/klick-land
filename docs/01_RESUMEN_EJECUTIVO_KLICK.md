@@ -112,6 +112,6 @@ A diferencia de las aplicaciones tradicionales orientadas a maximizar el tiempo 
 
 1. **Tasa de Verificación:** $\%$ de perfiles con KYC aprobado ($> 85\%$).
 2. **Completitud de Perfiles:** $\%$ de usuarios con cuestionario de compatibilidad completo ($> 90\%$).
-3. **Calidad de Matching:** Compatibilidad media de conexiones iniciadas ($> 72\%$).
+3. **Calidad de Conexiones Klick:** Compatibilidad media de conexiones iniciadas ($> 72\%$).
 4. **Conversión a Citas Seguras:** Número de citas coordinadas mediante el protocolo *Safe First Date*.
 5. **Métricas de Trust & Safety:** Tasa de reportes por usuario, tiempo de respuesta a incidentes ($< 15$ min en alertas críticas) y cero tolerancia a cuentas falsas.

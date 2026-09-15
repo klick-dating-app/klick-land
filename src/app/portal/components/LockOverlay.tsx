@@ -36,8 +36,8 @@ export default function LockOverlay({ itemId }: LockOverlayProps) {
           <h3 className="text-lg md:text-xl font-normal text-white uppercase tracking-wider">{itemInfo.name}</h3>
           <p className="text-[11px] md:text-xs text-white/50 leading-relaxed">
             {isProceso
-              ? "Este módulo de seguimiento y preparación para citas y matching requiere la contratación de un plan de asesoría activo."
-              : "Este contenido exclusivo está bloqueado. Adquiere el acceso permanente para comenzar tu preparación para citas y matching con nuestros mentores autorizados."}
+              ? "Este módulo de seguimiento y preparación para tus conexiones Klick requiere la contratación de un plan de asesoría activo."
+              : "Este contenido exclusivo está bloqueado. Adquiere el acceso permanente para comenzar tu preparación para tus conexiones Klick con nuestros mentores autorizados."}
           </p>
         </div>
 

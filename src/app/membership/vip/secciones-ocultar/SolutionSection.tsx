@@ -20,7 +20,7 @@ export default function SolutionSection() {
                         <span>Admisión + <span className="text-[#82111f]">Estrategia Legal.</span></span>
                     </h3>
                     <p className="text-lg text-slate-600 leading-relaxed max-w-2xl mx-auto">
-                        Integramos afinidad relacional y de valores y preparación para citas y matching para blindar tu solicitud desde el día 1.
+                        Integramos afinidad relacional y de valores y preparación para tus conexiones Klick para blindar tu solicitud desde el día 1.
                     </p>
                 </FadeIn>
 

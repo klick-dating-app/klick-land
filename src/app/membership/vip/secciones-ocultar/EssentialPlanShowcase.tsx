@@ -56,7 +56,7 @@ export default function EssentialPlanShowcase() {
                             <span className="text-black">Membresía VIP</span>
                         </h2>
                         <p className="mt-6 text-xl text-black font-normal leading-relaxed max-w-xl">
-                            Todo lo que necesitas para asegurar tu proceso de verificación y compatibilidad y comenzar tu proceso de matching y verificación con expertos.
+                            Todo lo que necesitas para asegurar tu proceso de verificación y compatibilidad y comenzar tu proceso de conexión Klick y verificación con expertos.
                         </p>
                     </div>
                     <Link href="/instructions-payment-vip?plan=esencial">

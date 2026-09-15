@@ -19,7 +19,7 @@ flowchart TD
         REG --> KYC --> FILT
     end
 
-    subgraph M03["03 & 04. Motor de Matching & Compatibilidad"]
+    subgraph M03["03 & 04. Motor de Conexión Klick & Compatibilidad"]
         GATE1["Hard Safety Filters (Bloqueos/Restricciones)"]
         GATE2["Hard Compatibility Filters (Indispensables)"]
         SCORE["Cálculo de Score Ponderado (0-100%)"]
@@ -62,13 +62,13 @@ flowchart TD
 
 ---
 
-## 2. Flujo Completo del Motor de Matching (Pipeline de 6 Pasos)
+## 2. Flujo Completo del Motor de Conexión Klick (Pipeline de 6 Pasos)
 
 ```mermaid
 sequenceDiagram
     autonumber
     actor UsuarioA as Usuario A
-    participant Engine as Motor de Matching (Cloud Functions)
+    participant Engine as Motor de Conexión Klick (Cloud Functions)
     participant DB as Firestore / Cloud SQL
     actor UsuarioB as Candidato B
 
@@ -160,7 +160,7 @@ flowchart TB
         Auth2["Firebase Authentication (Email, Apple, Google, SMS)"]
         Firestore["Cloud Firestore (Perfiles, Matches, Score, Chats)"]
         Storage["Cloud Storage (Fotos Privadas / KYC cifrado)"]
-        Functions["Cloud Functions / Cloud Run (Match Engine & Moderación)"]
+        Functions["Cloud Functions / Cloud Run (Klick Engine & Moderación)"]
         Stripe["Stripe Payments (Suscripciones FIAT)"]
         Vertex["Vertex AI (Moderación y Asistente Educativo)"]
     end
