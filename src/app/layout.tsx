@@ -34,6 +34,8 @@ export const viewport: Viewport = {
   ],
 };
 
+import { KlickAppProvider } from "@/context/KlickAppContext";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -79,11 +81,13 @@ fbq('track', 'PageView');
           enableSystem
           disableTransitionOnChange
         >
-          <SidebarProvider>
-            <NativeShell />
-            {children}
-            <Toaster />
-          </SidebarProvider>
+          <KlickAppProvider>
+            <SidebarProvider>
+              <NativeShell />
+              {children}
+              <Toaster />
+            </SidebarProvider>
+          </KlickAppProvider>
         </ThemeProvider>
       </body>
     </html>
