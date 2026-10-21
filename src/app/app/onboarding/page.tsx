@@ -139,10 +139,10 @@ export default function OnboardingPage() {
   return (
     <div className="space-y-6 p-5 pb-10 pt-8">
       <header className="space-y-2">
-        <p className="text-xs uppercase tracking-wider text-primary">Paso {step + 1} de {STEPS.length}</p>
-        <h1 className="text-3xl font-extrabold tracking-tight">{STEPS[step]}</h1>
-        <div className="h-1.5 rounded-full bg-muted">
-          <div className="h-full rounded-full bg-gradient-to-r from-rose-500 to-orange-500 transition-all" style={{ width: `${((step + 1) / STEPS.length) * 100}%` }} />
+        <p className="eyebrow">Paso {step + 1} de {STEPS.length}</p>
+        <h1 className="text-4xl font-light tracking-tighter">{STEPS[step]}</h1>
+        <div className="h-px bg-white/15">
+          <div className="bg-brand h-px transition-all" style={{ width: `${((step + 1) / STEPS.length) * 100}%` }} />
         </div>
       </header>
 

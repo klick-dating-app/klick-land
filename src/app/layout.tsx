@@ -33,11 +33,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body className={`${montserrat.variable} font-sans`}>
         <GoogleAnalytics />
         <OrganizationJsonLd />
-        <ThemeProvider attribute="class" defaultTheme="dark" disableTransitionOnChange>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
           <AuthProvider>
             <NativeShell />
             {children}
-            <Toaster position="top-center" richColors />
+            <Toaster position="top-center" richColors theme="system" />
           </AuthProvider>
         </ThemeProvider>
       </body>
