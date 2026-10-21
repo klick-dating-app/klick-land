@@ -110,11 +110,13 @@ export default function DiscoverPage() {
               </button>
             </div>
             <div className="pointer-events-none space-y-2">
-              <ScoreBadge score={current.score} />
-              <h2 className="flex items-center gap-2 text-2xl font-semibold leading-none tracking-tight">
-                {current.name}, <span className="font-light">{current.age}</span>
-                {current.verified && <VerifiedStar />}
-              </h2>
+              <div className="flex items-center justify-between gap-3">
+                <h2 className="flex items-center gap-2 text-2xl font-semibold leading-none tracking-tight">
+                  {current.name}, <span className="font-light">{current.age}</span>
+                  {current.verified && <VerifiedStar />}
+                </h2>
+                <ScoreBadge score={current.score} />
+              </div>
               <p className="flex items-center gap-1.5 text-xs font-medium text-white/80"><MapPin className="h-3.5 w-3.5 text-blue-400" />{current.city}, {current.state} · {current.distanceMiles} mi</p>
             </div>
           </div>

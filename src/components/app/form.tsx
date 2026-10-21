@@ -87,11 +87,12 @@ export function Spinner({ className }: { className?: string }) {
   return <div className={cn('h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent', className)} />;
 }
 
-export function ScoreBadge({ score }: { score: number }) {
+/** Porcentaje de compatibilidad: solo texto, sin cápsula. */
+export function ScoreBadge({ score, className }: { score: number; className?: string }) {
   return (
-    <span className="inline-flex items-center gap-2 rounded-full border border-foreground/15 bg-black/50 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider backdrop-blur-md">
-      <span className="text-brand text-sm font-bold normal-case tracking-normal">{Math.round(score)}%</span>
-      <span className="text-white/70">Klick</span>
+    <span className={cn('inline-flex items-baseline gap-1.5 drop-shadow-[0_1px_4px_rgba(0,0,0,0.6)]', className)}>
+      <span className="text-brand text-2xl font-semibold leading-none tracking-tight">{Math.round(score)}%</span>
+      <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/80">Klick</span>
     </span>
   );
 }
