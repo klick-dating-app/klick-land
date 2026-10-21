@@ -22,6 +22,7 @@ export default function DiscoverPage() {
   const [matchInfo, setMatchInfo] = useState<{ id: string; name: string; score: number; photo?: string } | null>(null);
   const [busy, setBusy] = useState(false);
   const touchX = useRef<number | null>(null);
+  const [labelsVisible, setLabelsVisible] = useState(true);
 
   const load = useCallback(async () => {
     setQueue(null);
@@ -35,6 +36,14 @@ export default function DiscoverPage() {
   useEffect(() => void load(), [load]);
 
   const current = queue?.[0];
+  const currentId = current?.uid;
+
+  // Las etiquetas (Next / Klick / Dating) se desvanecen lentamente a los 5 s de mostrar cada perfil.
+  useEffect(() => {
+    setLabelsVisible(true);
+    const t = setTimeout(() => setLabelsVisible(false), 5000);
+    return () => clearTimeout(t);
+  }, [currentId]);
   const next = () => {
     setPhotoIdx(0);
     window.scrollTo({ top: 0 });
@@ -89,23 +98,18 @@ export default function DiscoverPage() {
           <div className="absolute right-3 top-[calc(0.9rem+var(--safe-top))] z-10"><SafetyMenu onPhoto targetId={current.uid} onDone={next} /></div>
 
           <div className="absolute inset-x-5 bottom-4 z-10 space-y-3 text-white">
-            {current.photos.length > 1 && (
-              <div className="pointer-events-none flex justify-center gap-1.5" aria-label={`Foto ${photoIdx + 1} de ${current.photos.length}`}>
-                {current.photos.map((_, i) => <span key={i} className={`h-1.5 rounded-full transition-all ${i === photoIdx ? 'w-5 bg-white' : 'w-1.5 bg-white/40'}`} />)}
-              </div>
-            )}
             <div className="flex items-end justify-center gap-12 pb-1">
               <button disabled={busy} onClick={() => act('pass')} aria-label="Next" className="flex w-16 flex-col items-center gap-1.5 transition active:scale-90">
                 <UserRound className="h-10 w-10 drop-shadow-[0_3px_8px_rgba(0,0,0,0.55)]" strokeWidth={1.4} />
-                <span className="text-xs font-semibold text-white/90">Next</span>
+                <span className={`text-xs font-semibold text-white/90 transition-opacity duration-[1500ms] ${labelsVisible ? 'opacity-100' : 'opacity-0'}`}>Next</span>
               </button>
               <button disabled={busy} onClick={() => act('like', 'friendship')} aria-label="Klick" className="flex w-16 flex-col items-center gap-1.5 transition active:scale-90">
                 <KlickLogo size={44} className="drop-shadow-[0_3px_8px_rgba(0,0,0,0.55)]" />
-                <span className="text-xs font-semibold text-white/90">Klick</span>
+                <span className={`text-xs font-semibold text-white/90 transition-opacity duration-[1500ms] ${labelsVisible ? 'opacity-100' : 'opacity-0'}`}>Klick</span>
               </button>
               <button disabled={busy} onClick={() => act('like', 'date')} aria-label="Dating" className="flex w-16 flex-col items-center gap-1.5 transition active:scale-90">
                 <RedHeartIcon className="h-11 w-11 drop-shadow-[0_3px_8px_rgba(0,0,0,0.55)]" />
-                <span className="text-xs font-semibold text-white/90">Dating</span>
+                <span className={`text-xs font-semibold text-white/90 transition-opacity duration-[1500ms] ${labelsVisible ? 'opacity-100' : 'opacity-0'}`}>Dating</span>
               </button>
             </div>
             <div className="pointer-events-none space-y-2">
