@@ -3,37 +3,32 @@
     {
       "source": "functions",
       "codebase": "default",
-      "ignore": [
-        "node_modules",
-        ".git",
-        "firebase-debug.log",
-        "firebase-debug.*.log",
-        "*.local"
-      ],
-      "predeploy": [
-        "npm --prefix \"$RESOURCE_DIR\" run build"
-      ],
+      "ignore": ["node_modules", ".git", "firebase-debug.log", "*.local"],
+      "predeploy": ["npm --prefix \"$RESOURCE_DIR\" run build"],
       "runtime": "nodejs20"
     }
   ],
   "hosting": {
-    "source": ".",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
+    "public": "out",
+    "cleanUrls": true,
+    "trailingSlash": true,
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "headers": [
+      { "source": "**", "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Cross-Origin-Opener-Policy", "value": "same-origin-allow-popups" }
+      ] },
+      { "source": "/_next/static/**", "headers": [
+        { "key": "Cache-Control", "value": "public,max-age=31536000,immutable" }
+      ] }
     ],
-    "frameworksBackend": {
-      "region": "us-central1"
-    }
-  },
-  "emulators": {
-    "functions": {
-      "port": 5001
-    },
-    "ui": {
-      "port": 4000
-    }
+    "redirects": [
+      { "source": "/contacto", "destination": "/contact", "type": 301 },
+      { "source": "/privacidad", "destination": "/privacy", "type": 301 },
+      { "source": "/terminos", "destination": "/terms", "type": 301 },
+      { "source": "/preguntas-frecuentes", "destination": "/faqs", "type": 301 }
+    ]
   },
   "firestore": {
     "database": "(default)",
@@ -41,7 +36,13 @@
     "rules": "firestore.rules",
     "indexes": "firestore.indexes.json"
   },
-  "storage": {
-    "rules": "storage.rules"
+  "storage": { "rules": "storage.rules" },
+  "emulators": {
+    "auth": { "port": 9099 },
+    "functions": { "port": 5001 },
+    "firestore": { "port": 8080 },
+    "storage": { "port": 9199 },
+    "hosting": { "port": 5000 },
+    "ui": { "enabled": true, "port": 4000 }
   }
 }
