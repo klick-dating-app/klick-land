@@ -82,7 +82,7 @@ function SafeDates() {
         <div className="flex items-end justify-between">
           <div>
             <p className="eyebrow">Safe First Date</p>
-            <h1 className="text-4xl font-light tracking-tighter">Citas seguras</h1>
+            <h1 className="text-[26px] font-light tracking-tight">Citas seguras</h1>
           </div>
           {!matchId && matches.length > 0 && <a href="#nueva" className="btn-brand !px-4 !py-2 text-xs"><Plus className="h-3.5 w-3.5" /> Nueva</a>}
         </div>
@@ -92,7 +92,7 @@ function SafeDates() {
       <ol className="flex items-center justify-between gap-1">
         {STEPS.map((s, i) => (
           <li key={s} className="flex flex-1 flex-col items-center gap-1.5 text-center">
-            <span className="flex h-7 w-7 items-center justify-center rounded-full border border-foreground/20 text-[11px] font-semibold">{i + 1}</span>
+            <span className="text-sm font-light text-foreground/60">0{i + 1}</span>
             <span className="eyebrow !text-[9px]">{s}</span>
           </li>
         ))}
@@ -137,7 +137,7 @@ function SafeDates() {
               <div className="surface flex flex-col items-center gap-3 p-8 text-center">
                 <CalendarCheck className="h-7 w-7 text-blue-500" strokeWidth={1.4} />
                 <p className="text-sm font-light text-muted-foreground">Haz Klick con alguien y planea tu primera cita aquí.</p>
-                <Link href="/app/discover/" className="btn-ghost">Ir al Feed</Link>
+                <Link href="/app/discover/" className="btn-ghost">Ir a Partner</Link>
               </div>
             ) : (
               <div className="no-scrollbar -mx-1 flex gap-4 overflow-x-auto px-1 py-1">

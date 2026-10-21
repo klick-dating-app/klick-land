@@ -72,7 +72,8 @@ export const getCandidates = onCall(async (req) => {
 /** Like / pass. Si hay like mutuo se crea el match y se notifica a ambos. */
 export const swipe = onCall(async (req) => {
   const uid = requireUid(req);
-  const { targetId, action } = (req.data ?? {}) as { targetId?: string; action?: 'like' | 'pass' };
+  const { targetId, action, intent: rawIntent } = (req.data ?? {}) as { targetId?: string; action?: 'like' | 'pass'; intent?: 'friendship' | 'date' };
+  const intent = rawIntent === 'date' ? 'date' : 'friendship';
   if (!targetId || targetId === uid || (action !== 'like' && action !== 'pass')) {
     throw new HttpsError('invalid-argument', 'Solicitud inválida.');
   }
@@ -81,7 +82,7 @@ export const swipe = onCall(async (req) => {
   const r = compatibility(me, other);
   if (!r.eligible) throw new HttpsError('failed-precondition', 'Este perfil no es compatible.');
 
-  await db().doc(`users/${uid}/swipes/${targetId}`).set({ action, at: FieldValue.serverTimestamp() });
+  await db().doc(`users/${uid}/swipes/${targetId}`).set({ action, intent, at: FieldValue.serverTimestamp() });
   if (action === 'pass') return { matched: false };
 
   const reciprocal = await db().doc(`users/${targetId}/swipes/${uid}`).get();
@@ -96,6 +97,8 @@ export const swipe = onCall(async (req) => {
     },
     score: r.score,
     commonGround: r.commonGround,
+    // Cita solo si ambos eligieron la flor; si no, es una amistad que puede evolucionar.
+    kind: intent === 'date' && reciprocal.data()?.intent === 'date' ? 'date' : 'friendship',
     status: 'active',
     createdAt: FieldValue.serverTimestamp(),
     lastMessage: null,

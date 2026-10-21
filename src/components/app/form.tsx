@@ -67,15 +67,32 @@ export function Toggle({ label, checked, onChange }: { label: string; checked: b
   );
 }
 
+/** Estrella de 10 puntas (sello de verificado), calculada una sola vez. */
+const STAR_POINTS = Array.from({ length: 20 }, (_, i) => {
+  const r = i % 2 === 0 ? 11.5 : 8.6;
+  const a = (Math.PI * i) / 10 - Math.PI / 2;
+  return `${(12 + r * Math.cos(a)).toFixed(2)},${(12 + r * Math.sin(a)).toFixed(2)}`;
+}).join(' ');
+
+/** Marca de perfil verificado: estrella de 10 puntas junto al nombre y la edad. */
+export function VerifiedStar({ className }: { className?: string }) {
+  return (
+    <svg role="img" aria-label="Verificado" viewBox="0 0 24 24" className={cn('h-[18px] w-[18px] shrink-0', className)}>
+      <polygon points={STAR_POINTS} fill="#3b82f6" strokeLinejoin="round" stroke="#3b82f6" strokeWidth="0.8" />
+    </svg>
+  );
+}
+
 export function Spinner({ className }: { className?: string }) {
   return <div className={cn('h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent', className)} />;
 }
 
-export function ScoreBadge({ score }: { score: number }) {
+/** Porcentaje de compatibilidad: solo texto, sin cápsula. */
+export function ScoreBadge({ score, className }: { score: number; className?: string }) {
   return (
-    <span className="inline-flex items-center gap-2 rounded-full border border-foreground/15 bg-black/50 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider backdrop-blur-md">
-      <span className="text-brand text-sm font-bold normal-case tracking-normal">{Math.round(score)}%</span>
-      <span className="text-white/70">Klick</span>
+    <span className={cn('inline-flex items-baseline gap-1.5 drop-shadow-[0_1px_4px_rgba(0,0,0,0.6)]', className)}>
+      <span className="text-brand text-2xl font-semibold leading-none tracking-tight">{Math.round(score)}%</span>
+      <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/80">Klick</span>
     </span>
   );
 }

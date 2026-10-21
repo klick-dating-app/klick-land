@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
-import { ArrowLeft, LogOut, Moon, Smartphone, Sun, Trash2 } from 'lucide-react';
+import { LogOut, Moon, Smartphone, Sun, Trash2, X } from 'lucide-react';
 import { toast } from 'sonner';
 import { useAuth } from '@/context/AuthContext';
 import { api } from '@/lib/api';
@@ -42,10 +42,10 @@ export default function SettingsPage() {
   return (
     <div className="space-y-10 px-5 pt-6">
       <header className="space-y-3">
-        <Link href="/app/profile/" aria-label="Volver" className="inline-flex rounded-full border border-foreground/15 p-2"><ArrowLeft className="h-5 w-5" /></Link>
+        <Link href="/app/profile/" aria-label="Cerrar" className="-ml-1 inline-flex p-1 text-foreground/70"><X className="h-6 w-6" strokeWidth={1.5} /></Link>
         <div>
           <p className="eyebrow">Ajustes</p>
-          <h1 className="text-4xl font-light tracking-tighter">Configuración</h1>
+          <h1 className="text-[26px] font-light tracking-tight">Configuración</h1>
         </div>
       </header>
 

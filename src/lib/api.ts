@@ -38,7 +38,7 @@ export interface ProfileInput {
 export const api = {
   saveProfile: call<ProfileInput, { ok: boolean; age: number }>('saveProfile'),
   getCandidates: call<Record<string, never>, { candidates: Candidate[] }>('getCandidates'),
-  swipe: call<{ targetId: string; action: 'like' | 'pass' }, { matched: boolean; matchId?: string; score?: number }>('swipe'),
+  swipe: call<{ targetId: string; action: 'like' | 'pass'; intent?: 'friendship' | 'date' }, { matched: boolean; matchId?: string; score?: number }>('swipe'),
   blockUser: call<{ targetId: string }, { ok: boolean }>('blockUser'),
   reportUser: call<{ targetId: string; category: string; details?: string; matchId?: string }, { ok: boolean }>('reportUser'),
   requestVerification: call<Record<string, never>, { ok: boolean }>('requestVerification'),

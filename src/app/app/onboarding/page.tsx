@@ -140,7 +140,7 @@ export default function OnboardingPage() {
     <div className="space-y-6 p-5 pb-10 pt-8">
       <header className="space-y-2">
         <p className="eyebrow">Paso {step + 1} de {STEPS.length}</p>
-        <h1 className="text-4xl font-light tracking-tighter">{STEPS[step]}</h1>
+        <h1 className="text-[26px] font-light tracking-tight">{STEPS[step]}</h1>
         <div className="h-px bg-white/15">
           <div className="bg-brand h-px transition-all" style={{ width: `${((step + 1) / STEPS.length) * 100}%` }} />
         </div>
@@ -178,7 +178,7 @@ export default function OnboardingPage() {
             {photos.map((url) => (
               <div key={url} className="relative aspect-[3/4] overflow-hidden rounded-xl bg-muted">
                 <Image src={url} alt="" fill unoptimized className="object-cover" />
-                <button className="absolute right-1 top-1 rounded-full bg-black/60 p-1" onClick={() => setPhotos((p) => p.filter((x) => x !== url))} aria-label="Quitar foto">
+                <button className="absolute right-1 top-1 p-1 drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]" onClick={() => setPhotos((p) => p.filter((x) => x !== url))} aria-label="Quitar foto">
                   <X className="h-4 w-4 text-white" />
                 </button>
               </div>
