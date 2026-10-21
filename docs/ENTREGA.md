@@ -6,7 +6,7 @@ El código está completo y compila (`npm run typecheck`, `npm run build`, `func
 
 ### Google Cloud / Firebase (imprescindible)
 - [ ] **Proyecto Firebase nuevo y exclusivo de Klick** (plan Blaze). `.firebaserc` hoy apunta a `REPLACE_WITH_KLICK_FIREBASE_PROJECT_ID`.
-      ⚠ No reutilices `udreamms-platform-1`: las reglas de Klick sobrescribirían las del otro producto.
+      ⚠ Debe ser un proyecto dedicado: desplegar reglas sobre un proyecto compartido sobrescribiría las de otros productos.
 - [ ] Activar: Authentication (Email/Password), Firestore (modo producción, `nam5`), Storage, Cloud Functions, Cloud Messaging, Hosting.
 - [ ] Config web de la app → rellenar `.env.local` (plantilla en `.env.example`).
 - [ ] `google-services.json` (Android) → `android/app/`.
