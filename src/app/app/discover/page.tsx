@@ -3,14 +3,14 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { CheckCircle2, Crown, MapPin, Sparkles } from 'lucide-react';
+import { CheckCircle2, Crown, MapPin, Sparkles, UserRound } from 'lucide-react';
 import { toast } from 'sonner';
 import { useAuth } from '@/context/AuthContext';
 import { api } from '@/lib/api';
 import KlickLogo from '@/components/ui/KlickLogo';
 import { ScoreBadge, Spinner, VerifiedStar } from '@/components/app/form';
 import SafetyMenu from '@/components/app/SafetyMenu';
-import { BouquetIcon, RedHeartIcon } from '@/components/app/icons';
+import { RedHeartIcon } from '@/components/app/icons';
 import type { Candidate } from '@/lib/types';
 
 type Intent = 'friendship' | 'date';
@@ -92,21 +92,24 @@ export default function DiscoverPage() {
           </header>
           <div className="absolute right-3 top-[calc(3.2rem+var(--safe-top))] z-10"><SafetyMenu onPhoto targetId={current.uid} onDone={next} /></div>
 
-          {current.photos.length > 1 && (
-            <div className="pointer-events-none absolute right-3 top-1/2 flex -translate-y-1/2 flex-col gap-1.5">
-              {current.photos.map((_, i) => <span key={i} className={`h-1.5 w-1.5 rounded-full ${i === photoIdx ? 'bg-white' : 'bg-white/35'}`} />)}
-            </div>
-          )}
-
           <div className="absolute inset-x-5 bottom-4 z-10 space-y-3 text-white">
-            <div className="flex items-end justify-center gap-16 pb-1">
-              <button disabled={busy} onClick={() => act('like', 'friendship')} aria-label="Amistad" className="flex flex-col items-center gap-1 transition active:scale-90">
-                <BouquetIcon className="h-[4.25rem] w-[4.25rem] drop-shadow-[0_3px_8px_rgba(0,0,0,0.55)]" />
-                <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/85">Amistad</span>
+            {current.photos.length > 1 && (
+              <div className="pointer-events-none flex justify-center gap-1.5" aria-label={`Foto ${photoIdx + 1} de ${current.photos.length}`}>
+                {current.photos.map((_, i) => <span key={i} className={`h-1.5 rounded-full transition-all ${i === photoIdx ? 'w-5 bg-white' : 'w-1.5 bg-white/40'}`} />)}
+              </div>
+            )}
+            <div className="flex items-end justify-center gap-12 pb-1">
+              <button disabled={busy} onClick={() => act('pass')} aria-label="Next" className="flex w-16 flex-col items-center gap-1.5 transition active:scale-90">
+                <UserRound className="h-10 w-10 drop-shadow-[0_3px_8px_rgba(0,0,0,0.55)]" strokeWidth={1.4} />
+                <span className="text-xs font-semibold text-white/90">Next</span>
               </button>
-              <button disabled={busy} onClick={() => act('like', 'date')} aria-label="Cita" className="flex flex-col items-center gap-1 transition active:scale-90">
-                <RedHeartIcon className="h-[3.1rem] w-[3.1rem] drop-shadow-[0_3px_8px_rgba(0,0,0,0.55)]" />
-                <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/85">Cita</span>
+              <button disabled={busy} onClick={() => act('like', 'friendship')} aria-label="Klick" className="flex w-16 flex-col items-center gap-1.5 transition active:scale-90">
+                <KlickLogo size={44} className="drop-shadow-[0_3px_8px_rgba(0,0,0,0.55)]" />
+                <span className="text-xs font-semibold text-white/90">Klick</span>
+              </button>
+              <button disabled={busy} onClick={() => act('like', 'date')} aria-label="Dating" className="flex w-16 flex-col items-center gap-1.5 transition active:scale-90">
+                <RedHeartIcon className="h-11 w-11 drop-shadow-[0_3px_8px_rgba(0,0,0,0.55)]" />
+                <span className="text-xs font-semibold text-white/90">Dating</span>
               </button>
             </div>
             <div className="pointer-events-none space-y-2">
@@ -123,7 +126,7 @@ export default function DiscoverPage() {
         </div>
 
         <div className="space-y-6 px-5 pb-6 pt-6">
-          <p className="text-center text-[10px] font-medium uppercase tracking-[0.22em] text-muted-foreground">Desliza a la izquierda para pasar</p>
+          <p className="text-center text-[10px] font-medium uppercase tracking-[0.22em] text-muted-foreground">Desliza a la izquierda para Next</p>
           {current.bio && (
             <div className="space-y-2">
               <span className="section-label">Sobre mí</span>

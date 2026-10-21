@@ -40,7 +40,7 @@ export default function KlicksPage() {
                 <div className="relative aspect-[3/4] bg-muted">
                   {other?.photo && <Image src={other.photo} alt="" fill unoptimized className="object-cover" />}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent via-60% to-black/40" />
-                  <span className="absolute left-3 top-3 text-[10px] font-semibold uppercase tracking-[0.16em] text-white/85 drop-shadow">{m.kind === 'date' ? 'Cita' : 'Amistad'}</span>
+                  <span className="absolute left-3 top-3 text-xs font-semibold text-white/90 drop-shadow">{m.kind === 'date' ? 'Dating' : 'Klick'}</span>
                   <div className="absolute inset-x-3 bottom-3 flex items-center justify-between gap-1 text-white">
                     <p className="flex min-w-0 items-center gap-1.5 text-base font-semibold tracking-tight"><span className="truncate">{other?.name}</span><VerifiedStar className="h-4 w-4" /></p>
                     <ScoreBadge score={m.score} className="[&>span:first-child]:text-base [&>span:last-child]:hidden" />
