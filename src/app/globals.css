@@ -54,13 +54,13 @@
   }
 
   .dark {
-    --background: 220 39% 11%;
+    --background: 226 42% 7%;
     --foreground: 0 0% 98%;
 
-    --card: 220 30% 15%;
+    --card: 226 32% 11%;
     --card-foreground: 0 0% 98%;
 
-    --popover: 220 30% 15%;
+    --popover: 226 32% 11%;
     --popover-foreground: 0 0% 98%;
 
     --primary: 348 83% 42%;
@@ -70,7 +70,7 @@
     --secondary: 15 93% 55%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 217.2 32.6% 17.5%;
+    --muted: 226 28% 16%;
     --muted-foreground: 215 20.2% 65.1%;
 
     --accent: 348 83% 47%;
@@ -79,8 +79,8 @@
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
+    --border: 226 24% 18%;
+    --input: 226 24% 20%;
     --ring: 348 83% 47%;
 
     --gradient-hero: linear-gradient(135deg, hsl(348 83% 42%), hsl(348 100% 58%));
@@ -205,3 +205,39 @@
     padding-right: var(--safe-right);
   }
 }
+
+/* ------------------------------------------------------------------ */
+/* Sistema visual Klick                                                */
+/* ------------------------------------------------------------------ */
+@layer base {
+  body {
+    background-image:
+      radial-gradient(60rem 40rem at 85% -10%, hsl(348 90% 50% / 0.16), transparent 60%),
+      radial-gradient(50rem 36rem at -10% 10%, hsl(15 95% 55% / 0.10), transparent 60%);
+    background-attachment: fixed;
+    -webkit-font-smoothing: antialiased;
+  }
+  html { -webkit-tap-highlight-color: transparent; }
+}
+
+@layer components {
+  .glass { @apply border border-white/10 bg-white/[0.04] backdrop-blur-xl; }
+  .surface { @apply rounded-3xl border border-white/[0.07] bg-card/80 shadow-[0_8px_30px_-12px_rgba(0,0,0,0.6)]; }
+  .btn-brand {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 font-semibold text-white transition active:scale-[0.97];
+    background-image: linear-gradient(135deg, hsl(348 90% 52%), hsl(14 95% 55%));
+    box-shadow: 0 10px 30px -10px hsl(348 90% 55% / 0.7);
+  }
+  .btn-brand:disabled { @apply opacity-50; }
+  .btn-ghost { @apply inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/5 px-6 py-3.5 font-semibold transition hover:bg-white/10 active:scale-[0.97]; }
+  .text-gradient {
+    background-image: linear-gradient(135deg, hsl(348 95% 62%), hsl(18 100% 62%));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .pill { @apply inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.06] px-3 py-1 text-xs font-medium; }
+}
+
+@keyframes card-in { from { opacity: 0; transform: translateY(14px) scale(.98); } to { opacity: 1; transform: none; } }
+.animate-card-in { animation: card-in .35s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes pop { 0% { transform: scale(.6); opacity: 0; } 70% { transform: scale(1.06); } 100% { transform: scale(1); opacity: 1; } }
+.animate-pop { animation: pop .4s cubic-bezier(.2,.8,.2,1) both; }

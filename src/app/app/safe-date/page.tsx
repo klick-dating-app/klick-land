@@ -59,14 +59,14 @@ function SafeDates() {
   const setStatus = (d: SafeDate, status: 'completed' | 'cancelled') => updateDoc(doc(db, 'safeDates', d.id), { status });
 
   return (
-    <div className="space-y-6 p-4">
+    <div className="space-y-6 px-5 pt-6">
       <header className="space-y-1">
-        <h1 className="flex items-center gap-2 text-2xl font-bold"><ShieldCheck className="h-6 w-6 text-primary" /> Safe First Date</h1>
+        <h1 className="flex items-center gap-2 text-3xl font-extrabold tracking-tight"><ShieldCheck className="h-6 w-6 text-primary" /> Safe First Date</h1>
         <p className="text-sm text-muted-foreground">Lugar público, horario de día y un contacto de confianza. Te recordamos 1 hora antes y te pedimos confirmar que llegaste bien.</p>
       </header>
 
       {match && (
-        <section className="space-y-4 rounded-2xl border bg-card p-4">
+        <section className="space-y-4 surface p-5">
           <h2 className="font-semibold">Nueva cita con {match.profiles[match.members.find((m) => m !== user?.uid)!]?.name}</h2>
           <Field label="Tipo de lugar"><Chips options={SAFE_VENUES} value={venueType} onChange={setVenueType} /></Field>
           <Field label="Nombre del lugar"><input className={inputCls} value={venueName} onChange={(e) => setVenueName(e.target.value)} /></Field>
@@ -90,7 +90,7 @@ function SafeDates() {
       ) : (
         <ul className="space-y-3">
           {dates.map((d) => (
-            <li key={d.id} className="space-y-3 rounded-2xl border bg-card p-4">
+            <li key={d.id} className="space-y-3 surface p-5">
               <div className="flex items-start justify-between gap-3">
                 <div>
                   <p className="font-semibold">{d.venueName}</p>

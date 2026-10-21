@@ -50,16 +50,16 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="mx-auto flex min-h-dvh max-w-sm flex-col justify-center gap-6 p-6 pt-safe pb-safe">
+    <main className="mx-auto flex min-h-dvh max-w-sm flex-col justify-center gap-7 p-6 pt-safe pb-safe">
       <div className="flex flex-col items-center gap-2 text-center">
         <KlickLogo size={72} priority />
-        <h1 className="text-2xl font-bold">{mode === 'signup' ? 'Crea tu cuenta' : 'Bienvenido de vuelta'}</h1>
+        <h1 className="text-3xl font-extrabold tracking-tight">{mode === 'signup' ? 'Crea tu cuenta' : 'Bienvenido de vuelta'}</h1>
         <p className="text-sm text-muted-foreground">Citas seguras con compatibilidad real.</p>
       </div>
 
       {!isFirebaseConfigured && <p className="rounded-xl bg-amber-500/15 p-3 text-xs text-amber-300">Firebase no está configurado todavía (.env.local).</p>}
 
-      <form onSubmit={submit} className="space-y-4">
+      <form onSubmit={submit} className="surface space-y-4 p-5">
         <Field label="Correo"><input type="email" required autoComplete="email" className={inputCls} value={email} onChange={(e) => setEmail(e.target.value)} /></Field>
         <Field label="Contraseña"><input type="password" required minLength={8} autoComplete={mode === 'signup' ? 'new-password' : 'current-password'} className={inputCls} value={password} onChange={(e) => setPassword(e.target.value)} /></Field>
         {mode === 'signup' && (
@@ -68,7 +68,7 @@ export default function LoginPage() {
             <span>Tengo 18 años o más y acepto los <Link href="/terms/" className="text-primary underline">Términos</Link> y la <Link href="/privacy/" className="text-primary underline">Política de privacidad</Link>.</span>
           </label>
         )}
-        <Button className="w-full" disabled={busy || !isFirebaseConfigured}>{busy ? 'Un momento…' : mode === 'signup' ? 'Crear cuenta' : 'Entrar'}</Button>
+        <Button size="lg" className="w-full" disabled={busy || !isFirebaseConfigured}>{busy ? 'Un momento…' : mode === 'signup' ? 'Crear cuenta' : 'Entrar'}</Button>
       </form>
 
       <div className="space-y-2 text-center text-sm">

@@ -1,10 +1,24 @@
 import { httpsCallable } from 'firebase/functions';
 import { functions } from './firebase';
+import { DEMO, DEMO_CANDIDATES } from './demo';
 import type { Candidate, Plan, Questionnaire } from './types';
 
+const delay = (ms = 250) => new Promise((r) => setTimeout(r, ms));
+
+/** En modo demo las llamadas se resuelven con datos de ejemplo. */
+const demoResult = (name: string, data: any): unknown => {
+  if (name === 'getCandidates') return { candidates: DEMO_CANDIDATES };
+  if (name === 'swipe') return { matched: data.action === 'like' && data.targetId === 'c1', matchId: 'm1', score: 93 };
+  if (name === 'saveProfile') return { ok: true, age: 29 };
+  return { ok: true, url: '#' };
+};
+
 const call = <Req, Res>(name: string) => {
-  const fn = httpsCallable<Req, Res>(functions, name);
-  return async (data: Req) => (await fn(data)).data;
+  const fn = DEMO ? null : httpsCallable<Req, Res>(functions, name);
+  return async (data: Req) => {
+    if (!fn) return delay().then(() => demoResult(name, data) as Res);
+    return (await fn(data)).data;
+  };
 };
 
 export interface ProfileInput {
