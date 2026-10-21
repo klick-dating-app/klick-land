@@ -64,4 +64,16 @@ ios/App/build/
 ios/App/output/
 ios/DerivedData/
 ios/capacitor-cordova-ios-plugins/
-**/capacitor.config.json
+**/capacitor.config.json.gitconfig
+
+# Credenciales nativas y de release (se entregan por canal seguro, nunca al repo)
+google-services.json
+GoogleService-Info.plist
+*.keystore
+*.jks
+android/keystore.properties
+functions/.env.*
+!functions/.env.example
+.env.*
+!.env.example
+out/

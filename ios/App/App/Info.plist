@@ -45,5 +45,15 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Klick usa la cámara para tus fotos de perfil y la verificación de identidad.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Klick necesita acceso a tus fotos para elegir las imágenes de tu perfil.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Klick usa tu ubicación aproximada para mostrarte personas cercanas. Nunca compartimos tu ubicación exacta.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
 </dict>
 </plist>
