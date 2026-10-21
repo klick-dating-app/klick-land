@@ -3,7 +3,7 @@
 import { useEffect, useState, useSyncExternalStore } from 'react';
 import { collection, doc, onSnapshot, orderBy, query, where } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
-import { DEMO, DEMO_DATES, DEMO_MATCHES, demoStore } from '@/lib/demo';
+import { DEMO, DEMO_MATCHES, demoStore } from '@/lib/demo';
 import type { Match, Message, SafeDate } from '@/lib/types';
 
 const withId = <T,>(d: { id: string; data(): unknown }) => ({ id: d.id, ...(d.data() as object) }) as T;
@@ -50,13 +50,14 @@ export function useMessages(matchId?: string | null, max = 200) {
 
 export function useSafeDates(uid?: string) {
   const [dates, setDates] = useState<SafeDate[] | null>(null);
+  const demoDates = useSyncExternalStore(demoStore.subscribe, () => demoStore.dates, () => demoStore.dates);
   useEffect(() => {
-    if (DEMO) return setDates(DEMO_DATES);
+    if (DEMO) return;
     if (!uid) return;
     const q = query(collection(db, 'safeDates'), where('participants', 'array-contains', uid), orderBy('dateTimeMs'));
     return onSnapshot(q, (s) => setDates(s.docs.map((d) => withId<SafeDate>(d))), () => setDates([]));
   }, [uid]);
-  return dates;
+  return DEMO ? demoDates : dates;
 }
 
 export function useVerificationStatus(uid?: string) {

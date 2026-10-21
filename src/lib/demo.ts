@@ -45,8 +45,17 @@ export const DEMO_DATES: SafeDate[] = [
 /** Mini-store para que el chat de demo reaccione al enviar mensajes. */
 const listeners = new Set<() => void>();
 export const demoStore = {
+  dates: [...DEMO_DATES] as SafeDate[],
   messages: Object.fromEntries(Object.entries(DEMO_MESSAGES).map(([k, v]) => [k, [...v]])) as Record<string, Message[]>,
   subscribe(fn: () => void) { listeners.add(fn); return () => void listeners.delete(fn); },
+  addDate(d: Omit<SafeDate, 'id'>) {
+    this.dates = [...this.dates, { ...d, id: String(Date.now()) }].sort((a, b) => a.dateTimeMs - b.dateTimeMs);
+    listeners.forEach((l) => l());
+  },
+  patchDate(id: string, patch: Partial<SafeDate>) {
+    this.dates = this.dates.map((d) => (d.id === id ? { ...d, ...patch } : d));
+    listeners.forEach((l) => l());
+  },
   send(matchId: string, text: string) {
     this.messages = { ...this.messages, [matchId]: [...(this.messages[matchId] ?? []), { id: String(Date.now()), senderId: DEMO_UID, text, createdAt: { toMillis: () => Date.now() } }] };
     listeners.forEach((l) => l());

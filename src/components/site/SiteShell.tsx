@@ -58,7 +58,7 @@ export function SiteFooter() {
 
 export function SiteShell({ children, overlay = false }: { children: React.ReactNode; overlay?: boolean }) {
   return (
-    <div className="flex min-h-dvh flex-col bg-[#050507]">
+    <div className="dark flex min-h-dvh flex-col bg-[#050507] text-foreground">
       <SiteHeader overlay={overlay} />
       <main className="flex-1">{children}</main>
       <SiteFooter />

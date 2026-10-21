@@ -20,13 +20,13 @@ export default function MatchesPage() {
     <div className="space-y-8 px-5 pt-8">
       <header className="space-y-1">
         <p className="eyebrow">Mensajes</p>
-        <h1 className="text-4xl font-light tracking-tighter">Tus Klicks</h1>
+        <h1 className="text-4xl font-light tracking-tighter">Inbox</h1>
       </header>
 
       {matches.length === 0 ? (
         <div className="flex flex-col items-center gap-4 py-24 text-center">
-          <Heart className="h-7 w-7 text-blue-400" strokeWidth={1.4} />
-          <p className="text-sm font-light leading-relaxed text-zinc-400">Aún no tienes matches.<br />Explora perfiles compatibles.</p>
+          <Heart className="h-7 w-7 text-blue-600 dark:text-blue-400" strokeWidth={1.4} />
+          <p className="text-sm font-light leading-relaxed text-muted-foreground">Aún no tienes matches.<br />Explora perfiles compatibles.</p>
           <Link href="/app/discover/" className="btn-ghost mt-2">Ir a Descubrir</Link>
         </div>
       ) : (
@@ -37,26 +37,26 @@ export default function MatchesPage() {
               <div className="no-scrollbar -mx-1 flex gap-5 overflow-x-auto px-2 py-1.5">
                 {fresh.map(({ m, other }) => (
                   <Link key={m.id} href={`/app/chat/?id=${m.id}`} className="shrink-0 text-center">
-                    <div className="relative h-[76px] w-[76px] overflow-hidden rounded-full ring-1 ring-white/30 ring-offset-[3px] ring-offset-black">
+                    <div className="relative h-[76px] w-[76px] overflow-hidden rounded-full ring-1 ring-foreground/30 ring-offset-[3px] ring-offset-background">
                       {other?.photo && <Image src={other.photo} alt="" fill unoptimized className="object-cover" />}
                     </div>
-                    <p className="mt-2 text-xs font-medium text-zinc-300">{other?.name}</p>
+                    <p className="mt-2 text-xs font-medium text-foreground/75">{other?.name}</p>
                   </Link>
                 ))}
               </div>
             </section>
           )}
 
-          <ul className="divide-y divide-white/10 border-y border-white/10">
+          <ul className="divide-y divide-foreground/10 border-y border-foreground/10">
             {view.map(({ m, other }) => (
               <li key={m.id}>
                 <Link href={`/app/chat/?id=${m.id}`} className="flex items-center gap-4 py-4 transition active:opacity-70">
-                  <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-full bg-zinc-900">
+                  <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-full bg-muted">
                     {other?.photo && <Image src={other.photo} alt="" fill unoptimized className="object-cover" />}
                   </div>
                   <div className="min-w-0 flex-1">
                     <p className="text-[17px] font-medium tracking-tight">{other?.name ?? 'Match'}</p>
-                    <p className="truncate text-sm font-light text-zinc-400">{m.lastMessage ?? 'Di hola 👋'}</p>
+                    <p className="truncate text-sm font-light text-muted-foreground">{m.lastMessage ?? 'Di hola 👋'}</p>
                   </div>
                   <ScoreRing score={m.score} size={46} />
                 </Link>

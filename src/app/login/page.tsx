@@ -50,7 +50,7 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="relative flex min-h-dvh items-center justify-center overflow-hidden bg-black">
+    <main className="dark relative flex min-h-dvh items-center justify-center overflow-hidden bg-black text-foreground">
       <div className="pointer-events-none absolute left-1/2 top-[-10%] h-[350px] w-[350px] -translate-x-1/2 rounded-full bg-gradient-to-b from-purple-900/25 via-pink-900/10 to-transparent blur-3xl" />
       <div className="pointer-events-none absolute bottom-[-10%] right-[-10%] h-[260px] w-[260px] rounded-full bg-cyan-900/15 blur-3xl" />
 

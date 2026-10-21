@@ -8,7 +8,7 @@ import { REPORT_CATEGORIES } from '@/lib/klick/options';
 import { inputCls } from '@/components/app/form';
 
 /** Reportar / bloquear: siempre accesible desde perfiles y chats. */
-export default function SafetyMenu({ targetId, matchId, onDone }: { targetId: string; matchId?: string; onDone?: () => void }) {
+export default function SafetyMenu({ targetId, matchId, onDone, onPhoto = false }: { targetId: string; matchId?: string; onDone?: () => void; onPhoto?: boolean }) {
   const [open, setOpen] = useState(false);
   const [category, setCategory] = useState('');
   const [details, setDetails] = useState('');
@@ -30,13 +30,13 @@ export default function SafetyMenu({ targetId, matchId, onDone }: { targetId: st
 
   return (
     <>
-      <button onClick={() => setOpen(true)} aria-label="Reportar o bloquear" className="rounded-full bg-black/45 p-2.5 text-white backdrop-blur">
+      <button onClick={() => setOpen(true)} aria-label="Reportar o bloquear" className={onPhoto ? 'rounded-full bg-black/45 p-2.5 text-white backdrop-blur' : 'rounded-full border border-foreground/15 p-2.5 text-foreground/80'}>
         <ShieldAlert className="h-5 w-5" />
       </button>
       {open && (
         <div className="fixed inset-0 z-50 flex items-end bg-black/60" onClick={() => setOpen(false)}>
-          <div className="mx-auto w-full max-w-lg space-y-4 rounded-t-[2rem] border-t border-white/10 bg-[#08080b] p-7 pb-safe" onClick={(e) => e.stopPropagation()}>
-            <h2 className="flex items-center gap-2 text-xl font-light tracking-tight"><Flag className="h-5 w-5 text-blue-400" strokeWidth={1.5} /> Seguridad</h2>
+          <div className="mx-auto w-full max-w-lg space-y-4 rounded-t-[2rem] border-t border-foreground/10 bg-card p-7 pb-safe" onClick={(e) => e.stopPropagation()}>
+            <h2 className="flex items-center gap-2 text-xl font-light tracking-tight"><Flag className="h-5 w-5 text-blue-600 dark:text-blue-400" strokeWidth={1.5} /> Seguridad</h2>
             <select className={inputCls} value={category} onChange={(e) => setCategory(e.target.value)}>
               <option value="">Motivo del reporte…</option>
               {REPORT_CATEGORIES.map((c) => <option key={c.id} value={c.id}>{c.label}</option>)}
