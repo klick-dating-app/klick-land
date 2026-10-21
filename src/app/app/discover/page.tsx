@@ -86,11 +86,7 @@ export default function DiscoverPage() {
           <button className="absolute inset-y-0 left-0 w-1/2" aria-label="Foto anterior" onClick={() => setPhotoIdx((i) => Math.max(0, i - 1))} />
           <button className="absolute inset-y-0 right-0 w-1/2" aria-label="Foto siguiente" onClick={() => setPhotoIdx((i) => Math.min(current.photos.length - 1, i + 1))} />
 
-          <header className="pointer-events-none absolute inset-x-0 top-0 z-10 flex items-center justify-between px-5 pt-[calc(0.9rem+var(--safe-top))] text-white">
-            <KlickLogo size={26} showText textClassName="text-base font-semibold tracking-tight" />
-            <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-white/70">Solo 60 %+</span>
-          </header>
-          <div className="absolute right-3 top-[calc(3.2rem+var(--safe-top))] z-10"><SafetyMenu onPhoto targetId={current.uid} onDone={next} /></div>
+          <div className="absolute right-3 top-[calc(0.9rem+var(--safe-top))] z-10"><SafetyMenu onPhoto targetId={current.uid} onDone={next} /></div>
 
           <div className="absolute inset-x-5 bottom-4 z-10 space-y-3 text-white">
             {current.photos.length > 1 && (

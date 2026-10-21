@@ -29,7 +29,7 @@ export default function KlicksPage() {
         <div className="flex flex-col items-center gap-4 py-20 text-center">
           <Heart className="h-7 w-7 text-blue-500" strokeWidth={1.4} />
           <p className="text-sm font-light leading-relaxed text-muted-foreground">Aún no tienes Klicks.<br />Explora perfiles compatibles.</p>
-          <Link href="/app/discover/" className="btn-ghost mt-2">Ir al Feed</Link>
+          <Link href="/app/discover/" className="btn-ghost mt-2">Ir a Partner</Link>
         </div>
       ) : (
         <div className="grid grid-cols-2 gap-3">

@@ -137,7 +137,7 @@ function SafeDates() {
               <div className="surface flex flex-col items-center gap-3 p-8 text-center">
                 <CalendarCheck className="h-7 w-7 text-blue-500" strokeWidth={1.4} />
                 <p className="text-sm font-light text-muted-foreground">Haz Klick con alguien y planea tu primera cita aquí.</p>
-                <Link href="/app/discover/" className="btn-ghost">Ir al Feed</Link>
+                <Link href="/app/discover/" className="btn-ghost">Ir a Partner</Link>
               </div>
             ) : (
               <div className="no-scrollbar -mx-1 flex gap-4 overflow-x-auto px-1 py-1">
