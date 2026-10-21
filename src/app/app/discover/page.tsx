@@ -3,13 +3,14 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { CheckCircle2, Crown, Flower2, Heart, MapPin, Sparkles } from 'lucide-react';
+import { CheckCircle2, Crown, MapPin, Sparkles } from 'lucide-react';
 import { toast } from 'sonner';
 import { useAuth } from '@/context/AuthContext';
 import { api } from '@/lib/api';
 import KlickLogo from '@/components/ui/KlickLogo';
 import { ScoreBadge, Spinner, VerifiedStar } from '@/components/app/form';
 import SafetyMenu from '@/components/app/SafetyMenu';
+import { BouquetIcon, RedHeartIcon } from '@/components/app/icons';
 import type { Candidate } from '@/lib/types';
 
 type Intent = 'friendship' | 'date';
@@ -97,24 +98,25 @@ export default function DiscoverPage() {
             </div>
           )}
 
-          <div className="pointer-events-none absolute inset-x-5 bottom-[5.5rem] space-y-2 text-white">
-            <ScoreBadge score={current.score} />
-            <h2 className="flex items-center gap-2 text-2xl font-semibold leading-none tracking-tight">
-              {current.name}, <span className="font-light">{current.age}</span>
-              {current.verified && <VerifiedStar />}
-            </h2>
-            <p className="flex items-center gap-1.5 text-xs font-medium text-white/80"><MapPin className="h-3.5 w-3.5 text-blue-400" />{current.city}, {current.state} · {current.distanceMiles} mi</p>
-          </div>
-
-          <div className="absolute inset-x-0 bottom-3 z-10 flex items-end justify-center gap-20 text-white">
-            <button disabled={busy} onClick={() => act('like', 'friendship')} aria-label="Amistad" className="flex flex-col items-center gap-1 p-2 transition active:scale-90">
-              <Heart className="h-10 w-10 drop-shadow-[0_2px_6px_rgba(0,0,0,0.5)]" fill="white" strokeWidth={1.2} />
-              <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/80">Amistad</span>
-            </button>
-            <button disabled={busy} onClick={() => act('like', 'date')} aria-label="Cita" className="flex flex-col items-center gap-1 p-2 text-[#ff4fa3] transition active:scale-90">
-              <Flower2 className="h-10 w-10 drop-shadow-[0_2px_6px_rgba(0,0,0,0.5)]" fill="currentColor" fillOpacity={0.35} strokeWidth={1.5} />
-              <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/80">Cita</span>
-            </button>
+          <div className="absolute inset-x-5 bottom-4 z-10 space-y-3 text-white">
+            <div className="flex items-end justify-center gap-16 pb-1">
+              <button disabled={busy} onClick={() => act('like', 'friendship')} aria-label="Amistad" className="flex flex-col items-center gap-1 transition active:scale-90">
+                <BouquetIcon className="h-[4.25rem] w-[4.25rem] drop-shadow-[0_3px_8px_rgba(0,0,0,0.55)]" />
+                <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/85">Amistad</span>
+              </button>
+              <button disabled={busy} onClick={() => act('like', 'date')} aria-label="Cita" className="flex flex-col items-center gap-1 transition active:scale-90">
+                <RedHeartIcon className="h-[3.1rem] w-[3.1rem] drop-shadow-[0_3px_8px_rgba(0,0,0,0.55)]" />
+                <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/85">Cita</span>
+              </button>
+            </div>
+            <div className="pointer-events-none space-y-2">
+              <ScoreBadge score={current.score} />
+              <h2 className="flex items-center gap-2 text-2xl font-semibold leading-none tracking-tight">
+                {current.name}, <span className="font-light">{current.age}</span>
+                {current.verified && <VerifiedStar />}
+              </h2>
+              <p className="flex items-center gap-1.5 text-xs font-medium text-white/80"><MapPin className="h-3.5 w-3.5 text-blue-400" />{current.city}, {current.state} · {current.distanceMiles} mi</p>
+            </div>
           </div>
         </div>
 
