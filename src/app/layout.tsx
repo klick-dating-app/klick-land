@@ -1,93 +1,44 @@
-import type { Metadata, Viewport } from "next";
-import { Montserrat } from "next/font/google";
+import type { Metadata, Viewport } from 'next';
+import { Montserrat } from 'next/font/google';
+import { Toaster } from 'sonner';
 
-import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
-import { SidebarProvider } from "@/components/SidebarContext";
-import { Toaster } from "sonner";
-import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
-import OrganizationJsonLd from "@/components/seo/OrganizationJsonLd";
-import NativeShell from "@/components/native/NativeShell";
-import { rootMetadata } from "@/lib/seo";
+import './globals.css';
+import { ThemeProvider } from '@/components/theme-provider';
+import GoogleAnalytics from '@/components/analytics/GoogleAnalytics';
+import OrganizationJsonLd from '@/components/seo/OrganizationJsonLd';
+import NativeShell from '@/components/native/NativeShell';
+import { AuthProvider } from '@/context/AuthContext';
+import { rootMetadata } from '@/lib/seo';
 
 const montserrat = Montserrat({
-  subsets: ["latin"],
-  variable: "--font-montserrat",
-  display: "swap",
-  weight: ["300", "400", "500", "600", "700", "800", "900"],
+  subsets: ['latin'],
+  variable: '--font-montserrat',
+  display: 'swap',
+  weight: ['300', '400', '500', '600', '700', '800'],
 });
 
 export const metadata: Metadata = rootMetadata;
 
-/**
- * `viewportFit: "cover"` habilita `env(safe-area-inset-*)` para el contenedor
- * nativo de Capacitor (notch / Dynamic Island / barra de gestos Android).
- * En web el efecto es neutro: los insets valen 0.
- */
+/** `viewportFit: cover` habilita `env(safe-area-inset-*)` en notch / Dynamic Island. */
 export const viewport: Viewport = {
-  width: "device-width",
+  width: 'device-width',
   initialScale: 1,
-  viewportFit: "cover",
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#101a2e" },
-  ],
+  viewportFit: 'cover',
+  themeColor: '#101a2e',
 };
 
-import { KlickAppProvider } from "@/context/KlickAppContext";
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        {/* Meta Pixel Code */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '27649530617988251');
-fbq('track', 'PageView');
-            `,
-          }}
-        />
-        <noscript>
-          <img
-            height="1"
-            width="1"
-            style={{ display: "none" }}
-            src="https://www.facebook.com/tr?id=27649530617988251&ev=PageView&noscript=1"
-            alt=""
-          />
-        </noscript>
-        {/* End Meta Pixel Code */}
-      </head>
+    <html lang="es" suppressHydrationWarning>
       <body className={`${montserrat.variable} font-sans`}>
         <GoogleAnalytics />
         <OrganizationJsonLd />
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <KlickAppProvider>
-            <SidebarProvider>
-              <NativeShell />
-              {children}
-              <Toaster />
-            </SidebarProvider>
-          </KlickAppProvider>
+        <ThemeProvider attribute="class" defaultTheme="dark" disableTransitionOnChange>
+          <AuthProvider>
+            <NativeShell />
+            {children}
+            <Toaster position="top-center" richColors />
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>

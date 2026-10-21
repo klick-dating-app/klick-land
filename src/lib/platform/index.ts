@@ -14,7 +14,7 @@ export type AppPlatform = 'web' | 'ios' | 'android';
 const hasWindow = typeof window !== 'undefined';
 
 function isDevAppPreview(): boolean {
-  if (!hasWindow) return false;
+  if (!hasWindow || process.env.NODE_ENV === 'production') return false;
   try {
     const params = new URLSearchParams(window.location.search);
     if (params.get('app') === 'true' || params.get('mode') === 'app') return true;

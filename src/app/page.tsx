@@ -1,88 +1,55 @@
-"use client";
+import Link from 'next/link';
+import { BadgeCheck, CalendarHeart, HeartHandshake, Lock, ShieldCheck, Sparkles } from 'lucide-react';
+import { SiteShell } from '@/components/site/SiteShell';
+import { PLANS } from '@/lib/klick/options';
 
-import { sendMetaEvent } from "@/lib/meta-events";
-
-import Header from "@/components/landing/Header";
-import Footer from "@/components/landing/Footer";
-import Hero from "@/components/landing/Hero";
-import ChooseYourPath from "@/components/landing/ChooseYourPath";
-import Stats from "@/components/landing/Stats";
-import KlickAppShowcase from "@/components/landing/KlickAppShowcase";
-import FAQsSection from "@/components/landing/FAQsSection";
-import BasicPlanShowcase from "@/components/landing/BasicPlanShowcase";
-import VipPlanShowcase from "@/components/landing/VipPlanShowcase";
-import MentorshipShowcase from "@/components/landing/MentorshipShowcase";
-import FreeTrainingShowcase from "@/components/landing/FreeTrainingShowcase";
-import KlickStoriesShowcase from "@/components/landing/KlickStoriesShowcase";
-
-import { useState, useEffect } from "react";
-import { isNative } from "@/lib/platform";
-import MobileAppContainer from "@/components/app/MobileAppContainer";
+const FEATURES = [
+  { Icon: BadgeCheck, title: 'Perfiles verificados', text: 'Verificación de identidad con selfie y moderación de fotos. Menos perfiles falsos, más conexiones reales.' },
+  { Icon: Sparkles, title: 'Compatibilidad de 0 a 100 %', text: 'Fe, matrimonio, familia, idiomas, estilo de vida e intereses. Solo ves personas con 60 % o más.' },
+  { Icon: HeartHandshake, title: 'Common Ground', text: 'Te mostramos lo que realmente tienen en común para que la primera conversación sea fácil.' },
+  { Icon: CalendarHeart, title: 'Safe First Date', text: 'Lugar público, recordatorios, check-in de llegada y contacto de confianza en cada primera cita.' },
+  { Icon: ShieldCheck, title: 'Reporta y bloquea', text: 'Reportes y bloqueo instantáneos en cada perfil y chat, con revisión humana.' },
+  { Icon: Lock, title: 'Tu privacidad primero', text: 'Nunca mostramos tu ubicación exacta. Puedes eliminar tu cuenta y datos en cualquier momento.' },
+];
 
 export default function Home() {
-  const [inAppMode, setInAppMode] = useState<boolean | null>(null);
-
-  useEffect(() => {
-    setInAppMode(isNative());
-  }, []);
-
-  const handleStartQuote = () => {
-    window.location.href = "/#planes";
-  };
-
-  // Si estamos en la App Móvil (o ?app=true), mostramos el flujo de la App
-  if (inAppMode) {
-    return <MobileAppContainer />;
-  }
-
   return (
-    <div className="min-h-screen bg-black font-sans">
-      <Header />
-
-      <main>
-        <Hero onStartQuote={handleStartQuote} />
-
-        {/* Bloque de Planes y App Showcase (Fondo Oscuro Continuo sin barra blanca) */}
-        <div className="bg-[#050507] [&>section]:scroll-mt-28">
-          <ChooseYourPath />
-          <KlickAppShowcase />
+    <SiteShell>
+      <section className="mx-auto max-w-5xl px-5 py-20 text-center">
+        <p className="mb-4 inline-block rounded-full border border-primary/40 px-4 py-1 text-xs font-semibold uppercase tracking-widest text-primary">Citas seguras · Utah</p>
+        <h1 className="text-4xl font-extrabold leading-tight sm:text-6xl">Conecta con intención.<br /><span className="text-primary">Haz Klick</span> con seguridad.</h1>
+        <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">Klick combina verificación de identidad, un algoritmo de compatibilidad profunda y un protocolo de primera cita segura para relaciones que van en serio.</p>
+        <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <Link href="/login/" className="rounded-full bg-primary px-8 py-3.5 font-semibold text-primary-foreground shadow-lg">Crear mi cuenta</Link>
+          <Link href="/safe-dates/" className="rounded-full border px-8 py-3.5 font-semibold">Cómo te protegemos</Link>
         </div>
+      </section>
 
-        {/* Bloque Secciones Claras (Fondo Blanco) */}
-        <div className="flex flex-col gap-16 md:gap-20 lg:gap-24 bg-white [&>section]:scroll-mt-28 py-12 md:py-16">
-          <VipPlanShowcase />
-          <BasicPlanShowcase />
-          
-          <div className="w-full flex justify-center px-6">
-            <a 
-              href="https://chat.whatsapp.com/GVlnQKclJuP63qZjeE0r24" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              onClick={() => sendMetaEvent('Lead', { source: 'Home Page WhatsApp Button' })}
-              className="w-full sm:w-auto px-8 py-3.5 bg-transparent border border-black text-black hover:bg-black/10 transition-all flex items-center justify-center gap-3 text-base md:text-lg font-medium shadow-xl hover:scale-105 rounded-full"
-            >
-              <span>I Want to Find My Partner!</span>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
-              </svg>
-            </a>
+      <section className="mx-auto grid max-w-5xl gap-4 px-5 pb-20 sm:grid-cols-2 lg:grid-cols-3">
+        {FEATURES.map(({ Icon, title, text }) => (
+          <div key={title} className="space-y-2 rounded-2xl border bg-card p-6">
+            <Icon className="h-7 w-7 text-primary" />
+            <h2 className="text-lg font-bold">{title}</h2>
+            <p className="text-sm text-muted-foreground">{text}</p>
           </div>
+        ))}
+      </section>
 
-          <MentorshipShowcase />
-          <FreeTrainingShowcase />
+      <section className="border-y bg-card/40 py-20">
+        <div className="mx-auto max-w-5xl px-5">
+          <h2 className="text-center text-3xl font-extrabold">Gratis para ellas. Planes simples para ellos.</h2>
+          <p className="mx-auto mt-3 max-w-2xl text-center text-muted-foreground">Las mujeres tienen acceso completo sin costo. Los hombres pueden explorar gratis y suscribirse para iniciar conversaciones.</p>
+          <div className="mt-10 grid gap-4 sm:grid-cols-3">
+            {PLANS.map((p) => (
+              <div key={p.id} className={`space-y-3 rounded-2xl border p-6 ${'highlight' in p && p.highlight ? 'border-primary bg-primary/5' : 'bg-card'}`}>
+                <h3 className="text-lg font-bold">{p.name}</h3>
+                <p><span className="text-3xl font-extrabold">{p.price}</span><span className="text-sm text-muted-foreground"> / {p.period}</span></p>
+                <ul className="space-y-1 text-sm text-muted-foreground">{p.perks.map((x) => <li key={x}>✓ {x}</li>)}</ul>
+              </div>
+            ))}
+          </div>
         </div>
-
-        {/* Sección oscura inferior */}
-        <div className="flex flex-col gap-16 md:gap-20 lg:gap-24 bg-black [&>section]:scroll-mt-28">
-          <KlickStoriesShowcase />
-          <Stats />
-          <FAQsSection />
-        </div>
-      </main>
-
-      <div className="bg-black pt-20 md:pt-28 lg:pt-36">
-        <Footer />
-      </div>
-    </div>
+      </section>
+    </SiteShell>
   );
 }

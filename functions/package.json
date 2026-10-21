@@ -1,33 +1,25 @@
 {
-  "name": "functions",
-  "description": "Cloud Functions for Firebase",
+  "name": "klick-functions",
+  "description": "Klick \u2014 Cloud Functions (matching, chat, Safe First Date, billing, trust & safety)",
+  "private": true,
   "scripts": {
-    "lint": "eslint .",
-    "serve": "firebase emulators:start --only functions",
-    "shell": "firebase functions:shell",
-    "start": "npm run shell",
+    "build": "tsc",
+    "serve": "npm run build && firebase emulators:start --only functions,firestore,auth,storage",
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log",
-    "build": "tsc"
+    "test": "tsc && node --test lib/lib/compat.test.js"
   },
   "engines": {
     "node": "20"
   },
   "main": "lib/index.js",
   "dependencies": {
-    "axios": "^1.13.2",
-    "firebase-admin": "^12.1.0",
-    "firebase-functions": "^5.0.1"
+    "firebase-admin": "^12.7.0",
+    "firebase-functions": "^6.1.0",
+    "stripe": "^17.5.0"
   },
   "devDependencies": {
-    "@types/node": "^24.10.1",
-    "@typescript-eslint/eslint-plugin": "^8.48.1",
-    "@typescript-eslint/parser": "^8.48.1",
-    "eslint": "^9.39.1",
-    "eslint-config-google": "^0.14.0",
-    "eslint-plugin-import": "^2.32.0",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.9.3"
-  },
-  "private": true
+    "@types/node": "^20",
+    "typescript": "^5.6.0"
+  }
 }

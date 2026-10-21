@@ -1,8 +1,5 @@
 {
   "projects": {
-    "default": "udreamms-platform-1",
-    "production": "udreamms-platform-1"
-  },
-  "targets": {},
-  "etags": {}
+    "default": "REPLACE_WITH_KLICK_FIREBASE_PROJECT_ID"
+  }
 }

@@ -1,48 +1,98 @@
 rules_version = '2';
 
+// Klick — reglas de Firestore.
+// Principio: el cliente SOLO lee y envía mensajes. Toda escritura sensible
+// (perfil, swipes, matches, entitlements, reportes, bloqueos) pasa por Cloud Functions.
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Allow authenticated users to manage Kanban groups
-    match /kanban-groups/{groupId} {
-      allow read, create, update, delete: if request.auth != null;
+    function signedIn() { return request.auth != null; }
+    function isAdmin() { return signedIn() && request.auth.token.admin == true; }
+    function entitlement() { return get(/databases/$(database)/documents/entitlements/$(request.auth.uid)).data; }
 
-      // Allow authenticated users to manage cards within a group
-      match /cards/{cardId} {
-        allow read, create, update, delete: if request.auth != null;
-      }
-    }
-
-    // This rule allows the search functionality to work.
-    // It lets any authenticated user read from the 'cards' collection group.
-    match /{path=**}/cards/{cardId} {
-      allow read: if request.auth != null;
-    }
-
-    // Allows any authenticated user to create, read, update, and delete chatbots.
-    match /chatbots/{botId} {
-      allow read: if true;
-      allow write: if request.auth != null;
-    }
-
-    // New rule for contacts collection
-    match /contacts/{contactId} {
-      allow read, write: if request.auth != null;
-    }
-
-    // Visa crypto QR payments — written only by Firebase Admin (API routes).
-    // Clients must not read/write payment sessions or comprobantes directly.
-    match /visaCryptoSessions/{sessionId} {
-      allow read, write: if false;
-
-      match /paymentRequests/{requestId} {
-        allow read, write: if false;
-      }
-    }
-
-    match /visaCryptoComprobantes/{comprobanteId} {
-      allow read: if request.auth != null;
+    match /users/{uid} {
+      allow read: if signedIn() && (request.auth.uid == uid || resource.data.onboarded == true);
       allow write: if false;
+
+      // Cuestionario profundo: dueño, o usuarios con entitlement `canViewDetails`.
+      match /restricted/{doc} {
+        allow read: if signedIn() && (request.auth.uid == uid || entitlement().canViewDetails == true);
+        allow write: if false;
+      }
+      match /private/{doc} {
+        allow read: if signedIn() && request.auth.uid == uid;
+        allow write: if false;
+      }
+      match /swipes/{target} {
+        allow read: if signedIn() && request.auth.uid == uid;
+        allow write: if false;
+      }
+      match /blocks/{target} {
+        allow read: if signedIn() && request.auth.uid == uid;
+        allow write: if false;
+      }
+      // Tokens FCM del propio usuario.
+      match /devices/{token} {
+        allow read, write: if signedIn() && request.auth.uid == uid;
+      }
+    }
+
+    match /entitlements/{uid} {
+      allow read: if signedIn() && request.auth.uid == uid;
+      allow write: if false;
+    }
+
+    match /verifications/{uid} {
+      allow read: if signedIn() && (request.auth.uid == uid || isAdmin());
+      allow write: if false;
+    }
+
+    match /matches/{matchId} {
+      allow read: if signedIn() && request.auth.uid in resource.data.members;
+      allow write: if false;
+
+      match /messages/{messageId} {
+        allow read: if signedIn() && request.auth.uid in get(/databases/$(database)/documents/matches/$(matchId)).data.members;
+        allow create: if signedIn()
+          && request.auth.uid in get(/databases/$(database)/documents/matches/$(matchId)).data.members
+          && get(/databases/$(database)/documents/matches/$(matchId)).data.status == 'active'
+          && entitlement().canChat == true
+          && request.resource.data.senderId == request.auth.uid
+          && request.resource.data.text is string
+          && request.resource.data.text.size() > 0
+          && request.resource.data.text.size() <= 2000
+          && request.resource.data.keys().hasOnly(['senderId', 'text', 'createdAt'])
+          && request.resource.data.createdAt == request.time;
+        allow update, delete: if false;
+      }
+    }
+
+    match /safeDates/{dateId} {
+      allow read: if signedIn() && request.auth.uid in resource.data.participants;
+      allow create: if signedIn()
+        && request.resource.data.createdBy == request.auth.uid
+        && request.resource.data.participants.size() == 2
+        && request.auth.uid in request.resource.data.participants
+        && request.resource.data.status == 'scheduled'
+        && get(/databases/$(database)/documents/matches/$(request.resource.data.matchId)).data.members.hasAll(request.resource.data.participants);
+      allow update: if signedIn()
+        && request.auth.uid in resource.data.participants
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['checkins', 'status', 'feedback']);
+      allow delete: if false;
+
+      // Contacto de confianza: solo lo ve quien creó el plan.
+      match /private/{doc} {
+        allow read, write: if signedIn() && request.auth.uid == get(/databases/$(database)/documents/safeDates/$(dateId)).data.createdBy;
+      }
+    }
+
+    match /reports/{reportId} {
+      allow read: if isAdmin();
+      allow write: if false;
+    }
+
+    match /billing/{uid} {
+      allow read, write: if false;
     }
   }
 }

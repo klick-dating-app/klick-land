@@ -1,14 +1,19 @@
+import { initializeApp } from 'firebase-admin/app';
+import { setGlobalOptions } from 'firebase-functions/v2';
 
-// src/index.ts
-import * as admin from 'firebase-admin';
+initializeApp();
+setGlobalOptions({ region: 'us-central1', maxInstances: 20 });
 
-if (admin.apps.length === 0) {
-  admin.initializeApp();
-}
-
-// Export all functions
-export { sendWhatsappMessage, sendWhatsappMediaMessage } from './callable/whatsapp';
-export { moveCard } from './cardActions';
-export { whatsappWebhook } from './webhooks/whatsapp';
-export { googleFormsWebhook } from './webhooks/googleForms';
-// fixCors eliminado porque ya cumplió su función
+export { saveProfile } from './profile';
+export { getCandidates, swipe } from './discovery';
+export {
+  blockUser,
+  unblockUser,
+  reportUser,
+  requestVerification,
+  adminReviewVerification,
+  adminResolveReport,
+  deleteAccount,
+} from './safety';
+export { createCheckoutSession, createPortalSession, stripeWebhook } from './billing';
+export { onMessageCreated, safeDateReminders } from './triggers';
