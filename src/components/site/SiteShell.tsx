@@ -6,18 +6,18 @@ export const SUPPORT_EMAIL = process.env.NEXT_PUBLIC_SUPPORT_EMAIL || 'support@k
 export function SiteShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-dvh flex-col">
-      <header className="sticky top-0 z-30 border-b bg-background/90 backdrop-blur pt-safe">
+      <header className="glass sticky top-0 z-30 border-x-0 border-t-0 pt-safe">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-5 py-3">
           <Link href="/" aria-label="Klick"><KlickLogo size={34} showText textClassName="text-lg font-bold" /></Link>
           <nav className="flex items-center gap-5 text-sm">
             <Link href="/safe-dates/" className="hidden text-muted-foreground hover:text-foreground sm:inline">Safe First Date</Link>
             <Link href="/faqs/" className="hidden text-muted-foreground hover:text-foreground sm:inline">FAQ</Link>
-            <Link href="/login/" className="rounded-full bg-primary px-4 py-2 font-semibold text-primary-foreground">Entrar</Link>
+            <Link href="/login/" className="btn-brand !px-5 !py-2 text-sm">Entrar</Link>
           </nav>
         </div>
       </header>
       <main className="flex-1">{children}</main>
-      <footer className="border-t py-8 pb-safe text-sm text-muted-foreground">
+      <footer className="border-t border-white/5 py-8 pb-safe text-sm text-muted-foreground">
         <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-3 px-5 sm:flex-row">
           <p>© {new Date().getFullYear()} SafeMeet.Ut LLC · Klick</p>
           <nav className="flex flex-wrap justify-center gap-x-5 gap-y-1">

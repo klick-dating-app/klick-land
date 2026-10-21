@@ -14,6 +14,8 @@ import { api } from '@/lib/api';
 import { pickPhoto } from '@/lib/platform/photo';
 import { Button } from '@/components/ui/button';
 
+const PLAN_LABEL: Record<string, string> = { free: 'Gratis', basic: 'Básico', premium: 'Premium', vip: 'VIP' };
+
 export default function ProfilePage() {
   const { user, profile, entitlement, signOut } = useAuth();
   const router = useRouter();
@@ -50,37 +52,42 @@ export default function ProfilePage() {
     }
   };
 
-  const row = 'flex items-center justify-between rounded-2xl border bg-card p-4';
+  const plan = profile.gender === 'female' ? 'Gratis completo' : PLAN_LABEL[entitlement?.plan ?? 'free'];
+  const row = 'surface flex items-center justify-between gap-3 p-4 transition active:scale-[0.98]';
   return (
-    <div className="space-y-4 p-4">
-      <div className="flex items-center gap-4">
-        <div className="relative h-20 w-20 overflow-hidden rounded-full bg-muted">
+    <div className="space-y-5 pb-4">
+      <section className="relative overflow-hidden px-5 pb-8 pt-10 text-center">
+        <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-rose-500/25 to-transparent" />
+        <div className="relative mx-auto h-32 w-32 overflow-hidden rounded-full ring-4 ring-primary ring-offset-4 ring-offset-background">
           {profile.photos[0] && <Image src={profile.photos[0]} alt="" fill unoptimized className="object-cover" />}
         </div>
-        <div>
-          <h1 className="flex items-center gap-1.5 text-2xl font-bold">{profile.name}, {profile.age}{profile.verified && <BadgeCheck className="h-6 w-6 text-emerald-500" />}</h1>
-          <p className="text-sm text-muted-foreground">{profile.city}, {profile.state}</p>
-          <p className="text-xs text-primary">Plan: {entitlement?.plan === 'free' || !entitlement ? (profile.gender === 'female' ? 'Gratis completo' : 'Gratis') : entitlement.plan}</p>
+        <h1 className="relative mt-4 flex items-center justify-center gap-1.5 text-2xl font-extrabold">
+          {profile.name}, {profile.age}
+          {profile.verified && <BadgeCheck className="h-6 w-6 fill-emerald-500 text-black" />}
+        </h1>
+        <p className="relative text-sm text-muted-foreground">{profile.city}, {profile.state}</p>
+        <span className="pill relative mt-3"><Crown className="h-3.5 w-3.5 text-amber-400" /> Plan {plan}</span>
+      </section>
+
+      <div className="space-y-2.5 px-5">
+        <Link href="/app/onboarding/" className={row}><span className="flex items-center gap-3 font-medium"><Pencil className="h-5 w-5 text-primary" /> Editar perfil y preferencias</span><ChevronRight className="h-5 w-5 text-muted-foreground" /></Link>
+
+        <div className={row}>
+          <span className="flex items-center gap-3 font-medium"><ShieldCheck className="h-5 w-5 text-emerald-400" />
+            {profile.verified ? 'Identidad verificada' : verification === 'pending' ? 'Verificación en revisión' : verification === 'rejected' ? 'Verificación rechazada' : 'Verifica tu identidad'}
+          </span>
+          {!profile.verified && verification !== 'pending' && <Button size="sm" disabled={busy} onClick={verify}>Selfie</Button>}
         </div>
+
+        {profile.gender === 'male' && <Link href="/app/upgrade/" className={row}><span className="flex items-center gap-3 font-medium"><Crown className="h-5 w-5 text-amber-400" /> Planes y suscripción</span><ChevronRight className="h-5 w-5 text-muted-foreground" /></Link>}
+
+        <div className="flex flex-wrap justify-center gap-x-5 gap-y-1 pt-3 text-xs text-muted-foreground">
+          <Link href="/privacy/">Privacidad</Link><Link href="/terms/">Términos</Link><Link href="/safe-dates/">Seguridad</Link><Link href="/contact/">Soporte</Link>
+        </div>
+
+        <Button variant="outline" className="mt-2 w-full" onClick={() => signOut().then(() => router.replace('/'))}><LogOut className="mr-2 h-4 w-4" /> Cerrar sesión</Button>
+        <Button variant="ghost" className="w-full text-destructive" disabled={busy} onClick={remove}><Trash2 className="mr-2 h-4 w-4" /> Eliminar mi cuenta</Button>
       </div>
-
-      <Link href="/app/onboarding/" className={row}><span className="flex items-center gap-3"><Pencil className="h-5 w-5" /> Editar perfil y preferencias</span><ChevronRight className="h-5 w-5" /></Link>
-
-      <div className={row}>
-        <span className="flex items-center gap-3"><ShieldCheck className="h-5 w-5" />
-          {profile.verified ? 'Identidad verificada' : verification === 'pending' ? 'Verificación en revisión' : verification === 'rejected' ? 'Verificación rechazada' : 'Verifica tu identidad'}
-        </span>
-        {!profile.verified && verification !== 'pending' && <Button size="sm" disabled={busy} onClick={verify}>Tomar selfie</Button>}
-      </div>
-
-      {profile.gender === 'male' && <Link href="/app/upgrade/" className={row}><span className="flex items-center gap-3"><Crown className="h-5 w-5 text-amber-400" /> Planes y suscripción</span><ChevronRight className="h-5 w-5" /></Link>}
-
-      <div className="flex flex-wrap gap-x-4 gap-y-1 px-1 pt-2 text-xs text-muted-foreground">
-        <Link href="/privacy/">Privacidad</Link><Link href="/terms/">Términos</Link><Link href="/safe-dates/">Consejos de seguridad</Link><Link href="/contact/">Soporte</Link>
-      </div>
-
-      <Button variant="outline" className="w-full" onClick={() => signOut().then(() => router.replace('/'))}><LogOut className="mr-2 h-4 w-4" /> Cerrar sesión</Button>
-      <Button variant="ghost" className="w-full text-destructive" disabled={busy} onClick={remove}><Trash2 className="mr-2 h-4 w-4" /> Eliminar mi cuenta</Button>
     </div>
   );
 }
