@@ -36,11 +36,15 @@ export const getCandidates = onCall(async (req) => {
   ]);
 
   const out: Candidate[] = [];
-  const subjects = await Promise.all(
-    pool.docs.filter((d) => !skip.has(d.id)).map(async (d) => {
-      const q = await db().doc(`users/${d.id}/restricted/details`).get();
-      return q.exists ? { uid: d.id, s: { profile: d.data() as PublicProfile, q: q.data() as Questionnaire } } : null;
-    }),
+  // Una sola lectura en lote del cuestionario de todos los candidatos (en vez de N lecturas).
+  const pending = pool.docs.filter((d) => !skip.has(d.id));
+  const details = pending.length
+    ? await db().getAll(...pending.map((d) => db().doc(`users/${d.id}/restricted/details`)))
+    : [];
+  const subjects = pending.map((d, i) =>
+    details[i].exists
+      ? { uid: d.id, s: { profile: d.data() as PublicProfile, q: details[i].data() as Questionnaire } }
+      : null,
   );
   for (const item of subjects) {
     if (!item) continue;
