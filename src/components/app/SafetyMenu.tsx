@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Flag, ShieldAlert } from 'lucide-react';
+import { Flag, MoreHorizontal } from 'lucide-react';
 import { toast } from 'sonner';
 import { api } from '@/lib/api';
 import { REPORT_CATEGORIES } from '@/lib/klick/options';
@@ -30,8 +30,8 @@ export default function SafetyMenu({ targetId, matchId, onDone, onPhoto = false 
 
   return (
     <>
-      <button onClick={() => setOpen(true)} aria-label="Reportar o bloquear" className={onPhoto ? 'rounded-full bg-black/45 p-2.5 text-white backdrop-blur' : 'rounded-full border border-foreground/15 p-2.5 text-foreground/80'}>
-        <ShieldAlert className="h-5 w-5" />
+      <button onClick={() => setOpen(true)} aria-label="Reportar o bloquear" className={onPhoto ? 'p-2 text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.7)]' : 'p-2 text-foreground/70'}>
+        <MoreHorizontal className="h-6 w-6" strokeWidth={1.8} />
       </button>
       {open && (
         <div className="fixed inset-0 z-50 flex items-end bg-black/60" onClick={() => setOpen(false)}>

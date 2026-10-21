@@ -20,7 +20,7 @@ export default function MatchesPage() {
     <div className="space-y-8 px-5 pt-8">
       <header className="space-y-1">
         <p className="eyebrow">Mensajes</p>
-        <h1 className="text-4xl font-light tracking-tighter">Inbox</h1>
+        <h1 className="text-[26px] font-light tracking-tight">Inbox</h1>
       </header>
 
       {matches.length === 0 ? (

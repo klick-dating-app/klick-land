@@ -1,5 +1,6 @@
 'use client';
 
+import { Star } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export function Field({ label, hint, children }: { label: string; hint?: string; children: React.ReactNode }) {
@@ -65,6 +66,11 @@ export function Toggle({ label, checked, onChange }: { label: string; checked: b
       </span>
     </button>
   );
+}
+
+/** Marca de perfil verificado: estrella junto al nombre y la edad. */
+export function VerifiedStar({ className }: { className?: string }) {
+  return <Star aria-label="Verificado" className={cn('h-[17px] w-[17px] shrink-0 fill-blue-500 text-blue-500', className)} />;
 }
 
 export function Spinner({ className }: { className?: string }) {
