@@ -7,7 +7,7 @@ import { toast } from 'sonner';
 import { useAuth } from '@/context/AuthContext';
 import { isFirebaseConfigured } from '@/lib/firebase';
 import KlickLogo from '@/components/ui/KlickLogo';
-import { Button } from '@/components/ui/button';
+import { ShieldCheck } from 'lucide-react';
 import { Field, inputCls } from '@/components/app/form';
 
 const ERRORS: Record<string, string> = {
@@ -50,32 +50,35 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="mx-auto flex min-h-dvh max-w-sm flex-col justify-center gap-7 p-6 pt-safe pb-safe">
-      <div className="flex flex-col items-center gap-2 text-center">
-        <KlickLogo size={72} priority />
-        <h1 className="text-3xl font-extrabold tracking-tight">{mode === 'signup' ? 'Crea tu cuenta' : 'Bienvenido de vuelta'}</h1>
-        <p className="text-sm text-muted-foreground">Citas seguras con compatibilidad real.</p>
-      </div>
+    <main className="relative flex min-h-dvh items-center justify-center overflow-hidden bg-black">
+      <div className="pointer-events-none absolute left-1/2 top-[-10%] h-[350px] w-[350px] -translate-x-1/2 rounded-full bg-gradient-to-b from-purple-900/25 via-pink-900/10 to-transparent blur-3xl" />
+      <div className="pointer-events-none absolute bottom-[-10%] right-[-10%] h-[260px] w-[260px] rounded-full bg-cyan-900/15 blur-3xl" />
 
-      {!isFirebaseConfigured && <p className="rounded-xl bg-amber-500/15 p-3 text-xs text-amber-300">Firebase no está configurado todavía (.env.local).</p>}
+      <div className="relative z-10 flex w-full max-w-[430px] flex-col justify-between gap-10 px-7 py-10 pb-safe pt-safe">
+        <div className="space-y-4 pt-6 text-center">
+          <div className="flex items-center justify-center gap-3"><KlickLogo size={48} priority /><span className="text-3xl font-semibold tracking-tight">Klick Dating</span></div>
+          <p className="text-brand text-lg font-medium tracking-tight">Make klick with someone real</p>
+        </div>
 
-      <form onSubmit={submit} className="surface space-y-4 p-5">
-        <Field label="Correo"><input type="email" required autoComplete="email" className={inputCls} value={email} onChange={(e) => setEmail(e.target.value)} /></Field>
-        <Field label="Contraseña"><input type="password" required minLength={8} autoComplete={mode === 'signup' ? 'new-password' : 'current-password'} className={inputCls} value={password} onChange={(e) => setPassword(e.target.value)} /></Field>
-        {mode === 'signup' && (
-          <label className="flex items-start gap-2 text-xs text-muted-foreground">
-            <input type="checkbox" className="mt-0.5" checked={accepted} onChange={(e) => setAccepted(e.target.checked)} />
-            <span>Tengo 18 años o más y acepto los <Link href="/terms/" className="text-primary underline">Términos</Link> y la <Link href="/privacy/" className="text-primary underline">Política de privacidad</Link>.</span>
-          </label>
-        )}
-        <Button size="lg" className="w-full" disabled={busy || !isFirebaseConfigured}>{busy ? 'Un momento…' : mode === 'signup' ? 'Crear cuenta' : 'Entrar'}</Button>
-      </form>
+        {!isFirebaseConfigured && <p className="rounded-xl border border-white/10 bg-white/5 p-3 text-center text-xs text-zinc-400">Firebase aún no está configurado (.env.local).</p>}
 
-      <div className="space-y-2 text-center text-sm">
-        <button className="text-primary" onClick={() => setMode(mode === 'signup' ? 'signin' : 'signup')}>
-          {mode === 'signup' ? '¿Ya tienes cuenta? Inicia sesión' : '¿Nueva en Klick? Crea tu cuenta'}
-        </button>
-        {mode === 'signin' && <div><button className="text-muted-foreground" onClick={forgot}>Olvidé mi contraseña</button></div>}
+        <form onSubmit={submit} className="space-y-5">
+          <h1 className="eyebrow text-center">{mode === 'signup' ? 'Crea tu cuenta' : 'Bienvenido de vuelta'}</h1>
+          <Field label="Correo"><input type="email" required autoComplete="email" className={inputCls} value={email} onChange={(e) => setEmail(e.target.value)} /></Field>
+          <Field label="Contraseña"><input type="password" required minLength={8} autoComplete={mode === 'signup' ? 'new-password' : 'current-password'} className={inputCls} value={password} onChange={(e) => setPassword(e.target.value)} /></Field>
+          {mode === 'signup' && (
+            <label className="flex items-start gap-2.5 text-[11px] font-light leading-relaxed text-zinc-400">
+              <input type="checkbox" className="mt-0.5 accent-blue-500" checked={accepted} onChange={(e) => setAccepted(e.target.checked)} />
+              <span>Tengo 18 años o más y acepto los <Link href="/terms/" className="text-white underline">Términos</Link> y la <Link href="/privacy/" className="text-white underline">Política de privacidad</Link>.</span>
+            </label>
+          )}
+          <button className="btn-brand w-full" disabled={busy || !isFirebaseConfigured}>{busy ? 'Un momento…' : mode === 'signup' ? 'Crear cuenta' : 'Entrar'}</button>
+          <div className="space-y-2 text-center text-sm font-light">
+            <button type="button" className="text-zinc-300" onClick={() => setMode(mode === 'signup' ? 'signin' : 'signup')}>{mode === 'signup' ? '¿Ya tienes cuenta? Inicia sesión' : '¿Nueva en Klick? Crea tu cuenta'}</button>
+            {mode === 'signin' && <div><button type="button" className="text-zinc-500" onClick={forgot}>Olvidé mi contraseña</button></div>}
+          </div>
+          <p className="flex items-center justify-center gap-1.5 text-[11px] font-medium text-zinc-400"><ShieldCheck className="h-3.5 w-3.5 text-cyan-400" /> Perfiles verificados y citas seguras</p>
+        </form>
       </div>
     </main>
   );

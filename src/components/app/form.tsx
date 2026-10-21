@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 export function Field({ label, hint, children }: { label: string; hint?: string; children: React.ReactNode }) {
   return (
     <div className="space-y-2">
-      <label className="text-[13px] font-semibold tracking-wide text-foreground/80">{label}</label>
+      <label className="eyebrow !text-white/60">{label}</label>
       {children}
       {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
     </div>
@@ -13,7 +13,7 @@ export function Field({ label, hint, children }: { label: string; hint?: string;
 }
 
 export const inputCls =
-  'w-full rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3.5 text-base outline-none transition placeholder:text-muted-foreground focus:border-primary/70 focus:bg-white/[0.07] focus:ring-4 focus:ring-primary/15';
+  'w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3.5 text-base font-light outline-none transition placeholder:text-zinc-600 focus:border-white/40 focus:bg-white/[0.06]';
 
 /** Selección única o múltiple con "chips" táctiles. */
 export function Chips({
@@ -42,7 +42,7 @@ export function Chips({
           onClick={() => toggle(o)}
           className={cn(
             'rounded-full border px-4 py-2 text-sm font-medium transition active:scale-95',
-            selected(o) ? 'border-transparent bg-gradient-to-br from-rose-500 to-orange-500 text-white shadow-lg shadow-rose-500/25' : 'border-white/10 bg-white/[0.04] text-foreground/80 hover:border-white/25',
+            selected(o) ? 'border-blue-500/40 bg-blue-600/15 text-blue-300' : 'border-white/10 bg-white/5 text-zinc-300 hover:border-white/25',
           )}
         >
           {o}
@@ -57,10 +57,10 @@ export function Toggle({ label, checked, onChange }: { label: string; checked: b
     <button
       type="button"
       onClick={() => onChange(!checked)}
-      className="flex w-full items-center justify-between gap-4 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3.5 text-left text-sm"
+      className="flex w-full items-center justify-between gap-4 rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3.5 text-left text-sm font-light"
     >
       <span>{label}</span>
-      <span className={cn('h-7 w-12 shrink-0 rounded-full p-0.5 transition-colors', checked ? 'bg-gradient-to-r from-rose-500 to-orange-500' : 'bg-muted')}>
+      <span className={cn('h-7 w-12 shrink-0 rounded-full p-0.5 transition-colors', checked ? 'bg-brand' : 'bg-zinc-800')}>
         <span className={cn('block h-6 w-6 rounded-full bg-white shadow transition-transform', checked && 'translate-x-5')} />
       </span>
     </button>
@@ -73,8 +73,9 @@ export function Spinner({ className }: { className?: string }) {
 
 export function ScoreBadge({ score }: { score: number }) {
   return (
-    <span className="inline-flex items-center gap-1 rounded-full bg-gradient-to-br from-rose-500 to-orange-500 px-3 py-1.5 text-sm font-extrabold text-white shadow-lg shadow-rose-500/40">
-      ♥ {Math.round(score)}%
+    <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/50 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider backdrop-blur-md">
+      <span className="text-brand text-sm font-bold normal-case tracking-normal">{Math.round(score)}%</span>
+      <span className="text-white/70">Klick</span>
     </span>
   );
 }
@@ -88,7 +89,7 @@ export function ScoreRing({ score, size = 56 }: { score: number; size?: number }
       <svg width={size} height={size} className="-rotate-90">
         <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="currentColor" strokeOpacity={0.12} strokeWidth={5} />
         <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="url(#kg)" strokeWidth={5} strokeLinecap="round" strokeDasharray={c} strokeDashoffset={c * (1 - score / 100)} />
-        <defs><linearGradient id="kg"><stop offset="0" stopColor="#f43f5e" /><stop offset="1" stopColor="#fb923c" /></linearGradient></defs>
+        <defs><linearGradient id="kg"><stop offset="0" stopColor="#008aff" /><stop offset="0.5" stopColor="#7c3aed" /><stop offset="1" stopColor="#ff007f" /></linearGradient></defs>
       </svg>
       <span className="absolute inset-0 flex items-center justify-center text-[13px] font-extrabold">{Math.round(score)}</span>
     </div>

@@ -48,24 +48,19 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const showTabs = onboarded && !pathname.startsWith('/app/chat') && !onboarding;
   return (
     <div className="mx-auto flex min-h-dvh max-w-lg flex-col pt-safe">
-      {DEMO && <div className="bg-amber-500/90 py-1 text-center text-[11px] font-semibold text-black">MODO DEMO · datos de ejemplo</div>}
-      <main className={cn('flex-1', showTabs && 'pb-28')}>{children}</main>
+      {DEMO && <div className="border-b border-white/10 bg-white/5 py-1 text-center text-[10px] font-medium uppercase tracking-[0.2em] text-white/50">Demo · datos de ejemplo</div>}
+      <main className={cn('flex-1', showTabs && 'pb-24')}>{children}</main>
       {showTabs && (
-        <nav className="fixed inset-x-0 bottom-0 z-40 px-4 pb-safe">
-          <ul className="glass mx-auto mb-3 flex max-w-md rounded-full p-1.5 shadow-2xl shadow-black/50">
+        <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-black/80 pb-safe backdrop-blur-xl">
+          <ul className="mx-auto flex max-w-lg">
             {TABS.map(({ href, label, Icon }) => {
               const active = pathname.startsWith(href.slice(0, -1));
               return (
                 <li key={href} className="flex-1">
-                  <Link
-                    href={href}
-                    className={cn(
-                      'flex flex-col items-center gap-0.5 rounded-full py-2 text-[11px] font-medium transition',
-                      active ? 'bg-gradient-to-br from-rose-500 to-orange-500 text-white shadow-lg shadow-rose-500/30' : 'text-muted-foreground',
-                    )}
-                  >
-                    <Icon className="h-5 w-5" />
+                  <Link href={href} className={cn('relative flex flex-col items-center gap-1 py-3 text-[10px] font-medium uppercase tracking-[0.14em] transition', active ? 'text-white' : 'text-zinc-500')}>
+                    <Icon className="h-[22px] w-[22px]" strokeWidth={active ? 1.75 : 1.4} />
                     {label}
+                    {active && <span className="bg-brand absolute top-0 h-px w-10" />}
                   </Link>
                 </li>
               );

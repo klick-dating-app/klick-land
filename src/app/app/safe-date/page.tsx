@@ -59,10 +59,11 @@ function SafeDates() {
   const setStatus = (d: SafeDate, status: 'completed' | 'cancelled') => updateDoc(doc(db, 'safeDates', d.id), { status });
 
   return (
-    <div className="space-y-6 px-5 pt-6">
+    <div className="space-y-8 px-5 pt-8">
       <header className="space-y-1">
-        <h1 className="flex items-center gap-2 text-3xl font-extrabold tracking-tight"><ShieldCheck className="h-6 w-6 text-primary" /> Safe First Date</h1>
-        <p className="text-sm text-muted-foreground">Lugar público, horario de día y un contacto de confianza. Te recordamos 1 hora antes y te pedimos confirmar que llegaste bien.</p>
+        <p className="eyebrow">Protocolo</p>
+        <h1 className="text-4xl font-light tracking-tighter">Safe First Date</h1>
+        <p className="text-sm font-light leading-relaxed text-zinc-400">Lugar público, horario de día y un contacto de confianza. Te recordamos 1 hora antes y te pedimos confirmar que llegaste bien.</p>
       </header>
 
       {match && (
@@ -97,12 +98,12 @@ function SafeDates() {
                   <p className="flex items-center gap-1 text-sm text-muted-foreground"><MapPin className="h-4 w-4" />{d.venueAddress || 'Lugar público'}</p>
                   <p className="text-sm">{new Date(d.dateTimeMs).toLocaleString('es', { dateStyle: 'full', timeStyle: 'short' })}</p>
                 </div>
-                <span className="rounded-full bg-muted px-2.5 py-1 text-xs">{d.status === 'scheduled' ? 'Programada' : d.status === 'completed' ? 'Completada' : 'Cancelada'}</span>
+                <span className="pill">{d.status === 'scheduled' ? 'Programada' : d.status === 'completed' ? 'Completada' : 'Cancelada'}</span>
               </div>
               {d.status === 'scheduled' && (
                 <div className="flex flex-wrap gap-2">
                   {d.checkins?.[user!.uid] ? (
-                    <span className="flex items-center gap-1 text-sm text-emerald-500"><CheckCircle2 className="h-4 w-4" /> Check-in hecho</span>
+                    <span className="flex items-center gap-1 text-sm text-blue-400"><CheckCircle2 className="h-4 w-4" /> Check-in hecho</span>
                   ) : (
                     <Button size="sm" onClick={() => checkIn(d)}>Llegué bien</Button>
                   )}

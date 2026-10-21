@@ -35,8 +35,8 @@ export default function SafetyMenu({ targetId, matchId, onDone }: { targetId: st
       </button>
       {open && (
         <div className="fixed inset-0 z-50 flex items-end bg-black/60" onClick={() => setOpen(false)}>
-          <div className="mx-auto w-full max-w-lg space-y-4 rounded-t-[2rem] border-t border-white/10 bg-card p-6 pb-safe" onClick={(e) => e.stopPropagation()}>
-            <h2 className="flex items-center gap-2 text-lg font-bold"><Flag className="h-5 w-5 text-primary" /> Seguridad</h2>
+          <div className="mx-auto w-full max-w-lg space-y-4 rounded-t-[2rem] border-t border-white/10 bg-[#08080b] p-7 pb-safe" onClick={(e) => e.stopPropagation()}>
+            <h2 className="flex items-center gap-2 text-xl font-light tracking-tight"><Flag className="h-5 w-5 text-blue-400" strokeWidth={1.5} /> Seguridad</h2>
             <select className={inputCls} value={category} onChange={(e) => setCategory(e.target.value)}>
               <option value="">Motivo del reporte…</option>
               {REPORT_CATEGORIES.map((c) => <option key={c.id} value={c.id}>{c.label}</option>)}

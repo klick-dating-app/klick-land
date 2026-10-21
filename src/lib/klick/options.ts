@@ -17,9 +17,9 @@ export const REPORT_CATEGORIES: Array<{ id: string; label: string }> = [
 ];
 
 export const PLANS = [
-  { id: 'basic', name: 'Básico', price: '$19.99', period: 'mes', perks: ['Filtros completos', 'Common Ground ilimitado', 'Verificación KYC'] },
-  { id: 'premium', name: 'Premium', price: '$39.99', period: 'mes', perks: ['Chats ilimitados', 'Fe y matrimonio detallados', 'Coordinación Safe First Date'], highlight: true },
-  { id: 'vip', name: 'VIP', price: '$199', period: 'año', perks: ['Perfil destacado', '5 boosts al mes', 'Todo lo de Premium'] },
+  { id: 'basic', name: 'Básico', price: '$19.99', period: 'mes', perks: ['Filtros completos', 'Common Ground ilimitado', 'Verificación KYC'], en: { name: 'Basic', period: 'month', perks: ['Full filters', 'Unlimited Common Ground', 'ID verification'] } },
+  { id: 'premium', name: 'Premium', price: '$39.99', period: 'mes', perks: ['Chats ilimitados', 'Fe y matrimonio detallados', 'Coordinación Safe First Date'], highlight: true, en: { name: 'Premium', period: 'month', perks: ['Unlimited chats', 'Detailed faith & marriage', 'Safe First Date coordination'] } },
+  { id: 'vip', name: 'VIP', price: '$199', period: 'año', perks: ['Perfil destacado', '5 boosts al mes', 'Todo lo de Premium'], en: { name: 'VIP', period: 'year', perks: ['Featured profile', '5 boosts a month', 'Everything in Premium'] } },
 ] as const;
 
 export const SAFE_VENUES = ['Cafetería pública', 'Restaurante concurrido', 'Parque (de día)', 'Museo o centro cultural', 'Heladería'];
