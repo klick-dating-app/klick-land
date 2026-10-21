@@ -71,6 +71,7 @@ export interface Match {
   profiles: Record<string, { name: string; photo: string | null }>;
   score: number;
   commonGround: string[];
+  kind?: 'date' | 'friendship';
   status: 'active' | 'blocked';
   lastMessage: string | null;
   lastMessageAt?: { toMillis(): number };

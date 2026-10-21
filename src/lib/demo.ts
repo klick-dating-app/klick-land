@@ -26,8 +26,8 @@ export const DEMO_CANDIDATES: Candidate[] = [
 ];
 
 export const DEMO_MATCHES: Match[] = [
-  { id: 'm1', members: [DEMO_UID, 'c1'], profiles: { [DEMO_UID]: { name: 'Daniel', photo: pic('men', 32) }, c1: { name: 'Camila', photo: pic('women', 44) } }, score: 93, commonGround: ['Comparten la fe: LDS', 'Intereses comunes: Hiking, Pickleball', 'Idioma compartido: English, Spanish'], status: 'active', lastMessage: '¡Hicimos un Klick del 93 %! 😄', lastMessageAt: { toMillis: () => Date.now() } },
-  { id: 'm2', members: [DEMO_UID, 'c2'], profiles: { [DEMO_UID]: { name: 'Daniel', photo: pic('men', 32) }, c2: { name: 'Sofía', photo: pic('women', 68) } }, score: 86.5, commonGround: ['Primera cita ideal: Café', 'Idioma compartido: Spanish'], status: 'active', lastMessage: null, lastMessageAt: { toMillis: () => Date.now() - 86_400_000 } },
+  { id: 'm1', members: [DEMO_UID, 'c1'], profiles: { [DEMO_UID]: { name: 'Daniel', photo: pic('men', 32) }, c1: { name: 'Camila', photo: pic('women', 44) } }, score: 93, commonGround: ['Comparten la fe: LDS', 'Intereses comunes: Hiking, Pickleball', 'Idioma compartido: English, Spanish'], kind: 'date', status: 'active', lastMessage: '¡Hicimos un Klick del 93 %! 😄', lastMessageAt: { toMillis: () => Date.now() } },
+  { id: 'm2', members: [DEMO_UID, 'c2'], profiles: { [DEMO_UID]: { name: 'Daniel', photo: pic('men', 32) }, c2: { name: 'Sofía', photo: pic('women', 68) } }, score: 86.5, commonGround: ['Primera cita ideal: Café', 'Idioma compartido: Spanish'], kind: 'friendship', status: 'active', lastMessage: null, lastMessageAt: { toMillis: () => Date.now() - 86_400_000 } },
 ];
 
 export const DEMO_MESSAGES: Record<string, Message[]> = {

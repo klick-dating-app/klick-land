@@ -41,6 +41,7 @@ export default function KlicksPage() {
                   {other?.photo && <Image src={other.photo} alt="" fill unoptimized className="object-cover" />}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent" />
                   <div className="absolute left-3 top-3"><ScoreBadge score={m.score} /></div>
+                  <span className="absolute right-3 top-3 text-[10px] font-semibold uppercase tracking-[0.14em] text-white/85 drop-shadow">{m.kind === 'date' ? 'Cita' : 'Amistad'}</span>
                   <p className="absolute bottom-3 left-3 flex items-center gap-1.5 text-base font-semibold tracking-tight text-white">{other?.name}<VerifiedStar className="h-4 w-4" /></p>
                 </div>
                 <div className="flex gap-2 p-2.5">

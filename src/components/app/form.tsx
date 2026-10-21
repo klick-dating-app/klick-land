@@ -1,6 +1,5 @@
 'use client';
 
-import { Star } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export function Field({ label, hint, children }: { label: string; hint?: string; children: React.ReactNode }) {
@@ -68,9 +67,20 @@ export function Toggle({ label, checked, onChange }: { label: string; checked: b
   );
 }
 
-/** Marca de perfil verificado: estrella junto al nombre y la edad. */
+/** Estrella de 10 puntas (sello de verificado), calculada una sola vez. */
+const STAR_POINTS = Array.from({ length: 20 }, (_, i) => {
+  const r = i % 2 === 0 ? 11.5 : 8.6;
+  const a = (Math.PI * i) / 10 - Math.PI / 2;
+  return `${(12 + r * Math.cos(a)).toFixed(2)},${(12 + r * Math.sin(a)).toFixed(2)}`;
+}).join(' ');
+
+/** Marca de perfil verificado: estrella de 10 puntas junto al nombre y la edad. */
 export function VerifiedStar({ className }: { className?: string }) {
-  return <Star aria-label="Verificado" className={cn('h-[17px] w-[17px] shrink-0 fill-blue-500 text-blue-500', className)} />;
+  return (
+    <svg role="img" aria-label="Verificado" viewBox="0 0 24 24" className={cn('h-[18px] w-[18px] shrink-0', className)}>
+      <polygon points={STAR_POINTS} fill="#3b82f6" strokeLinejoin="round" stroke="#3b82f6" strokeWidth="0.8" />
+    </svg>
+  );
 }
 
 export function Spinner({ className }: { className?: string }) {
