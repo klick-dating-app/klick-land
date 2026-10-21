@@ -1,7 +1,7 @@
 {
   "name": "klick",
   "version": "1.0.0",
-  "description": "Klick — app de citas segura (web + iOS + Android)",
+  "description": "Klick \u2014 app de citas segura (web + iOS + Android)",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -14,7 +14,9 @@
     "cap:doctor": "cap doctor",
     "cap:assets": "capacitor-assets generate --iconBackgroundColor #101a2e --iconBackgroundColorDark #101a2e --splashBackgroundColor #ffffff --splashBackgroundColorDark #101a2e",
     "android": "npm run cap:sync && cap open android",
-    "ios": "npm run cap:sync && cap open ios"
+    "ios": "npm run cap:sync && cap open ios",
+    "functions:test": "npm --prefix functions test",
+    "verify": "npm run typecheck && npm run functions:test && npm run build"
   },
   "keywords": [
     "klick",

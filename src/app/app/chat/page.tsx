@@ -3,7 +3,7 @@
 import { Suspense, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { addDoc, collection, doc, limitToLast, onSnapshot, orderBy, query, serverTimestamp } from 'firebase/firestore';
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { ArrowLeft, CalendarHeart, Lock, Send } from 'lucide-react';
 import { toast } from 'sonner';
 import { db } from '@/lib/firebase';
@@ -11,28 +11,20 @@ import { useAuth } from '@/context/AuthContext';
 import { Spinner } from '@/components/app/form';
 import SafetyMenu from '@/components/app/SafetyMenu';
 import { cn } from '@/lib/utils';
-import type { Match, Message } from '@/lib/types';
+import { useMatch, useMessages } from '@/hooks/useKlickData';
 
 function Chat() {
   const id = useSearchParams().get('id');
   const router = useRouter();
   const { user, entitlement } = useAuth();
-  const [match, setMatch] = useState<Match | null>(null);
-  const [messages, setMessages] = useState<Message[]>([]);
+  const { match, missing } = useMatch(id);
+  const messages = useMessages(id);
   const [text, setText] = useState('');
   const bottom = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!id) return;
-    const unsubMatch = onSnapshot(doc(db, 'matches', id), (s) => (s.exists() ? setMatch({ id: s.id, ...(s.data() as Omit<Match, 'id'>) }) : router.replace('/app/matches/')), () => router.replace('/app/matches/'));
-    const unsubMsgs = onSnapshot(query(collection(db, `matches/${id}/messages`), orderBy('createdAt'), limitToLast(200)), (s) =>
-      setMessages(s.docs.map((d) => ({ id: d.id, ...(d.data() as Omit<Message, 'id'>) }))),
-    );
-    return () => {
-      unsubMatch();
-      unsubMsgs();
-    };
-  }, [id, router]);
+    if (missing) router.replace('/app/matches/');
+  }, [missing, router]);
 
   useEffect(() => bottom.current?.scrollIntoView({ behavior: 'smooth' }), [messages.length]);
 

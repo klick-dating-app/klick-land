@@ -1,14 +1,14 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { doc, onSnapshot } from 'firebase/firestore';
 import { ref, uploadBytes } from 'firebase/storage';
 import { BadgeCheck, ChevronRight, Crown, LogOut, Pencil, ShieldCheck, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
-import { db, storage } from '@/lib/firebase';
+import { storage } from '@/lib/firebase';
+import { useVerificationStatus } from '@/hooks/useKlickData';
 import { useAuth } from '@/context/AuthContext';
 import { api } from '@/lib/api';
 import { pickPhoto } from '@/lib/platform/photo';
@@ -17,13 +17,8 @@ import { Button } from '@/components/ui/button';
 export default function ProfilePage() {
   const { user, profile, entitlement, signOut } = useAuth();
   const router = useRouter();
-  const [verification, setVerification] = useState<string>('none');
+  const verification = useVerificationStatus(user?.uid);
   const [busy, setBusy] = useState(false);
-
-  useEffect(() => {
-    if (!user) return;
-    return onSnapshot(doc(db, 'verifications', user.uid), (s) => setVerification(s.exists() ? s.data().status : 'none'), () => undefined);
-  }, [user]);
 
   if (!user || !profile) return null;
 

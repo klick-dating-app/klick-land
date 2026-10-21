@@ -1,24 +1,15 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { collection, onSnapshot, orderBy, query, where } from 'firebase/firestore';
 import { Heart } from 'lucide-react';
-import { db } from '@/lib/firebase';
+import { useMatches } from '@/hooks/useKlickData';
 import { useAuth } from '@/context/AuthContext';
 import { Spinner } from '@/components/app/form';
-import type { Match } from '@/lib/types';
 
 export default function MatchesPage() {
   const { user } = useAuth();
-  const [matches, setMatches] = useState<Match[] | null>(null);
-
-  useEffect(() => {
-    if (!user) return;
-    const q = query(collection(db, 'matches'), where('members', 'array-contains', user.uid), orderBy('lastMessageAt', 'desc'));
-    return onSnapshot(q, (s) => setMatches(s.docs.map((d) => ({ id: d.id, ...(d.data() as Omit<Match, 'id'>) })).filter((m) => m.status === 'active')), () => setMatches([]));
-  }, [user]);
+  const matches = useMatches(user?.uid);
 
   if (!matches) return <div className="flex h-[70dvh] items-center justify-center"><Spinner className="h-8 w-8" /></div>;
 

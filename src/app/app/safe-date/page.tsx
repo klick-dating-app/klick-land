@@ -1,8 +1,8 @@
 'use client';
 
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { addDoc, collection, doc, onSnapshot, orderBy, query, setDoc, updateDoc, where } from 'firebase/firestore';
+import { addDoc, collection, doc, setDoc, updateDoc } from 'firebase/firestore';
 import { CalendarHeart, CheckCircle2, MapPin, Phone, ShieldCheck } from 'lucide-react';
 import { toast } from 'sonner';
 import { db } from '@/lib/firebase';
@@ -10,13 +10,14 @@ import { useAuth } from '@/context/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Chips, Field, Spinner, inputCls } from '@/components/app/form';
 import { SAFE_VENUES } from '@/lib/klick/options';
-import type { Match, SafeDate } from '@/lib/types';
+import { useMatch, useSafeDates } from '@/hooks/useKlickData';
+import type { SafeDate } from '@/lib/types';
 
 function SafeDates() {
   const matchId = useSearchParams().get('matchId');
   const { user } = useAuth();
-  const [dates, setDates] = useState<SafeDate[] | null>(null);
-  const [match, setMatch] = useState<Match | null>(null);
+  const dates = useSafeDates(user?.uid);
+  const { match } = useMatch(matchId);
   const [venueType, setVenueType] = useState(SAFE_VENUES[0]);
   const [venueName, setVenueName] = useState('');
   const [venueAddress, setVenueAddress] = useState('');
@@ -24,17 +25,6 @@ function SafeDates() {
   const [contactName, setContactName] = useState('');
   const [contactPhone, setContactPhone] = useState('');
   const [busy, setBusy] = useState(false);
-
-  useEffect(() => {
-    if (!user) return;
-    const q = query(collection(db, 'safeDates'), where('participants', 'array-contains', user.uid), orderBy('dateTimeMs'));
-    return onSnapshot(q, (s) => setDates(s.docs.map((d) => ({ id: d.id, ...(d.data() as Omit<SafeDate, 'id'>) }))), () => setDates([]));
-  }, [user]);
-
-  useEffect(() => {
-    if (!matchId) return setMatch(null);
-    return onSnapshot(doc(db, 'matches', matchId), (s) => setMatch(s.exists() ? ({ id: s.id, ...(s.data() as Omit<Match, 'id'>) }) : null));
-  }, [matchId]);
 
   const create = async () => {
     if (!user || !match) return;
@@ -58,7 +48,6 @@ function SafeDates() {
       }
       toast.success('Safe First Date creada. Te avisaremos antes de la cita.');
       history.replaceState(null, '', '/app/safe-date/');
-      setMatch(null);
     } catch {
       toast.error('No se pudo crear el plan');
     } finally {
