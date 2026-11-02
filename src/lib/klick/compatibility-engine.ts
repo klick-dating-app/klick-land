@@ -14,20 +14,20 @@ export interface KlickUserProfile {
   // 1. Fe & Valores LDS (Peso: 5)
   faith: string; // 'LDS' | 'Christian' | 'Other'
   faithImportance: 'Very important' | 'Important' | 'Flexible';
-  templeRecommend: 'Sí' | 'En proceso' | 'No' | 'Prefiero no indicar';
+  templeRecommend: 'Yes' | 'In progress' | 'No' | 'Prefer not to say' | 'Sí' | 'En proceso';
   templeMarriageRequirement: 'Indispensable' | 'Preferred' | 'Flexible';
-  servedMission: 'Sí (Nacional)' | 'Sí (Internacional)' | 'No' | 'Servicio honorable';
+  servedMission: 'Yes (Domestic)' | 'Yes (International)' | 'No' | 'Honorable service' | 'Sí (Nacional)' | 'Sí (Internacional)';
 
   // 2. Matrimonio & Objetivos (Peso: 5)
-  maritalStatus: 'Soltero/a' | 'Divorciado/a' | 'Viudo/a';
+  maritalStatus: 'Single' | 'Divorced' | 'Widowed' | 'Soltero/a' | 'Divorciado/a' | 'Viudo/a';
   seekingMarriage: boolean;
-  marriageTimeline: '<1 año' | '1-2 años' | '2+ años' | 'Flexible';
+  marriageTimeline: '<1 year' | '1-2 years' | '2+ years' | 'Flexible' | '<1 año' | '1-2 años' | '2+ años';
   marriageIndispensable: boolean;
 
   // 3. Familia & Hijos (Peso: 5)
   hasChildren: boolean;
-  wantsChildren: 'Sí' | 'No' | 'No seguro';
-  acceptsPartnerWithChildren: 'Sí' | 'No' | 'Flexible';
+  wantsChildren: 'Yes' | 'No' | 'Not sure' | 'Sí' | 'No seguro';
+  acceptsPartnerWithChildren: 'Yes' | 'No' | 'Flexible' | 'Sí';
   familyIndispensable: boolean;
 
   // 4. Idiomas & Cultura (Peso: 4)
@@ -117,7 +117,7 @@ export function calculateKlickCompatibility(
       passedThreshold60: false,
       categoryScores,
       commonGround: [],
-      exclusionReason: 'Candidato restringido o bloqueado por seguridad Trust & Safety.',
+      exclusionReason: 'Candidate account restricted or blocked by Trust & Safety.',
       isEligibleForMatch: false,
     };
   }
@@ -132,7 +132,8 @@ export function calculateKlickCompatibility(
   // --- PUERTA 2: HARD COMPATIBILITY GATE (Requisitos Indispensables M-002) ---
   // Requisito 1: Matrimonio en el Templo Indispensable
   if (userA.templeMarriageRequirement === 'Indispensable') {
-    if (candidate.templeRecommend !== 'Sí' && candidate.templeRecommend !== 'En proceso') {
+    const isTempleOk = candidate.templeRecommend === 'Yes' || candidate.templeRecommend === 'In progress' || candidate.templeRecommend === 'Sí' || candidate.templeRecommend === 'En proceso';
+    if (!isTempleOk) {
       return {
         score: 0,
         passedSafetyGate: true,
@@ -140,7 +141,7 @@ export function calculateKlickCompatibility(
         passedThreshold60: false,
         categoryScores,
         commonGround: [],
-        exclusionReason: 'Requisito Indispensable de Matrimonio en el Templo no satisfecho.',
+        exclusionReason: 'Indispensable requirement for Temple Marriage not met.',
         isEligibleForMatch: false,
       };
     }
@@ -155,13 +156,13 @@ export function calculateKlickCompatibility(
       passedThreshold60: false,
       categoryScores,
       commonGround: [],
-      exclusionReason: 'Requisito Indispensable de meta de matrimonio no satisfecho.',
+      exclusionReason: 'Indispensable requirement for marriage goal not satisfied.',
       isEligibleForMatch: false,
     };
   }
 
   // Requisito 3: Hijos Indispensable
-  if (userA.familyIndispensable && userA.acceptsPartnerWithChildren === 'No' && candidate.hasChildren) {
+  if (userA.familyIndispensable && (userA.acceptsPartnerWithChildren === 'No') && candidate.hasChildren) {
     return {
       score: 0,
       passedSafetyGate: true,
@@ -169,7 +170,7 @@ export function calculateKlickCompatibility(
       passedThreshold60: false,
       categoryScores,
       commonGround: [],
-      exclusionReason: 'Preferencia familiar indispensable no coincide.',
+      exclusionReason: 'Family preference for children does not align.',
       isEligibleForMatch: false,
     };
   }
@@ -184,7 +185,7 @@ export function calculateKlickCompatibility(
       passedThreshold60: false,
       categoryScores,
       commonGround: [],
-      exclusionReason: `Distancia (${candidate.distanceMiles} mi) excede el radio máximo (${maxDistance} mi).`,
+      exclusionReason: `Distance (${candidate.distanceMiles} mi) exceeds maximum radius (${maxDistance} mi).`,
       isEligibleForMatch: false,
     };
   }
@@ -205,13 +206,13 @@ export function calculateKlickCompatibility(
   let faithScore = 0;
   if (userA.faith === candidate.faith) {
     faithScore += 2.5;
-    commonGround.push(`Ambos son miembros de la fe ${candidate.faith}`);
+    commonGround.push(`Both are members of the ${candidate.faith} faith`);
   }
   if (userA.faithImportance === candidate.faithImportance) {
     faithScore += 1.5;
-    commonGround.push(`Prioridad de fe compartida: ${candidate.faithImportance}`);
+    commonGround.push(`Shared faith priority: ${candidate.faithImportance}`);
   }
-  if (candidate.templeRecommend === 'Sí') {
+  if (candidate.templeRecommend === 'Yes' || candidate.templeRecommend === 'Sí') {
     faithScore += 1.0;
   }
   categoryScores.faith = Math.min(5, faithScore);
@@ -220,11 +221,11 @@ export function calculateKlickCompatibility(
   let marriageScore = 0;
   if (userA.seekingMarriage && candidate.seekingMarriage) {
     marriageScore += 3.0;
-    commonGround.push('Ambos buscan una relación seria con meta de matrimonio');
+    commonGround.push('Both seeking a serious relationship leading to marriage');
   }
   if (userA.marriageTimeline === candidate.marriageTimeline) {
     marriageScore += 2.0;
-    commonGround.push(`Plazo de matrimonio coincidente (${candidate.marriageTimeline})`);
+    commonGround.push(`Matching marriage timeline (${candidate.marriageTimeline})`);
   } else {
     marriageScore += 1.0;
   }
@@ -234,7 +235,7 @@ export function calculateKlickCompatibility(
   let familyScore = 0;
   if (userA.wantsChildren === candidate.wantsChildren) {
     familyScore += 3.0;
-    commonGround.push(`Deseo de hijos coincidente: ${candidate.wantsChildren}`);
+    commonGround.push(`Matching desire for children: ${candidate.wantsChildren}`);
   }
   if (userA.acceptsPartnerWithChildren === candidate.acceptsPartnerWithChildren) {
     familyScore += 2.0;
@@ -248,7 +249,7 @@ export function calculateKlickCompatibility(
   let langScore = 0;
   if (sharedLanguages.length > 0) {
     langScore = 4;
-    commonGround.push(`Idioma compartido: ${sharedLanguages.join(', ')}`);
+    commonGround.push(`Shared language: ${sharedLanguages.join(', ')}`);
   } else {
     langScore = 1.5;
   }
@@ -259,7 +260,7 @@ export function calculateKlickCompatibility(
   let lifestyleScore = 2.0;
   if (sharedLifestyle.length > 0) {
     lifestyleScore += Math.min(2.0, sharedLifestyle.length * 1.0);
-    commonGround.push(`Estilo de vida afin: ${sharedLifestyle.join(', ')}`);
+    commonGround.push(`Compatible lifestyle: ${sharedLifestyle.join(', ')}`);
   }
   categoryScores.lifestyle = Math.min(4, lifestyleScore);
 
@@ -267,7 +268,7 @@ export function calculateKlickCompatibility(
   let personalityScore = 2.5;
   if (userA.communicationStyle === candidate.communicationStyle) {
     personalityScore += 1.5;
-    commonGround.push(`Comunicación ${candidate.communicationStyle}`);
+    commonGround.push(`${candidate.communicationStyle} communication`);
   }
   categoryScores.personality = Math.min(4, personalityScore);
 
@@ -278,7 +279,7 @@ export function calculateKlickCompatibility(
   let hobbiesScore = 1.0;
   if (allSharedInterests.length > 0) {
     hobbiesScore += Math.min(2.0, allSharedInterests.length * 0.7);
-    commonGround.push(`Intereses comunes: ${allSharedInterests.slice(0, 3).join(', ')}`);
+    commonGround.push(`Shared interests: ${allSharedInterests.slice(0, 3).join(', ')}`);
   }
   categoryScores.hobbies = Math.min(3, hobbiesScore);
 
@@ -287,7 +288,7 @@ export function calculateKlickCompatibility(
   let dateScore = 1.5;
   if (sharedDateTypes.length > 0) {
     dateScore += 1.5;
-    commonGround.push(`Primera cita ideal: ${sharedDateTypes[0]}`);
+    commonGround.push(`Ideal first date: ${sharedDateTypes[0]}`);
   }
   categoryScores.safeFirstDate = Math.min(3, dateScore);
 
@@ -322,6 +323,6 @@ export function calculateKlickCompatibility(
     categoryScores,
     commonGround: finalCommonGround,
     isEligibleForMatch: passedThreshold60,
-    exclusionReason: !passedThreshold60 ? `El Score (${finalScore}%) está por debajo del umbral mínimo del 60.0%.` : undefined,
+    exclusionReason: !passedThreshold60 ? `Compatibility score (${finalScore}%) is below the minimum 60.0% threshold.` : undefined,
   };
 }

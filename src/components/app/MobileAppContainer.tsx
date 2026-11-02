@@ -22,7 +22,9 @@ export type AppStep =
   | "icebreakers"
   | "preferences"
   | "tutorial"
-  | "feed";
+  | "feed"
+  | "feed-male"
+  | "feed-female";
 
 export default function MobileAppContainer() {
   const [currentStep, setCurrentStep] = useState<AppStep>("welcome");
@@ -91,9 +93,13 @@ export default function MobileAppContainer() {
     setCurrentStep("tutorial");
   };
 
-  // Paso 8: Tutorial -> Main Feed
+  // Paso 8: Tutorial -> Main Feed (respeta el género seleccionado en el onboarding)
   const handleFinishTutorial = () => {
-    setCurrentStep("feed");
+    if (formData.gender === "Hombre") {
+      setCurrentStep("feed-male");
+    } else {
+      setCurrentStep("feed-female");
+    }
   };
 
   if (currentStep === "legal") {
@@ -168,15 +174,21 @@ export default function MobileAppContainer() {
     );
   }
 
-  if (currentStep === "feed") {
-    return <MobileAppMainFeed />;
+  if (currentStep === "feed-male") {
+    return <MobileAppMainFeed initialGender="male" />;
+  }
+
+  if (currentStep === "feed" || currentStep === "feed-female") {
+    return <MobileAppMainFeed initialGender="female" />;
   }
 
   return (
     <MobileAppWelcome
       onGoogleLogin={handleStartAuth}
       onAppleLogin={handleStartAuth}
-      onDirectAccess={() => setCurrentStep("feed")}
+      onDirectAccess={() => setCurrentStep("feed-male")}
+      onMaleProfileAccess={() => setCurrentStep("feed-male")}
+      onFemaleProfileAccess={() => setCurrentStep("feed-female")}
     />
   );
 }

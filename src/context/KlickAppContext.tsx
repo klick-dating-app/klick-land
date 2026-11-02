@@ -6,7 +6,12 @@ import {
   type KlickUserProfile,
   type CompatibilityResult,
 } from '@/lib/klick/compatibility-engine';
-import { CURRENT_MOCK_USER, MOCK_CANDIDATE_PROFILES } from '@/lib/klick/mock-profiles';
+import {
+  CURRENT_MOCK_USER,
+  CURRENT_MALE_MOCK_USER,
+  MOCK_CANDIDATE_PROFILES,
+  MOCK_FEMALE_CANDIDATE_PROFILES,
+} from '@/lib/klick/mock-profiles';
 import { toast } from 'sonner';
 
 export type UserGenderRole = 'female' | 'male_free' | 'male_premium';
@@ -74,8 +79,11 @@ interface KlickAppContextType {
 const KlickAppContext = createContext<KlickAppContextType | undefined>(undefined);
 
 export function KlickAppProvider({ children }: { children: React.ReactNode }) {
-  const [currentUser, setCurrentUser] = useState<KlickUserProfile>(CURRENT_MOCK_USER);
-  const [userRole, setUserRole] = useState<UserGenderRole>('female'); // Por defecto femenino (Gratis)
+  const [userRole, setUserRoleState] = useState<UserGenderRole>('female'); // Por defecto femenino (Gratis)
+  const isMaleMode = userRole !== 'female';
+  const currentUser = isMaleMode ? CURRENT_MALE_MOCK_USER : CURRENT_MOCK_USER;
+  const activeCandidatePool = isMaleMode ? MOCK_FEMALE_CANDIDATE_PROFILES : MOCK_CANDIDATE_PROFILES;
+
   const [blockedUserIds, setBlockedUserIds] = useState<string[]>([]);
   
   const [activeFilters, setFilters] = useState<FilterState>({
@@ -88,20 +96,33 @@ export function KlickAppProvider({ children }: { children: React.ReactNode }) {
     templeRequirementIndispensable: true,
   });
 
-  const [matches, setMatches] = useState<Array<{ profile: KlickUserProfile; compatibility: CompatibilityResult; matchedAt: string }>>([
+  const [femaleMatches, setFemaleMatches] = useState<Array<{ profile: KlickUserProfile; compatibility: CompatibilityResult; matchedAt: string }>>([
     {
       profile: MOCK_CANDIDATE_PROFILES[0],
       compatibility: calculateKlickCompatibility(CURRENT_MOCK_USER, MOCK_CANDIDATE_PROFILES[0]),
-      matchedAt: 'Hace 2 horas',
+      matchedAt: '2 hours ago',
     },
     {
       profile: MOCK_CANDIDATE_PROFILES[1],
       compatibility: calculateKlickCompatibility(CURRENT_MOCK_USER, MOCK_CANDIDATE_PROFILES[1]),
-      matchedAt: 'Ayer',
+      matchedAt: 'Yesterday',
     }
   ]);
 
-  const [chats, setChats] = useState<ChatThread[]>([
+  const [maleMatches, setMaleMatches] = useState<Array<{ profile: KlickUserProfile; compatibility: CompatibilityResult; matchedAt: string }>>([
+    {
+      profile: MOCK_FEMALE_CANDIDATE_PROFILES[0],
+      compatibility: calculateKlickCompatibility(CURRENT_MALE_MOCK_USER, MOCK_FEMALE_CANDIDATE_PROFILES[0]),
+      matchedAt: '1 hour ago',
+    },
+    {
+      profile: MOCK_FEMALE_CANDIDATE_PROFILES[1],
+      compatibility: calculateKlickCompatibility(CURRENT_MALE_MOCK_USER, MOCK_FEMALE_CANDIDATE_PROFILES[1]),
+      matchedAt: 'Yesterday',
+    }
+  ]);
+
+  const [femaleChats, setFemaleChats] = useState<ChatThread[]>([
     {
       id: 'thread_01',
       candidate: MOCK_CANDIDATE_PROFILES[0],
@@ -111,14 +132,14 @@ export function KlickAppProvider({ children }: { children: React.ReactNode }) {
         {
           id: 'm1',
           senderId: MOCK_CANDIDATE_PROFILES[0].id,
-          text: '¡Hola Camila! Vi que también serviste tu misión y disfrutas el senderismo en Utah. ¡Hicimos un Klick del 93%!',
+          text: 'Hey Camila! Saw you served a mission and love hiking around Utah. We got a 93% Klick compatibility!',
           timestamp: '10:30 AM',
           isRead: true,
         },
         {
           id: 'm2',
           senderId: CURRENT_MOCK_USER.id,
-          text: '¡Hola Samuel! Sí, me encantó ver que coincidimos en tantas metas y en el deseo de matrimonio en el templo.',
+          text: 'Hi Samuel! Yes, loved seeing we share so many values and goals towards temple marriage.',
           timestamp: '10:45 AM',
           isRead: true,
         }
@@ -126,7 +147,32 @@ export function KlickAppProvider({ children }: { children: React.ReactNode }) {
     }
   ]);
 
-  const [safeDatePlans, setSafeDatePlans] = useState<SafeDatePlan[]>([
+  const [maleChats, setMaleChats] = useState<ChatThread[]>([
+    {
+      id: 'thread_male_01',
+      candidate: MOCK_FEMALE_CANDIDATE_PROFILES[0],
+      compatibility: calculateKlickCompatibility(CURRENT_MALE_MOCK_USER, MOCK_FEMALE_CANDIDATE_PROFILES[0]),
+      lastMessageAt: '12:32 PM',
+      messages: [
+        {
+          id: 'mm1',
+          senderId: MOCK_FEMALE_CANDIDATE_PROFILES[0].id,
+          text: 'Hi Juan Carlos! Saw you also served an international mission and love music ✨',
+          timestamp: '12:30 PM',
+          isRead: true,
+        },
+        {
+          id: 'mm2',
+          senderId: CURRENT_MALE_MOCK_USER.id,
+          text: 'Hi Camila! Yes, it was an unforgettable experience. How is your week going?',
+          timestamp: '12:32 PM',
+          isRead: true,
+        }
+      ]
+    }
+  ]);
+
+  const [femaleSafeDatePlans, setFemaleSafeDatePlans] = useState<SafeDatePlan[]>([
     {
       id: 'plan_01',
       matchId: 'thread_01',
@@ -134,16 +180,40 @@ export function KlickAppProvider({ children }: { children: React.ReactNode }) {
       candidatePhoto: MOCK_CANDIDATE_PROFILES[0].photos[0],
       venueName: 'Sugar House Coffee (Salt Lake City)',
       venueAddress: '2011 S 1100 E, Salt Lake City, UT 84105',
-      dateTime: 'Sábado, 4:00 PM',
-      trustedContactName: 'María Morales (Hermana)',
+      dateTime: 'Saturday, 4:00 PM',
+      trustedContactName: 'Maria Morales (Sister)',
       trustedContactPhone: '+1 (801) 555-0199',
       status: 'scheduled',
-      notes: 'Lugar público diurno y check-in activo.',
+      notes: 'Daytime public venue with active safety check-in.',
     }
   ]);
 
+  const [maleSafeDatePlans, setMaleSafeDatePlans] = useState<SafeDatePlan[]>([
+    {
+      id: 'plan_male_01',
+      matchId: 'thread_male_01',
+      candidateName: 'Camila Valencia',
+      candidatePhoto: MOCK_FEMALE_CANDIDATE_PROFILES[0].photos[0],
+      venueName: 'The Shops at Riverwoods (Provo)',
+      venueAddress: '4801 N University Ave, Provo, UT 84604',
+      dateTime: 'Saturday, 5:00 PM',
+      trustedContactName: 'Carlos Morales (Brother)',
+      trustedContactPhone: '+1 (801) 555-0144',
+      status: 'scheduled',
+      notes: 'Verified safe public meetup validated by Klick Safe Date protocol.',
+    }
+  ]);
+
+  const matches = isMaleMode ? maleMatches : femaleMatches;
+  const setMatches = isMaleMode ? setMaleMatches : setFemaleMatches;
+  const chats = isMaleMode ? maleChats : femaleChats;
+  const setChats = isMaleMode ? setMaleChats : setFemaleChats;
+  const safeDatePlans = isMaleMode ? maleSafeDatePlans : femaleSafeDatePlans;
+  const setSafeDatePlans = isMaleMode ? setMaleSafeDatePlans : setFemaleSafeDatePlans;
+  const setUserRole = setUserRoleState;
+
   // Calcular candidatos con algoritmo y aplicar filtros
-  const candidatesWithScore = MOCK_CANDIDATE_PROFILES
+  const candidatesWithScore = activeCandidatePool
     .filter(c => !blockedUserIds.includes(c.id))
     .filter(c => c.age >= activeFilters.minAge && c.age <= activeFilters.maxAge)
     .filter(c => c.distanceMiles <= activeFilters.maxDistance)
@@ -174,7 +244,7 @@ export function KlickAppProvider({ children }: { children: React.ReactNode }) {
       const newMatch = {
         profile: item.profile,
         compatibility: item.compatibility,
-        matchedAt: 'Ahora mismo',
+        matchedAt: 'Just now',
       };
       setMatches(prev => [newMatch, ...prev]);
 
@@ -184,13 +254,13 @@ export function KlickAppProvider({ children }: { children: React.ReactNode }) {
           id: `thread_${candidateId}_${Date.now()}`,
           candidate: item.profile,
           compatibility: item.compatibility,
-          lastMessageAt: 'Ahora',
+          lastMessageAt: 'Now',
           messages: [
             {
               id: `sys_${Date.now()}`,
               senderId: 'system',
-              text: `✨ ¡Felicidades! Han hecho Klick con un ${item.compatibility.score}% de compatibilidad. Tienen ${item.compatibility.commonGround.length} puntos de encuentro comunes.`,
-              timestamp: 'Ahora',
+              text: `✨ Congratulations! You made a Klick with ${item.compatibility.score}% compatibility and ${item.compatibility.commonGround.length} shared common ground points.`,
+              timestamp: 'Now',
               isRead: true,
             }
           ]
@@ -198,21 +268,21 @@ export function KlickAppProvider({ children }: { children: React.ReactNode }) {
         setChats(prev => [newThread, ...prev]);
       }
 
-      toast.success(`💘 ¡Hicieron Klick! Compatibilidad del ${item.compatibility.score}%`);
+      toast.success(`💘 It's a Klick! ${item.compatibility.score}% compatibility`);
       return { isMatch: true, compatibility: item.compatibility };
     } else {
-      toast.info('Perfil registrado en tus likes.');
+      toast.info('Profile saved to your liked candidates.');
       return { isMatch: false };
     }
   };
 
   const passProfile = (candidateId: string) => {
-    // Pasar al siguiente candidato
+    // Next candidate
   };
 
   const sendMessage = (threadId: string, text: string) => {
     if (!canInitiateChat()) {
-      toast.error('La suscripción Premium es requerida para enviar mensajes.');
+      toast.error('VIP Subscription required to send messages.');
       return;
     }
 
@@ -227,7 +297,7 @@ export function KlickAppProvider({ children }: { children: React.ReactNode }) {
         };
         return {
           ...thread,
-          lastMessageAt: 'Ahora',
+          lastMessageAt: 'Now',
           messages: [...thread.messages, newMsg]
         };
       }
@@ -242,13 +312,13 @@ export function KlickAppProvider({ children }: { children: React.ReactNode }) {
       status: 'scheduled',
     };
     setSafeDatePlans(prev => [newPlan, ...prev]);
-    toast.success('🛡️ ¡Plan Safe First Date creado con éxito!');
+    toast.success('🛡️ Safe First Date plan created successfully!');
   };
 
   const checkInSafeDate = (planId: string) => {
     setSafeDatePlans(prev => prev.map(p => {
       if (p.id === planId) {
-        toast.success('✅ Check-in confirmado: Llegaste a salvo a tu cita.');
+        toast.success('✅ Check-in confirmed: You arrived safely.');
         return { ...p, status: 'checked_in' as const };
       }
       return p;
@@ -259,12 +329,12 @@ export function KlickAppProvider({ children }: { children: React.ReactNode }) {
     setBlockedUserIds(prev => [...prev, userId]);
     setMatches(prev => prev.filter(m => m.profile.id !== userId));
     setChats(prev => prev.filter(c => c.candidate.id !== userId));
-    toast.success('Usuario bloqueado inmediatamente. No volverá a aparecer en tus resultados.');
+    toast.success('User blocked immediately. They will no longer appear in your feed.');
   };
 
   const reportUser = (userId: string, category: string, details: string) => {
-    blockUser(userId, `Reportado: ${category}`);
-    toast.success(`🛡️ Reporte generado y enviado al equipo de Trust & Safety para auditoría.`);
+    blockUser(userId, `Reported: ${category}`);
+    toast.success(`🛡️ Safety report submitted and forwarded to Trust & Safety.`);
   };
 
   return (

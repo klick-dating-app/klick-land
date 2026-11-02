@@ -48,7 +48,7 @@ export default function MobileAppLegal({
           </div>
 
           {/* Logo en miniatura Klick */}
-          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/5 border border-white/10 shrink-0">
+          <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 shrink-0">
             <KlickLogo size={18} priority />
             <span className="text-[11px] font-semibold text-zinc-300">Klick</span>
           </div>
@@ -63,17 +63,17 @@ export default function MobileAppLegal({
         >
           {/* Tag de paso en azul */}
           <span className="text-[11px] font-bold tracking-widest text-blue-500 uppercase mb-2">
-            PASO 1 · LEGAL
+            STEP 1 · LEGAL
           </span>
 
           {/* Título en semibold */}
           <h1 className="text-2xl sm:text-[26px] font-semibold tracking-tight text-white mb-2 uppercase">
-            Antes de empezar
+            Before We Begin
           </h1>
 
           {/* Subtítulo */}
           <p className="text-xs sm:text-[13px] text-zinc-400 font-normal mb-6">
-            Klick es una comunidad real. Necesitamos tu acuerdo.
+            Klick is a real community. We need your agreement.
           </p>
 
           {/* Tarjeta 1: Aceptación de Términos (Interactiva) */}
@@ -100,7 +100,7 @@ export default function MobileAppLegal({
 
             {/* Texto de términos con enlaces en Azul */}
             <p className="text-xs sm:text-[13px] text-zinc-200 leading-relaxed">
-              Acepto los{" "}
+              I agree to the{" "}
               <a
                 href="/terminos"
                 target="_blank"
@@ -108,9 +108,9 @@ export default function MobileAppLegal({
                 onClick={(e) => e.stopPropagation()}
                 className="text-blue-400 hover:text-blue-300 underline font-medium"
               >
-                Términos y Condiciones
+                Terms and Conditions
               </a>{" "}
-              y la{" "}
+              and the{" "}
               <a
                 href="/privacidad"
                 target="_blank"
@@ -118,9 +118,9 @@ export default function MobileAppLegal({
                 onClick={(e) => e.stopPropagation()}
                 className="text-blue-400 hover:text-blue-300 underline font-medium"
               >
-                Política de Privacidad
+                Privacy Policy
               </a>{" "}
-              de Klick.
+              of Klick.
             </p>
           </div>
 
@@ -130,7 +130,7 @@ export default function MobileAppLegal({
               <ShieldCheck className="w-4 h-4" />
             </div>
             <p className="text-xs sm:text-[12.5px] text-zinc-400 leading-relaxed font-normal">
-              Nunca compartimos tu ubicación exacta ni tus datos personales con terceros.
+              We never share your exact location or personal data with third parties.
             </p>
           </div>
         </motion.div>
@@ -147,7 +147,7 @@ export default function MobileAppLegal({
                 : "bg-[#181920] text-zinc-500 cursor-not-allowed border border-white/5"
             }`}
           >
-            <span>Continuar</span>
+            <span>Continue</span>
           </button>
         </div>
 

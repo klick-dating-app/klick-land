@@ -55,7 +55,7 @@ export default function MobileAppNotifications({
             />
           </div>
 
-          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/5 border border-white/10 shrink-0">
+          <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 shrink-0">
             <KlickLogo size={18} priority />
             <span className="text-[11px] font-semibold text-zinc-300">Klick</span>
           </div>
@@ -70,17 +70,17 @@ export default function MobileAppNotifications({
         >
           {/* Tag de paso en azul */}
           <span className="text-[11px] font-bold tracking-widest text-blue-500 uppercase mb-2">
-            PASO 3 · PERMISOS
+            STEP 3 · PERMISSIONS
           </span>
 
           {/* Título en semibold */}
           <h1 className="text-2xl sm:text-[26px] font-semibold tracking-tight text-white mb-2 uppercase">
-            Activa las notificaciones
+            Enable Notifications
           </h1>
 
           {/* Subtítulo */}
           <p className="text-xs sm:text-[13px] text-zinc-400 font-normal mb-8">
-            Te avisamos cuando alguien hace klick contigo o te escribe.
+            We will notify you when someone makes a Klick with you or sends a message.
           </p>
 
           {/* Tarjeta limpia sin contenedor circular en la campana */}
@@ -91,7 +91,7 @@ export default function MobileAppNotifications({
 
             {/* Mensaje */}
             <p className="text-xs sm:text-[13.5px] text-zinc-300 leading-relaxed mb-6 px-1">
-              &ldquo;Klick&rdquo; quiere enviarte notificaciones de matches, mensajes y recordatorios de citas.
+              &ldquo;Klick&rdquo; would like to send you notifications for matches, messages, and safe date reminders.
             </p>
 
             {/* Botones de acción dentro de la tarjeta */}
@@ -105,7 +105,7 @@ export default function MobileAppNotifications({
                     : "bg-transparent hover:bg-white/10 active:bg-white/15 border-white/10 text-zinc-400 hover:text-white"
                 }`}
               >
-                Ahora no
+                Not now
               </button>
               <button
                 type="button"
@@ -116,7 +116,7 @@ export default function MobileAppNotifications({
                     : "bg-white/10 hover:bg-white/20 active:bg-white/25 border-white/20 text-white"
                 }`}
               >
-                {permissionStatus === "accepted" ? "Activadas ✓" : "Aceptar"}
+                {permissionStatus === "accepted" ? "Enabled ✓" : "Allow"}
               </button>
             </div>
 
@@ -130,7 +130,7 @@ export default function MobileAppNotifications({
             type="button"
             className="w-full h-14 rounded-full bg-white hover:bg-zinc-100 text-black active:scale-[0.98] shadow-xl shadow-white/10 text-[15px] font-semibold transition-all duration-200 cursor-pointer flex items-center justify-center"
           >
-            <span>Continuar</span>
+            <span>Continue</span>
           </button>
         </div>
 

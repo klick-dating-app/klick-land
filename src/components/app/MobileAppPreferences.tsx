@@ -24,28 +24,28 @@ export default function MobileAppPreferences({
   onContinue,
 }: MobileAppPreferencesProps) {
   // Espiritualidad
-  const [templeRecommend, setTempleRecommend] = useState("Vigente");
-  const [templeImportance, setTempleImportance] = useState("Muy importante");
-  const [churchAttendance, setChurchAttendance] = useState("Cada semana");
-  const [servedMission, setServedMission] = useState("Sí");
+  const [templeRecommend, setTempleRecommend] = useState("Active");
+  const [templeImportance, setTempleImportance] = useState("Very important");
+  const [churchAttendance, setChurchAttendance] = useState("Every week");
+  const [servedMission, setServedMission] = useState("Yes");
 
   // Familia e Intenciones
-  const [relationshipGoal, setRelationshipGoal] = useState("Matrimonio");
-  const [childrenGoal, setChildrenGoal] = useState("Quiero hijos");
-  const [marriageTimeline, setMarriageTimeline] = useState("1 – 2 años");
+  const [relationshipGoal, setRelationshipGoal] = useState("Marriage");
+  const [childrenGoal, setChildrenGoal] = useState("Want children");
+  const [marriageTimeline, setMarriageTimeline] = useState("1 – 2 years");
 
   // Logística
-  const [ageRange, setAgeRange] = useState("21 – 32 años");
-  const [maxDistance, setMaxDistance] = useState("40 km");
-  const [languages, setLanguages] = useState("Español e Inglés");
+  const [ageRange, setAgeRange] = useState("21 – 32 years");
+  const [maxDistance, setMaxDistance] = useState("35 mi");
+  const [languages, setLanguages] = useState("English & Spanish");
 
   // Seguridad y Valores
-  const [coreValues, setCoreValues] = useState("Fe, honestidad, servicio");
+  const [coreValues, setCoreValues] = useState("Faith, honesty, service");
   const [onlyVerified, setOnlyVerified] = useState(true);
   const [safeFirstDate, setSafeFirstDate] = useState(true);
 
   // Afinidad
-  const [interests, setInterests] = useState("Templo, música, aire libre");
+  const [interests, setInterests] = useState("Temple, music, outdoors");
   const [compatibilityMin, setCompatibilityMin] = useState(70);
 
   const handleSubmit = () => {
@@ -69,7 +69,7 @@ export default function MobileAppPreferences({
   };
 
   const pillClass = (selected: boolean) =>
-    `px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 cursor-pointer border ${
+    `px-4 py-2 rounded-full text-xs font-semibold transition-all duration-200 cursor-pointer border shadow-sm ${
       selected
         ? "bg-blue-600/20 border-blue-500 text-white shadow-md shadow-blue-500/10"
         : "bg-[#101116] hover:bg-[#15161e] text-zinc-400 hover:text-white border-white/10"
@@ -104,7 +104,7 @@ export default function MobileAppPreferences({
             />
           </div>
 
-          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/5 border border-white/10 shrink-0">
+          <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 shrink-0">
             <KlickLogo size={18} priority />
             <span className="text-[11px] font-semibold text-zinc-300">Klick</span>
           </div>
@@ -120,13 +120,13 @@ export default function MobileAppPreferences({
           {/* Header */}
           <div>
             <span className="text-[11px] font-bold tracking-widest text-blue-500 uppercase mb-1">
-              PASO 6 · FILTROS Y PREFERENCIAS
+              STEP 6 · PREFERENCES & FILTERS
             </span>
             <h1 className="text-2xl sm:text-[26px] font-semibold tracking-tight text-white mb-1 uppercase">
-              Tus no negociables
+              Your Non-Negotiables
             </h1>
             <p className="text-xs text-zinc-400 font-normal">
-              Puedes cambiarlos cuando quieras desde tu perfil.
+              You can adjust these anytime in your profile settings.
             </p>
           </div>
 
@@ -134,16 +134,16 @@ export default function MobileAppPreferences({
           <div className="flex flex-col gap-3.5 pb-2 border-b border-white/5">
             <div className="flex items-center gap-2 text-blue-400 font-bold text-xs uppercase tracking-wider">
               <Building2 className="w-4 h-4 text-blue-400" />
-              <span>Espiritualidad</span>
+              <span>Spirituality</span>
             </div>
 
             {/* Recomendación para el templo */}
             <div>
               <p className="text-[11px] text-zinc-400 font-medium mb-1.5">
-                Recomendación para el templo
+                Temple Recommend
               </p>
               <div className="flex flex-wrap gap-2">
-                {["Vigente", "En proceso", "No por ahora"].map((item) => (
+                {["Active", "In progress", "Not right now"].map((item) => (
                   <button
                     key={item}
                     type="button"
@@ -159,10 +159,10 @@ export default function MobileAppPreferences({
             {/* Importancia en la pareja */}
             <div>
               <p className="text-[11px] text-zinc-400 font-medium mb-1.5">
-                Importancia en la pareja
+                Importance in Partner
               </p>
               <div className="flex flex-wrap gap-2">
-                {["Muy importante", "Importante", "Flexible"].map((item) => (
+                {["Very important", "Important", "Flexible"].map((item) => (
                   <button
                     key={item}
                     type="button"
@@ -178,10 +178,10 @@ export default function MobileAppPreferences({
             {/* Asistencia a la iglesia */}
             <div>
               <p className="text-[11px] text-zinc-400 font-medium mb-1.5">
-                Asistencia a la iglesia
+                Church Attendance
               </p>
               <div className="flex flex-wrap gap-2">
-                {["Cada semana", "A veces", "Regresando"].map((item) => (
+                {["Every week", "Sometimes", "Returning"].map((item) => (
                   <button
                     key={item}
                     type="button"
@@ -197,10 +197,10 @@ export default function MobileAppPreferences({
             {/* ¿Has servido una misión? */}
             <div>
               <p className="text-[11px] text-zinc-400 font-medium mb-1.5">
-                ¿Has servido una misión?
+                Served a Mission?
               </p>
               <div className="flex flex-wrap gap-2">
-                {["Sí", "No", "En planes"].map((item) => (
+                {["Yes", "No", "Planning"].map((item) => (
                   <button
                     key={item}
                     type="button"
@@ -218,16 +218,16 @@ export default function MobileAppPreferences({
           <div className="flex flex-col gap-3.5 pb-2 border-b border-white/5">
             <div className="flex items-center gap-2 text-blue-400 font-bold text-xs uppercase tracking-wider">
               <Heart className="w-4 h-4 text-blue-400" />
-              <span>Familia e Intenciones</span>
+              <span>Family & Intentions</span>
             </div>
 
             {/* Meta de relación */}
             <div>
               <p className="text-[11px] text-zinc-400 font-medium mb-1.5">
-                Meta de relación
+                Relationship Goal
               </p>
               <div className="flex flex-wrap gap-2">
-                {["Matrimonio", "Noviazgo serio", "Conocer gente"].map((item) => (
+                {["Marriage", "Committed dating", "Meeting people"].map((item) => (
                   <button
                     key={item}
                     type="button"
@@ -243,10 +243,10 @@ export default function MobileAppPreferences({
             {/* Hijos */}
             <div>
               <p className="text-[11px] text-zinc-400 font-medium mb-1.5">
-                Hijos
+                Children
               </p>
               <div className="flex flex-wrap gap-2">
-                {["Quiero hijos", "Ya tengo", "Aún no sé"].map((item) => (
+                {["Want children", "Already have", "Not sure yet"].map((item) => (
                   <button
                     key={item}
                     type="button"
@@ -262,10 +262,10 @@ export default function MobileAppPreferences({
             {/* Tiempo para casarse */}
             <div>
               <p className="text-[11px] text-zinc-400 font-medium mb-1.5">
-                Tiempo para casarse
+                Marriage Timeline
               </p>
               <div className="flex flex-wrap gap-2">
-                {["< 1 año", "1 – 2 años", "Sin prisa"].map((item) => (
+                {["< 1 year", "1 – 2 years", "No rush"].map((item) => (
                   <button
                     key={item}
                     type="button"
@@ -283,13 +283,13 @@ export default function MobileAppPreferences({
           <div className="flex flex-col gap-3.5 pb-2 border-b border-white/5">
             <div className="flex items-center gap-2 text-blue-400 font-bold text-xs uppercase tracking-wider">
               <Languages className="w-4 h-4 text-blue-400" />
-              <span>Logística</span>
+              <span>Logistics</span>
             </div>
 
             {/* Rango de edad */}
             <div>
               <div className="flex items-center justify-between text-xs mb-1.5">
-                <span className="text-zinc-400 font-medium">Rango de edad</span>
+                <span className="text-zinc-400 font-medium">Age range</span>
                 <span className="text-blue-400 font-semibold">{ageRange}</span>
               </div>
               <input
@@ -304,7 +304,7 @@ export default function MobileAppPreferences({
             {/* Distancia máxima */}
             <div>
               <div className="flex items-center justify-between text-xs mb-1.5">
-                <span className="text-zinc-400 font-medium">Distancia máxima</span>
+                <span className="text-zinc-400 font-medium">Maximum distance</span>
                 <span className="text-blue-400 font-semibold">{maxDistance}</span>
               </div>
               <input
@@ -319,10 +319,10 @@ export default function MobileAppPreferences({
             {/* Idiomas */}
             <div>
               <p className="text-[11px] text-zinc-400 font-medium mb-1.5">
-                Idiomas
+                Languages
               </p>
               <div className="flex flex-wrap gap-2">
-                {["Español", "Inglés", "Español e Inglés"].map((item) => (
+                {["English", "Spanish", "English & Spanish"].map((item) => (
                   <button
                     key={item}
                     type="button"
@@ -340,19 +340,19 @@ export default function MobileAppPreferences({
           <div className="flex flex-col gap-3.5 pb-2 border-b border-white/5">
             <div className="flex items-center gap-2 text-blue-400 font-bold text-xs uppercase tracking-wider">
               <ShieldCheck className="w-4 h-4 text-blue-400" />
-              <span>Seguridad y Valores</span>
+              <span>Safety & Values</span>
             </div>
 
             {/* Valores principales */}
             <div>
               <p className="text-[11px] text-zinc-400 font-medium mb-1.5">
-                Valores principales
+                Core Values
               </p>
               <div className="flex flex-wrap gap-2">
                 {[
-                  "Fe, honestidad, servicio",
-                  "Familia y lealtad",
-                  "Crecimiento y humor",
+                  "Faith, honesty, service",
+                  "Family & loyalty",
+                  "Growth & humor",
                 ].map((item) => (
                   <button
                     key={item}
@@ -369,7 +369,7 @@ export default function MobileAppPreferences({
             {/* Switches */}
             <div className="flex items-center justify-between py-1">
               <span className="text-xs text-zinc-300 font-medium">
-                Solo perfiles verificados
+                Only verified profiles
               </span>
               <button
                 type="button"
@@ -388,7 +388,7 @@ export default function MobileAppPreferences({
 
             <div className="flex items-center justify-between py-1">
               <span className="text-xs text-zinc-300 font-medium">
-                Activar &ldquo;Primera Cita Segura&rdquo;
+                Enable &ldquo;Safe First Date&rdquo; protocol
               </span>
               <button
                 type="button"
@@ -410,19 +410,19 @@ export default function MobileAppPreferences({
           <div className="flex flex-col gap-3.5 pb-2">
             <div className="flex items-center gap-2 text-blue-400 font-bold text-xs uppercase tracking-wider">
               <Sparkles className="w-4 h-4 text-blue-400" />
-              <span>Afinidad</span>
+              <span>Affinities</span>
             </div>
 
             {/* Intereses */}
             <div>
               <p className="text-[11px] text-zinc-400 font-medium mb-1.5">
-                Intereses
+                Interests
               </p>
               <div className="flex flex-wrap gap-2">
                 {[
-                  "Templo, música, aire libre",
-                  "Deportes y viajes",
-                  "Arte y lectura",
+                  "Temple, music, outdoors",
+                  "Sports & travel",
+                  "Art & reading",
                   "Fitness / Gym",
                 ].map((item) => (
                   <button
@@ -441,7 +441,7 @@ export default function MobileAppPreferences({
             <div>
               <div className="flex items-center justify-between text-xs mb-1.5">
                 <span className="text-zinc-400 font-medium">
-                  Nivel de compatibilidad mínimo
+                  Minimum compatibility score
                 </span>
                 <span className="text-blue-400 font-semibold">{compatibilityMin}%</span>
               </div>
@@ -464,7 +464,7 @@ export default function MobileAppPreferences({
             type="button"
             className="w-full h-14 rounded-full bg-white hover:bg-zinc-100 text-black active:scale-[0.98] shadow-xl shadow-white/10 text-[15px] font-semibold transition-all duration-200 cursor-pointer flex items-center justify-center"
           >
-            <span>Continuar</span>
+            <span>Continue</span>
           </button>
         </div>
 

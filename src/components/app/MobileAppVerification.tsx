@@ -56,7 +56,7 @@ export default function MobileAppVerification({
             />
           </div>
 
-          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/5 border border-white/10 shrink-0">
+          <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 shrink-0">
             <KlickLogo size={18} priority />
             <span className="text-[11px] font-semibold text-zinc-300">Klick</span>
           </div>
@@ -71,17 +71,17 @@ export default function MobileAppVerification({
         >
           {/* Tag de paso en azul */}
           <span className="text-[11px] font-bold tracking-widest text-blue-500 uppercase mb-2">
-            PASO 5 · VERIFICACIÓN
+            STEP 5 · VERIFICATION
           </span>
 
           {/* Título en semibold */}
           <h1 className="text-2xl sm:text-[26px] font-semibold tracking-tight text-white mb-2 uppercase">
-            Verificación de fotos
+            Photo Verification
           </h1>
 
           {/* Subtítulo */}
           <p className="text-xs sm:text-[13px] text-zinc-400 font-normal mb-8">
-            Un gesto rápido para confirmar que eres tú.
+            A quick snapshot to confirm it&apos;s really you.
           </p>
 
           {/* Tarjeta limpia sin contenedor circular de icono */}
@@ -100,11 +100,11 @@ export default function MobileAppVerification({
                   <BadgeCheck className="w-16 h-16 stroke-[1.5] text-blue-400 mb-4 drop-shadow-md" />
 
                   <h3 className="text-base sm:text-lg font-bold text-white uppercase tracking-wider mb-2">
-                    Verificar Ahora
+                    Verify Now
                   </h3>
 
                   <p className="text-xs sm:text-[13px] text-zinc-400 leading-relaxed mb-6 px-2">
-                    Tomaremos un selfie rápido y lo compararemos con tus fotos para activar tu insignia de confianza.
+                    We will take a quick selfie to match your photos and activate your verified trust badge.
                   </p>
 
                   <button
@@ -116,12 +116,12 @@ export default function MobileAppVerification({
                     {isVerifying ? (
                       <>
                         <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                        <span>Verificando selfie...</span>
+                        <span>Verifying selfie...</span>
                       </>
                     ) : (
                       <>
                         <Camera className="w-4 h-4" />
-                        <span>Iniciar verificación</span>
+                        <span>Start Verification</span>
                       </>
                     )}
                   </button>
@@ -138,11 +138,11 @@ export default function MobileAppVerification({
                   <BadgeCheck className="w-20 h-20 fill-blue-500 text-black mb-4 drop-shadow-xl animate-pulse" />
 
                   <h3 className="text-base sm:text-lg font-bold text-white uppercase tracking-wider mb-2">
-                    Perfil Verificado
+                    Verified Profile
                   </h3>
 
                   <p className="text-xs sm:text-[13px] text-zinc-300 leading-relaxed px-2">
-                    ¡Listo! Tu insignia azul de verificación ya está activa.
+                    All set! Your verified badge is now active.
                   </p>
                 </motion.div>
               )}
@@ -157,7 +157,7 @@ export default function MobileAppVerification({
             type="button"
             className="w-full h-14 rounded-full bg-white hover:bg-zinc-100 text-black active:scale-[0.98] shadow-xl shadow-white/10 text-[15px] font-semibold transition-all duration-200 cursor-pointer flex items-center justify-center"
           >
-            <span>Continuar</span>
+            <span>Continue</span>
           </button>
         </div>
 

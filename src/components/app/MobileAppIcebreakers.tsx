@@ -12,23 +12,23 @@ interface MobileAppIcebreakersProps {
 }
 
 const AVAILABLE_PROMPTS = [
-  "¿Cuál es tu lenguaje de amor no oficial?",
-  "Mi idea de una primera cita inolvidable y diferente...",
-  "Un secreto o dato curioso para hacerme sonreír al instante...",
-  "¿Cómo describirías tu domingo ideal juntos?",
-  "Lo primero que noto en alguien y me hace hacer klick...",
-  "Una meta loca o sueño que quiero cumplir este año...",
-  "Si cocino para ti en nuestra tercera cita, prepararía...",
-  "Una lección espiritual o de vida que me cambió la perspectiva...",
-  "El cumplido más lindo o sincero que me han hecho...",
-  "Dos verdades y una mentira sobre mí...",
+  "What is your unofficial love language?",
+  "My idea of an unforgettable, fun first date...",
+  "A quirky fact that always makes me smile...",
+  "How would you describe your ideal Sunday together?",
+  "The first thing I notice in someone that makes us Klick...",
+  "A dream or goal I want to accomplish this year...",
+  "If I cook for you on our third date, I'd make...",
+  "A spiritual lesson or life experience that shaped me...",
+  "The sweetest compliment I've ever received...",
+  "Two truths and a lie about me...",
 ];
 
 export default function MobileAppIcebreakers({
   onBack,
   onContinue,
 }: MobileAppIcebreakersProps) {
-  // 3 preguntas seleccionables por defecto
+  // 3 default selectable prompts
   const [selectedPrompts, setSelectedPrompts] = useState([
     AVAILABLE_PROMPTS[0],
     AVAILABLE_PROMPTS[1],
@@ -36,9 +36,9 @@ export default function MobileAppIcebreakers({
   ]);
 
   const [answers, setAnswers] = useState<Record<string, string>>({
-    [AVAILABLE_PROMPTS[0]]: "Café por la mañana, detalles inesperados y miradas con complicidad.",
-    [AVAILABLE_PROMPTS[1]]: "Paseo nocturno, pizza artesanal y hablar de todo hasta que cierren.",
-    [AVAILABLE_PROMPTS[3]]: "Conferencia por la mañana, comida en familia y caminata al atardecer.",
+    [AVAILABLE_PROMPTS[0]]: "Morning hot drink, thoughtful little surprises, and good banter.",
+    [AVAILABLE_PROMPTS[1]]: "Strolling through downtown, artisan pizza, and talking until late.",
+    [AVAILABLE_PROMPTS[3]]: "Church meetings, family lunch, and a sunset mountain walk.",
   });
 
   const handlePromptChange = (index: number, newPrompt: string) => {
@@ -93,7 +93,7 @@ export default function MobileAppIcebreakers({
             />
           </div>
 
-          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/5 border border-white/10 shrink-0">
+          <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 shrink-0">
             <KlickLogo size={18} priority />
             <span className="text-[11px] font-semibold text-zinc-300">Klick</span>
           </div>
@@ -108,17 +108,17 @@ export default function MobileAppIcebreakers({
         >
           {/* Tag de paso en azul */}
           <span className="text-[11px] font-bold tracking-widest text-blue-500 uppercase mb-1.5">
-            PASO 5 · ICEBREAKERS
+            STEP 6 · ICEBREAKERS
           </span>
 
           {/* Título en semibold */}
           <h1 className="text-2xl sm:text-[26px] font-semibold tracking-tight text-white mb-1.5 uppercase">
-            Rompe el hielo
+            Break the Ice
           </h1>
 
           {/* Subtítulo */}
           <p className="text-xs sm:text-[13px] text-zinc-400 font-normal mb-5">
-            Preguntas coquetas y reales para conectar desde el primer vistazo.
+            Fun, genuine prompts to connect from the first glance.
           </p>
 
           {/* Lista de Prompts sin contenedores dobles */}
@@ -137,7 +137,7 @@ export default function MobileAppIcebreakers({
                     type="button"
                     onClick={() => handleNextPrompt(index)}
                     className="p-1.5 text-zinc-400 hover:text-white transition-colors shrink-0 cursor-pointer"
-                    title="Cambiar pregunta"
+                    title="Change prompt"
                   >
                     <RefreshCw className="w-3.5 h-3.5" />
                   </button>
@@ -148,7 +148,7 @@ export default function MobileAppIcebreakers({
                   rows={2}
                   value={answers[prompt] || ""}
                   onChange={(e) => handleAnswerChange(prompt, e.target.value)}
-                  placeholder="Escribe tu respuesta aquí..."
+                  placeholder="Write your answer here..."
                   className="w-full px-4 py-3 rounded-2xl bg-[#101116] border border-white/10 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none text-zinc-100 text-xs sm:text-[13px] placeholder:text-zinc-600 resize-none transition-all leading-relaxed"
                 />
               </div>
@@ -163,7 +163,7 @@ export default function MobileAppIcebreakers({
             type="button"
             className="w-full h-14 rounded-full bg-white hover:bg-zinc-100 text-black active:scale-[0.98] shadow-xl shadow-white/10 text-[15px] font-semibold transition-all duration-200 cursor-pointer flex items-center justify-center"
           >
-            <span>Continuar</span>
+            <span>Continue</span>
           </button>
         </div>
 

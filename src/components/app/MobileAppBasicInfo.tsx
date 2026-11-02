@@ -80,7 +80,7 @@ export default function MobileAppBasicInfo({
             />
           </div>
 
-          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/5 border border-white/10 shrink-0">
+          <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 shrink-0">
             <KlickLogo size={18} priority />
             <span className="text-[11px] font-semibold text-zinc-300">Klick</span>
           </div>
@@ -97,17 +97,17 @@ export default function MobileAppBasicInfo({
         >
           {/* Tag de paso en azul */}
           <span className="text-[11px] font-bold tracking-widest text-blue-500 uppercase mb-1">
-            PASO 2 · INFORMACIÓN BÁSICA
+            STEP 2 · BASIC INFO
           </span>
 
           {/* Título en semibold */}
           <h1 className="text-2xl sm:text-[26px] font-semibold tracking-tight text-white mb-1.5 uppercase">
-            Cuéntanos de ti
+            Tell Us About Yourself
           </h1>
 
           {/* Subtítulo */}
           <p className="text-xs sm:text-[12.5px] text-zinc-400 font-normal mb-5">
-            Tu edad se calcula automáticamente desde tu fecha de nacimiento.
+            Your age is automatically calculated from your birthdate.
           </p>
 
           {/* Inputs */}
@@ -115,13 +115,13 @@ export default function MobileAppBasicInfo({
             {/* Nombre */}
             <div>
               <label className="block text-[11px] font-bold uppercase tracking-wider text-zinc-400 mb-1.5">
-                Nombre
+                First Name
               </label>
               <input
                 type="text"
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
-                placeholder="Tu nombre"
+                placeholder="Your first name"
                 className="w-full h-12 px-4 rounded-xl bg-[#101116] border border-blue-500/40 focus:border-blue-400 focus:ring-1 focus:ring-blue-400 outline-none text-white text-sm transition-all"
               />
             </div>
@@ -129,13 +129,13 @@ export default function MobileAppBasicInfo({
             {/* Apellido */}
             <div>
               <label className="block text-[11px] font-bold uppercase tracking-wider text-zinc-400 mb-1.5">
-                Apellido
+                Last Name
               </label>
               <input
                 type="text"
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
-                placeholder="Tu apellido"
+                placeholder="Your last name"
                 className="w-full h-12 px-4 rounded-xl bg-[#101116] border border-white/10 focus:border-blue-400 outline-none text-white text-sm transition-all"
               />
             </div>
@@ -144,15 +144,15 @@ export default function MobileAppBasicInfo({
             <div>
               <div className="flex items-center justify-between mb-1.5">
                 <label className="text-[11px] font-bold uppercase tracking-wider text-zinc-400">
-                  Apodo / Nickname
+                  Nickname
                 </label>
-                <span className="text-[10px] text-zinc-500 font-normal">Opcional</span>
+                <span className="text-[10px] text-zinc-500 font-normal">Optional</span>
               </div>
               <input
                 type="text"
                 value={nickname}
                 onChange={(e) => setNickname(e.target.value)}
-                placeholder="@tu_apodo"
+                placeholder="@your_handle"
                 className="w-full h-12 px-4 rounded-xl bg-[#101116] border border-white/10 focus:border-blue-400 outline-none text-white text-sm transition-all"
               />
             </div>
@@ -160,7 +160,7 @@ export default function MobileAppBasicInfo({
             {/* Cumpleaños */}
             <div>
               <label className="block text-[11px] font-bold uppercase tracking-wider text-zinc-400 mb-1.5">
-                Cumpleaños
+                Birthday
               </label>
               <div className="relative">
                 <input
@@ -176,7 +176,7 @@ export default function MobileAppBasicInfo({
             <div>
               <div className="flex items-center justify-between mb-1.5">
                 <label className="text-[11px] font-bold uppercase tracking-wider text-zinc-400">
-                  Estatura
+                  Height
                 </label>
                 {/* Switch de unidad inches / cm */}
                 <div className="flex items-center gap-1 bg-white/5 p-0.5 rounded-lg border border-white/10 text-[11px]">
@@ -220,7 +220,7 @@ export default function MobileAppBasicInfo({
                       ))}
                     </select>
                     <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-zinc-500 pointer-events-none">
-                      pies
+                      feet
                     </span>
                   </div>
                   <div className="relative">
@@ -236,7 +236,7 @@ export default function MobileAppBasicInfo({
                       ))}
                     </select>
                     <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-zinc-500 pointer-events-none">
-                      pulgadas
+                      inches
                     </span>
                   </div>
                 </div>
@@ -254,30 +254,30 @@ export default function MobileAppBasicInfo({
             {/* Género */}
             <div>
               <label className="block text-[11px] font-bold uppercase tracking-wider text-zinc-400 mb-1.5">
-                Género
+                Gender
               </label>
               <div className="grid grid-cols-2 gap-3">
                 <button
                   type="button"
                   onClick={() => setGender("Hombre")}
                   className={`h-12 rounded-xl text-sm font-semibold border transition-all duration-200 cursor-pointer ${
-                    gender === "Hombre"
+                    gender === "Hombre" || gender === "Man"
                       ? "bg-blue-600/20 border-blue-500 text-white shadow-md shadow-blue-500/10"
                       : "bg-[#101116] hover:bg-[#15161e] border-white/10 text-zinc-400"
                   }`}
                 >
-                  Hombre
+                  Man
                 </button>
                 <button
                   type="button"
                   onClick={() => setGender("Mujer")}
                   className={`h-12 rounded-xl text-sm font-semibold border transition-all duration-200 cursor-pointer ${
-                    gender === "Mujer"
+                    gender === "Mujer" || gender === "Woman"
                       ? "bg-pink-600/20 border-pink-500 text-white shadow-md shadow-pink-500/10"
                       : "bg-[#101116] hover:bg-[#15161e] border-white/10 text-zinc-400"
                   }`}
                 >
-                  Mujer
+                  Woman
                 </button>
               </div>
             </div>
@@ -291,7 +291,7 @@ export default function MobileAppBasicInfo({
             form="basic-info-form"
             className="w-full h-14 rounded-full bg-white hover:bg-zinc-100 text-black active:scale-[0.98] shadow-xl shadow-white/10 text-[15px] font-semibold transition-all duration-200 cursor-pointer flex items-center justify-center"
           >
-            <span>Continuar</span>
+            <span>Continue</span>
           </button>
         </div>
 

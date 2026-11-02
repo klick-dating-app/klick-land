@@ -106,7 +106,7 @@ export default function MobileAppPhotos({
             />
           </div>
 
-          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/5 border border-white/10 shrink-0">
+          <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 shrink-0">
             <KlickLogo size={18} priority />
             <span className="text-[11px] font-semibold text-zinc-300">Klick</span>
           </div>
@@ -121,17 +121,17 @@ export default function MobileAppPhotos({
         >
           {/* Tag de paso en azul */}
           <span className="text-[11px] font-bold tracking-widest text-blue-500 uppercase mb-1">
-            PASO 4 · MULTIMEDIA
+            STEP 4 · MEDIA
           </span>
 
           {/* Título en semibold */}
           <h1 className="text-2xl sm:text-[26px] font-semibold tracking-tight text-white mb-1 uppercase">
-            Tus fotos y video
+            Your Photos & Video
           </h1>
 
           {/* Subtítulo */}
           <p className="text-xs sm:text-[12.5px] text-zinc-400 font-normal mb-5">
-            Sube tus mejores ángulos y un video corto para que tu perfil resalte.
+            Upload your best angles and a short video to make your profile stand out.
           </p>
 
           {/* Grid Moderno de Fotos y Video */}
@@ -146,7 +146,7 @@ export default function MobileAppPhotos({
                 <>
                   <img
                     src={mediaSlots[0].url}
-                    alt="Foto Principal"
+                    alt="Main Photo"
                     className="w-full h-full object-cover"
                   />
                   <button
@@ -156,8 +156,8 @@ export default function MobileAppPhotos({
                   >
                     <X className="w-4 h-4" />
                   </button>
-                  <span className="absolute bottom-2.5 left-2.5 px-2.5 py-1 rounded-full bg-blue-600 text-[10px] font-bold text-white shadow-md">
-                    Foto Principal ⭐
+                  <span className="absolute bottom-2.5 left-2.5 px-3.5 py-1 rounded-full bg-blue-600 text-[10px] font-bold text-white shadow-md">
+                    Main Photo ⭐
                   </span>
                 </>
               ) : (
@@ -165,8 +165,8 @@ export default function MobileAppPhotos({
                   <div className="w-12 h-12 rounded-full bg-blue-600/15 border border-blue-500/30 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform">
                     <Camera className="w-6 h-6" />
                   </div>
-                  <span className="text-xs font-semibold text-white">Foto Principal</span>
-                  <span className="text-[10px] text-zinc-500 leading-tight">La primera que verán</span>
+                  <span className="text-xs font-semibold text-white">Main Photo</span>
+                  <span className="text-[10px] text-zinc-500 leading-tight">First one people see</span>
                 </div>
               )}
             </div>
@@ -192,7 +192,7 @@ export default function MobileAppPhotos({
                   >
                     <X className="w-3.5 h-3.5" />
                   </button>
-                  <span className="absolute bottom-1.5 left-1.5 px-2 py-0.5 rounded-md bg-black/70 text-[9px] font-bold text-blue-400">
+                  <span className="absolute bottom-1.5 left-1.5 px-2.5 py-0.5 rounded-md bg-black/70 text-[9px] font-bold text-blue-400">
                     Video 🎥
                   </span>
                 </>
@@ -202,7 +202,7 @@ export default function MobileAppPhotos({
                     <Video className="w-4 h-4" />
                   </div>
                   <span className="text-[11px] font-semibold text-white">Video</span>
-                  <span className="text-[9px] text-zinc-500">Opcional</span>
+                  <span className="text-[9px] text-zinc-500">Optional</span>
                 </div>
               )}
             </div>
@@ -214,7 +214,7 @@ export default function MobileAppPhotos({
             >
               {mediaSlots[2].url ? (
                 <>
-                  <img src={mediaSlots[2].url} alt="Foto 3" className="w-full h-full object-cover" />
+                  <img src={mediaSlots[2].url} alt="Photo 3" className="w-full h-full object-cover" />
                   <button
                     type="button"
                     onClick={(e) => handleRemoveMedia(2, e)}
@@ -226,7 +226,7 @@ export default function MobileAppPhotos({
               ) : (
                 <div className="flex flex-col items-center gap-1 text-zinc-500 group-hover:text-blue-400">
                   <Plus className="w-5 h-5" />
-                  <span className="text-[10px] font-medium">Foto 2</span>
+                  <span className="text-[10px] font-medium">Photo 2</span>
                 </div>
               )}
             </div>
@@ -240,7 +240,7 @@ export default function MobileAppPhotos({
               >
                 {mediaSlots[idx].url ? (
                   <>
-                    <img src={mediaSlots[idx].url!} alt={`Foto ${idx}`} className="w-full h-full object-cover" />
+                    <img src={mediaSlots[idx].url!} alt={`Photo ${idx}`} className="w-full h-full object-cover" />
                     <button
                       type="button"
                       onClick={(e) => handleRemoveMedia(idx, e)}
@@ -252,7 +252,7 @@ export default function MobileAppPhotos({
                 ) : (
                   <div className="flex flex-col items-center gap-1 text-zinc-500 group-hover:text-blue-400">
                     <Plus className="w-5 h-5" />
-                    <span className="text-[10px] font-medium">Foto {idx}</span>
+                    <span className="text-[10px] font-medium">Photo {idx}</span>
                   </div>
                 )}
               </div>
@@ -264,7 +264,7 @@ export default function MobileAppPhotos({
           <div className="w-full p-3 rounded-2xl bg-[#0e0f15] border border-white/5 flex items-center gap-2.5 mb-2">
             <Sparkles className="w-4 h-4 text-blue-400 shrink-0" />
             <p className="text-[11.5px] text-zinc-300 leading-snug font-normal">
-              Perfiles con <span className="text-white font-semibold">video y fotos reales</span> tienen <span className="text-blue-400 font-semibold">3x más match rate</span>.
+              Profiles with <span className="text-white font-semibold">real photos & video</span> get <span className="text-blue-400 font-semibold">3x higher match rates</span>.
             </p>
           </div>
         </motion.div>
@@ -276,7 +276,7 @@ export default function MobileAppPhotos({
             type="button"
             className="w-full h-14 rounded-full bg-white hover:bg-zinc-100 text-black active:scale-[0.98] shadow-xl shadow-white/10 text-[15px] font-semibold transition-all duration-200 cursor-pointer flex items-center justify-center"
           >
-            <span>Continuar</span>
+            <span>Continue</span>
           </button>
         </div>
 

@@ -74,7 +74,7 @@ export default function KlickLogo({
 
       {showText && (
         <span
-          className={`font-black tracking-tight bg-[linear-gradient(90deg,#008aff_0%,#7c3aed_24%,#ff007f_48%,#ff1744_72%,#ff8c00_100%)] bg-clip-text text-transparent ${
+          className={`font-semibold tracking-tight bg-[linear-gradient(90deg,#008aff_0%,#7c3aed_24%,#ff007f_48%,#ff1744_72%,#ff8c00_100%)] bg-clip-text text-transparent ${
             textClassName || "text-lg"
           }`}
         >
