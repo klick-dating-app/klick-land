@@ -18,7 +18,7 @@ export interface BasicInfoData {
   birthday: string;
   heightValue: string;
   heightUnit: "ft" | "cm";
-  gender: "Hombre" | "Mujer" | "";
+  gender: "Hombre" | "Mujer" | "Man" | "Woman" | "";
 }
 
 export default function MobileAppBasicInfo({
@@ -33,7 +33,7 @@ export default function MobileAppBasicInfo({
   const [heightFeet, setHeightFeet] = useState("5");
   const [heightInches, setHeightInches] = useState("10");
   const [heightCm, setHeightCm] = useState("178");
-  const [gender, setGender] = useState<"Hombre" | "Mujer" | "">("Hombre");
+  const [gender, setGender] = useState<"Hombre" | "Mujer" | "Man" | "Woman" | "">("Hombre");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

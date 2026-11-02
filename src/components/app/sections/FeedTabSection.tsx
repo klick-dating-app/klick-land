@@ -26,7 +26,7 @@ import {
 } from "@/components/app/MobileAppBadges";
 
 interface FeedTabSectionProps {
-  feedScrollRef: React.RefObject<HTMLDivElement | null>;
+  feedScrollRef: React.RefObject<HTMLDivElement>;
   currentCandidate: KlickUserProfile;
   currentCompatibility: CompatibilityResult;
   isLightMode: boolean;
