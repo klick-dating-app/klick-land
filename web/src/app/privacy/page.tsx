@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { SiteShell, Prose, SUPPORT_EMAIL } from '@/components/site/SiteShell';
 import { pageMetadata } from '@/lib/seo';
 
-export const metadata: Metadata = pageMetadata('Política de privacidad', 'Qué datos recopila Klick, para qué los usa y cómo los proteges.');
+export const metadata: Metadata = pageMetadata('/privacy');
 
 export default function PrivacyPage() {
   return (

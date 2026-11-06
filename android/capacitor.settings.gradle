@@ -8,8 +8,6 @@ project(':capacitor-app').projectDir = new File('../web/node_modules/@capacitor/
 include ':capacitor-browser'
 project(':capacitor-browser').projectDir = new File('../web/node_modules/@capacitor/browser/android')
 
-<<<<<<< HEAD
-=======
 include ':capacitor-camera'
 project(':capacitor-camera').projectDir = new File('../web/node_modules/@capacitor/camera/android')
 
@@ -25,7 +23,6 @@ project(':capacitor-keyboard').projectDir = new File('../web/node_modules/@capac
 include ':capacitor-push-notifications'
 project(':capacitor-push-notifications').projectDir = new File('../web/node_modules/@capacitor/push-notifications/android')
 
->>>>>>> c10c949 (refactor: reorganizar en monorepo (web, backend, database, android, ios))
 include ':capacitor-splash-screen'
 project(':capacitor-splash-screen').projectDir = new File('../web/node_modules/@capacitor/splash-screen/android')
 

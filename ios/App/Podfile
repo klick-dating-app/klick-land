@@ -9,14 +9,6 @@ use_frameworks!
 install! 'cocoapods', :disable_input_output_paths => true
 
 def capacitor_pods
-<<<<<<< HEAD
-  pod 'Capacitor', :path => '../../node_modules/@capacitor/ios'
-  pod 'CapacitorCordova', :path => '../../node_modules/@capacitor/ios'
-  pod 'CapacitorApp', :path => '../../node_modules/@capacitor/app'
-  pod 'CapacitorBrowser', :path => '../../node_modules/@capacitor/browser'
-  pod 'CapacitorSplashScreen', :path => '../../node_modules/@capacitor/splash-screen'
-  pod 'CapacitorStatusBar', :path => '../../node_modules/@capacitor/status-bar'
-=======
   pod 'Capacitor', :path => '../../web/node_modules/@capacitor/ios'
   pod 'CapacitorCordova', :path => '../../web/node_modules/@capacitor/ios'
   pod 'CapacitorApp', :path => '../../web/node_modules/@capacitor/app'
@@ -28,12 +20,12 @@ def capacitor_pods
   pod 'CapacitorPushNotifications', :path => '../../web/node_modules/@capacitor/push-notifications'
   pod 'CapacitorSplashScreen', :path => '../../web/node_modules/@capacitor/splash-screen'
   pod 'CapacitorStatusBar', :path => '../../web/node_modules/@capacitor/status-bar'
->>>>>>> c10c949 (refactor: reorganizar en monorepo (web, backend, database, android, ios))
 end
 
 target 'App' do
   capacitor_pods
-  # Add your Pods here
+  # Push: Capacitor entrega el token FCM (no el de APNs) para que Cloud Functions pueda notificar.
+  pod 'FirebaseMessaging'
 end
 
 post_install do |installer|

@@ -35,6 +35,7 @@ export const viewport: Viewport = {
 };
 
 import { KlickAppProvider } from "@/context/KlickAppContext";
+import { AuthProvider } from "@/context/AuthContext";
 
 export default function RootLayout({
   children,
@@ -84,7 +85,7 @@ fbq('track', 'PageView');
           <KlickAppProvider>
             <SidebarProvider>
               <NativeShell />
-              {children}
+              <AuthProvider>{children}</AuthProvider>
               <Toaster />
             </SidebarProvider>
           </KlickAppProvider>

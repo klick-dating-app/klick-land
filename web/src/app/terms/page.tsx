@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { SiteShell, Prose } from '@/components/site/SiteShell';
 import { pageMetadata } from '@/lib/seo';
 
-export const metadata: Metadata = pageMetadata('Términos de servicio', 'Condiciones de uso de Klick.');
+export const metadata: Metadata = pageMetadata('/terms');
 
 export default function TermsPage() {
   return (

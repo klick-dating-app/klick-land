@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { SiteShell, Prose, SUPPORT_EMAIL } from '@/components/site/SiteShell';
 import { pageMetadata } from '@/lib/seo';
 
-export const metadata: Metadata = pageMetadata('Eliminar cuenta', 'Cómo eliminar tu cuenta de Klick y tus datos.');
+export const metadata: Metadata = pageMetadata('/delete-account');
 
 export default function DeleteAccountPage() {
   return (

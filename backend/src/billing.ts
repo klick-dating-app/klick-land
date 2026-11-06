@@ -61,7 +61,7 @@ async function applySubscription(sub: Stripe.Subscription) {
   await db().doc(`entitlements/${uid}`).set({
     ...ent,
     status: active ? 'active' : sub.status === 'past_due' ? 'past_due' : 'canceled',
-    currentPeriodEnd: sub.current_period_end * 1000,
+    currentPeriodEnd: (sub.items.data[0]?.current_period_end ?? 0) * 1000,
   });
 }
 

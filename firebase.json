@@ -3,27 +3,12 @@
     {
       "source": "backend",
       "codebase": "default",
-      "ignore": [
-        "node_modules",
-        ".git",
-        "firebase-debug.log",
-        "firebase-debug.*.log",
-        "*.local"
-      ],
-      "predeploy": [
-        "npm --prefix \"$RESOURCE_DIR\" run build"
-      ],
+      "ignore": ["node_modules", ".git", "firebase-debug.log", "*.local"],
+      "predeploy": ["npm --prefix \"$RESOURCE_DIR\" run build"],
       "runtime": "nodejs20"
     }
   ],
   "hosting": {
-<<<<<<< HEAD
-    "source": ".",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-=======
     "public": "web/out",
     "cleanUrls": true,
     "trailingSlash": true,
@@ -37,19 +22,13 @@
       { "source": "/_next/static/**", "headers": [
         { "key": "Cache-Control", "value": "public,max-age=31536000,immutable" }
       ] }
->>>>>>> c10c949 (refactor: reorganizar en monorepo (web, backend, database, android, ios))
     ],
-    "frameworksBackend": {
-      "region": "us-central1"
-    }
-  },
-  "emulators": {
-    "functions": {
-      "port": 5001
-    },
-    "ui": {
-      "port": 4000
-    }
+    "redirects": [
+      { "source": "/contacto", "destination": "/contact", "type": 301 },
+      { "source": "/privacidad", "destination": "/privacy", "type": 301 },
+      { "source": "/terminos", "destination": "/terms", "type": 301 },
+      { "source": "/preguntas-frecuentes", "destination": "/faqs", "type": 301 }
+    ]
   },
   "firestore": {
     "database": "(default)",
@@ -57,10 +36,6 @@
     "rules": "database/firestore.rules",
     "indexes": "database/firestore.indexes.json"
   },
-<<<<<<< HEAD
-  "storage": {
-    "rules": "storage.rules"
-=======
   "storage": { "rules": "database/storage.rules" },
   "emulators": {
     "auth": { "port": 9099 },
@@ -69,6 +44,5 @@
     "storage": { "port": 9199 },
     "hosting": { "port": 5000 },
     "ui": { "enabled": true, "port": 4000 }
->>>>>>> c10c949 (refactor: reorganizar en monorepo (web, backend, database, android, ios))
   }
 }
