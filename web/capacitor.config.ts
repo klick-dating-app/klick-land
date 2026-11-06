@@ -19,6 +19,7 @@ const SERVER_URL = process.env.CAP_SERVER_URL || 'https://www.klickdating.app';
 
 const config: CapacitorConfig = {
   appId: 'com.klickland.app',
+<<<<<<< HEAD:capacitor.config.ts
   appName: 'Klick Land',
   webDir: 'mobile/www',
   server: {
@@ -43,6 +44,13 @@ const config: CapacitorConfig = {
     contentInset: 'always',
     limitsNavigationsToAppBoundDomains: false,
   },
+=======
+  appName: 'Klick',
+  webDir: 'out',
+  android: { path: '../android' },
+  ...(devServer ? { server: { url: devServer, cleartext: true } } : { server: { androidScheme: 'https', iosScheme: 'capacitor' } }),
+  ios: { path: '../ios', contentInset: 'always' },
+>>>>>>> c10c949 (refactor: reorganizar en monorepo (web, backend, database, android, ios)):web/capacitor.config.ts
   plugins: {
     SplashScreen: {
       launchShowDuration: 1500,

@@ -1,0 +1,56 @@
+'use client';
+
+import { useState } from 'react';
+import { Flag, MoreHorizontal } from 'lucide-react';
+import { toast } from 'sonner';
+import { api } from '@/lib/api';
+import { REPORT_CATEGORIES } from '@/lib/klick/options';
+import { inputCls } from '@/components/app/form';
+
+/** Reportar / bloquear: siempre accesible desde perfiles y chats. */
+export default function SafetyMenu({ targetId, matchId, onDone, onPhoto = false }: { targetId: string; matchId?: string; onDone?: () => void; onPhoto?: boolean }) {
+  const [open, setOpen] = useState(false);
+  const [category, setCategory] = useState('');
+  const [details, setDetails] = useState('');
+  const [busy, setBusy] = useState(false);
+
+  const run = async (fn: () => Promise<unknown>, ok: string) => {
+    setBusy(true);
+    try {
+      await fn();
+      toast.success(ok);
+      setOpen(false);
+      onDone?.();
+    } catch (e: any) {
+      toast.error(e?.message ?? 'No se pudo completar la acción');
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <>
+      <button onClick={() => setOpen(true)} aria-label="Reportar o bloquear" className={onPhoto ? 'p-2 text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.7)]' : 'p-2 text-foreground/70'}>
+        <MoreHorizontal className="h-6 w-6" strokeWidth={1.8} />
+      </button>
+      {open && (
+        <div className="fixed inset-0 z-50 flex items-end bg-black/60" onClick={() => setOpen(false)}>
+          <div className="mx-auto w-full max-w-lg space-y-4 rounded-t-[2rem] border-t border-foreground/10 bg-card p-7 pb-safe" onClick={(e) => e.stopPropagation()}>
+            <h2 className="flex items-center gap-2 text-xl font-light tracking-tight"><Flag className="h-5 w-5 text-blue-600 dark:text-blue-400" strokeWidth={1.5} /> Seguridad</h2>
+            <select className={inputCls} value={category} onChange={(e) => setCategory(e.target.value)}>
+              <option value="">Motivo del reporte…</option>
+              {REPORT_CATEGORIES.map((c) => <option key={c.id} value={c.id}>{c.label}</option>)}
+            </select>
+            <textarea className={inputCls} rows={3} placeholder="Detalles (opcional)" value={details} maxLength={1000} onChange={(e) => setDetails(e.target.value)} />
+            <button className="btn-brand w-full" disabled={!category || busy} onClick={() => run(() => api.reportUser({ targetId, category, details, matchId }), 'Reporte enviado y usuario bloqueado')}>
+              Reportar y bloquear
+            </button>
+            <button className="btn-ghost w-full" disabled={busy} onClick={() => run(() => api.blockUser({ targetId }), 'Usuario bloqueado')}>
+              Solo bloquear
+            </button>
+          </div>
+        </div>
+      )}
+    </>
+  );
+}

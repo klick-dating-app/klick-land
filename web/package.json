@@ -1,0 +1,61 @@
+{
+  "name": "klick-web",
+  "version": "1.0.0",
+  "description": "Klick — app de citas segura (web + iOS + Android)",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "typecheck": "tsc --noEmit",
+    "cap:sync": "npm run build && cap sync",
+    "cap:doctor": "cap doctor",
+    "cap:assets": "capacitor-assets generate --iconBackgroundColor #101a2e --iconBackgroundColorDark #101a2e --splashBackgroundColor #ffffff --splashBackgroundColorDark #101a2e",
+    "android": "npm run cap:sync && cap open android",
+    "ios": "npm run cap:sync && cap open ios"
+  },
+  "keywords": [
+    "klick",
+    "klick-land",
+    "dating",
+    "app",
+    "nextjs"
+  ],
+  "author": "Klick",
+  "dependencies": {
+    "@capacitor/android": "7.6.9",
+    "@capacitor/app": "7.1.2",
+    "@capacitor/browser": "7.0.5",
+    "@capacitor/camera": "^7.0.5",
+    "@capacitor/core": "7.6.9",
+    "@capacitor/geolocation": "^7.1.8",
+    "@capacitor/haptics": "^7.0.5",
+    "@capacitor/ios": "7.6.9",
+    "@capacitor/keyboard": "^7.0.6",
+    "@capacitor/push-notifications": "^7.0.7",
+    "@capacitor/splash-screen": "7.0.5",
+    "@capacitor/status-bar": "7.0.6",
+    "@radix-ui/react-slot": "^1.1.0",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "firebase": "^12.6.0",
+    "lucide-react": "^0.544.0",
+    "next": "^16.0.7",
+    "next-themes": "^0.4.6",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "sonner": "^2.0.7",
+    "tailwind-merge": "^3.3.1",
+    "tailwindcss-animate": "^1.0.7"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "3.0.5",
+    "@capacitor/cli": "7.6.9",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^9.36.0",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
+  },
+  "private": true
+}

@@ -1,6 +1,7 @@
 {
   "name": "klick-dating-app",
   "version": "1.0.0",
+<<<<<<< HEAD
   "description": "Klick Dating App Platform.",
   "main": "index.js",
   "scripts": {
@@ -130,5 +131,24 @@
     "typescript": "^5",
     "webpack": "^5.103.0",
     "yaml": "^2.8.2"
+=======
+  "private": true,
+  "description": "Klick — app de citas segura (monorepo: web, backend, database, android, ios)",
+  "scripts": {
+    "install:all": "npm --prefix web install && npm --prefix backend install",
+    "dev": "npm --prefix web run dev",
+    "build:web": "npm --prefix web run build",
+    "typecheck": "npm --prefix web run typecheck",
+    "backend:build": "npm --prefix backend run build",
+    "backend:test": "npm --prefix backend test",
+    "cap:sync": "npm --prefix web run cap:sync",
+    "android": "npm --prefix web run android",
+    "ios": "npm --prefix web run ios",
+    "emulators": "firebase emulators:start",
+    "deploy:rules": "firebase deploy --only firestore,storage",
+    "deploy:functions": "firebase deploy --only functions",
+    "deploy:web": "npm run build:web && firebase deploy --only hosting",
+    "verify": "npm run typecheck && npm run backend:test && npm run build:web"
+>>>>>>> c10c949 (refactor: reorganizar en monorepo (web, backend, database, android, ios))
   }
 }

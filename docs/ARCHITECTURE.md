@@ -26,11 +26,24 @@ klick/
 └── firebase.json, firestore.rules, storage.rules
 ```
 
+<<<<<<< HEAD
 ---
+=======
+## Principios
+1. **El cliente casi no escribe.** Perfil, swipes, matches, bloqueos, reportes y entitlements solo los escribe el servidor (`database/firestore.rules` → `allow write: if false`). El cliente únicamente envía mensajes y planes de Safe Date.
+2. **Gating en el servidor.** `getCandidates` aplica puertas de seguridad, filtros indispensables (en ambos sentidos), distancia y el umbral del 60 %. El cuestionario profundo (`users/{uid}/restricted/details`) solo lo lee quien tenga `entitlements.canViewDetails`.
+3. **Pagos = webhook.** Solo `stripeWebhook` concede planes; el cliente no puede auto-asignarse un plan.
+4. **Privacidad.** Ubicación redondeada a ~1 km; fecha de nacimiento y correo en `users/{uid}/private/info`; el selfie de verificación se borra tras aprobarse.
+>>>>>>> c10c949 (refactor: reorganizar en monorepo (web, backend, database, android, ios))
 
 ## 2. Capas del Sistema y Responsabilidades
 
+<<<<<<< HEAD
 ### A. Capa de Rutas (`src/app/`)
+=======
+## Motor de compatibilidad
+`backend/src/lib/compat.ts` — 10 categorías (43 pts → 0–100). Puertas: seguridad, edad, distancia, templo, matrimonio e hijos indispensables (mutuas). Umbral de match: 60 %.
+>>>>>>> c10c949 (refactor: reorganizar en monorepo (web, backend, database, android, ios))
 
 | Ruta | Módulo / Función |
 | :--- | :--- |

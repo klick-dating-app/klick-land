@@ -4,7 +4,7 @@ node_modules/
 # Firebase
 .firebase/
 serviceAccountKey.json
-functions/service-account-key.json
+backend/service-account-key.json
 firebase-debug.log
 firestore-debug.log
 
@@ -20,7 +20,7 @@ dist/
 .next/
 out/
 .turbo/
-functions/lib/
+backend/lib/
 
 # TypeScript
 tsconfig.tsbuildinfo
@@ -64,4 +64,20 @@ ios/App/build/
 ios/App/output/
 ios/DerivedData/
 ios/capacitor-cordova-ios-plugins/
+<<<<<<< HEAD
 **/capacitor.config.json
+=======
+**/capacitor.config.json.gitconfig
+
+# Credenciales nativas y de release (se entregan por canal seguro, nunca al repo)
+google-services.json
+GoogleService-Info.plist
+*.keystore
+*.jks
+android/keystore.properties
+backend/.env.*
+!backend/.env.example
+.env.*
+!.env.example
+out/
+>>>>>>> c10c949 (refactor: reorganizar en monorepo (web, backend, database, android, ios))

@@ -32,6 +32,7 @@ Toda la especificación técnica, ejecutiva y de diseño está centralizada en l
 ## 🚀 Puesta en Marcha en Desarrollo
 
 ```bash
+<<<<<<< HEAD
 # 1. Instalar dependencias
 npm install
 
@@ -43,3 +44,34 @@ npm run dev
 ```
 
 Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
+=======
+npm run install:all
+cp web/.env.example web/.env.local     # claves del proyecto Firebase
+npm run dev                     # http://localhost:3000
+npm run typecheck && npm run backend:build
+```
+
+## Documentación
+- [docs/ENTREGA.md](docs/ENTREGA.md) — **qué falta entregar y cómo desplegar**
+- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — arquitectura, modelo de datos y seguridad
+- [docs/MOBILE.md](docs/MOBILE.md) — compilar y publicar iOS/Android
+- Especificación de producto: [docs/01…07](docs/)
+
+## Estructura (monorepo)
+```
+web/        Next.js + Capacitor config. Origen de la UI (y futura base de android/ios)
+  src/app · src/components · src/context · src/hooks · src/lib
+backend/    Cloud Functions (Node 20): perfil, descubrimiento, seguridad, billing, triggers
+database/   Firestore rules, índices y Storage rules
+android/    proyecto nativo Capacitor (se genera/sincroniza desde web/)
+ios/        proyecto nativo Capacitor
+docs/       producto, arquitectura, entrega
+firebase.json  .firebaserc     orquestan backend + database + hosting (web/out)
+package.json                   scripts raíz que delegan a cada carpeta
+```
+
+## Despliegue
+- **Vercel (web):** Root Directory = `web`. Variables `NEXT_PUBLIC_*` en el panel (ver `web/.env.example`).
+- **Firebase:** desde la raíz → `npm run deploy:rules | deploy:functions | deploy:web`.
+- **Apps:** `npm run cap:sync`, luego `npm run android` / `npm run ios`.
+>>>>>>> c10c949 (refactor: reorganizar en monorepo (web, backend, database, android, ios))
