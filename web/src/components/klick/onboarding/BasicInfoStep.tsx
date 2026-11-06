@@ -9,6 +9,9 @@ import KlickLogo from "@/components/ui/KlickLogo";
 interface BasicInfoStepProps {
   onBack: () => void;
   onContinue: (data: BasicInfoData) => void;
+  /** Prellenado desde la cuenta (p. ej. el nombre de Google). */
+  initialFirstName?: string;
+  initialLastName?: string;
 }
 
 export interface BasicInfoData {
@@ -19,35 +22,59 @@ export interface BasicInfoData {
   heightValue: string;
   heightUnit: "ft" | "cm";
   gender: "Hombre" | "Mujer" | "Man" | "Woman" | "";
+  city: string;
+  state: string;
 }
+
+const yearsSince = (iso: string) => {
+  const d = new Date(`${iso}T00:00:00`);
+  const now = new Date();
+  let age = now.getFullYear() - d.getFullYear();
+  if (now < new Date(now.getFullYear(), d.getMonth(), d.getDate())) age--;
+  return age;
+};
 
 export default function BasicInfoStep({
   onBack,
   onContinue,
+  initialFirstName = "",
+  initialLastName = "",
 }: BasicInfoStepProps) {
-  const [firstName, setFirstName] = useState("Juan Carlos");
-  const [lastName, setLastName] = useState("Morales");
-  const [nickname, setNickname] = useState("juancarlos_m");
+  const [firstName, setFirstName] = useState(initialFirstName);
+  const [lastName, setLastName] = useState(initialLastName);
+  const [nickname, setNickname] = useState("");
   const [birthday, setBirthday] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
   const [heightUnit, setHeightUnit] = useState<"ft" | "cm">("ft");
   const [heightFeet, setHeightFeet] = useState("5");
   const [heightInches, setHeightInches] = useState("10");
   const [heightCm, setHeightCm] = useState("178");
-  const [gender, setGender] = useState<"Hombre" | "Mujer" | "Man" | "Woman" | "">("Hombre");
+  const [gender, setGender] = useState<"Hombre" | "Mujer" | "Man" | "Woman" | "">("");
+  const [error, setError] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!firstName.trim()) return setError("Escribe tu nombre.");
+    if (!birthday) return setError("Indica tu fecha de nacimiento.");
+    if (yearsSince(birthday) < 18) return setError("Debes ser mayor de 18 años para usar Klick.");
+    if (!gender) return setError("Elige si eres hombre o mujer.");
+    if (!city.trim() || !state.trim()) return setError("Indica tu ciudad y estado.");
+    setError("");
+
     const heightValue =
       heightUnit === "ft" ? `${heightFeet}' ${heightInches}"` : `${heightCm} cm`;
 
     onContinue({
-      firstName,
-      lastName,
-      nickname,
+      firstName: firstName.trim(),
+      lastName: lastName.trim(),
+      nickname: nickname.trim(),
       birthday,
       heightValue,
       heightUnit,
       gender,
+      city: city.trim(),
+      state: state.trim(),
     });
   };
 
@@ -172,6 +199,36 @@ export default function BasicInfoStep({
               </div>
             </div>
 
+            {/* Ciudad y estado */}
+            <div className="grid grid-cols-[1fr_7rem] gap-2.5">
+              <div>
+                <label className="block text-[11px] font-bold uppercase tracking-wider text-zinc-400 mb-1.5">
+                  City
+                </label>
+                <input
+                  type="text"
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                  placeholder="Salt Lake City"
+                  autoComplete="address-level2"
+                  className="w-full h-12 px-4 rounded-xl bg-[#101116] border border-white/10 focus:border-blue-400 outline-none text-white text-sm transition-all"
+                />
+              </div>
+              <div>
+                <label className="block text-[11px] font-bold uppercase tracking-wider text-zinc-400 mb-1.5">
+                  State
+                </label>
+                <input
+                  type="text"
+                  value={state}
+                  onChange={(e) => setState(e.target.value)}
+                  placeholder="UT"
+                  autoComplete="address-level1"
+                  className="w-full h-12 px-4 rounded-xl bg-[#101116] border border-white/10 focus:border-blue-400 outline-none text-white text-sm transition-all"
+                />
+              </div>
+            </div>
+
             {/* Estatura (con selector ft / cm) */}
             <div>
               <div className="flex items-center justify-between mb-1.5">
@@ -286,6 +343,11 @@ export default function BasicInfoStep({
 
         {/* 3. Botón Continuar */}
         <div className="w-full z-10 pb-2 pt-3">
+          {error && (
+            <p role="alert" className="mb-2 text-center text-xs font-medium text-red-400">
+              {error}
+            </p>
+          )}
           <button
             type="submit"
             form="basic-info-form"

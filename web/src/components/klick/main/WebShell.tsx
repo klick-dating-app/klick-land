@@ -1,6 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
+import { loginHref } from "@/lib/klick/routes";
 import {
   Flame,
   Heart,
@@ -56,6 +59,12 @@ export function WebSidebar({
   onSwitchRole,
 }: WebSidebarProps) {
   const isMale = userRole !== "female";
+  const router = useRouter();
+  const { user, profile, signOut } = useAuth();
+  // Con perfil real el molde lo fija el perfil; el selector Hombre/Mujer es solo para la demo.
+  const isSignedIn = !!user && !!profile?.onboarded;
+  const exitClass =
+    "flex items-center gap-2 px-4 text-[10px] font-semibold uppercase tracking-[0.3em] text-white/40 hover:text-white/80 transition-colors";
   const item = (active: boolean) =>
     cn(
       "w-full flex items-center gap-3 px-4 h-11 rounded-full text-sm font-medium transition-colors",
@@ -92,6 +101,7 @@ export function WebSidebar({
       </div>
 
       <div className="flex flex-col gap-4">
+        {!isSignedIn && (
         <div className="flex flex-col gap-2">
           <span className="px-2 text-[10px] font-semibold uppercase tracking-[0.25em] text-zinc-500">
             Demo profile
@@ -123,6 +133,7 @@ export function WebSidebar({
             </button>
           </div>
         </div>
+        )}
 
         <button
           type="button"
@@ -144,13 +155,24 @@ export function WebSidebar({
           </span>
         </button>
 
-        <Link
-          href="/web/login"
-          className="flex items-center gap-2 px-4 text-[10px] font-semibold uppercase tracking-[0.3em] text-white/40 hover:text-white/80 transition-colors"
-        >
-          <LogOut className="w-3.5 h-3.5" />
-          Exit demo
-        </Link>
+        {isSignedIn ? (
+          <button
+            type="button"
+            onClick={async () => {
+              await signOut();
+              router.replace(loginHref("web"));
+            }}
+            className={exitClass}
+          >
+            <LogOut className="w-3.5 h-3.5" />
+            Sign out
+          </button>
+        ) : (
+          <Link href={loginHref("web")} className={exitClass}>
+            <LogOut className="w-3.5 h-3.5" />
+            Exit demo
+          </Link>
+        )}
       </div>
     </aside>
   );

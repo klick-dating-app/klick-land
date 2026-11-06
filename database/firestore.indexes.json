@@ -1,63 +1,28 @@
 {
   "indexes": [
     {
-      "collectionGroup": "visaCryptoComprobantes",
+      "collectionGroup": "matches",
       "queryScope": "COLLECTION",
       "fields": [
-        {
-          "fieldPath": "billingEmail",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "paidAt",
-          "order": "DESCENDING"
-        }
+        { "fieldPath": "members", "arrayConfig": "CONTAINS" },
+        { "fieldPath": "lastMessageAt", "order": "DESCENDING" }
       ]
     },
     {
-      "collectionGroup": "visaCryptoComprobantes",
+      "collectionGroup": "safeDates",
       "queryScope": "COLLECTION",
       "fields": [
-        {
-          "fieldPath": "paidAt",
-          "order": "DESCENDING"
-        }
-      ]
-    },
-    {
-      "collectionGroup": "chatbots",
-      "queryScope": "COLLECTION",
-      "fields": [
-        {
-          "fieldPath": "isActive",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "updatedAt",
-          "order": "DESCENDING"
-        }
+        { "fieldPath": "participants", "arrayConfig": "CONTAINS" },
+        { "fieldPath": "dateTimeMs", "order": "ASCENDING" }
       ]
     }
   ],
   "fieldOverrides": [
     {
-      "collectionGroup": "cards",
-      "fieldPath": "contactName",
+      "collectionGroup": "blocks",
+      "fieldPath": "blockedUid",
       "indexes": [
-        {
-          "order": "ASCENDING",
-          "queryScope": "COLLECTION_GROUP"
-        }
-      ]
-    },
-    {
-      "collectionGroup": "cards",
-      "fieldPath": "contactNumber",
-      "indexes": [
-        {
-          "order": "ASCENDING",
-          "queryScope": "COLLECTION_GROUP"
-        }
+        { "order": "ASCENDING", "queryScope": "COLLECTION_GROUP" }
       ]
     }
   ]

@@ -1,6 +1,7 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
+import { useAuth } from '@/context/AuthContext';
 import {
   calculateKlickCompatibility,
   type KlickUserProfile,
@@ -79,9 +80,37 @@ interface KlickAppContextType {
 const KlickAppContext = createContext<KlickAppContextType | undefined>(undefined);
 
 export function KlickAppProvider({ children }: { children: React.ReactNode }) {
+  const { user, profile, entitlement } = useAuth();
   const [userRole, setUserRoleState] = useState<UserGenderRole>('female'); // Por defecto femenino (Gratis)
+
+  // Con sesión y perfil guardado, el "molde" (hombre/mujer) lo decide el perfil real y su plan.
+  useEffect(() => {
+    if (!profile?.onboarded) return;
+    if (profile.gender === 'female') setUserRoleState('female');
+    else setUserRoleState(entitlement?.canChat ? 'male_premium' : 'male_free');
+  }, [profile?.onboarded, profile?.gender, entitlement?.canChat]);
+
   const isMaleMode = userRole !== 'female';
-  const currentUser = isMaleMode ? CURRENT_MALE_MOCK_USER : CURRENT_MOCK_USER;
+  const mockUser = isMaleMode ? CURRENT_MALE_MOCK_USER : CURRENT_MOCK_USER;
+  // Los campos del cuestionario siguen saliendo del molde hasta conectar `users/{uid}/restricted/details`.
+  const currentUser = useMemo<KlickUserProfile>(
+    () =>
+      user && profile?.onboarded
+        ? {
+            ...mockUser,
+            id: user.uid,
+            name: profile.name,
+            age: profile.age,
+            gender: profile.gender,
+            city: profile.city,
+            state: profile.state,
+            photos: profile.photos,
+            bio: profile.bio,
+            verifiedKYC: profile.verified,
+          }
+        : mockUser,
+    [user, profile, mockUser],
+  );
   const activeCandidatePool = isMaleMode ? MOCK_FEMALE_CANDIDATE_PROFILES : MOCK_CANDIDATE_PROFILES;
 
   const [blockedUserIds, setBlockedUserIds] = useState<string[]>([]);

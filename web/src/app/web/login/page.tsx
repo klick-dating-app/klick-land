@@ -2,30 +2,22 @@
 
 import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import {
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  signInWithPopup,
-  GoogleAuthProvider,
-  GithubAuthProvider,
-  FacebookAuthProvider,
-  TwitterAuthProvider,
-  OAuthProvider,
-  onAuthStateChanged,
-  type AuthProvider,
-} from 'firebase/auth';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
+import { useAuth } from '@/context/AuthContext';
 import { toast } from 'sonner';
 import KlickAuthFlow, { type AuthMode, type SocialProvider } from '@/components/klick/auth/KlickAuthFlow';
-import { feedHref } from '@/lib/klick/routes';
+import { feedHref, onboardingHref } from '@/lib/klick/routes';
 
-const PROVIDERS: Record<Exclude<SocialProvider, 'phone'>, { name: string; create: () => AuthProvider }> = {
-  google: { name: 'Google', create: () => new GoogleAuthProvider() },
-  apple: { name: 'Apple', create: () => new OAuthProvider('apple.com') },
-  microsoft: { name: 'Microsoft', create: () => new OAuthProvider('microsoft.com') },
-  facebook: { name: 'Facebook', create: () => new FacebookAuthProvider() },
-  x: { name: 'X', create: () => new TwitterAuthProvider() },
-  github: { name: 'GitHub', create: () => new GithubAuthProvider() },
+const AUTH_ERRORS: Record<string, string> = {
+  'auth/popup-closed-by-user': 'Cerraste la ventana de Google antes de terminar.',
+  'auth/cancelled-popup-request': 'Cerraste la ventana de Google antes de terminar.',
+  'auth/popup-blocked': 'El navegador bloqueó la ventana de Google. Permite las ventanas emergentes e inténtalo de nuevo.',
+  'auth/operation-not-allowed': 'Este método de acceso aún no está activado en Firebase.',
+  'auth/unauthorized-domain': 'Este dominio no está autorizado en Firebase Authentication.',
+  'auth/email-already-in-use': 'Ya existe una cuenta con ese correo. Inicia sesión.',
+  'auth/invalid-credential': 'Correo o contraseña incorrectos.',
+  'auth/weak-password': 'La contraseña debe tener al menos 6 caracteres.',
 };
 
 function WebLogin() {
@@ -35,8 +27,9 @@ function WebLogin() {
   const emailParam = searchParams.get('email') ?? undefined;
 
   const [mode, setMode] = useState<AuthMode | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [busy, setBusy] = useState(false);
   const router = useRouter();
+  const { user, profile, loading, signIn, signUp } = useAuth();
 
   useEffect(() => {
     if (isRegisterParam) setMode('register');
@@ -44,38 +37,40 @@ function WebLogin() {
     else setMode(null);
   }, [isRegisterParam, isLoginParam]);
 
-  useEffect(() => onAuthStateChanged(auth, (user) => user && router.push(feedHref('web'))), [router]);
+  // Con sesión: quien ya completó su perfil va al feed; quien no, a llenar sus datos.
+  useEffect(() => {
+    if (loading || !user) return;
+    router.replace(profile?.onboarded ? feedHref('web') : onboardingHref('web'));
+  }, [loading, user, profile?.onboarded, router]);
 
   const fail = (error: unknown) => {
-    const message = error instanceof Error ? error.message : 'No se pudo iniciar sesión';
-    toast.error(message);
+    const code = (error as { code?: string })?.code ?? '';
+    toast.error(AUTH_ERRORS[code] ?? 'No se pudo iniciar sesión. Inténtalo de nuevo.');
   };
 
-  // El perfil en Firestore lo crea la callable `saveProfile` (reglas: el cliente no escribe `users/`).
   const handleEmail = async (email: string, password: string) => {
-    setLoading(true);
+    setBusy(true);
     try {
-      if (mode === 'register') await createUserWithEmailAndPassword(auth, email, password);
-      else await signInWithEmailAndPassword(auth, email, password);
+      await (mode === 'register' ? signUp(email, password) : signIn(email, password));
     } catch (error) {
       fail(error);
     } finally {
-      setLoading(false);
+      setBusy(false);
     }
   };
 
   const handleSocial = async (provider: SocialProvider) => {
-    if (provider === 'phone') {
-      toast.info('Phone authentication coming soon');
+    if (provider !== 'google') {
+      toast.info('Por ahora el acceso es con Google. Este método estará disponible pronto.');
       return;
     }
-    setLoading(true);
+    setBusy(true);
     try {
-      await signInWithPopup(auth, PROVIDERS[provider].create());
+      await signInWithPopup(auth, new GoogleAuthProvider());
     } catch (error) {
       fail(error);
     } finally {
-      setLoading(false);
+      setBusy(false);
     }
   };
 
@@ -88,7 +83,7 @@ function WebLogin() {
       onSocial={handleSocial}
       onEmailSubmit={handleEmail}
       onBackHome={() => router.push('/')}
-      loading={loading}
+      loading={busy || (!!user && loading)}
       initialEmail={emailParam}
     />
   );

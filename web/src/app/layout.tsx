@@ -82,13 +82,16 @@ fbq('track', 'PageView');
           enableSystem
           disableTransitionOnChange
         >
-          <KlickAppProvider>
-            <SidebarProvider>
-              <NativeShell />
-              <AuthProvider>{children}</AuthProvider>
-              <Toaster />
-            </SidebarProvider>
-          </KlickAppProvider>
+          {/* AuthProvider envuelve a KlickAppProvider para que la UI use el perfil real cuando hay sesión. */}
+          <AuthProvider>
+            <KlickAppProvider>
+              <SidebarProvider>
+                <NativeShell />
+                {children}
+                <Toaster />
+              </SidebarProvider>
+            </KlickAppProvider>
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>

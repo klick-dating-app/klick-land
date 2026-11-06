@@ -1,14 +1,16 @@
 "use client";
 
 import { useState } from "react";
+import { toast } from "sonner";
 import LegalStep from "./LegalStep";
-import BasicInfoStep from "./BasicInfoStep";
+import BasicInfoStep, { type BasicInfoData } from "./BasicInfoStep";
 import NotificationsStep from "./NotificationsStep";
 import PhotosStep from "./PhotosStep";
 import VerificationStep from "./VerificationStep";
 import IcebreakersStep from "./IcebreakersStep";
 import PreferencesStep from "./PreferencesStep";
 import TutorialStep from "./TutorialStep";
+import { imagePhotos, type OnboardingData } from "@/lib/klick/save-profile";
 
 type Step =
   | "legal"
@@ -18,30 +20,48 @@ type Step =
   | "verification"
   | "icebreakers"
   | "preferences"
-  | "tutorial";
+  | "tutorial"
+  | "saving";
 
 interface OnboardingFlowProps {
   /** Volver desde el primer paso (al login). */
   onExit: () => void;
-  /** Fin del tutorial; recibe el género elegido para abrir el feed correspondiente. */
-  onFinish: (gender: "male" | "female") => void;
+  /** Fin del tutorial con todos los datos. Si devuelve una promesa, se muestra "guardando" hasta que termine. */
+  onFinish: (data: OnboardingData) => void | Promise<void>;
+  initialFirstName?: string;
+  initialLastName?: string;
 }
 
-export default function OnboardingFlow({ onExit, onFinish }: OnboardingFlowProps) {
-  const [step, setStep] = useState<Step>("legal");
+const EMPTY: OnboardingData = {
+  firstName: "",
+  lastName: "",
+  birthday: "",
+  gender: "",
+  city: "",
+  state: "",
+  photos: [],
+  icebreakers: {},
+  preferences: {},
+};
 
-  // Maqueta: los datos aún no se guardan; al conectar Firebase irán a la callable `saveProfile`.
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    nickname: "",
-    birthday: "",
-    height: "",
-    gender: "Hombre",
-    photos: [] as string[],
-    icebreakers: {} as Record<string, string>,
-    preferences: {} as any,
-  });
+export default function OnboardingFlow({ onExit, onFinish, initialFirstName, initialLastName }: OnboardingFlowProps) {
+  const [step, setStep] = useState<Step>("legal");
+  const [data, setData] = useState<OnboardingData>(EMPTY);
+  const update = (patch: Partial<OnboardingData>, next: Step) => {
+    setData((prev) => ({ ...prev, ...patch }));
+    setStep(next);
+  };
+
+  const finish = async () => {
+    setStep("saving");
+    try {
+      await onFinish(data);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "";
+      toast.error(message || "No se pudo guardar tu perfil. Inténtalo de nuevo.");
+      setStep("tutorial");
+    }
+  };
 
   switch (step) {
     case "legal":
@@ -49,19 +69,15 @@ export default function OnboardingFlow({ onExit, onFinish }: OnboardingFlowProps
     case "basic-info":
       return (
         <BasicInfoStep
+          initialFirstName={data.firstName || initialFirstName}
+          initialLastName={data.lastName || initialLastName}
           onBack={() => setStep("legal")}
-          onContinue={(data: any) => {
-            setFormData((prev) => ({
-              ...prev,
-              firstName: data.firstName,
-              lastName: data.lastName,
-              nickname: data.nickname,
-              birthday: data.birthday,
-              height: data.heightValue,
-              gender: data.gender,
-            }));
-            setStep("notifications");
-          }}
+          onContinue={(d: BasicInfoData) =>
+            update(
+              { firstName: d.firstName, lastName: d.lastName, birthday: d.birthday, gender: d.gender, city: d.city, state: d.state },
+              "notifications",
+            )
+          }
         />
       );
     case "notifications":
@@ -71,8 +87,11 @@ export default function OnboardingFlow({ onExit, onFinish }: OnboardingFlowProps
         <PhotosStep
           onBack={() => setStep("notifications")}
           onContinue={(photos: string[]) => {
-            setFormData((prev) => ({ ...prev, photos }));
-            setStep("verification");
+            if (imagePhotos(photos).length === 0) {
+              toast.error("Sube al menos una foto para continuar.");
+              return;
+            }
+            update({ photos }, "verification");
           }}
         />
       );
@@ -82,28 +101,24 @@ export default function OnboardingFlow({ onExit, onFinish }: OnboardingFlowProps
       return (
         <IcebreakersStep
           onBack={() => setStep("verification")}
-          onContinue={(icebreakers: Record<string, string>) => {
-            setFormData((prev) => ({ ...prev, icebreakers }));
-            setStep("preferences");
-          }}
+          onContinue={(icebreakers: Record<string, string>) => update({ icebreakers }, "preferences")}
         />
       );
     case "preferences":
       return (
         <PreferencesStep
           onBack={() => setStep("icebreakers")}
-          onContinue={(preferences: any) => {
-            setFormData((prev) => ({ ...prev, preferences }));
-            setStep("tutorial");
-          }}
+          onContinue={(preferences: Record<string, unknown>) => update({ preferences }, "tutorial")}
         />
       );
     case "tutorial":
+      return <TutorialStep onBack={() => setStep("preferences")} onFinish={finish} />;
+    case "saving":
       return (
-        <TutorialStep
-          onBack={() => setStep("preferences")}
-          onFinish={() => onFinish(formData.gender === "Hombre" ? "male" : "female")}
-        />
+        <div className="min-h-[100dvh] w-full bg-black text-white flex flex-col items-center justify-center gap-4">
+          <span className="h-10 w-10 rounded-full border-2 border-white/20 border-t-white animate-spin" />
+          <p className="text-sm font-light tracking-wide text-white/70">Creando tu perfil…</p>
+        </div>
       );
   }
 }
