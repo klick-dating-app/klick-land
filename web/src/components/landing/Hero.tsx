@@ -8,7 +8,6 @@ interface HeroProps {
 }
 
 const videoLinks = [
-  "https://firebasestorage.googleapis.com/v0/b/landluxor.firebasestorage.app/o/Matchapp%2F6789235-uhd_4096_2160_25fps.mp4?alt=media&token=ce5c53ae-59a7-469a-8cbe-b44d333e7a84",
   "https://firebasestorage.googleapis.com/v0/b/landluxor.firebasestorage.app/o/Matchapp%2F6670592-uhd_4096_2160_25fps.mp4?alt=media&token=cb69e888-c607-4270-996e-31851a32a096",
   "https://firebasestorage.googleapis.com/v0/b/landluxor.firebasestorage.app/o/Matchapp%2F5102620-uhd_3840_2160_25fps.mp4?alt=media&token=bf00cbc7-a1ad-43f2-a1dd-a0a6d790bb44",
   "https://firebasestorage.googleapis.com/v0/b/landluxor.firebasestorage.app/o/Matchapp%2F4873444-hd_1920_1080_25fps.mp4?alt=media&token=9b8552bc-faa3-4235-9220-4a12e2459bc7",
@@ -18,7 +17,8 @@ const videoLinks = [
   "https://firebasestorage.googleapis.com/v0/b/landluxor.firebasestorage.app/o/Matchapp%2F15980593_3840_2160_30fps.mp4?alt=media&token=e2751d64-534e-48ac-b857-399e450db768",
   "https://firebasestorage.googleapis.com/v0/b/landluxor.firebasestorage.app/o/Matchapp%2F12488902_3840_2160_24fps.mp4?alt=media&token=45085b47-c933-4bd3-a47e-248ed130fc5e",
   "https://firebasestorage.googleapis.com/v0/b/landluxor.firebasestorage.app/o/Matchapp%2F10220214-uhd_4096_2160_25fps.mp4?alt=media&token=e56544bb-f856-41eb-b879-83ab9dc02159",
-  "https://firebasestorage.googleapis.com/v0/b/landluxor.firebasestorage.app/o/Matchapp%2F10212067-uhd_4096_2160_25fps.mp4?alt=media&token=401118b9-d2c9-46b5-bc5a-d31dbff58ef1"
+  "https://firebasestorage.googleapis.com/v0/b/landluxor.firebasestorage.app/o/Matchapp%2F10212067-uhd_4096_2160_25fps.mp4?alt=media&token=401118b9-d2c9-46b5-bc5a-d31dbff58ef1",
+  "https://firebasestorage.googleapis.com/v0/b/landluxor.firebasestorage.app/o/Matchapp%2F6789235-uhd_4096_2160_25fps.mp4?alt=media&token=ce5c53ae-59a7-469a-8cbe-b44d333e7a84"
 ];
 
 export default function Hero({ onStartQuote }: HeroProps) {
