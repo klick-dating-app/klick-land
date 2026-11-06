@@ -12,7 +12,6 @@ import {
 import { doc, onSnapshot } from 'firebase/firestore';
 import { auth, db, isFirebaseConfigured } from '@/lib/firebase';
 import { registerPush } from '@/lib/platform/push';
-import { DEMO, DEMO_ENTITLEMENT, DEMO_PROFILE, DEMO_UID } from '@/lib/demo';
 import type { Entitlement, UserProfile } from '@/lib/types';
 
 interface AuthState {
@@ -29,23 +28,7 @@ interface AuthState {
 
 const Ctx = createContext<AuthState | null>(null);
 
-const DEMO_VALUE: AuthState = {
-  user: { uid: DEMO_UID, email: 'demo@klick.app' } as User,
-  profile: DEMO_PROFILE,
-  entitlement: DEMO_ENTITLEMENT,
-  loading: false,
-  signUp: async () => undefined,
-  signIn: async () => undefined,
-  resetPassword: async () => undefined,
-  signOut: async () => undefined,
-};
-
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  if (DEMO) return <Ctx.Provider value={DEMO_VALUE}>{children}</Ctx.Provider>;
-  return <FirebaseAuthProvider>{children}</FirebaseAuthProvider>;
-}
-
-function FirebaseAuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [entitlement, setEntitlement] = useState<Entitlement | null>(null);
@@ -87,7 +70,7 @@ function FirebaseAuthProvider({ children }: { children: React.ReactNode }) {
   const onboarded = profile?.onboarded === true;
   useEffect(() => {
     if (user && onboarded) void registerPush(user.uid, (d) => {
-      if (d.matchId) window.location.assign(`/app/chat/?id=${encodeURIComponent(d.matchId)}`);
+      if (d.matchId) window.location.assign(`/app/feed/?chat=${encodeURIComponent(d.matchId)}`);
     });
   }, [user, onboarded]);
 

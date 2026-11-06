@@ -1,12 +1,12 @@
 # Firebase — Base de datos, Auth, Functions
 
-Proyecto por defecto: **`klick-platform-1`** (`.firebaserc`).
+Proyecto por defecto: **`klick-513516`** (`.firebaserc`).
 
 ## Consola y Firebase Studio
 
 | Recurso | Enlace / ubicación |
 |---------|-------------------|
-| Consola Firebase | https://console.firebase.google.com/project/klick-platform-1 |
+| Consola Firebase | https://console.firebase.google.com/project/klick-513516 |
 | Firestore | Build → Firestore Database |
 | Authentication | Build → Authentication |
 | Storage | Build → Storage |
@@ -16,7 +16,7 @@ Proyecto por defecto: **`klick-platform-1`** (`.firebaserc`).
 ### Desarrollo con Firebase Studio (IDX)
 
 - Config: `.idx/dev.nix` (Node 20, preview web).
-- El cliente web usa `src/lib/firebase.ts` (`firebaseConfig` con `projectId: klick-platform-1`).
+- El cliente web usa `src/lib/firebase.ts` (`firebaseConfig` con `projectId: klick-513516`).
 - Los datos que ves en Studio son los mismos de Firestore del proyecto (cuidado en producción).
 
 ## Archivos de configuración (raíz del repo)

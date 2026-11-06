@@ -2,7 +2,7 @@
 
 ## Qué se despliega aquí
 
-- **100% del código Next.js** en la raíz del repo (`package.json`, `src/`, `next.config.mjs`).
+- **100% del código Next.js** en `web/` (`web/package.json`, `web/src/`, `web/next.config.mjs`). En Vercel → Settings → General → **Root Directory = `web`**.
 - Config mínima: `vercel.json` → `{ "framework": "nextjs" }`.
 
 No se despliegan en Vercel:
@@ -19,7 +19,7 @@ La app en Vercel es **cliente + servidor ligero**:
 | Páginas con `"use client"` | `src/lib/firebase.ts` (SDK público) |
 | `/api/payments/*`, `/api/whatsapp/*` | `src/backend/firebase/admin.ts` (service account env vars) |
 
-El proyecto Firebase sigue siendo **`klick-platform-1`**.
+El proyecto Firebase sigue siendo **`klick-513516`**.
 
 ## Variables de entorno en Vercel
 
@@ -31,7 +31,7 @@ Mínimo para pagos + API:
 
 | Variable | Entorno | Descripción |
 |----------|---------|-------------|
-| `FIREBASE_PROJECT_ID` | Production, Preview | `klick-platform-1` |
+| `FIREBASE_PROJECT_ID` | Production, Preview | `klick-513516` |
 | `FIREBASE_CLIENT_EMAIL` | Production, Preview | Service account |
 | `FIREBASE_PRIVATE_KEY` | Production, Preview | Clave privada (pegar con `\n` o multilínea) |
 | `NEXT_PUBLIC_TREASURY_WALLET` | Production | Wallet Solana recepción |

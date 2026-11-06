@@ -18,7 +18,7 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
         <nav className="hidden items-center gap-9 md:flex">
           {NAV.map(([label, href]) => <Link key={label} href={href} className="text-[13px] font-medium uppercase tracking-[0.16em] text-white/70 transition hover:text-white">{label}</Link>)}
         </nav>
-        <Link href="/login/" className="btn-ghost !px-6 !py-2.5 text-sm">Sign in</Link>
+        <Link href="/web/login" className="btn-ghost !px-6 !py-2.5 text-sm">Sign in</Link>
       </div>
     </header>
   );

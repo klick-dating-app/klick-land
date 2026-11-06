@@ -8,7 +8,8 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: [
         "/api/",
-        "/portal",
+        "/web/feed",
+        "/app/",
         "/application/",
         "/onboarding/",
         "/instructions-payment-vip",

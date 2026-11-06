@@ -72,7 +72,7 @@ const Footer = () => {
                 <Link href="/contact" className="hover:text-white transition-colors">Support Contact</Link>
               </li>
               <li>
-                <Link href="/portal" className="hover:text-white font-medium text-white transition-colors">User Portal</Link>
+                <Link href="/web/login" className="hover:text-white font-medium text-white transition-colors">Klick App</Link>
               </li>
               <li className="pt-3 flex flex-col gap-1 text-xs">
                 <span className="text-gray-400 block">

@@ -15,25 +15,22 @@ import MentorshipShowcase from "@/components/landing/MentorshipShowcase";
 import FreeTrainingShowcase from "@/components/landing/FreeTrainingShowcase";
 import KlickStoriesShowcase from "@/components/landing/KlickStoriesShowcase";
 
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { isNative } from "@/lib/platform";
-import MobileAppContainer from "@/components/app/MobileAppContainer";
+import { loginHref } from "@/lib/klick/routes";
 
 export default function Home() {
-  const [inAppMode, setInAppMode] = useState<boolean | null>(null);
+  const router = useRouter();
 
+  // Capacitor abre `/`; la app nativa no muestra la landing sino su propio login.
   useEffect(() => {
-    setInAppMode(isNative());
-  }, []);
+    if (isNative()) router.replace(loginHref("app"));
+  }, [router]);
 
   const handleStartQuote = () => {
     window.location.href = "/#planes";
   };
-
-  // Si estamos en la App Móvil (o ?app=true), mostramos el flujo de la App
-  if (inAppMode) {
-    return <MobileAppContainer />;
-  }
 
   return (
     <div className="min-h-screen bg-black font-sans">

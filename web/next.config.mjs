@@ -68,8 +68,14 @@ const nextConfig = {
       { source: '/suite', destination: '/', permanent: true },
       { source: '/suite/:path*', destination: '/', permanent: true },
       // Old bookmarks / broken internal links
-      { source: '/app', destination: '/portal', permanent: true },
       { source: '/mentorship', destination: '/contact', permanent: true },
+      // App de citas: `/web/*` = pantalla grande, `/app/*` = marco móvil. Temporales mientras se definen las rutas.
+      { source: '/login', destination: '/web/login', permanent: false },
+      { source: '/web', destination: '/web/login', permanent: false },
+      { source: '/app', destination: '/app/login', permanent: false },
+      { source: '/demo', destination: '/web/feed', permanent: false },
+      { source: '/portal', destination: '/web/login', permanent: false },
+      { source: '/portal/:path*', destination: '/web/login', permanent: false },
     ];
   },
 };

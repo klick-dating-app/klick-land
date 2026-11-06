@@ -93,7 +93,7 @@ const menuData: MenuItemData[] = [
       actionText: "Join now",
       actionHref: "/contact",
       items: [
-        { title: "Klick", desc: "Everything in your pocket", href: "/portal", icon: LayoutGrid, colorClass: "text-pink-400 bg-pink-500/10" },
+        { title: "Klick", desc: "Everything in your pocket", href: "/web/login", icon: LayoutGrid, colorClass: "text-pink-400 bg-pink-500/10" },
         { title: "Referrals", desc: "Earn $50 per friend", href: "/referrals", icon: Gift, colorClass: "text-emerald-400 bg-emerald-500/10" },
         { title: "Educational Institutions", desc: "Strategic partnerships", href: "/partnerships", icon: Building2, colorClass: "text-indigo-400 bg-indigo-500/10" },
         { title: "Ambassadors", desc: "Represent Klick", href: "/contact", icon: Users, colorClass: "text-amber-400 bg-amber-500/10" },
@@ -192,14 +192,8 @@ export default function Header() {
 
           {/* GRUPO DERECHA: ACCIONES */}
           <div className="hidden lg:flex items-center gap-3 z-50">
-            {/* Solo mostrar Staff si NO es landing de membresía, o podrías dejarlo oculto si quieres algo más limpio */}
-            {!isVisaLandingPage && (
-              <Link href="/portal" className="text-[10px] font-medium text-gray-400 hover:text-white transition-colors uppercase tracking-widest flex items-center gap-1.5 opacity-80 hover:opacity-100 mr-1">
-                <Lock className="w-3 h-3" /> Staff
-              </Link>
-            )}
 
-            <Link href="/login">
+            <Link href="/web/login">
               <Button className="bg-white text-black hover:bg-white/90 rounded-full h-8 px-4 font-semibold text-xs transition-all duration-300 hover:scale-105 shadow-md">
                 Get Started
               </Button>
@@ -389,7 +383,7 @@ export default function Header() {
 
                 <div className="pt-6 space-y-4">
                   <div>
-                    <Link href="/login" onClick={() => setIsMobileMenuOpen(false)} className="w-full block">
+                    <Link href="/web/login" onClick={() => setIsMobileMenuOpen(false)} className="w-full block">
                       <Button className="w-full bg-white text-black hover:bg-white/90 h-12 text-sm font-semibold rounded-xl">
                         Get Started
                       </Button>

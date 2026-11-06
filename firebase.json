@@ -3,7 +3,7 @@
     {
       "source": "backend",
       "codebase": "default",
-      "ignore": ["node_modules", ".git", "firebase-debug.log", "*.local"],
+      "ignore": ["node_modules", ".git", "firebase-debug.log", "*.local", "service-account-key.json", "*.key.json"],
       "predeploy": ["npm --prefix \"$RESOURCE_DIR\" run build"],
       "runtime": "nodejs20"
     }

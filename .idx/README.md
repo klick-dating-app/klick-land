@@ -8,7 +8,7 @@ Entorno de desarrollo en la nube para este repositorio.
 
 ## Firebase en desarrollo
 
-El preview usa el mismo cliente que producción: `src/lib/firebase.ts` → proyecto **`udreamms-platform-1`**.
+El preview usa el mismo cliente que producción: `src/lib/firebase.ts` → proyecto **`klick-513516`**.
 
 **Precaución:** los cambios en Firestore/Auth desde Studio afectan el proyecto real si no usas emuladores.
 

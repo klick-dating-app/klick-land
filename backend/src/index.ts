@@ -1,14 +1,18 @@
+import { initializeApp, getApps } from 'firebase-admin/app';
 
-// src/index.ts
-import * as admin from 'firebase-admin';
+if (getApps().length === 0) initializeApp();
 
-if (admin.apps.length === 0) {
-  admin.initializeApp();
-}
-
-// Export all functions
-export { sendWhatsappMessage, sendWhatsappMediaMessage } from './callable/whatsapp';
-export { moveCard } from './cardActions';
-export { whatsappWebhook } from './webhooks/whatsapp';
-export { googleFormsWebhook } from './webhooks/googleForms';
-// fixCors eliminado porque ya cumplió su función
+// Cloud Functions de Klick. Web y app las llaman vía `web/src/lib/api.ts`.
+export { saveProfile } from './profile';
+export { getCandidates, swipe } from './discovery';
+export {
+  blockUser,
+  unblockUser,
+  reportUser,
+  requestVerification,
+  adminReviewVerification,
+  adminResolveReport,
+  deleteAccount,
+} from './safety';
+export { createCheckoutSession, createPortalSession, stripeWebhook } from './billing';
+export { onMessageCreated, safeDateReminders } from './triggers';
