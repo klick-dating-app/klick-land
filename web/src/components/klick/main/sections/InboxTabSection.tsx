@@ -17,6 +17,8 @@ import type {
   CompatibilityResult,
 } from "@/lib/klick/compatibility-engine";
 import { VerifiedStar, ScoreRing } from "@/components/klick/main/badges";
+import { keyFacts } from "@/lib/klick/profile-facts";
+import { Group, InfoRow } from "@/components/klick/ui/apple";
 
 interface MatchItem {
   profile: KlickUserProfile;
@@ -53,7 +55,7 @@ export default function InboxTabSection({
   onOpenUpgrade,
 }: InboxTabSectionProps) {
   return (
-    <div className="flex-1 w-full flex flex-col bg-[#070709] overflow-hidden">
+    <div className="flex-1 w-full flex flex-col bg-black overflow-hidden">
       {!activeChatThread ? (
         <div className="flex-1 w-full px-5 pt-10 pb-6 overflow-y-auto no-scrollbar space-y-7">
           <header className="space-y-1">
@@ -94,7 +96,7 @@ export default function InboxTabSection({
                     }}
                     className="shrink-0 text-center cursor-pointer group"
                   >
-                    <div className="relative h-[72px] w-[72px] overflow-hidden rounded-full ring-1 ring-white/30 ring-offset-[3px] ring-offset-[#070709] group-hover:ring-blue-400 transition-all">
+                    <div className="relative h-[72px] w-[72px] overflow-hidden rounded-full ring-1 ring-white/30 ring-offset-[3px] ring-offset-black group-hover:ring-blue-400 transition-all">
                       <Image
                         src={m.profile.photos[0]}
                         alt={m.profile.name}
@@ -146,9 +148,9 @@ export default function InboxTabSection({
         </div>
       ) : (
         /* Vista de Chat Abierto — Diseño Editorial v9 */
-        <div className="flex-1 w-full flex flex-col justify-between overflow-hidden bg-[#070709]">
+        <div className="flex-1 w-full flex flex-col justify-between overflow-hidden bg-black">
           {/* Header Glass del Chat */}
-          <header className="w-full px-3 pt-10 pb-3 bg-[#070709]/80 backdrop-blur-xl border-b border-white/10 flex items-center gap-3 z-10">
+          <header className="w-full px-3 pt-10 pb-3 bg-black/80 backdrop-blur-xl border-b border-white/10 flex items-center gap-3 z-10">
             <button
               type="button"
               onClick={() => onSelectChatThread(null)}
@@ -223,6 +225,15 @@ export default function InboxTabSection({
 
           {/* Mensajes */}
           <div className="flex-1 space-y-2.5 overflow-y-auto no-scrollbar p-4">
+            {keyFacts(activeChatThread.candidate).length > 0 && (
+              <div className="mb-3">
+                <Group title={`About ${activeChatThread.candidate.name.split(" ")[0]}`}>
+                  {keyFacts(activeChatThread.candidate).slice(0, 5).map((f) => (
+                    <InfoRow key={f.label} label={f.label} value={f.value} />
+                  ))}
+                </Group>
+              </div>
+            )}
             {activeChatThread.compatibility.commonGround.length > 0 && (
               <div className="space-y-2.5 rounded-2xl border border-blue-500/25 bg-gradient-to-br from-blue-500/10 to-purple-500/10 p-4 mb-3">
                 <span className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-blue-400">
@@ -274,7 +285,7 @@ export default function InboxTabSection({
           {canInitiateChat ? (
             <form
               onSubmit={onSendMessage}
-              className="flex items-center gap-2 p-3 border-t border-white/10 bg-[#070709]"
+              className="flex items-center gap-2 p-3 border-t border-white/10 bg-black"
             >
               <input
                 type="text"

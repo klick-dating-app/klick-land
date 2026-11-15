@@ -192,7 +192,7 @@ export default function SafeDatesTabSection({
   };
 
   return (
-    <div className="flex-1 w-full px-5 pt-10 pb-24 overflow-y-auto no-scrollbar space-y-7 bg-[#070709]">
+    <div className="flex-1 w-full px-5 pt-10 pb-24 overflow-y-auto no-scrollbar space-y-7 bg-black">
       <header className="space-y-2">
         <div className="flex items-end justify-between">
           <div>
@@ -246,7 +246,7 @@ export default function SafeDatesTabSection({
         </div>
 
         {upcomingDates.length === 0 ? (
-          <div className="rounded-[2rem] border border-white/10 bg-[#0d0e14] flex flex-col items-center gap-3 p-7 text-center">
+          <div className="rounded-[2rem] border border-white/10 bg-black flex flex-col items-center gap-3 p-7 text-center">
             <Calendar className="h-6 w-6 text-blue-500" strokeWidth={1.4} />
             <p className="text-xs font-light text-zinc-400">
               No upcoming dates scheduled right now. Plan a new Safe Date above!
@@ -256,7 +256,7 @@ export default function SafeDatesTabSection({
           upcomingDates.map((plan, i) => (
             <div
               key={plan.id}
-              className={`rounded-[2rem] border bg-[#0d0e14] p-5 space-y-4 shadow-[0_25px_50px_-25px_rgba(0,0,0,0.6)] ${
+              className={`rounded-[2rem] border bg-black p-5 space-y-4 shadow-[0_25px_50px_-25px_rgba(0,0,0,0.6)] ${
                 i === 0 ? "border-blue-500/40" : "border-white/10"
               }`}
             >
@@ -366,7 +366,7 @@ export default function SafeDatesTabSection({
                 onClick={() => onPlanDateWithCandidate(m.profile.id)}
                 className="shrink-0 text-center cursor-pointer group"
               >
-                <div className="relative h-16 w-16 overflow-hidden rounded-full ring-1 ring-white/30 ring-offset-2 ring-offset-[#070709] group-hover:ring-blue-400 transition-all">
+                <div className="relative h-16 w-16 overflow-hidden rounded-full ring-1 ring-white/30 ring-offset-2 ring-offset-black group-hover:ring-blue-400 transition-all">
                   <Image
                     src={m.profile.photos[0]}
                     alt={m.profile.name}
@@ -403,7 +403,7 @@ export default function SafeDatesTabSection({
           {pastDates.map((past) => (
             <div
               key={past.id}
-              className="rounded-[2rem] border border-emerald-500/35 bg-[#0d0e14] p-5 space-y-4 transition-all"
+              className="rounded-[2rem] border border-emerald-500/35 bg-black p-5 space-y-4 transition-all"
             >
               <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-3 min-w-0">
@@ -480,7 +480,7 @@ export default function SafeDatesTabSection({
             initial={{ opacity: 0, y: 80 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 80 }}
-            className="absolute inset-0 z-50 bg-[#07080d]/95 backdrop-blur-2xl flex flex-col p-6 overflow-y-auto no-scrollbar"
+            className="absolute inset-0 z-50 bg-black/95 backdrop-blur-2xl flex flex-col p-6 overflow-y-auto no-scrollbar"
           >
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2.5">
@@ -506,7 +506,7 @@ export default function SafeDatesTabSection({
             </div>
 
             {/* Tarjeta resumen de la cita pasada */}
-            <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-[#10121a] border border-white/10 mb-4">
+            <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-black border border-white/10 mb-4">
               <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-full bg-zinc-900">
                 <Image
                   src={selectedPastDate.candidatePhoto}
@@ -529,7 +529,7 @@ export default function SafeDatesTabSection({
               onSubmit={handlePostReview}
               className="flex flex-col gap-4 flex-1"
             >
-              <div className="p-4 rounded-2xl bg-[#10121a] border border-white/10 space-y-4">
+              <div className="p-4 rounded-2xl bg-black border border-white/10 space-y-4">
                 {/* Selector de Estrellas */}
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-semibold text-zinc-300">
@@ -591,7 +591,7 @@ export default function SafeDatesTabSection({
                     value={reviewText}
                     onChange={(e) => setReviewText(e.target.value)}
                     placeholder={`Write everything that went great on your date with ${selectedPastDate.candidateName}...`}
-                    className="w-full rounded-2xl border border-white/10 bg-white/[0.04] p-3.5 text-xs text-white leading-relaxed outline-none placeholder:text-zinc-500 focus:border-blue-500/50 resize-none no-scrollbar"
+                    className="w-full rounded-2xl border border-white/[0.12] bg-black p-3.5 text-xs text-white leading-relaxed outline-none placeholder:text-zinc-500 focus:border-blue-500/50 resize-none no-scrollbar"
                   />
                 </div>
               </div>
@@ -612,7 +612,7 @@ export default function SafeDatesTabSection({
             initial={{ opacity: 0, y: 80 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 80 }}
-            className="absolute inset-0 z-50 bg-[#07080d]/95 backdrop-blur-2xl flex flex-col p-6 overflow-y-auto no-scrollbar"
+            className="absolute inset-0 z-50 bg-black/95 backdrop-blur-2xl flex flex-col p-6 overflow-y-auto no-scrollbar"
           >
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2.5">
@@ -639,7 +639,7 @@ export default function SafeDatesTabSection({
             </div>
 
             {/* Tarjeta resumen de la cita pasada */}
-            <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-[#10121a] border border-white/10 mb-4">
+            <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-black border border-white/10 mb-4">
               <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-full bg-zinc-900">
                 <Image
                   src={selectedPastDate.candidatePhoto}
@@ -662,7 +662,7 @@ export default function SafeDatesTabSection({
               onSubmit={handleSendFeedback}
               className="flex flex-col gap-4 flex-1"
             >
-              <div className="p-4 rounded-2xl bg-[#10121a] border border-white/10 space-y-4">
+              <div className="p-4 rounded-2xl bg-black border border-white/10 space-y-4">
                 <div>
                   <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block mb-2">
                     What Could Be Improved?
@@ -697,7 +697,7 @@ export default function SafeDatesTabSection({
                     value={feedbackText}
                     onChange={(e) => setFeedbackText(e.target.value)}
                     placeholder={`Write privately what could be improved from your past date with ${selectedPastDate.candidateName}...`}
-                    className="w-full rounded-2xl border border-white/10 bg-white/[0.04] p-3.5 text-xs text-white leading-relaxed outline-none placeholder:text-zinc-500 focus:border-purple-500/50 resize-none no-scrollbar"
+                    className="w-full rounded-2xl border border-white/[0.12] bg-black p-3.5 text-xs text-white leading-relaxed outline-none placeholder:text-zinc-500 focus:border-purple-500/50 resize-none no-scrollbar"
                   />
                 </div>
               </div>

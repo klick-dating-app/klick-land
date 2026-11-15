@@ -135,6 +135,7 @@ export function ScoreRing({
 export function LightThemeStyles() {
   return (
     <style>{`
+      .klick-light-theme .bg-black,
       .klick-light-theme .bg-\\[\\#070709\\],
       .klick-light-theme .bg-\\[\\#07070b\\],
       .klick-light-theme .bg-\\[\\#07080d\\]\\/95,
@@ -201,12 +202,28 @@ export function LightThemeStyles() {
       .klick-light-theme .divide-white\\/10 > :not([hidden]) ~ :not([hidden]) {
         border-color: rgba(15, 23, 42, 0.1) !important;
       }
+      .klick-light-theme .ring-offset-black,
       .klick-light-theme .ring-offset-\\[\\#070709\\] {
         --tw-ring-offset-color: #ffffff !important;
       }
       .klick-light-theme .shadow-\\[0_20px_40px_-20px_rgba\\(0\\,0\\,0\\,0\\.6\\)\\],
       .klick-light-theme .shadow-\\[0_25px_50px_-25px_rgba\\(0\\,0\\,0\\,0\\.6\\)\\] {
         box-shadow: 0 12px 28px -12px rgba(15, 23, 42, 0.12) !important;
+      }
+      /* Controles estilo Apple (components/klick/ui/apple.tsx) */
+      .klick-light-theme .bg-\\[\\#1c1c1e\\] {
+        background-color: #f3f5fa !important;
+      }
+      .klick-light-theme .bg-\\[\\#39393d\\] {
+        background-color: #e5e5ea !important;
+      }
+      .klick-light-theme .border-white\\/\\[0\\.12\\],
+      .klick-light-theme .border-white\\/\\[0\\.08\\] {
+        border-color: rgba(15, 23, 42, 0.1) !important;
+      }
+      .klick-light-theme .k-primary {
+        background-color: #0f172a !important;
+        color: #ffffff !important;
       }
     `}</style>
   );

@@ -20,7 +20,7 @@ export default function LegalStep({
   return (
     <div className="min-h-screen w-full bg-black flex items-center justify-center overflow-hidden select-none">
       {/* Contenedor simulador móvil con espacio superior para cámara/notch */}
-      <div className="w-full max-w-[430px] h-[100dvh] bg-[#070709] text-white flex flex-col justify-between relative overflow-hidden shadow-2xl md:border md:border-zinc-800/80 md:rounded-[40px] px-6 pt-12 pb-8">
+      <div className="w-full max-w-[430px] h-[100dvh] bg-black text-white flex flex-col justify-between relative overflow-hidden shadow-2xl md:border md:border-zinc-800/80 md:rounded-[40px] px-6 pt-12 pb-8">
         
         {/* Ambient Glow */}
         <div className="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[300px] h-[300px] bg-blue-900/10 rounded-full blur-3xl pointer-events-none" />
@@ -84,7 +84,7 @@ export default function LegalStep({
             className={`w-full p-4 rounded-2xl border transition-all duration-200 cursor-pointer flex items-start gap-3.5 mb-3.5 select-none ${
               acceptedTerms
                 ? "bg-white/[0.08] border-purple-500/50 shadow-lg shadow-purple-500/10"
-                : "bg-[#101116] hover:bg-[#15161e] border-white/10"
+                : "bg-black hover:bg-white/[0.04] border-white/10"
             }`}
           >
             {/* Checkbox circular interactivo */}
@@ -125,7 +125,7 @@ export default function LegalStep({
           </div>
 
           {/* Tarjeta 2: Garantía de Privacidad en Azul */}
-          <div className="w-full p-4 rounded-2xl bg-[#101116]/80 border border-white/5 flex items-start gap-3.5">
+          <div className="w-full p-4 rounded-2xl bg-black border border-white/5 flex items-start gap-3.5">
             <div className="p-1 rounded-full bg-blue-500/10 text-blue-400 shrink-0 mt-0.5">
               <ShieldCheck className="w-4 h-4" />
             </div>

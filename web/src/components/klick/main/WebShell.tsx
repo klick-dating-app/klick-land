@@ -19,10 +19,14 @@ import KlickLogo from "@/components/ui/KlickLogo";
 import { VerifiedStar } from "@/components/klick/main/badges";
 import type { KlickTab } from "@/components/klick/main/sections/BottomNavBar";
 import type { UserGenderRole, SafeDatePlan } from "@/context/KlickAppContext";
-import type {
-  KlickUserProfile,
-  CompatibilityResult,
+import {
+  FACTOR_LABELS,
+  FACTOR_WEIGHTS,
+  type CompatFactor,
+  type KlickUserProfile,
+  type CompatibilityResult,
 } from "@/lib/klick/compatibility-engine";
+import { keyFacts } from "@/lib/klick/profile-facts";
 import { cn } from "@/lib/utils";
 
 type ScoredProfile = { profile: KlickUserProfile; compatibility: CompatibilityResult };
@@ -138,7 +142,7 @@ export function WebSidebar({
         <button
           type="button"
           onClick={() => onSelectTab("perfil")}
-          className="flex items-center gap-3 rounded-2xl bg-white/5 hover:bg-white/10 p-2.5 text-left transition-colors"
+          className="flex items-center gap-3 rounded-2xl border border-white/[0.12] bg-black hover:bg-white/[0.06] p-2.5 text-left transition-colors"
         >
           <span
             className="w-10 h-10 rounded-full bg-cover bg-center shrink-0 border border-white/10"
@@ -178,19 +182,6 @@ export function WebSidebar({
   );
 }
 
-const CATEGORY_LABELS: { key: keyof CompatibilityResult["categoryScores"]; label: string; max: number }[] = [
-  { key: "safety", label: "Safety", max: 6 },
-  { key: "faith", label: "Faith", max: 5 },
-  { key: "marriage", label: "Marriage", max: 5 },
-  { key: "family", label: "Family", max: 5 },
-  { key: "languages", label: "Languages", max: 4 },
-  { key: "distance", label: "Distance", max: 4 },
-  { key: "lifestyle", label: "Lifestyle", max: 4 },
-  { key: "personality", label: "Personality", max: 4 },
-  { key: "hobbies", label: "Hobbies", max: 3 },
-  { key: "safeFirstDate", label: "Safe first date", max: 3 },
-];
-
 interface WebContextPanelProps {
   activeTab: KlickTab;
   currentCandidate?: KlickUserProfile;
@@ -210,7 +201,7 @@ export function WebContextPanel({
   safeDatePlans,
   onSelectTab,
 }: WebContextPanelProps) {
-  const card = "rounded-3xl border border-white/5 bg-white/[0.03] p-5";
+  const card = "rounded-3xl border border-white/[0.12] bg-black p-5";
   const title = "text-[10px] font-semibold uppercase tracking-[0.25em] text-zinc-500";
   const upcoming = safeDatePlans.filter((p) => p.status === "scheduled" || p.status === "checked_in");
 
@@ -228,20 +219,20 @@ export function WebContextPanel({
             with <span className="text-white font-medium">{currentCandidate.name}</span>
           </p>
           <div className="mt-4 flex flex-col gap-2.5">
-            {CATEGORY_LABELS.map(({ key, label, max }) => {
-              const value = currentCompatibility.categoryScores[key] ?? 0;
+            {(Object.keys(FACTOR_WEIGHTS) as CompatFactor[]).map((key) => {
+              const value = currentCompatibility.factors?.[key] ?? 0;
               return (
-                <div key={key} className="flex items-center gap-3">
-                  <span className="w-28 shrink-0 text-xs text-zinc-400">{label}</span>
+                <div key={key} className="flex items-center gap-3" title={FACTOR_LABELS[key].compares}>
+                  <span className="w-32 shrink-0 text-xs text-zinc-400 truncate">
+                    {FACTOR_LABELS[key].emoji} {FACTOR_LABELS[key].label}
+                  </span>
                   <span className="flex-1 h-1.5 rounded-full bg-white/5 overflow-hidden">
                     <span
                       className="block h-full rounded-full bg-gradient-to-r from-blue-500 to-purple-500"
-                      style={{ width: `${Math.min(100, (value / max) * 100)}%` }}
+                      style={{ width: `${value}%` }}
                     />
                   </span>
-                  <span className="w-10 text-right text-[11px] text-zinc-500 tabular-nums">
-                    {value}/{max}
-                  </span>
+                  <span className="w-9 text-right text-[11px] text-zinc-500 tabular-nums">{value}%</span>
                 </div>
               );
             })}
@@ -255,6 +246,20 @@ export function WebContextPanel({
               ))}
             </div>
           )}
+        </div>
+      )}
+
+      {activeTab === "feed" && currentCandidate && keyFacts(currentCandidate).length > 0 && (
+        <div className={card}>
+          <span className={title}>About {currentCandidate.name.split(" ")[0]}</span>
+          <dl className="mt-2">
+            {keyFacts(currentCandidate).map((f) => (
+              <div key={f.label} className="flex items-start justify-between gap-4 py-2 border-b border-white/[0.08] last:border-b-0">
+                <dt className="text-xs text-zinc-500 shrink-0">{f.label}</dt>
+                <dd className="text-xs text-white text-right">{f.value}</dd>
+              </div>
+            ))}
+          </dl>
         </div>
       )}
 

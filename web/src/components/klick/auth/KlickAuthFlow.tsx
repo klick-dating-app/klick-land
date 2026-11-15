@@ -200,7 +200,7 @@ function VerifiedBadge({ className }: { className?: string }) {
         />
         <path d="m8.8 12.2 2.1 2.1 4.3-4.3" stroke="#FFFFFF" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
-      <span>Verified LDS Community · 18+ Only</span>
+      <span>Verified LDS Community · 21+ Only</span>
     </div>
   );
 }
@@ -419,7 +419,7 @@ export default function KlickAuthFlow({
           type="button"
           disabled={loading}
           onClick={() => onSocial('apple')}
-          className="w-full h-12 bg-[#181920] hover:bg-[#20222c] active:scale-[0.98] border border-white/10 text-white font-semibold text-[14px] rounded-full flex items-center justify-center gap-3 shadow-lg transition-all duration-200 disabled:opacity-50"
+          className="w-full h-12 bg-black hover:bg-white/[0.06] active:scale-[0.98] border border-white/10 text-white font-semibold text-[14px] rounded-full flex items-center justify-center gap-3 shadow-lg transition-all duration-200 disabled:opacity-50"
         >
           <AppleIcon />
           <span>Continue with Apple ID</span>

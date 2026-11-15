@@ -11,7 +11,7 @@ export default function PrivacyPage() {
         <p>SafeMeet.Ut LLC («Klick») respeta tu privacidad. Esta política describe qué datos tratamos y tus derechos.</p>
         <h2>Datos que recopilamos</h2>
         <ul>
-          <li>Cuenta: correo electrónico y fecha de nacimiento (para verificar que eres mayor de 18 años).</li>
+          <li>Cuenta: correo electrónico y fecha de nacimiento (para verificar que eres mayor de 21 años).</li>
           <li>Perfil: nombre, género, fotos, biografía, ciudad y ubicación aproximada (~1 km).</li>
           <li>Cuestionario de compatibilidad: fe, matrimonio, familia, idiomas, estilo de vida e intereses. Son datos sensibles que usas voluntariamente.</li>
           <li>Actividad: likes, matches, mensajes y planes de Safe First Date.</li>
@@ -30,7 +30,7 @@ export default function PrivacyPage() {
         <h2>Tus derechos</h2>
         <p>Puedes editar tus datos en la app, eliminar tu cuenta desde Perfil o solicitarlo en <a className="text-primary underline" href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>. Conservamos únicamente lo exigido por ley.</p>
         <h2>Menores</h2>
-        <p>Klick es solo para mayores de 18 años. Eliminamos cuentas de menores.</p>
+        <p>Klick es solo para mayores de 21 años. Eliminamos cuentas de menores.</p>
         <p className="text-xs">Documento base: debe ser revisado por asesoría legal antes del lanzamiento.</p>
       </Prose>
     </SiteShell>

@@ -205,3 +205,45 @@
     padding-right: var(--safe-right);
   }
 }
+/* Deslizador estilo Apple (componentes en components/klick/ui/apple.tsx).
+   El tramo recorrido se pinta con la variable --k-fill que fija el componente. */
+.k-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 22px;
+  background: transparent;
+  cursor: pointer;
+}
+.k-range::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(to right, #0a84ff var(--k-fill, 0%), rgba(120, 120, 128, 0.32) var(--k-fill, 0%));
+}
+.k-range::-moz-range-track {
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(120, 120, 128, 0.32);
+}
+.k-range::-moz-range-progress {
+  height: 4px;
+  border-radius: 999px;
+  background: #0a84ff;
+}
+.k-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  margin-top: -9px;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 0.5px 4px rgba(0, 0, 0, 0.35), 0 0 0 0.5px rgba(0, 0, 0, 0.06);
+}
+.k-range::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border: none;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 0.5px 4px rgba(0, 0, 0, 0.35);
+}

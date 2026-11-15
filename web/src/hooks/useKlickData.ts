@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { collection, doc, onSnapshot, orderBy, query, where } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
-import type { Match, Message, SafeDate } from '@/lib/types';
+import type { Match, Message, Questionnaire, SafeDate } from '@/lib/types';
 
 const withId = <T,>(d: { id: string; data(): unknown }) => ({ id: d.id, ...(d.data() as object) }) as T;
 
@@ -61,4 +61,18 @@ export function useVerificationStatus(uid?: string) {
     return onSnapshot(doc(db, 'verifications', uid), (s) => setStatus(s.exists() ? s.data().status : 'none'), () => undefined);
   }, [uid]);
   return status;
+}
+
+/** Cuestionario propio (`users/{uid}/restricted/details`); las reglas permiten leerlo al dueño. `null` = no existe o sin sesión. */
+export function useMyQuestionnaire(uid?: string) {
+  const [questionnaire, setQuestionnaire] = useState<Questionnaire | null>(null);
+  useEffect(() => {
+    if (!uid) return setQuestionnaire(null);
+    return onSnapshot(
+      doc(db, 'users', uid, 'restricted', 'details'),
+      (s) => setQuestionnaire(s.exists() ? (s.data() as Questionnaire) : null),
+      () => setQuestionnaire(null),
+    );
+  }, [uid]);
+  return questionnaire;
 }

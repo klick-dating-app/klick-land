@@ -63,6 +63,7 @@ export const getCandidates = onCall(async (req) => {
       verified: p.verified,
       score: r.score,
       commonGround: r.commonGround,
+      factors: r.factors,
     });
   }
   out.sort((a, b) => b.score - a.score);

@@ -30,7 +30,7 @@ export default function BottomNavBar({
   onOpenFilters,
 }: BottomNavBarProps) {
   return (
-    <div className="w-full h-16 bg-[#08080c]/95 border-t border-white/10 backdrop-blur-md px-4 flex items-center justify-around z-40">
+    <div className="w-full h-16 bg-black/95 border-t border-white/10 backdrop-blur-md px-4 flex items-center justify-around z-40">
       <button
         type="button"
         onClick={() => onSelectTab("feed")}

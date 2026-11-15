@@ -52,6 +52,25 @@ export interface KlickUserProfile {
   preferredDateTypes: string[]; // ['Café', 'Caminata en parque', 'Restaurante público', 'Helado']
   safetyPreferences: string[]; // ['Lugar público', 'Horario diurno', 'Check-in activo']
 
+  // 9. Campos SafeMeet.Ut (mismos nombres que `Questionnaire`; opcionales)
+  churchImportance?: string;
+  churchAttendance?: string;
+  relationshipGoals?: string[];
+  childrenStatus?: string;
+  culturalBackground?: string;
+  openToLongDistance?: string;
+  coreValues?: string[];
+  education?: string;
+  heightCm?: number;
+  partnerTempleImportance?: string;
+  spiritualExpectations?: string[];
+  partnerLanguages?: string[];
+  languageImportance?: string;
+  culturePreferences?: string[];
+  valuePriorities?: Partial<Record<string, string>>;
+  verifiedOnly?: string;
+  socials?: Partial<Record<'spotify' | 'facebook' | 'instagram' | 'whatsapp' | 'x' | 'youtube' | 'tiktok', string>>;
+
   // Datos Privados / Configuración de Búsqueda
   preferences?: {
     minAge?: number;
@@ -80,9 +99,118 @@ export interface CompatibilityResult {
     hobbies: number; // Max 3
     safeFirstDate: number; // Max 3
   };
+  /** 0–100 por factor de la hoja "Compatibilidad" (mismos nombres que el backend). */
+  factors: Record<CompatFactor, number>;
   commonGround: string[];
   exclusionReason?: string;
   isEligibleForMatch: boolean;
+}
+
+/** Pesos de la hoja "Compatibilidad" de SafeMeet.Ut; copia de `backend/src/lib/compat.ts`. */
+export const FACTOR_WEIGHTS = {
+  faith: 25,
+  goal: 20,
+  family: 15,
+  languageCulture: 10,
+  distance: 10,
+  values: 10,
+  lifestyle: 10,
+} as const;
+export type CompatFactor = keyof typeof FACTOR_WEIGHTS;
+
+export const FACTOR_LABELS: Record<CompatFactor, { label: string; emoji: string; compares: string }> = {
+  faith: { label: 'LDS Faith', emoji: '⛪', compares: 'Temple recommend, attendance, importance of the Church' },
+  goal: { label: 'Relationship Goal', emoji: '💍', compares: 'Friendship, serious relationship, marriage, temple' },
+  family: { label: 'Family', emoji: '👨‍👩‍👧', compares: 'Children, wanting children, accepting children' },
+  languageCulture: { label: 'Language & Culture', emoji: '🌎', compares: 'Languages and cultural preferences' },
+  distance: { label: 'Distance', emoji: '📍', compares: 'Distance and openness to long distance' },
+  values: { label: 'Values', emoji: '❤️', compares: 'Family, integrity, service, health…' },
+  lifestyle: { label: 'Lifestyle', emoji: '🏃', compares: 'Interests and compatible habits' },
+};
+
+const NO_FACTORS: Record<CompatFactor, number> = { faith: 0, goal: 0, family: 0, languageCulture: 0, distance: 0, values: 0, lifestyle: 0 };
+
+const ATTENDANCE = ['Every week', 'Almost every week', 'A few times a month', 'Occasionally'];
+const YES = new Set(['Yes', 'Sí']);
+const UNSURE = new Set(['Not sure', 'No seguro', 'Maybe', 'Tal vez', 'Not sure yet']);
+const sharedOf = (a: string[] = [], b: string[] = []) => a.filter((x) => b.includes(x));
+const mean = (...xs: number[]) => xs.reduce((s, n) => s + n, 0) / xs.length;
+const kids = (p: KlickUserProfile) => (p.childrenStatus ? p.childrenStatus !== 'No' : p.hasChildren);
+const goalsOf = (p: KlickUserProfile) => p.relationshipGoals?.length ? p.relationshipGoals : p.seekingMarriage ? ['Marriage'] : ['Meeting people'];
+const templeFit = (me: KlickUserProfile, other: KlickUserProfile) => {
+  const demand = me.partnerTempleImportance ?? (me.templeMarriageRequirement === 'Indispensable' ? 'Essential' : me.templeMarriageRequirement === 'Preferred' ? 'Preferred' : 'Not important');
+  if (!['Essential', 'Very important', 'Preferred'].includes(demand)) return 1;
+  if (YES.has(other.templeRecommend)) return 1;
+  if (other.templeRecommend === 'In progress' || other.templeRecommend === 'En proceso') return 0.6;
+  return demand === 'Essential' ? 0 : 0.3;
+};
+const childrenFit = (me: KlickUserProfile, other: KlickUserProfile) =>
+  !kids(other) ? 1 : YES.has(me.acceptsPartnerWithChildren) ? 1 : me.acceptsPartnerWithChildren === 'Flexible' ? 0.6 : 0.1;
+const cultureFit = (me: KlickUserProfile, other: KlickUserProfile) => {
+  const prefs = me.culturePreferences ?? [];
+  if (!prefs.length || prefs.includes('No preference')) return 1;
+  return other.culturalBackground && prefs.includes(other.culturalBackground) ? 1 : 0.4;
+};
+const langFit = (me: KlickUserProfile, other: KlickUserProfile) =>
+  !me.partnerLanguages?.length || sharedOf(me.partnerLanguages, other.languages).length ? 1 : 0.3;
+const RANK: Record<string, number> = { Essential: 3, Important: 2, 'Nice to have': 1, 'Not important': 0 };
+
+/** Los 7 factores (0–1) y el "common ground" que añaden los campos SafeMeet. */
+function sheetFactors(a: KlickUserProfile, b: KlickUserProfile) {
+  const extra: string[] = [];
+  let attendance = 0.5;
+  if (a.churchAttendance && b.churchAttendance) {
+    const gap = Math.abs(ATTENDANCE.indexOf(a.churchAttendance) - ATTENDANCE.indexOf(b.churchAttendance));
+    attendance = 1 - gap / 3;
+    if (gap === 0) extra.push(`Same church attendance: ${b.churchAttendance}`);
+  }
+  const sameImportance = a.churchImportance && b.churchImportance ? a.churchImportance === b.churchImportance : a.faithImportance === b.faithImportance;
+  const bothRecommend = YES.has(a.templeRecommend) && YES.has(b.templeRecommend);
+  const faith = (a.faith === b.faith ? 0.3 : 0) + (sameImportance ? 0.15 : 0) + attendance * 0.25 + (bothRecommend ? 0.15 : 0) + mean(templeFit(a, b), templeFit(b, a)) * 0.15;
+
+  const goals = sharedOf(goalsOf(a), goalsOf(b));
+  if (goals.length && a.relationshipGoals?.length && b.relationshipGoals?.length) extra.push(`Both looking for: ${goals.slice(0, 2).join(', ')}`);
+  const goal = (goals.length ? 0.6 : 0.15) + (a.seekingMarriage && b.seekingMarriage ? 0.2 : 0) + (a.marriageTimeline === b.marriageTimeline ? 0.2 : 0.1);
+
+  const wants = a.wantsChildren === b.wantsChildren ? 1 : UNSURE.has(a.wantsChildren) || UNSURE.has(b.wantsChildren) ? 0.5 : 0;
+  const family = wants * 0.5 + mean(childrenFit(a, b), childrenFit(b, a)) * 0.5;
+
+  const langs = sharedOf(a.languages, b.languages);
+  if (a.culturalBackground && a.culturalBackground === b.culturalBackground) extra.push(`Shared culture: ${b.culturalBackground}`);
+  const languageCulture = (langs.length ? 0.6 : 0.15) + mean(langFit(a, b), langFit(b, a)) * 0.2 + mean(cultureFit(a, b), cultureFit(b, a)) * 0.2;
+
+  const miles = b.distanceMiles;
+  let distance = miles <= 15 ? 1 : miles <= 35 ? 0.8 : miles <= 60 ? 0.6 : 0.4;
+  if (miles > 60 && a.openToLongDistance === 'Yes' && b.openToLongDistance === 'Yes') distance = 0.6;
+
+  const parts: number[] = [];
+  const core = sharedOf(a.coreValues, b.coreValues);
+  if (a.coreValues?.length && b.coreValues?.length) parts.push(Math.min(1, 0.4 + core.length * 0.2));
+  if (core.length) extra.push(`Shared values: ${core.slice(0, 3).join(', ')}`);
+  const pa = a.valuePriorities ?? {};
+  const pb = b.valuePriorities ?? {};
+  const rated = Object.keys(pa).filter((k) => pa[k] && pb[k] && k in pb);
+  if (rated.length) parts.push(mean(...rated.map((k) => 1 - Math.abs((RANK[pa[k]!] ?? 0) - (RANK[pb[k]!] ?? 0)) / 3)));
+  const values = parts.length ? mean(...parts) : 0.5;
+
+  const life = sharedOf(a.lifestyleRoutine, b.lifestyleRoutine);
+  const interests = [...sharedOf(a.hobbies, b.hobbies), ...sharedOf(a.sports, b.sports)];
+  const lifestyle =
+    Math.min(1, 0.5 + life.length * 0.25) * 0.25 +
+    Math.min(1, 0.3 + interests.length * 0.25) * 0.3 +
+    (a.communicationStyle === b.communicationStyle ? 1 : 0.5) * 0.15 +
+    (sharedOf(a.preferredDateTypes, b.preferredDateTypes).length ? 1 : 0.5) * 0.15 +
+    mean(a.verifiedKYC ? 1 : 0.5, b.verifiedKYC ? 1 : 0.5) * 0.15;
+
+  const raw: Record<CompatFactor, number> = { faith, goal, family, languageCulture, distance, values, lifestyle };
+  const factors = { ...NO_FACTORS };
+  let score = 0;
+  for (const k of Object.keys(FACTOR_WEIGHTS) as CompatFactor[]) {
+    const v = Math.max(0, Math.min(1, raw[k]));
+    factors[k] = Math.round(v * 100);
+    score += v * FACTOR_WEIGHTS[k];
+  }
+  return { factors, score: Math.round(score * 10) / 10, extra };
 }
 
 /**
@@ -116,6 +244,7 @@ export function calculateKlickCompatibility(
       passedHardCompatibilityGate: false,
       passedThreshold60: false,
       categoryScores,
+      factors: NO_FACTORS,
       commonGround: [],
       exclusionReason: 'Candidate account restricted or blocked by Trust & Safety.',
       isEligibleForMatch: false,
@@ -140,6 +269,7 @@ export function calculateKlickCompatibility(
         passedHardCompatibilityGate: false,
         passedThreshold60: false,
         categoryScores,
+        factors: NO_FACTORS,
         commonGround: [],
         exclusionReason: 'Indispensable requirement for Temple Marriage not met.',
         isEligibleForMatch: false,
@@ -155,6 +285,7 @@ export function calculateKlickCompatibility(
       passedHardCompatibilityGate: false,
       passedThreshold60: false,
       categoryScores,
+      factors: NO_FACTORS,
       commonGround: [],
       exclusionReason: 'Indispensable requirement for marriage goal not satisfied.',
       isEligibleForMatch: false,
@@ -169,6 +300,7 @@ export function calculateKlickCompatibility(
       passedHardCompatibilityGate: false,
       passedThreshold60: false,
       categoryScores,
+      factors: NO_FACTORS,
       commonGround: [],
       exclusionReason: 'Family preference for children does not align.',
       isEligibleForMatch: false,
@@ -184,6 +316,7 @@ export function calculateKlickCompatibility(
       passedHardCompatibilityGate: false,
       passedThreshold60: false,
       categoryScores,
+      factors: NO_FACTORS,
       commonGround: [],
       exclusionReason: `Distance (${candidate.distanceMiles} mi) exceeds maximum radius (${maxDistance} mi).`,
       isEligibleForMatch: false,
@@ -292,28 +425,15 @@ export function calculateKlickCompatibility(
   }
   categoryScores.safeFirstDate = Math.min(3, dateScore);
 
-  // --- CÁLCULO DE SCORE NORMALIZADO (Total Peso: 43) ---
-  const totalScoreObtained =
-    categoryScores.safety +
-    categoryScores.faith +
-    categoryScores.marriage +
-    categoryScores.family +
-    categoryScores.languages +
-    categoryScores.distance +
-    categoryScores.lifestyle +
-    categoryScores.personality +
-    categoryScores.hobbies +
-    categoryScores.safeFirstDate;
-
-  const maxPossible = 43;
-  const rawScore = (totalScoreObtained / maxPossible) * 100;
-  const finalScore = Math.round(rawScore * 10) / 10; // 1 decimal
+  // `categoryScores` se conserva para el desglose detallado; el porcentaje usa los 7 factores de la hoja.
+  const sheet = sheetFactors(userA, candidate);
+  const finalScore = sheet.score;
 
   // --- PUERTA 4: UMBRAL DEL 60% (M-006 / DEV-008 / AT-001..002) ---
   const passedThreshold60 = finalScore >= 60.0;
 
-  // Limitar Common Ground a 3 - 7 elementos reales
-  const finalCommonGround = commonGround.slice(0, 7);
+  // Limitar Common Ground a 3 - 7 elementos reales (primero los datos SafeMeet)
+  const finalCommonGround = [...sheet.extra, ...commonGround].slice(0, 7);
 
   return {
     score: finalScore,
@@ -321,6 +441,7 @@ export function calculateKlickCompatibility(
     passedHardCompatibilityGate: true,
     passedThreshold60,
     categoryScores,
+    factors: sheet.factors,
     commonGround: finalCommonGround,
     isEligibleForMatch: passedThreshold60,
     exclusionReason: !passedThreshold60 ? `Compatibility score (${finalScore}%) is below the minimum 60.0% threshold.` : undefined,

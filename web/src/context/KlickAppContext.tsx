@@ -2,6 +2,8 @@
 
 import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
 import { useAuth } from '@/context/AuthContext';
+import { useMyQuestionnaire } from '@/hooks/useKlickData';
+import { profileFromQuestionnaire } from '@/lib/klick/questionnaire-profile';
 import {
   calculateKlickCompatibility,
   type KlickUserProfile,
@@ -47,7 +49,7 @@ export interface SafeDatePlan {
   notes?: string;
 }
 
-interface FilterState {
+export interface FilterState {
   minAge: number;
   maxAge: number;
   maxDistance: number;
@@ -55,7 +57,41 @@ interface FilterState {
   mustHaveTempleRecommend: boolean;
   mustWantMarriage: boolean;
   templeRequirementIndispensable: boolean;
+  // Filtros SafeMeet.Ut. Lista vacía = sin filtro.
+  churchAttendance: string[];
+  relationshipGoals: string[];
+  languages: string[];
+  cultures: string[];
+  childrenStatus: string[];
+  wantsChildren: string[];
+  onlyVerified: boolean;
+  includeLongDistance: boolean;
+  minCompatibility: number;
 }
+
+export const DEFAULT_FILTERS: FilterState = {
+  minAge: 21,
+  maxAge: 35,
+  maxDistance: 50,
+  faithRequired: 'LDS',
+  mustHaveTempleRecommend: true,
+  mustWantMarriage: true,
+  templeRequirementIndispensable: true,
+  churchAttendance: [],
+  relationshipGoals: [],
+  languages: [],
+  cultures: [],
+  childrenStatus: [],
+  wantsChildren: [],
+  onlyVerified: false,
+  includeLongDistance: false,
+  minCompatibility: 0,
+};
+
+const anyOf = (wanted: string[], value: string | string[] | undefined) =>
+  !wanted.length || (Array.isArray(value) ? value.some((v) => wanted.includes(v)) : !!value && wanted.includes(value));
+/** Los perfiles de ejemplo guardan respuestas en inglés o español ("Sí"/"Yes"). */
+const WANTS_CHILDREN: Record<string, string> = { Sí: 'Yes', 'No seguro': 'Not sure yet', 'Not sure': 'Not sure yet', 'Tal vez': 'Maybe' };
 
 interface KlickAppContextType {
   currentUser: KlickUserProfile;
@@ -92,12 +128,14 @@ export function KlickAppProvider({ children }: { children: React.ReactNode }) {
 
   const isMaleMode = userRole !== 'female';
   const mockUser = isMaleMode ? CURRENT_MALE_MOCK_USER : CURRENT_MOCK_USER;
-  // Los campos del cuestionario siguen saliendo del molde hasta conectar `users/{uid}/restricted/details`.
+  // El cuestionario real (lo que se respondió en el onboarding) reemplaza al del molde.
+  const questionnaire = useMyQuestionnaire(profile?.onboarded ? user?.uid : undefined);
   const currentUser = useMemo<KlickUserProfile>(
     () =>
       user && profile?.onboarded
         ? {
             ...mockUser,
+            ...(questionnaire ? profileFromQuestionnaire(questionnaire) : {}),
             id: user.uid,
             name: profile.name,
             age: profile.age,
@@ -105,25 +143,18 @@ export function KlickAppProvider({ children }: { children: React.ReactNode }) {
             city: profile.city,
             state: profile.state,
             photos: profile.photos,
+            socials: profile.socials ?? {},
             bio: profile.bio,
             verifiedKYC: profile.verified,
           }
         : mockUser,
-    [user, profile, mockUser],
+    [user, profile, mockUser, questionnaire],
   );
   const activeCandidatePool = isMaleMode ? MOCK_FEMALE_CANDIDATE_PROFILES : MOCK_CANDIDATE_PROFILES;
 
   const [blockedUserIds, setBlockedUserIds] = useState<string[]>([]);
   
-  const [activeFilters, setFilters] = useState<FilterState>({
-    minAge: 21,
-    maxAge: 35,
-    maxDistance: 50,
-    faithRequired: 'LDS',
-    mustHaveTempleRecommend: true,
-    mustWantMarriage: true,
-    templeRequirementIndispensable: true,
-  });
+  const [activeFilters, setFilters] = useState<FilterState>(DEFAULT_FILTERS);
 
   const [femaleMatches, setFemaleMatches] = useState<Array<{ profile: KlickUserProfile; compatibility: CompatibilityResult; matchedAt: string }>>([
     {
@@ -245,7 +276,14 @@ export function KlickAppProvider({ children }: { children: React.ReactNode }) {
   const candidatesWithScore = activeCandidatePool
     .filter(c => !blockedUserIds.includes(c.id))
     .filter(c => c.age >= activeFilters.minAge && c.age <= activeFilters.maxAge)
-    .filter(c => c.distanceMiles <= activeFilters.maxDistance)
+    .filter(c => c.distanceMiles <= activeFilters.maxDistance || (activeFilters.includeLongDistance && c.openToLongDistance === 'Yes'))
+    .filter(c => !activeFilters.onlyVerified || c.verifiedKYC)
+    .filter(c => anyOf(activeFilters.churchAttendance, c.churchAttendance))
+    .filter(c => anyOf(activeFilters.relationshipGoals, c.relationshipGoals))
+    .filter(c => anyOf(activeFilters.languages, c.languages))
+    .filter(c => anyOf(activeFilters.cultures, c.culturalBackground))
+    .filter(c => anyOf(activeFilters.childrenStatus, c.childrenStatus ?? (c.hasChildren ? undefined : 'No')))
+    .filter(c => anyOf(activeFilters.wantsChildren, WANTS_CHILDREN[c.wantsChildren] ?? c.wantsChildren))
     .map(c => {
       const userProfileForCalc = {
         ...currentUser,
@@ -254,7 +292,8 @@ export function KlickAppProvider({ children }: { children: React.ReactNode }) {
       const compatibility = calculateKlickCompatibility(userProfileForCalc, c);
       return { profile: c, compatibility };
     })
-    .filter(item => item.compatibility.passedHardCompatibilityGate);
+    .filter(item => item.compatibility.passedHardCompatibilityGate)
+    .filter(item => item.compatibility.score >= activeFilters.minCompatibility);
 
   const canInitiateChat = () => {
     // Mujeres: 100% gratis

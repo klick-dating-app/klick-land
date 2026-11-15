@@ -56,3 +56,55 @@ test('el puntaje es simétrico', () => {
   const b = base({ gender: 'male' }, { hobbies: ['Cine'], wantsChildren: 'No' });
   assert.equal(compatibility(a, b).score, compatibility(b, a).score);
 });
+
+test('los pesos de la hoja Compatibilidad suman 100 y se reportan por factor', async () => {
+  const { FACTOR_WEIGHTS } = await import('./compat');
+  assert.equal(Object.values(FACTOR_WEIGHTS).reduce((s, n) => s + n, 0), 100);
+  const r = compatibility(base(), base({ gender: 'male' }));
+  for (const v of Object.values(r.factors)) assert.ok(v >= 0 && v <= 100);
+  assert.equal(r.factors.distance, 100);
+});
+
+test('perfiles sin los campos nuevos siguen siendo compatibles (respaldo con los anteriores)', () => {
+  const r = compatibility(base(), base({ gender: 'male' }));
+  assert.equal(r.eligible, true);
+});
+
+test('"solo verificados" excluye perfiles sin verificar', () => {
+  const r = compatibility(base({}, { verifiedOnly: 'Yes' }), base({ verified: false }));
+  assert.equal(r.excluded, 'verification');
+});
+
+test('recomendación del templo "Essential" en la pareja es puerta dura', () => {
+  const r = compatibility(base({}, { partnerTempleImportance: 'Essential' }), base({}, { templeRecommend: 'No' }));
+  assert.equal(r.excluded, 'temple');
+});
+
+test('idioma indispensable sin idioma en común excluye', () => {
+  const r = compatibility(
+    base({}, { partnerLanguages: ['Spanish'], languageImportance: 'Essential' }),
+    base({}, { languages: ['English'] }),
+  );
+  assert.equal(r.excluded, 'language');
+});
+
+test('quien acepta relación a distancia no queda fuera por millas', () => {
+  const far = base({ lat: 39.0, lng: -111.66 }, { openToLongDistance: 'Yes' });
+  const r = compatibility(base({}, { maxDistanceMiles: 50, openToLongDistance: 'Yes' }), far);
+  assert.notEqual(r.excluded, 'distance');
+});
+
+test('misma asistencia y valores comunes suben el puntaje', () => {
+  const plain = compatibility(base(), base({ gender: 'male' })).score;
+  const rich = compatibility(
+    base({}, { churchAttendance: 'Every week', coreValues: ['Faith', 'Family', 'Service'] }),
+    base({ gender: 'male' }, { churchAttendance: 'Every week', coreValues: ['Faith', 'Family', 'Service'] }),
+  ).score;
+  assert.ok(rich > plain);
+});
+
+test('el umbral de compatibilidad mínima de cualquiera de los dos se respeta', () => {
+  const r = compatibility(base({}, { minCompatibility: 100 }), base({ gender: 'male' }, { hobbies: [] }));
+  assert.equal(r.eligible, false);
+  assert.equal(r.excluded, 'threshold');
+});

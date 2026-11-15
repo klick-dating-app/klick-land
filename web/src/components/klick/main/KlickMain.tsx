@@ -21,6 +21,7 @@ import BottomNavBar, {
   type KlickTab,
 } from "@/components/klick/main/sections/BottomNavBar";
 import ProfileModals from "@/components/klick/main/modals/ProfileModals";
+import { detailsFromUser } from "@/lib/klick/profile-details";
 import DiscoveryModals from "@/components/klick/main/modals/DiscoveryModals";
 import { WebSidebar, WebContextPanel } from "@/components/klick/main/WebShell";
 
@@ -108,6 +109,7 @@ export default function KlickMain({
   const [editTimeline, setEditTimeline] = useState(
     currentUser.marriageTimeline
   );
+  const [editDetails, setEditDetails] = useState(() => detailsFromUser(currentUser));
   const [userPhotos, setUserPhotos] = useState<string[]>(currentUser.photos);
   const [isEditingBio, setIsEditingBio] = useState(false);
   const [isLightMode, setIsLightMode] = useState(false);
@@ -198,6 +200,11 @@ export default function KlickMain({
     setProfileIndex(0);
     setPhotoIndex(0);
   }, [currentUser.id, currentUser.name]);
+
+  // El cuestionario real llega de Firestore después del primer render: el editor se rellena cuando cambia el perfil.
+  useEffect(() => {
+    setEditDetails(detailsFromUser(currentUser));
+  }, [currentUser]);
 
   const activeCandidates = candidatesWithScore;
   const currentCandidateEntry =
@@ -314,7 +321,7 @@ export default function KlickMain({
   const isWeb = layout === "web";
   const themeClasses = isLightMode
     ? "klick-light-theme bg-white text-zinc-900 md:border-zinc-200"
-    : "bg-[#070709] text-white md:border-zinc-800/80";
+    : "bg-black text-white md:border-zinc-800/80";
 
   const bottomNav = (
     <BottomNavBar
@@ -340,7 +347,10 @@ export default function KlickMain({
             isLightMode={isLightMode}
             matchAnimation={matchAnimation}
             dateReviews={dateReviews}
-            onOpenReport={() => setShowReportModal(true)}
+            onBlock={handleBlockCurrentCandidate}
+            onReport={handleReportCurrentCandidate}
+            reportReason={reportReason}
+            onChangeReportReason={setReportReason}
             onOpenRadar={() => setShowRadarModal(true)}
             onPass={handlePass}
             onLike={handleLike}
@@ -421,6 +431,7 @@ export default function KlickMain({
             onChangeIsEditingBio={setIsEditingBio}
             editTemple={editTemple}
             editTimeline={editTimeline}
+            editDetails={editDetails}
             userRole={userRole}
             datePlaceVenue={datePlaceVenue}
             datePlaceOutfitStyle={datePlaceOutfitStyle}
@@ -460,6 +471,8 @@ export default function KlickMain({
           setEditMission={setEditMission}
           editTimeline={editTimeline}
           setEditTimeline={setEditTimeline}
+          editDetails={editDetails}
+          setEditDetails={setEditDetails}
           showEditFeedModal={showEditFeedModal}
           onCloseEditFeed={() => setShowEditFeedModal(false)}
           safeUserPhotos={safeUserPhotos}
@@ -543,7 +556,7 @@ export default function KlickMain({
           onSwitchRole={setUserRole}
         />
         {/* Las secciones están diseñadas para ~500px; en pantalla grande se centran y el espacio lateral lo usan menú y panel. */}
-        <main className="flex-1 min-w-0 flex justify-center bg-[#050507]">
+        <main className="flex-1 min-w-0 flex justify-center bg-black">
           <div
             className={`w-full max-w-[540px] h-full flex flex-col justify-between relative overflow-hidden md:border-x transition-colors duration-300 ${themeClasses}`}
           >
