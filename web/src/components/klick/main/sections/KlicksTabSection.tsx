@@ -35,7 +35,7 @@ export default function KlicksTabSection({
   onPlanDateWithCandidate,
 }: KlicksTabSectionProps) {
   return (
-    <div className="flex-1 w-full px-5 pt-10 pb-6 overflow-y-auto no-scrollbar flex flex-col gap-6 bg-[#070709]">
+    <div className="flex-1 w-full px-5 pt-10 pb-6 overflow-y-auto no-scrollbar flex flex-col gap-6 bg-black">
       <header className="space-y-1">
         <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-blue-400">
           Matches
@@ -74,7 +74,7 @@ export default function KlicksTabSection({
             return (
               <div
                 key={i}
-                className="rounded-3xl border border-white/10 bg-[#0d0e14] overflow-hidden shadow-[0_20px_40px_-20px_rgba(0,0,0,0.6)]"
+                className="rounded-3xl border border-white/10 bg-black overflow-hidden shadow-[0_20px_40px_-20px_rgba(0,0,0,0.6)]"
               >
                 <div className="relative aspect-[3/4] bg-zinc-900">
                   <Image
@@ -96,6 +96,15 @@ export default function KlicksTabSection({
                     <ScoreBadge score={m.compatibility.score} />
                   </div>
                 </div>
+                <p className="px-3 pt-2.5 text-[10px] leading-snug text-zinc-400 line-clamp-2">
+                  {[
+                    `${m.profile.age} · ${m.profile.city}`,
+                    m.profile.churchAttendance,
+                    m.profile.relationshipGoals?.[0],
+                  ]
+                    .filter(Boolean)
+                    .join(" · ")}
+                </p>
                 <div className="flex items-center gap-2 p-2.5">
                   <button
                     type="button"

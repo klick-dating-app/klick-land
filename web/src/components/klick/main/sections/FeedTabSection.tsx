@@ -4,13 +4,9 @@ import React from "react";
 import {
   MapPin,
   ChevronsRight,
-  Sparkles,
   Coffee,
   ChevronDown,
   Heart,
-  CheckCircle2,
-  Sliders,
-  Flag,
   Star,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -24,6 +20,8 @@ import {
   ScoreBadge,
   type DateReviewItem,
 } from "@/components/klick/main/badges";
+import { profileFactGroups, type Fact } from "@/lib/klick/profile-facts";
+import SocialLinks from "@/components/klick/main/SocialLinks";
 
 interface FeedTabSectionProps {
   feedScrollRef: React.RefObject<HTMLDivElement>;
@@ -32,7 +30,10 @@ interface FeedTabSectionProps {
   isLightMode: boolean;
   matchAnimation: boolean;
   dateReviews: DateReviewItem[];
-  onOpenReport: () => void;
+  onBlock: () => void;
+  onReport: (e: React.FormEvent) => void;
+  reportReason: string;
+  onChangeReportReason: (v: string) => void;
   onOpenRadar: () => void;
   onPass: () => void;
   onLike: () => void;
@@ -46,7 +47,10 @@ export default function FeedTabSection({
   isLightMode,
   matchAnimation,
   dateReviews,
-  onOpenReport,
+  onBlock,
+  onReport,
+  reportReason,
+  onChangeReportReason,
   onOpenRadar,
   onPass,
   onLike,
@@ -55,7 +59,7 @@ export default function FeedTabSection({
   return (
     <div
       ref={feedScrollRef}
-      className="relative flex-1 w-full overflow-y-auto no-scrollbar flex flex-col bg-zinc-950"
+      className="relative flex-1 w-full overflow-y-auto no-scrollbar flex flex-col bg-black"
     >
       {/* Header Flotante del Feed (altura 0 para no crear barra superior y flotar sobre la imagen) */}
       <div className="sticky top-0 z-30 h-0 w-full overflow-visible pointer-events-none">
@@ -68,14 +72,6 @@ export default function FeedTabSection({
               priority
             />
           </div>
-          <button
-            type="button"
-            onClick={onOpenReport}
-            className="pointer-events-auto p-2 rounded-full bg-black/25 hover:bg-black/45 text-white/80 hover:text-white backdrop-blur-sm transition-colors cursor-pointer"
-            title="Safety & Report"
-          >
-            <Flag className="w-3.5 h-3.5" />
-          </button>
         </div>
       </div>
 
@@ -88,8 +84,13 @@ export default function FeedTabSection({
           }}
         />
 
+        {/* Redes de la persona: columna a la derecha, centrada en la primera foto (Spotify + iconos del pie de página) */}
+        <div className="absolute right-4 top-[44%] -translate-y-1/2 z-20">
+          <SocialLinks socials={currentCandidate.socials} size={34} vertical />
+        </div>
+
         {/* Nombre, estrella de 12 puntas, porcentaje y frase justo encima de la barra borrosa de 3 iconos */}
-        <div className="absolute bottom-[74px] left-5 right-5 z-20 flex flex-col gap-1">
+        <div className="absolute bottom-[74px] left-5 right-5 z-20 flex flex-col gap-2">
           <div className="flex items-center justify-between gap-3">
             <h2 className="klick-keep-white flex items-center gap-1.5 text-lg sm:text-xl font-semibold leading-none tracking-tight text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.75)]">
               <span className="klick-keep-white">
@@ -110,7 +111,7 @@ export default function FeedTabSection({
             />
           </div>
 
-          <div className="klick-keep-white flex items-center gap-1.5 text-xs font-medium mt-0.5 text-white/95 drop-shadow-[0_1px_4px_rgba(0,0,0,0.75)]">
+          <div className="klick-keep-white flex items-center gap-1.5 text-xs font-medium mt-1 leading-relaxed text-white/95 drop-shadow-[0_1px_4px_rgba(0,0,0,0.75)]">
             <MapPin className="w-3.5 h-3.5 text-blue-400" />
             <span className="klick-keep-white">
               {currentCandidate.city}, {currentCandidate.state} ·{" "}
@@ -119,7 +120,7 @@ export default function FeedTabSection({
           </div>
 
           {/* Frase justo arriba/atrás del borde de la barra borrosa de los 3 iconos */}
-          <div className="klick-keep-white flex items-center justify-center gap-1.5 pt-2 text-[11px] text-white/90 font-normal drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
+          <div className="klick-keep-white flex items-center justify-center gap-1.5 pt-3 text-[11px] text-white/90 font-normal drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
             <ChevronDown className="w-3.5 h-3.5 animate-bounce text-blue-400" />
             <span className="klick-keep-white">
               Scroll to view full profile
@@ -129,50 +130,34 @@ export default function FeedTabSection({
       </div>
 
       {/* BLOQUE EDITORIAL 1: About Me & Key Shared Strengths */}
-      <div className="px-5 py-6 flex flex-col gap-5 bg-[#070709]">
+      <div className="px-5 py-9 flex flex-col gap-9 bg-black">
         {/* Biografía */}
         <div className="flex flex-col gap-2">
-          <span className="text-[11px] font-bold text-blue-400 uppercase tracking-wider">
-            About Me
-          </span>
-          <p className="text-sm sm:text-[15px] text-zinc-100 leading-relaxed font-light">
+          <span className="text-[13px] font-semibold text-zinc-500">About Me</span>
+          <p className="text-[15px] text-zinc-100 leading-[1.8]">
             {currentCandidate.bio}
           </p>
         </div>
 
-        {/* Common Ground (Puntos en Común) */}
-        <div
-          className={`p-4 rounded-2xl border flex flex-col gap-2.5 ${
-            isLightMode
-              ? "bg-blue-50/70 border-blue-200/80"
-              : "bg-gradient-to-br from-blue-950/30 to-purple-950/20 border-blue-500/20"
-          }`}
-        >
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-blue-400 uppercase tracking-wider flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5" />
-              Why You Klick ({currentCompatibility.commonGround.length})
-            </span>
-            <button
-              type="button"
-              onClick={onOpenRadar}
-              className="text-[11px] font-bold px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 border border-blue-400/30 cursor-pointer"
-            >
-              {currentCompatibility.score}% Match
-            </button>
+        {/* Por qué hacen Klick: lista simple, sin caja */}
+        {currentCompatibility.commonGround.length > 0 && (
+          <div className="flex flex-col gap-2">
+            <div className="flex items-baseline justify-between">
+              <span className="text-[13px] font-semibold text-zinc-500">Why You Klick</span>
+              <button type="button" onClick={onOpenRadar} className="text-[13px] font-semibold text-[#0a84ff] cursor-pointer">
+                {Math.round(currentCompatibility.score)}% match ›
+              </button>
+            </div>
+            <ul className="flex flex-col gap-3.5 pt-1">
+              {currentCompatibility.commonGround.map((item, idx) => (
+                <li key={idx} className="flex items-start gap-2.5 text-[14px] text-zinc-200 leading-relaxed">
+                  <Heart className="w-4 h-4 mt-1 text-[#ff007f] fill-[#ff007f] shrink-0" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
           </div>
-          <div className="flex flex-col gap-1.5 mt-0.5">
-            {currentCompatibility.commonGround.map((item, idx) => (
-              <div
-                key={idx}
-                className="flex items-center gap-2 text-xs text-zinc-200 font-medium"
-              >
-                <CheckCircle2 className="w-3.5 h-3.5 text-blue-500 shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </div>
+        )}
       </div>
 
       {/* 2. SEGUNDA IMAGEN DEL PERFIL (Mismo tamaño que la imagen principal) */}
@@ -187,55 +172,13 @@ export default function FeedTabSection({
         </div>
       )}
 
-      {/* BLOQUE EDITORIAL 2: Valores, Fe y Metas de Relación */}
-      <div className="px-5 py-6 flex flex-col gap-5 bg-[#070709]">
-        {/* Espiritualidad y Valores */}
-        <div className="flex flex-col gap-2.5">
-          <span className="text-[11px] font-bold text-blue-400 uppercase tracking-wider flex items-center gap-1.5">
-            <Sparkles className="w-3.5 h-3.5 text-blue-400" />
-            Spirituality & Values
-          </span>
-          <div className="flex flex-wrap gap-2">
-            <span className="px-4 py-1.5 rounded-full bg-blue-600/15 border border-blue-500/30 text-blue-300 text-xs font-semibold shadow-sm">
-              Temple:{" "}
-              {currentCandidate.templeRecommend === "Sí" ||
-              currentCandidate.templeRecommend === "Yes"
-                ? "Active Recommend"
-                : currentCandidate.templeRecommend}
-            </span>
-            <span className="px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-zinc-300 text-xs font-medium shadow-sm">
-              Mission: {currentCandidate.servedMission}
-            </span>
-            <span className="px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-zinc-300 text-xs font-medium shadow-sm">
-              Faith: {currentCandidate.faithImportance}
-            </span>
-          </div>
-        </div>
-
-        {/* Metas de Matrimonio y Familia */}
-        <div className="flex flex-col gap-2.5">
-          <span className="text-[11px] font-bold text-blue-400 uppercase tracking-wider flex items-center gap-1.5">
-            <Heart className="w-3.5 h-3.5 text-rose-500" />
-            Relationship & Family Goals
-          </span>
-          <div className="flex flex-wrap gap-2">
-            <span
-              className={`px-4 py-1.5 rounded-full border text-xs font-semibold shadow-sm ${
-                isLightMode
-                  ? "bg-rose-50 border-rose-200 text-rose-700"
-                  : "bg-rose-600/15 border-rose-500/30 text-rose-300"
-              }`}
-            >
-              Goal: Eternal Marriage ({currentCandidate.marriageTimeline})
-            </span>
-            <span className="px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-zinc-300 text-xs font-medium shadow-sm">
-              Children: {currentCandidate.wantsChildren}
-            </span>
-            <span className="px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-zinc-300 text-xs font-medium shadow-sm">
-              {currentCandidate.occupation}
-            </span>
-          </div>
-        </div>
+      {/* BLOQUE EDITORIAL 2: Fe y Relación, como texto editorial (sin cajas ni cápsulas) */}
+      <div className="px-5 py-9 flex flex-col gap-11 bg-black">
+        {profileFactGroups(currentCandidate)
+          .filter((g) => g.title !== "About")
+          .map((g) => (
+            <FactSection key={g.title} title={g.title} facts={g.facts} />
+          ))}
       </div>
 
       {/* 3. FOTOS ADICIONALES (3ra foto en adelante, mismo tamaño que la principal) */}
@@ -253,104 +196,72 @@ export default function FeedTabSection({
         </div>
       ))}
 
-      {/* BLOQUE EDITORIAL 3: Idiomas, Estilo de Vida y Radar */}
-      <div className="px-5 py-6 pb-28 flex flex-col gap-5 bg-[#070709]">
-        <div className="flex flex-col gap-2.5">
-          <span className="text-[11px] font-bold text-blue-400 uppercase tracking-wider">
-            Languages & Lifestyle
-          </span>
-          <div className="flex flex-wrap gap-2">
-            <span className="px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-zinc-300 text-xs font-medium shadow-sm">
-              Languages: {currentCandidate.languages.join(", ")}
-            </span>
-            {currentCandidate.hobbies.map((h, i) => (
-              <span
-                key={i}
-                className="px-4 py-1.5 rounded-full bg-[#12131a] border border-white/10 text-zinc-300 text-xs font-medium shadow-sm"
-              >
-                {h}
-              </span>
-            ))}
-            {currentCandidate.sports.map((s, i) => (
-              <span
-                key={`sport-${i}`}
-                className="px-4 py-1.5 rounded-full bg-[#12131a] border border-white/10 text-zinc-300 text-xs font-medium shadow-sm"
-              >
-                {s}
-              </span>
-            ))}
-          </div>
-        </div>
+      {/* BLOQUE EDITORIAL 3: Sobre la persona, reseñas y seguridad (al final del perfil) */}
+      <div className="px-5 pt-9 pb-28 flex flex-col gap-11 bg-black">
+        {profileFactGroups(currentCandidate)
+          .filter((g) => g.title === "About")
+          .map((g) => (
+            <FactSection key={g.title} title={g.title} facts={g.facts} />
+          ))}
 
-        {/* Botón Ver Desglose Completo de Radar */}
-        <button
-          type="button"
-          onClick={onOpenRadar}
-          className="w-full h-11 rounded-2xl bg-[#0e0f15] hover:bg-[#151620] border border-blue-500/30 text-blue-400 text-xs font-semibold flex items-center justify-center gap-2 cursor-pointer transition-colors"
-        >
-          <Sliders className="w-4 h-4" />
-          <span>View Compatibility Radar ({currentCompatibility.score}%)</span>
+        <button type="button" onClick={onOpenRadar} className="self-start text-[14px] font-semibold text-[#0a84ff] cursor-pointer">
+          See compatibility breakdown ({Math.round(currentCompatibility.score)}%) ›
         </button>
 
-        {/* RESEÑAS PÚBLICAS DE CITAS (Reviews enviados desde Dates) */}
-        <div className="flex flex-col gap-3 pt-2">
-          <div className="flex items-center justify-between">
-            <span className="text-[11px] font-bold text-blue-400 uppercase tracking-wider flex items-center gap-1.5">
-              <Star className="w-3.5 h-3.5 fill-blue-400 text-blue-400" />
-              Date Reviews ({dateReviews.length})
-            </span>
-            <span className="text-[10px] text-zinc-400 font-medium">
-              Verified Safe Dates
-            </span>
-          </div>
-
-          <div className="flex flex-col gap-2.5">
+        {/* Reseñas públicas de citas */}
+        {dateReviews.length > 0 && (
+          <div className="flex flex-col">
+            <div className="flex items-baseline justify-between pb-2">
+              <span className="text-[13px] font-semibold text-zinc-500">Date Reviews ({dateReviews.length})</span>
+              <span className="text-[11px] text-zinc-600">Verified Safe Dates</span>
+            </div>
             {dateReviews.map((rev) => (
-              <div
-                key={rev.id}
-                className="rounded-2xl border border-white/10 bg-[#0d0e14] p-4 space-y-2"
-              >
+              <div key={rev.id} className="py-5 border-b border-white/[0.08] last:border-b-0">
                 <div className="flex items-center justify-between gap-2">
-                  <div className="min-w-0">
-                    <span className="text-xs font-semibold text-white block truncate">
-                      {rev.author} ·{" "}
-                      <span className="text-blue-400 font-normal">
-                        {rev.venue}
-                      </span>
-                    </span>
-                    <span className="text-[10px] text-zinc-400">
-                      {rev.date}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-0.5 shrink-0">
+                  <span className="text-[14px] text-white truncate">
+                    {rev.author} <span className="text-zinc-500">· {rev.venue}</span>
+                  </span>
+                  <span className="flex items-center gap-0.5 shrink-0">
                     {Array.from({ length: rev.rating }).map((_, idx) => (
-                      <Star
-                        key={idx}
-                        className="h-3.5 w-3.5 text-amber-400 fill-amber-400"
-                      />
+                      <Star key={idx} className="h-3 w-3 text-amber-400 fill-amber-400" />
                     ))}
-                  </div>
+                  </span>
                 </div>
-
-                {rev.highlights.length > 0 && (
-                  <div className="flex flex-wrap gap-1.5">
-                    {rev.highlights.map((h) => (
-                      <span
-                        key={h}
-                        className="px-2.5 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-[10px] font-medium text-blue-400"
-                      >
-                        {h}
-                      </span>
-                    ))}
-                  </div>
-                )}
-
-                <p className="text-xs font-light text-zinc-200 leading-relaxed">
-                  &ldquo;{rev.comment}&rdquo;
+                <p className="mt-2.5 text-[14px] text-zinc-300 leading-[1.75]">&ldquo;{rev.comment}&rdquo;</p>
+                <p className="mt-2 text-[11px] text-zinc-500 leading-relaxed">
+                  {[rev.date, ...rev.highlights].join(" · ")}
                 </p>
               </div>
             ))}
           </div>
+        )}
+
+        {/* Seguridad: bloquear o reportar solo al llegar al final del perfil */}
+        <div className="flex flex-col">
+          <span className="text-[13px] font-semibold text-zinc-500">Trust & Safety</span>
+          <p className="mt-2 text-[12px] text-zinc-500 leading-relaxed">
+            Klick keeps a respectful community with strict identity verification. Reports are private and reviewed by our team.
+          </p>
+          <button
+            type="button"
+            onClick={onBlock}
+            className="mt-4 py-4 text-left text-[14px] text-rose-500 border-b border-white/[0.08] cursor-pointer"
+          >
+            Block {currentCandidate.name.split(" ")[0]}
+          </button>
+          <form onSubmit={onReport} className="flex items-center gap-3 py-4 border-b border-white/[0.08]">
+            <input
+              type="text"
+              value={reportReason}
+              onChange={(e) => onChangeReportReason(e.target.value)}
+              placeholder="Reason for report"
+              aria-label="Reason for report"
+              className="flex-1 min-w-0 bg-transparent text-[14px] text-white placeholder:text-zinc-600 outline-none"
+            />
+            <button type="submit" className="text-[14px] font-semibold text-rose-500 cursor-pointer shrink-0">
+              Report
+            </button>
+          </form>
         </div>
       </div>
 
@@ -428,3 +339,17 @@ export default function FeedTabSection({
   );
 }
 
+/** Datos de la persona como texto: título pequeño y filas "etiqueta · valor" sin fondo ni cápsulas. */
+function FactSection({ title, facts }: { title: string; facts: Fact[] }) {
+  return (
+    <div className="flex flex-col">
+      <span className="text-[13px] font-semibold text-zinc-500 pb-2">{title}</span>
+      {facts.map((f) => (
+        <div key={f.label} className="flex items-start justify-between gap-6 py-4 border-b border-white/[0.08] last:border-b-0">
+          <span className="text-[14px] text-zinc-500 shrink-0 leading-relaxed">{f.label}</span>
+          <span className="text-[14px] text-white text-right leading-relaxed">{f.value}</span>
+        </div>
+      ))}
+    </div>
+  );
+}

@@ -80,7 +80,7 @@ export default function PhotosStep({
       />
 
       {/* Contenedor simulador móvil */}
-      <div className="w-full max-w-[430px] h-[100dvh] bg-[#070709] text-white flex flex-col justify-between relative overflow-hidden shadow-2xl md:border md:border-zinc-800/80 md:rounded-[40px] px-6 pt-12 pb-8">
+      <div className="w-full max-w-[430px] h-[100dvh] bg-black text-white flex flex-col justify-between relative overflow-hidden shadow-2xl md:border md:border-zinc-800/80 md:rounded-[40px] px-6 pt-12 pb-8">
         
         {/* Ambient Glow */}
         <div className="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[300px] h-[300px] bg-blue-900/15 rounded-full blur-3xl pointer-events-none" />
@@ -140,7 +140,7 @@ export default function PhotosStep({
             {/* Slot 1: Foto Principal (Destacada, 2 columnas) */}
             <div
               onClick={() => handleSlotClick(0)}
-              className="col-span-2 row-span-2 relative aspect-[3/4] rounded-2xl bg-[#0e0f15] border border-white/10 hover:border-blue-500/60 transition-all flex flex-col items-center justify-center cursor-pointer overflow-hidden group shadow-lg"
+              className="col-span-2 row-span-2 relative aspect-[3/4] rounded-2xl bg-black border border-white/10 hover:border-blue-500/60 transition-all flex flex-col items-center justify-center cursor-pointer overflow-hidden group shadow-lg"
             >
               {mediaSlots[0].url ? (
                 <>
@@ -174,7 +174,7 @@ export default function PhotosStep({
             {/* Slot 2: Video de Perfil */}
             <div
               onClick={() => handleSlotClick(1)}
-              className="col-span-1 relative aspect-[3/4] rounded-2xl bg-[#0e0f15] border border-blue-500/20 hover:border-blue-500/60 transition-all flex flex-col items-center justify-center cursor-pointer overflow-hidden group shadow-md"
+              className="col-span-1 relative aspect-[3/4] rounded-2xl bg-black border border-blue-500/20 hover:border-blue-500/60 transition-all flex flex-col items-center justify-center cursor-pointer overflow-hidden group shadow-md"
             >
               {mediaSlots[1].url ? (
                 <>
@@ -210,7 +210,7 @@ export default function PhotosStep({
             {/* Slot 3 */}
             <div
               onClick={() => handleSlotClick(2)}
-              className="col-span-1 relative aspect-[3/4] rounded-2xl bg-[#0e0f15] border border-white/10 hover:border-blue-500/50 transition-all flex flex-col items-center justify-center cursor-pointer overflow-hidden group shadow-md"
+              className="col-span-1 relative aspect-[3/4] rounded-2xl bg-black border border-white/10 hover:border-blue-500/50 transition-all flex flex-col items-center justify-center cursor-pointer overflow-hidden group shadow-md"
             >
               {mediaSlots[2].url ? (
                 <>
@@ -236,7 +236,7 @@ export default function PhotosStep({
               <div
                 key={idx}
                 onClick={() => handleSlotClick(idx)}
-                className="col-span-1 relative aspect-[3/4] rounded-2xl bg-[#0e0f15] border border-white/10 hover:border-blue-500/50 transition-all flex flex-col items-center justify-center cursor-pointer overflow-hidden group shadow-md"
+                className="col-span-1 relative aspect-[3/4] rounded-2xl bg-black border border-white/10 hover:border-blue-500/50 transition-all flex flex-col items-center justify-center cursor-pointer overflow-hidden group shadow-md"
               >
                 {mediaSlots[idx].url ? (
                   <>
@@ -261,7 +261,7 @@ export default function PhotosStep({
           </div>
 
           {/* Banner de recomendación */}
-          <div className="w-full p-3 rounded-2xl bg-[#0e0f15] border border-white/5 flex items-center gap-2.5 mb-2">
+          <div className="w-full p-3 rounded-2xl bg-black border border-white/5 flex items-center gap-2.5 mb-2">
             <Sparkles className="w-4 h-4 text-blue-400 shrink-0" />
             <p className="text-[11.5px] text-zinc-300 leading-snug font-normal">
               Profiles with <span className="text-white font-semibold">real photos & video</span> get <span className="text-blue-400 font-semibold">3x higher match rates</span>.

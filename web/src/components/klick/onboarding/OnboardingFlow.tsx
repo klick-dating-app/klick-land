@@ -74,7 +74,7 @@ export default function OnboardingFlow({ onExit, onFinish, initialFirstName, ini
           onBack={() => setStep("legal")}
           onContinue={(d: BasicInfoData) =>
             update(
-              { firstName: d.firstName, lastName: d.lastName, birthday: d.birthday, gender: d.gender, city: d.city, state: d.state },
+              { firstName: d.firstName, lastName: d.lastName, birthday: d.birthday, gender: d.gender, city: d.city, state: d.state, height: d.heightValue },
               "notifications",
             )
           }

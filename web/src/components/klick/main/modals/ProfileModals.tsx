@@ -18,6 +18,27 @@ import {
   VerifiedStar,
   type PersonalFeedbackItem,
 } from "@/components/klick/main/badges";
+import type { ProfileDetails } from "@/lib/klick/profile-details";
+import { PREFERENCE_OPTIONS } from "@/components/klick/onboarding/PreferencesStep";
+import {
+  CHILDREN_STATUS,
+  CHURCH_ATTENDANCE,
+  CHURCH_IMPORTANCE,
+  CORE_VALUES,
+  CULTURES,
+  EDUCATION_LEVELS,
+  IMPORTANCE_LEVELS,
+  LANGUAGE_IMPORTANCE,
+  PARTNER_LANGUAGES,
+  RELATIONSHIP_GOALS,
+  SPIRITUAL_EXPECTATIONS,
+  VALUE_KEYS,
+  VALUE_PRIORITY,
+  VERIFIED_ONLY,
+  YES_NO_MAYBE,
+} from "@/lib/types";
+import { Group, MultiSelectRow, PrimaryButton, SelectRow, TextRow } from "@/components/klick/ui/apple";
+import { SOCIALS, cleanHandle } from "@/lib/klick/socials";
 
 interface ProfileModalsProps {
   isLightMode: boolean;
@@ -44,6 +65,8 @@ interface ProfileModalsProps {
   setEditMission: (val: any) => void;
   editTimeline: any;
   setEditTimeline: (val: any) => void;
+  editDetails: ProfileDetails;
+  setEditDetails: React.Dispatch<React.SetStateAction<ProfileDetails>>;
 
   // Edit Feed Modal
   showEditFeedModal: boolean;
@@ -100,6 +123,8 @@ export default function ProfileModals({
   setEditMission,
   editTimeline,
   setEditTimeline,
+  editDetails,
+  setEditDetails,
   showEditFeedModal,
   onCloseEditFeed,
   safeUserPhotos,
@@ -135,150 +160,157 @@ export default function ProfileModals({
             initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 100 }}
-            className="absolute inset-0 z-50 bg-[#07070b]/98 backdrop-blur-xl flex flex-col px-5 pt-11 pb-6 overflow-y-auto no-scrollbar"
+            className="absolute inset-0 z-50 bg-black flex flex-col px-4 pt-11 pb-6 overflow-y-auto no-scrollbar"
           >
-            <div className="flex items-center justify-between pb-4 border-b border-white/10">
-              <div>
-                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-blue-400 block">
-                  Personal Info
-                </span>
-                <h2 className="text-lg font-semibold text-white tracking-tight">
-                  Edit Profile
-                </h2>
-              </div>
+            {/* Barra superior estilo hoja de Apple */}
+            <div className="flex items-center justify-between pb-5">
+              <button type="button" onClick={onCloseEditProfile} className="text-[15px] text-[#0a84ff] cursor-pointer">
+                Cancel
+              </button>
+              <h2 className="text-[15px] font-semibold text-white">Edit Profile</h2>
               <button
                 type="button"
-                onClick={onCloseEditProfile}
-                className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-zinc-300 cursor-pointer"
+                onClick={() => {
+                  const bad = SOCIALS.find((n) => cleanHandle(n.id, editDetails.socials[n.id] ?? "") === null);
+                  if (bad) return toast.error(`Check your ${bad.label} username.`);
+                  onCloseEditProfile();
+                  toast.success("Profile information updated!");
+                }}
+                className="text-[15px] font-semibold text-[#0a84ff] cursor-pointer"
               >
-                <X className="w-4 h-4" />
+                Done
               </button>
             </div>
 
-            <div className="flex flex-col gap-3.5 py-5">
-              <div className="grid grid-cols-3 gap-2.5">
-                <div className="col-span-2 flex flex-col gap-1">
-                  <label className="text-[11px] font-semibold text-zinc-400">
-                    Full Name
-                  </label>
-                  <input
-                    type="text"
-                    value={editName}
-                    onChange={(e) => setEditName(e.target.value)}
-                    className="h-11 px-3.5 rounded-xl bg-[#11121c] border border-white/10 focus:border-blue-500/50 text-xs text-white outline-none"
-                  />
-                </div>
-                <div className="flex flex-col gap-1">
-                  <label className="text-[11px] font-semibold text-zinc-400">
-                    Age
-                  </label>
-                  <input
-                    type="number"
-                    min={18}
-                    max={99}
-                    value={editAge}
-                    onChange={(e) => setEditAge(Number(e.target.value) || 18)}
-                    className="h-11 px-3 rounded-xl bg-[#11121c] border border-white/10 focus:border-blue-500/50 text-xs text-white outline-none"
-                  />
-                </div>
-              </div>
+            {(() => {
+              const d = editDetails;
+              const set = <K extends keyof ProfileDetails>(key: K) => (v: ProfileDetails[K]) =>
+                setEditDetails((prev) => ({ ...prev, [key]: v }));
+              return (
+                <div className="flex flex-col gap-6 pb-6">
+                  <Group title="Personal Info">
+                    <TextRow label="Full name" value={editName} onChange={setEditName} maxLength={40} />
+                    <TextRow label="Age" type="number" value={editAge} onChange={(v) => setEditAge(Math.max(21, Number(v) || 21))} />
+                    <TextRow label="City" value={editCity} onChange={setEditCity} />
+                    <TextRow label="Occupation" value={editOccupation} onChange={setEditOccupation} maxLength={80} />
+                  </Group>
 
-              <div className="grid grid-cols-2 gap-2.5">
-                <div className="flex flex-col gap-1">
-                  <label className="text-[11px] font-semibold text-zinc-400">
-                    City (Utah)
-                  </label>
-                  <input
-                    type="text"
-                    value={editCity}
-                    onChange={(e) => setEditCity(e.target.value)}
-                    className="h-11 px-3.5 rounded-xl bg-[#11121c] border border-white/10 focus:border-blue-500/50 text-xs text-white outline-none"
-                  />
-                </div>
-                <div className="flex flex-col gap-1">
-                  <label className="text-[11px] font-semibold text-zinc-400">
-                    Occupation / Career
-                  </label>
-                  <input
-                    type="text"
-                    value={editOccupation}
-                    onChange={(e) => setEditOccupation(e.target.value)}
-                    className="h-11 px-3.5 rounded-xl bg-[#11121c] border border-white/10 focus:border-blue-500/50 text-xs text-white outline-none"
-                  />
-                </div>
-              </div>
+                  <Group title="Biography">
+                    <div className="pr-4 py-3">
+                      <textarea
+                        value={editBio}
+                        onChange={(e) => setEditBio(e.target.value)}
+                        rows={4}
+                        maxLength={500}
+                        aria-label="Biography"
+                        className="w-full bg-transparent text-[14px] text-white leading-relaxed outline-none resize-none placeholder:text-zinc-600"
+                      />
+                    </div>
+                  </Group>
 
-              <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-semibold text-zinc-400">
-                  Biography
-                </label>
-                <textarea
-                  value={editBio}
-                  onChange={(e) => setEditBio(e.target.value)}
-                  rows={3}
-                  className="p-3.5 rounded-xl bg-[#11121c] border border-white/10 focus:border-blue-500/50 text-xs text-white outline-none resize-none leading-relaxed"
-                />
-              </div>
+                  <Group title="Faith">
+                    <SelectRow
+                      label="Temple recommend"
+                      value={editTemple === "Yes" || editTemple === "Sí" ? "Active" : editTemple === "No" ? "Not currently" : editTemple}
+                      options={["Active", "In progress", "Not currently"]}
+                      onChange={(v) => setEditTemple(v === "Active" ? "Yes" : v === "Not currently" ? "No" : v)}
+                      allowEmpty={false}
+                    />
+                    <SelectRow
+                      label="Served a mission"
+                      value={String(editMission).startsWith("Yes") || String(editMission).startsWith("Sí") ? "Yes" : editMission === "Planning to" ? "Planning to serve" : editMission}
+                      options={["Yes", "Planning to serve", "No"]}
+                      onChange={(v) => setEditMission(v === "Planning to serve" ? "Planning to" : v)}
+                      allowEmpty={false}
+                    />
+                    <SelectRow label="Importance of the Church" value={d.churchImportance} options={CHURCH_IMPORTANCE} onChange={set("churchImportance")} />
+                    <SelectRow label="Church attendance" value={d.churchAttendance} options={CHURCH_ATTENDANCE} onChange={set("churchAttendance")} />
+                  </Group>
 
-              <div className="grid grid-cols-2 gap-2.5">
-                <div className="flex flex-col gap-1">
-                  <label className="text-[11px] font-semibold text-zinc-400">
-                    Temple Recommend
-                  </label>
-                  <select
-                    value={editTemple}
-                    onChange={(e) => setEditTemple(e.target.value)}
-                    className="h-11 px-3 rounded-xl bg-[#11121c] border border-white/10 text-xs text-white outline-none"
-                  >
-                    <option value="Yes">Active Recommend</option>
-                    <option value="In progress">In progress</option>
-                    <option value="No">Not currently</option>
-                  </select>
+                  <Group title="Relationship">
+                    <MultiSelectRow label="Looking for" value={d.relationshipGoals} options={RELATIONSHIP_GOALS} onChange={set("relationshipGoals")} emptyLabel="Choose" />
+                    <SelectRow
+                      label="Marriage timeline"
+                      value={editTimeline}
+                      options={["<1 year", "1-2 years", "2+ years", "Flexible"]}
+                      onChange={setEditTimeline}
+                      allowEmpty={false}
+                    />
+                    <SelectRow label="Marital status" value={d.maritalStatus} options={PREFERENCE_OPTIONS.maritalStatus} onChange={set("maritalStatus")} />
+                  </Group>
+
+                  <Group title="Family">
+                    <SelectRow label="Children" value={d.childrenStatus} options={CHILDREN_STATUS} onChange={set("childrenStatus")} />
+                    <SelectRow label="Want children" value={d.wantsChildren} options={PREFERENCE_OPTIONS.wantsChildren} onChange={set("wantsChildren")} />
+                  </Group>
+
+                  <Group title="About Me">
+                    <SelectRow label="Education" value={d.education} options={EDUCATION_LEVELS} onChange={set("education")} />
+                    <MultiSelectRow label="Languages" value={d.languages} options={PARTNER_LANGUAGES} onChange={set("languages")} emptyLabel="Choose" />
+                    <SelectRow label="Cultural background" value={d.culturalBackground} options={CULTURES.filter((c) => c !== "No preference")} onChange={set("culturalBackground")} />
+                    <SelectRow label="Long distance" value={d.openToLongDistance} options={YES_NO_MAYBE} onChange={set("openToLongDistance")} />
+                    <MultiSelectRow label="Core values" value={d.coreValues} options={CORE_VALUES} onChange={set("coreValues")} emptyLabel="Choose" />
+                    <MultiSelectRow label="Interests" value={d.interests} options={PREFERENCE_OPTIONS.interests} onChange={set("interests")} emptyLabel="None" />
+                  </Group>
+
+                  <Group title="Social Media" footer="Shown as icons on your profile. WhatsApp is only shared after you both Klick.">
+                    {SOCIALS.map((net) => (
+                      <TextRow
+                        key={net.id}
+                        label={net.label}
+                        value={d.socials[net.id] ?? ""}
+                        placeholder={net.placeholder}
+                        maxLength={net.id === "whatsapp" ? 20 : 51}
+                        onChange={(v) => setEditDetails((prev) => ({ ...prev, socials: { ...prev.socials, [net.id]: v } }))}
+                      />
+                    ))}
+                  </Group>
+
+                  <Group title="Partner Preferences" footer="Private · used only for matching, never shown on your profile.">
+                    <SelectRow label="Temple recommend" value={d.partnerTempleImportance} options={IMPORTANCE_LEVELS} onChange={set("partnerTempleImportance")} />
+                    <MultiSelectRow label="Spiritual expectations" value={d.spiritualExpectations} options={SPIRITUAL_EXPECTATIONS} onChange={set("spiritualExpectations")} emptyLabel="None" />
+                    <SelectRow label="Partner with children" value={d.acceptsPartnerChildren} options={PREFERENCE_OPTIONS.acceptsPartnerChildren} onChange={set("acceptsPartnerChildren")} />
+                    <MultiSelectRow label="Languages" value={d.partnerLanguages} options={PARTNER_LANGUAGES} onChange={set("partnerLanguages")} />
+                    <SelectRow label="Sharing a language" value={d.languageImportance} options={LANGUAGE_IMPORTANCE} onChange={set("languageImportance")} />
+                    <MultiSelectRow label="Culture" value={d.culturePreferences} options={CULTURES} onChange={set("culturePreferences")} exclusive="No preference" />
+                    <SelectRow label="Verified only" value={d.verifiedOnly} options={VERIFIED_ONLY} onChange={set("verifiedOnly")} />
+                  </Group>
+
+                  <Group title="Shared Values" footer="How important is it that your partner shares each value?">
+                    {VALUE_KEYS.map((key) => (
+                      <SelectRow
+                        key={key}
+                        label={key}
+                        value={d.valuePriorities[key] ?? ""}
+                        options={VALUE_PRIORITY}
+                        onChange={(v) =>
+                          setEditDetails((prev) => {
+                            const next = { ...prev.valuePriorities };
+                            if (v) next[key] = v as (typeof VALUE_PRIORITY)[number];
+                            else delete next[key];
+                            return { ...prev, valuePriorities: next };
+                          })
+                        }
+                      />
+                    ))}
+                  </Group>
                 </div>
+              );
+            })()}
 
-                <div className="flex flex-col gap-1">
-                  <label className="text-[11px] font-semibold text-zinc-400">
-                    Served Mission
-                  </label>
-                  <select
-                    value={editMission}
-                    onChange={(e) => setEditMission(e.target.value)}
-                    className="h-11 px-3 rounded-xl bg-[#11121c] border border-white/10 text-xs text-white outline-none"
-                  >
-                    <option value="Yes">Yes (Returned Missionary)</option>
-                    <option value="Planning to">Planning to serve</option>
-                    <option value="No">No</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-semibold text-zinc-400">
-                  Eternal Marriage Timeline
-                </label>
-                <select
-                  value={editTimeline}
-                  onChange={(e) => setEditTimeline(e.target.value)}
-                  className="h-11 px-3 rounded-xl bg-[#11121c] border border-white/10 text-xs text-white outline-none"
-                >
-                  <option value="<1 year">Within 1 year</option>
-                  <option value="1-2 years">1 to 2 years</option>
-                  <option value="2+ years">2+ years</option>
-                  <option value="Flexible">Flexible</option>
-                </select>
-              </div>
+            <div className="mt-auto">
+              <PrimaryButton
+                variant="gradient"
+                onClick={() => {
+                  const bad = SOCIALS.find((n) => cleanHandle(n.id, editDetails.socials[n.id] ?? "") === null);
+                  if (bad) return toast.error(`Check your ${bad.label} username.`);
+                  onCloseEditProfile();
+                  toast.success("Profile information updated!");
+                }}
+              >
+                Save Changes
+              </PrimaryButton>
             </div>
-
-            <button
-              type="button"
-              onClick={() => {
-                onCloseEditProfile();
-                toast.success("Profile information updated!");
-              }}
-              className="klick-keep-white w-full h-12 rounded-full bg-gradient-to-r from-[#008aff] via-[#7c3aed] to-[#ff007f] text-white font-semibold text-xs mt-auto cursor-pointer shadow-lg shadow-purple-500/25"
-            >
-              Save Profile Changes
-            </button>
           </motion.div>
         )}
       </AnimatePresence>
@@ -292,7 +324,7 @@ export default function ProfileModals({
             initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 100 }}
-            className="absolute inset-0 z-50 bg-[#07070b]/98 backdrop-blur-xl flex flex-col px-5 pt-11 pb-6 overflow-y-auto no-scrollbar"
+            className="absolute inset-0 z-50 bg-black/95 backdrop-blur-xl flex flex-col px-5 pt-11 pb-6 overflow-y-auto no-scrollbar"
           >
             <div className="flex items-center justify-between pb-4 border-b border-white/10">
               <div>
@@ -434,7 +466,7 @@ export default function ProfileModals({
             initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 100 }}
-            className="absolute inset-0 z-50 bg-[#07070b]/98 backdrop-blur-xl flex flex-col px-5 pt-11 pb-6 overflow-y-auto no-scrollbar"
+            className="absolute inset-0 z-50 bg-black/95 backdrop-blur-xl flex flex-col px-5 pt-11 pb-6 overflow-y-auto no-scrollbar"
           >
             <div className="flex items-center justify-between pb-4 border-b border-white/10">
               <div>
@@ -456,7 +488,7 @@ export default function ProfileModals({
 
             <div className="py-5 flex flex-col gap-3.5">
               {/* Plan actual activo */}
-              <div className="p-4 rounded-2xl bg-[#11121c] border border-white/10 flex items-center justify-between">
+              <div className="p-4 rounded-2xl bg-black border border-white/10 flex items-center justify-between">
                 <div>
                   <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block">
                     Current Plan
@@ -550,7 +582,7 @@ export default function ProfileModals({
               ))}
 
               {/* Selector rápido de modo de suscripción */}
-              <div className="p-4 rounded-2xl bg-[#11121c] border border-white/10 flex flex-col gap-2.5">
+              <div className="p-4 rounded-2xl bg-black border border-white/10 flex flex-col gap-2.5">
                 <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-zinc-400">
                   Switch Membership Mode
                 </span>
@@ -617,7 +649,7 @@ export default function ProfileModals({
             initial={{ opacity: 0, y: 80 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 80 }}
-            className="absolute inset-0 z-50 bg-[#07080d]/95 backdrop-blur-2xl flex flex-col p-6 overflow-y-auto no-scrollbar"
+            className="absolute inset-0 z-50 bg-black/95 backdrop-blur-2xl flex flex-col p-6 overflow-y-auto no-scrollbar"
           >
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2.5">
@@ -644,7 +676,7 @@ export default function ProfileModals({
 
             <div className="space-y-4 flex-1 pb-4">
               {/* 1. LUGAR DE LA CITA (Venue & Address) */}
-              <div className="p-4 rounded-2xl bg-[#10121a] border border-white/10 space-y-3">
+              <div className="p-4 rounded-2xl bg-black border border-white/10 space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="text-[11px] font-bold uppercase tracking-wider text-zinc-300">
                     1. Where is the Date?
@@ -711,7 +743,7 @@ export default function ProfileModals({
               </div>
 
               {/* 2. VESTIMENTA (Outfit & Dress Code) */}
-              <div className="p-4 rounded-2xl bg-[#10121a] border border-white/10 space-y-3">
+              <div className="p-4 rounded-2xl bg-black border border-white/10 space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="text-[11px] font-bold uppercase tracking-wider text-zinc-300">
                     2. Outfit &amp; Dress Code
@@ -762,7 +794,7 @@ export default function ProfileModals({
               </div>
 
               {/* 3. DETALLES ADICIONALES (Vibe & Future Details) */}
-              <div className="p-4 rounded-2xl bg-[#10121a] border border-white/10 space-y-3">
+              <div className="p-4 rounded-2xl bg-black border border-white/10 space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="text-[11px] font-bold uppercase tracking-wider text-zinc-300">
                     3. Date Details &amp; Vibe
@@ -831,7 +863,7 @@ export default function ProfileModals({
             initial={{ opacity: 0, y: 80 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 80 }}
-            className="absolute inset-0 z-50 bg-[#07080d]/95 backdrop-blur-2xl flex flex-col p-6 overflow-y-auto no-scrollbar"
+            className="absolute inset-0 z-50 bg-black/95 backdrop-blur-2xl flex flex-col p-6 overflow-y-auto no-scrollbar"
           >
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2.5">
@@ -867,7 +899,7 @@ export default function ProfileModals({
 
             <div className="space-y-3 flex-1 pb-4">
               {personalFeedbacks.length === 0 ? (
-                <div className="rounded-2xl border border-white/10 bg-[#10121a] p-6 text-center">
+                <div className="rounded-2xl border border-white/10 bg-black p-6 text-center">
                   <p className="text-xs text-zinc-400">
                     No personal feedbacks yet.
                   </p>
@@ -876,7 +908,7 @@ export default function ProfileModals({
                 personalFeedbacks.map((fb) => (
                   <div
                     key={fb.id}
-                    className="rounded-2xl border border-white/10 bg-[#10121a] p-4 space-y-1.5"
+                    className="rounded-2xl border border-white/10 bg-black p-4 space-y-1.5"
                   >
                     <div className="flex items-center justify-between">
                       <span className="text-xs font-bold text-blue-400">

@@ -46,7 +46,7 @@ export default function TutorialStep({
   return (
     <div className="min-h-screen w-full bg-black flex items-center justify-center overflow-hidden select-none">
       {/* Contenedor simulador móvil */}
-      <div className="w-full max-w-[430px] h-[100dvh] bg-[#070709] text-white flex flex-col justify-between relative overflow-hidden shadow-2xl md:border md:border-zinc-800/80 md:rounded-[40px] px-6 pt-12 pb-8">
+      <div className="w-full max-w-[430px] h-[100dvh] bg-black text-white flex flex-col justify-between relative overflow-hidden shadow-2xl md:border md:border-zinc-800/80 md:rounded-[40px] px-6 pt-12 pb-8">
         
         {/* Ambient Glow */}
         <div className="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[300px] h-[300px] bg-pink-900/15 rounded-full blur-3xl pointer-events-none" />
@@ -92,7 +92,7 @@ export default function TutorialStep({
 
           {/* Tarjeta de Slide Tutorial interactiva */}
           <div className="relative p-[1.5px] rounded-3xl bg-[linear-gradient(135deg,#008aff_0%,#7c3aed_35%,#ff007f_70%,#ff8c00_100%)] shadow-2xl shadow-pink-500/10 mb-6">
-            <div className="w-full min-h-[190px] bg-[#0c0d12] rounded-[23px] p-7 flex flex-col justify-between">
+            <div className="w-full min-h-[190px] bg-black rounded-[23px] p-7 flex flex-col justify-between">
               
               <AnimatePresence mode="wait">
                 <motion.div

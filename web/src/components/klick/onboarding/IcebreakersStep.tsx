@@ -67,7 +67,7 @@ export default function IcebreakersStep({
   return (
     <div className="min-h-screen w-full bg-black flex items-center justify-center overflow-hidden select-none">
       {/* Contenedor simulador móvil */}
-      <div className="w-full max-w-[430px] h-[100dvh] bg-[#070709] text-white flex flex-col justify-between relative overflow-hidden shadow-2xl md:border md:border-zinc-800/80 md:rounded-[40px] px-6 pt-12 pb-8">
+      <div className="w-full max-w-[430px] h-[100dvh] bg-black text-white flex flex-col justify-between relative overflow-hidden shadow-2xl md:border md:border-zinc-800/80 md:rounded-[40px] px-6 pt-12 pb-8">
         
         {/* Ambient Glow */}
         <div className="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[300px] h-[300px] bg-pink-900/15 rounded-full blur-3xl pointer-events-none" />
@@ -149,7 +149,7 @@ export default function IcebreakersStep({
                   value={answers[prompt] || ""}
                   onChange={(e) => handleAnswerChange(prompt, e.target.value)}
                   placeholder="Write your answer here..."
-                  className="w-full px-4 py-3 rounded-2xl bg-[#101116] border border-white/10 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none text-zinc-100 text-xs sm:text-[13px] placeholder:text-zinc-600 resize-none transition-all leading-relaxed"
+                  className="w-full px-4 py-3 rounded-2xl bg-black border border-white/10 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none text-zinc-100 text-xs sm:text-[13px] placeholder:text-zinc-600 resize-none transition-all leading-relaxed"
                 />
               </div>
             ))}

@@ -1,6 +1,6 @@
 import { httpsCallable } from 'firebase/functions';
 import { functions } from './firebase';
-import type { Candidate, Plan, Questionnaire } from './types';
+import type { Candidate, Plan, Questionnaire, SocialNetwork } from './types';
 
 const call = <Req, Res>(name: string) => {
   const fn = httpsCallable<Req, Res>(functions, name);
@@ -19,6 +19,8 @@ export interface ProfileInput {
   photos: string[];
   bio: string;
   questionnaire: Questionnaire;
+  /** Usuario de cada red (WhatsApp: número; el servidor lo guarda en privado). */
+  socials?: Partial<Record<SocialNetwork, string>>;
 }
 
 export const api = {

@@ -57,7 +57,7 @@ export default function BasicInfoStep({
     e.preventDefault();
     if (!firstName.trim()) return setError("Escribe tu nombre.");
     if (!birthday) return setError("Indica tu fecha de nacimiento.");
-    if (yearsSince(birthday) < 18) return setError("Debes ser mayor de 18 años para usar Klick.");
+    if (yearsSince(birthday) < 21) return setError("Debes ser mayor de 21 años para usar Klick.");
     if (!gender) return setError("Elige si eres hombre o mujer.");
     if (!city.trim() || !state.trim()) return setError("Indica tu ciudad y estado.");
     setError("");
@@ -81,7 +81,7 @@ export default function BasicInfoStep({
   return (
     <div className="min-h-screen w-full bg-black flex items-center justify-center overflow-hidden select-none">
       {/* Contenedor simulador móvil */}
-      <div className="w-full max-w-[430px] h-[100dvh] bg-[#070709] text-white flex flex-col justify-between relative overflow-hidden shadow-2xl md:border md:border-zinc-800/80 md:rounded-[40px] px-6 pt-12 pb-8">
+      <div className="w-full max-w-[430px] h-[100dvh] bg-black text-white flex flex-col justify-between relative overflow-hidden shadow-2xl md:border md:border-zinc-800/80 md:rounded-[40px] px-6 pt-12 pb-8">
         
         {/* Ambient Glow */}
         <div className="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[300px] h-[300px] bg-blue-900/10 rounded-full blur-3xl pointer-events-none" />
@@ -149,7 +149,7 @@ export default function BasicInfoStep({
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
                 placeholder="Your first name"
-                className="w-full h-12 px-4 rounded-xl bg-[#101116] border border-blue-500/40 focus:border-blue-400 focus:ring-1 focus:ring-blue-400 outline-none text-white text-sm transition-all"
+                className="w-full h-12 px-4 rounded-xl bg-black border border-blue-500/40 focus:border-blue-400 focus:ring-1 focus:ring-blue-400 outline-none text-white text-sm transition-all"
               />
             </div>
 
@@ -163,7 +163,7 @@ export default function BasicInfoStep({
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
                 placeholder="Your last name"
-                className="w-full h-12 px-4 rounded-xl bg-[#101116] border border-white/10 focus:border-blue-400 outline-none text-white text-sm transition-all"
+                className="w-full h-12 px-4 rounded-xl bg-black border border-white/10 focus:border-blue-400 outline-none text-white text-sm transition-all"
               />
             </div>
 
@@ -180,7 +180,7 @@ export default function BasicInfoStep({
                 value={nickname}
                 onChange={(e) => setNickname(e.target.value)}
                 placeholder="@your_handle"
-                className="w-full h-12 px-4 rounded-xl bg-[#101116] border border-white/10 focus:border-blue-400 outline-none text-white text-sm transition-all"
+                className="w-full h-12 px-4 rounded-xl bg-black border border-white/10 focus:border-blue-400 outline-none text-white text-sm transition-all"
               />
             </div>
 
@@ -194,7 +194,7 @@ export default function BasicInfoStep({
                   type="date"
                   value={birthday}
                   onChange={(e) => setBirthday(e.target.value)}
-                  className="w-full h-12 px-4 rounded-xl bg-[#101116] border border-white/10 focus:border-blue-400 outline-none text-white text-sm transition-all [color-scheme:dark]"
+                  className="w-full h-12 px-4 rounded-xl bg-black border border-white/10 focus:border-blue-400 outline-none text-white text-sm transition-all [color-scheme:dark]"
                 />
               </div>
             </div>
@@ -211,7 +211,7 @@ export default function BasicInfoStep({
                   onChange={(e) => setCity(e.target.value)}
                   placeholder="Salt Lake City"
                   autoComplete="address-level2"
-                  className="w-full h-12 px-4 rounded-xl bg-[#101116] border border-white/10 focus:border-blue-400 outline-none text-white text-sm transition-all"
+                  className="w-full h-12 px-4 rounded-xl bg-black border border-white/10 focus:border-blue-400 outline-none text-white text-sm transition-all"
                 />
               </div>
               <div>
@@ -224,7 +224,7 @@ export default function BasicInfoStep({
                   onChange={(e) => setState(e.target.value)}
                   placeholder="UT"
                   autoComplete="address-level1"
-                  className="w-full h-12 px-4 rounded-xl bg-[#101116] border border-white/10 focus:border-blue-400 outline-none text-white text-sm transition-all"
+                  className="w-full h-12 px-4 rounded-xl bg-black border border-white/10 focus:border-blue-400 outline-none text-white text-sm transition-all"
                 />
               </div>
             </div>
@@ -268,7 +268,7 @@ export default function BasicInfoStep({
                     <select
                       value={heightFeet}
                       onChange={(e) => setHeightFeet(e.target.value)}
-                      className="w-full h-12 px-4 rounded-xl bg-[#101116] border border-white/10 focus:border-blue-400 outline-none text-white text-sm transition-all appearance-none cursor-pointer"
+                      className="w-full h-12 px-4 rounded-xl bg-black border border-white/10 focus:border-blue-400 outline-none text-white text-sm transition-all appearance-none cursor-pointer"
                     >
                       {[4, 5, 6, 7].map((f) => (
                         <option key={f} value={f} className="bg-zinc-900 text-white">
@@ -284,7 +284,7 @@ export default function BasicInfoStep({
                     <select
                       value={heightInches}
                       onChange={(e) => setHeightInches(e.target.value)}
-                      className="w-full h-12 px-4 rounded-xl bg-[#101116] border border-white/10 focus:border-blue-400 outline-none text-white text-sm transition-all appearance-none cursor-pointer"
+                      className="w-full h-12 px-4 rounded-xl bg-black border border-white/10 focus:border-blue-400 outline-none text-white text-sm transition-all appearance-none cursor-pointer"
                     >
                       {Array.from({ length: 12 }, (_, i) => i).map((inch) => (
                         <option key={inch} value={inch} className="bg-zinc-900 text-white">
@@ -303,7 +303,7 @@ export default function BasicInfoStep({
                   value={heightCm}
                   onChange={(e) => setHeightCm(e.target.value)}
                   placeholder="178 cm"
-                  className="w-full h-12 px-4 rounded-xl bg-[#101116] border border-white/10 focus:border-blue-400 outline-none text-white text-sm transition-all"
+                  className="w-full h-12 px-4 rounded-xl bg-black border border-white/10 focus:border-blue-400 outline-none text-white text-sm transition-all"
                 />
               )}
             </div>
@@ -320,7 +320,7 @@ export default function BasicInfoStep({
                   className={`h-12 rounded-xl text-sm font-semibold border transition-all duration-200 cursor-pointer ${
                     gender === "Hombre" || gender === "Man"
                       ? "bg-blue-600/20 border-blue-500 text-white shadow-md shadow-blue-500/10"
-                      : "bg-[#101116] hover:bg-[#15161e] border-white/10 text-zinc-400"
+                      : "bg-black hover:bg-white/[0.04] border-white/10 text-zinc-400"
                   }`}
                 >
                   Man
@@ -331,7 +331,7 @@ export default function BasicInfoStep({
                   className={`h-12 rounded-xl text-sm font-semibold border transition-all duration-200 cursor-pointer ${
                     gender === "Mujer" || gender === "Woman"
                       ? "bg-pink-600/20 border-pink-500 text-white shadow-md shadow-pink-500/10"
-                      : "bg-[#101116] hover:bg-[#15161e] border-white/10 text-zinc-400"
+                      : "bg-black hover:bg-white/[0.04] border-white/10 text-zinc-400"
                   }`}
                 >
                   Woman

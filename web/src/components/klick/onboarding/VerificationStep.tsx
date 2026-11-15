@@ -30,7 +30,7 @@ export default function VerificationStep({
   return (
     <div className="min-h-screen w-full bg-black flex items-center justify-center overflow-hidden select-none">
       {/* Contenedor simulador móvil */}
-      <div className="w-full max-w-[430px] h-[100dvh] bg-[#070709] text-white flex flex-col justify-between relative overflow-hidden shadow-2xl md:border md:border-zinc-800/80 md:rounded-[40px] px-6 pt-12 pb-8">
+      <div className="w-full max-w-[430px] h-[100dvh] bg-black text-white flex flex-col justify-between relative overflow-hidden shadow-2xl md:border md:border-zinc-800/80 md:rounded-[40px] px-6 pt-12 pb-8">
         
         {/* Ambient Glow */}
         <div className="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[300px] h-[300px] bg-blue-900/15 rounded-full blur-3xl pointer-events-none" />
@@ -85,7 +85,7 @@ export default function VerificationStep({
           </p>
 
           {/* Tarjeta limpia sin contenedor circular de icono */}
-          <div className="w-full bg-[#0e0f15] border border-white/10 rounded-3xl p-7 flex flex-col items-center text-center shadow-2xl">
+          <div className="w-full bg-black border border-white/10 rounded-3xl p-7 flex flex-col items-center text-center shadow-2xl">
             <AnimatePresence mode="wait">
               {!isVerified ? (
                 /* Estado 1: No verificado */

@@ -15,6 +15,9 @@ import {
 import { toast } from "sonner";
 import { VerifiedStar } from "@/components/klick/main/badges";
 
+import type { ProfileDetails } from "@/lib/klick/profile-details";
+import { Group, InfoRow, Row } from "@/components/klick/ui/apple";
+
 interface ProfileTabSectionProps {
   isLightMode: boolean;
   onToggleLightMode: () => void;
@@ -30,6 +33,7 @@ interface ProfileTabSectionProps {
   onChangeIsEditingBio: (val: boolean) => void;
   editTemple: string;
   editTimeline: string;
+  editDetails: ProfileDetails;
   userRole: "female" | "male_free" | "male_premium";
   datePlaceVenue: string;
   datePlaceOutfitStyle: string;
@@ -56,6 +60,7 @@ export default function ProfileTabSection({
   onChangeIsEditingBio,
   editTemple,
   editTimeline,
+  editDetails,
   userRole,
   datePlaceVenue,
   datePlaceOutfitStyle,
@@ -69,7 +74,7 @@ export default function ProfileTabSection({
   return (
     <div
       className={`flex-1 w-full px-5 pt-10 pb-24 overflow-y-auto no-scrollbar flex flex-col transition-colors duration-300 ${
-        isLightMode ? "bg-white text-zinc-900" : "bg-[#070709] text-white"
+        isLightMode ? "bg-white text-zinc-900" : "bg-black text-white"
       }`}
     >
       {/* Barra superior con Switch para cambiar el tema (Negro / Blanco) */}
@@ -208,7 +213,7 @@ export default function ProfileTabSection({
             className={`w-full min-h-[128px] p-4 rounded-2xl border text-[13px] leading-relaxed outline-none resize-none no-scrollbar overflow-hidden ${
               isLightMode
                 ? "bg-zinc-50 border-blue-500/50 text-zinc-800"
-                : "bg-[#0e0f15] border-blue-500/40 text-zinc-100"
+                : "bg-black border-blue-500/40 text-zinc-100"
             }`}
           />
         ) : (
@@ -217,7 +222,7 @@ export default function ProfileTabSection({
             className={`w-full min-h-[128px] p-4 rounded-2xl border text-[13px] leading-relaxed cursor-text transition-colors ${
               isLightMode
                 ? "bg-zinc-50 border-zinc-200/80 text-zinc-700"
-                : "bg-[#0e0f15] border-white/5 text-zinc-200"
+                : "bg-black border-white/5 text-zinc-200"
             }`}
           >
             {editBio || "Tap Edit to write a paragraph about yourself..."}
@@ -235,7 +240,7 @@ export default function ProfileTabSection({
           className={`p-3.5 rounded-2xl border flex items-center gap-3 transition-colors ${
             isLightMode
               ? "bg-zinc-50 border-zinc-200/80"
-              : "bg-[#0e0f15] border-white/5"
+              : "bg-black border-white/5"
           }`}
         >
           <VerifiedStar className="w-6 h-6 shrink-0" />
@@ -261,7 +266,7 @@ export default function ProfileTabSection({
           className={`p-3.5 rounded-2xl border flex items-center gap-3 transition-colors ${
             isLightMode
               ? "bg-zinc-50 border-zinc-200/80"
-              : "bg-[#0e0f15] border-white/5"
+              : "bg-black border-white/5"
           }`}
         >
           {/* Icono de Templo (espigas arquitectónicas sin cruz) */}
@@ -304,13 +309,37 @@ export default function ProfileTabSection({
           </div>
         </div>
 
+        {/* Datos SafeMeet.Ut visibles en el perfil, en filas estilo Ajustes de Apple */}
+        {(() => {
+          const rows = [
+            { label: "Attendance", value: editDetails.churchAttendance },
+            { label: "Looking for", value: editDetails.relationshipGoals.join(", ") },
+            { label: "Status", value: editDetails.maritalStatus },
+            { label: "Children", value: editDetails.childrenStatus },
+            { label: "Wants children", value: editDetails.wantsChildren },
+            { label: "Languages", value: editDetails.languages.join(", ") },
+            { label: "Culture", value: editDetails.culturalBackground },
+            { label: "Education", value: editDetails.education },
+            { label: "Values", value: editDetails.coreValues.join(", ") },
+          ].filter((r) => r.value);
+          if (!rows.length) return null;
+          return (
+            <Group title="About Me">
+              {rows.map((r) => (
+                <InfoRow key={r.label} label={r.label} value={r.value} />
+              ))}
+              <Row label={<span className="text-[#0a84ff]">Edit details</span>} onClick={onOpenEditProfile} />
+            </Group>
+          );
+        })()}
+
         <button
           type="button"
           onClick={onOpenUpgrade}
           className={`w-full p-3.5 rounded-2xl border flex items-center gap-3 text-left cursor-pointer transition-colors ${
             isLightMode
               ? "bg-zinc-50 hover:bg-zinc-100 border-zinc-200/80"
-              : "bg-[#0e0f15] hover:bg-white/[0.04] border-white/5"
+              : "bg-black hover:bg-white/[0.04] border-white/5"
           }`}
         >
           <CreditCard className="w-6 h-6 text-blue-500 shrink-0" />
@@ -342,7 +371,7 @@ export default function ProfileTabSection({
           className={`w-full p-3.5 rounded-2xl border flex items-center gap-3 text-left cursor-pointer transition-colors ${
             isLightMode
               ? "bg-zinc-50 hover:bg-zinc-100 border-zinc-200/80"
-              : "bg-[#0e0f15] hover:bg-white/[0.04] border-white/5"
+              : "bg-black hover:bg-white/[0.04] border-white/5"
           }`}
         >
           <MapPin className="w-6 h-6 text-blue-500 shrink-0" />
@@ -371,7 +400,7 @@ export default function ProfileTabSection({
           className={`w-full p-3.5 rounded-2xl border flex items-center gap-3 text-left cursor-pointer transition-colors ${
             isLightMode
               ? "bg-zinc-50 hover:bg-zinc-100 border-zinc-200/80"
-              : "bg-[#0e0f15] hover:bg-white/[0.04] border-white/5"
+              : "bg-black hover:bg-white/[0.04] border-white/5"
           }`}
         >
           <MessageSquarePlus className="w-6 h-6 text-blue-500 shrink-0" />

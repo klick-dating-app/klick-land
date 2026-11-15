@@ -1,89 +1,153 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
-import {
-  ChevronLeft,
-  Building2,
-  Heart,
-  Languages,
-  ShieldCheck,
-  Sparkles,
-  Award,
-} from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import { motion } from "framer-motion";
 import KlickLogo from "@/components/ui/KlickLogo";
+import { Group, MultiSelectRow, PrimaryButton, SelectRow, SliderRow, TextRow, ToggleRow } from "@/components/klick/ui/apple";
+import {
+  CHILDREN_STATUS,
+  CHURCH_IMPORTANCE,
+  CORE_VALUES,
+  CULTURES,
+  EDUCATION_LEVELS,
+  IMPORTANCE_LEVELS,
+  LANGUAGE_IMPORTANCE,
+  PARTNER_LANGUAGES,
+  RELATIONSHIP_GOALS,
+  SPIRITUAL_EXPECTATIONS,
+  VALUE_KEYS,
+  VALUE_PRIORITY,
+  VERIFIED_ONLY,
+  YES_NO_MAYBE,
+  type ValueKey,
+  type ValuePriority,
+} from "@/lib/types";
 
 interface PreferencesStepProps {
   onBack: () => void;
-  onContinue: (prefs: any) => void;
+  onContinue: (prefs: Record<string, unknown>) => void;
 }
 
-export default function PreferencesStep({
-  onBack,
-  onContinue,
-}: PreferencesStepProps) {
-  // Espiritualidad
+/** Opciones propias de la UI (las que se traducen al cuestionario en `save-profile.ts`). */
+export const PREFERENCE_OPTIONS = {
+  templeRecommend: ["Active", "In progress", "Not right now", "Prefer not to say"],
+  churchAttendance: ["Every week", "Almost every week", "A few times a month", "Occasionally", "Returning"],
+  servedMission: ["Yes", "No", "Planning"],
+  marriageTimeline: ["< 1 year", "1 – 2 years", "2 – 3 years", "No set timeline", "When I find the right person"],
+  wantsChildren: ["Yes", "No", "Maybe", "Not sure yet"],
+  acceptsPartnerChildren: ["Yes", "No", "Depends"],
+  maxDistance: ["10 mi", "25 mi", "50 mi", "100 mi", "Anywhere"],
+  maritalStatus: ["Single", "Divorced", "Widowed"],
+  lifestyle: ["Active", "Peaceful", "Family-oriented", "Social", "Homebody", "Adventurous"],
+  communication: ["Direct", "Calm", "Social", "Reserved"],
+  interests: [
+    "Temple service", "Music", "Outdoors", "Hiking", "Nature", "Travel", "Pickleball", "Fitness / Gym",
+    "Sports", "Reading", "Art", "Cooking", "Movies", "Photography", "Dancing", "Family history",
+    "Volunteering", "Board games",
+  ],
+  dateTypes: ["Coffee", "Park stroll", "Public restaurant", "Ice cream", "Museum", "Ward activity"],
+} as const;
+
+export default function PreferencesStep({ onBack, onContinue }: PreferencesStepProps) {
+  // ⛪ Fe LDS
   const [templeRecommend, setTempleRecommend] = useState("Active");
-  const [templeImportance, setTempleImportance] = useState("Very important");
+  const [templeImportance, setTempleImportance] = useState<string>("Very important");
+  const [churchImportance, setChurchImportance] = useState<string>("Very important");
   const [churchAttendance, setChurchAttendance] = useState("Every week");
   const [servedMission, setServedMission] = useState("Yes");
+  const [spiritualExpectations, setSpiritualExpectations] = useState<string[]>(["Similar faith", "Temple marriage"]);
 
-  // Familia e Intenciones
-  const [relationshipGoal, setRelationshipGoal] = useState("Marriage");
-  const [childrenGoal, setChildrenGoal] = useState("Want children");
+  // 💍 Relación y matrimonio
+  const [relationshipGoals, setRelationshipGoals] = useState<string[]>(["Serious relationship", "Marriage"]);
   const [marriageTimeline, setMarriageTimeline] = useState("1 – 2 years");
 
-  // Logística
-  const [ageRange, setAgeRange] = useState("21 – 32 years");
-  const [maxDistance, setMaxDistance] = useState("35 mi");
-  const [languages, setLanguages] = useState("English & Spanish");
+  // 👨‍👩‍👧 Familia
+  const [childrenStatus, setChildrenStatus] = useState<string>("No");
+  const [wantsChildren, setWantsChildren] = useState("Yes");
+  const [acceptsPartnerChildren, setAcceptsPartnerChildren] = useState("Depends");
 
-  // Seguridad y Valores
-  const [coreValues, setCoreValues] = useState("Faith, honesty, service");
-  const [onlyVerified, setOnlyVerified] = useState(true);
+  // 📍 Edad y distancia
+  const [minAge, setMinAge] = useState(21);
+  const [maxAge, setMaxAge] = useState(32);
+  const [maxDistance, setMaxDistance] = useState("50 mi");
+  const [longDistance, setLongDistance] = useState("Maybe");
+
+  // 🌎 Idioma y cultura
+  const [languages, setLanguages] = useState<string[]>(["English"]);
+  const [partnerLanguages, setPartnerLanguages] = useState<string[]>(["English"]);
+  const [languageImportance, setLanguageImportance] = useState<string>("Preferred");
+  const [culturalBackground, setCulturalBackground] = useState("");
+  const [culturePreferences, setCulturePreferences] = useState<string[]>(["No preference"]);
+
+  // ❤️ Valores
+  const [coreValues, setCoreValues] = useState<string[]>(["Faith", "Family", "Honesty"]);
+  const [valuePriorities, setValuePriorities] = useState<Partial<Record<ValueKey, ValuePriority>>>({
+    Faith: "Essential",
+    Family: "Essential",
+  });
+
+  // 👤 Sobre ti
+  const [maritalStatus, setMaritalStatus] = useState("Single");
+  const [occupation, setOccupation] = useState("");
+  const [education, setEducation] = useState("");
+  const [lifestyle, setLifestyle] = useState<string[]>([]);
+  const [communication, setCommunication] = useState("");
+
+  // 🛡️ Seguridad
+  const [onlyVerified, setOnlyVerified] = useState<string>("Yes");
   const [safeFirstDate, setSafeFirstDate] = useState(true);
 
-  // Afinidad
-  const [interests, setInterests] = useState("Temple, music, outdoors");
+  // ✨ Afinidad
+  const [interests, setInterests] = useState<string[]>(["Temple service", "Music", "Outdoors"]);
+  const [dateTypes, setDateTypes] = useState<string[]>(["Coffee"]);
   const [compatibilityMin, setCompatibilityMin] = useState(70);
 
   const handleSubmit = () => {
     onContinue({
       templeRecommend,
       templeImportance,
+      churchImportance,
       churchAttendance,
       servedMission,
-      relationshipGoal,
-      childrenGoal,
+      spiritualExpectations,
+      relationshipGoals,
+      // Se mantiene la clave anterior para quien aún lea `relationshipGoal`.
+      relationshipGoal: relationshipGoals.some((g) => g.includes("Marriage")) ? "Marriage" : relationshipGoals[0] ?? "Meeting people",
       marriageTimeline,
-      ageRange,
+      childrenStatus,
+      wantsChildren,
+      acceptsPartnerChildren,
+      ageRange: `${minAge} – ${maxAge} years`,
+      minAge,
+      maxAge,
       maxDistance,
+      longDistance,
       languages,
+      partnerLanguages,
+      languageImportance,
+      culturalBackground,
+      culturePreferences,
       coreValues,
+      valuePriorities,
+      maritalStatus,
+      occupation: occupation.trim(),
+      education,
+      lifestyle,
+      communication,
       onlyVerified,
       safeFirstDate,
       interests,
+      dateTypes,
       compatibilityMin,
     });
   };
 
-  const pillClass = (selected: boolean) =>
-    `px-4 py-2 rounded-full text-xs font-semibold transition-all duration-200 cursor-pointer border shadow-sm ${
-      selected
-        ? "bg-blue-600/20 border-blue-500 text-white shadow-md shadow-blue-500/10"
-        : "bg-[#101116] hover:bg-[#15161e] text-zinc-400 hover:text-white border-white/10"
-    }`;
-
   return (
     <div className="min-h-screen w-full bg-black flex items-center justify-center overflow-hidden select-none">
       {/* Contenedor simulador móvil */}
-      <div className="w-full max-w-[430px] h-[100dvh] bg-[#070709] text-white flex flex-col justify-between relative overflow-hidden shadow-2xl md:border md:border-zinc-800/80 md:rounded-[40px] px-6 pt-12 pb-8">
-        
-        {/* Ambient Glow */}
-        <div className="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[300px] h-[300px] bg-blue-900/15 rounded-full blur-3xl pointer-events-none" />
-
-        {/* 1. Header con Botón Atrás (<), Barra de progreso y Logo */}
+      <div className="w-full max-w-[430px] h-[100dvh] bg-black text-white flex flex-col justify-between relative overflow-hidden md:border md:border-zinc-800/80 md:rounded-[40px] px-5 pt-12 pb-8">
+        {/* Header con Botón Atrás (<), Barra de progreso y Logo */}
         <div className="w-full flex items-center justify-between gap-3 z-10">
           <button
             onClick={onBack}
@@ -104,370 +168,110 @@ export default function PreferencesStep({
             />
           </div>
 
-          <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 shrink-0">
+          <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/5 shrink-0">
             <KlickLogo size={18} priority />
             <span className="text-[11px] font-semibold text-zinc-300">Klick</span>
           </div>
         </div>
 
-        {/* 2. Contenido Scrollable de Preferencias (Limpio y sin exceso de cajas) */}
+        {/* Contenido desplazable: grupos estilo Ajustes de Apple */}
         <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.4 }}
-          className="flex-1 flex flex-col justify-start z-10 mt-6 px-1 overflow-y-auto no-scrollbar space-y-6 pb-6"
+          className="flex-1 flex flex-col justify-start z-10 mt-6 overflow-y-auto no-scrollbar gap-7 pb-6"
         >
-          {/* Header */}
-          <div>
-            <span className="text-[11px] font-bold tracking-widest text-blue-500 uppercase mb-1">
-              STEP 6 · PREFERENCES & FILTERS
+          <div className="px-1">
+            <span className="text-[11px] font-semibold tracking-widest text-zinc-500 uppercase">
+              Step 6 · Preferences
             </span>
-            <h1 className="text-2xl sm:text-[26px] font-semibold tracking-tight text-white mb-1 uppercase">
-              Your Non-Negotiables
-            </h1>
-            <p className="text-xs text-zinc-400 font-normal">
-              You can adjust these anytime in your profile settings.
+            <h1 className="text-[28px] font-bold tracking-tight text-white mt-1">Your Non-Negotiables</h1>
+            <p className="text-[13px] text-zinc-500 mt-1">
+              You can change these anytime. Private answers are never shown on your profile.
             </p>
           </div>
 
-          {/* Sección 1: Espiritualidad */}
-          <div className="flex flex-col gap-3.5 pb-2 border-b border-white/5">
-            <div className="flex items-center gap-2 text-blue-400 font-bold text-xs uppercase tracking-wider">
-              <Building2 className="w-4 h-4 text-blue-400" />
-              <span>Spirituality</span>
-            </div>
+          <Group title="LDS Faith" footer="Only a verification badge is shown for your temple recommend, and only with your consent.">
+            <SelectRow label="Temple recommend" value={templeRecommend} options={PREFERENCE_OPTIONS.templeRecommend} onChange={setTempleRecommend} allowEmpty={false} />
+            <SelectRow label="Importance of the Church" value={churchImportance} options={CHURCH_IMPORTANCE} onChange={setChurchImportance} />
+            <SelectRow label="Church attendance" value={churchAttendance} options={PREFERENCE_OPTIONS.churchAttendance} onChange={setChurchAttendance} />
+            <SelectRow label="Served a mission" value={servedMission} options={PREFERENCE_OPTIONS.servedMission} onChange={setServedMission} />
+          </Group>
 
-            {/* Recomendación para el templo */}
-            <div>
-              <p className="text-[11px] text-zinc-400 font-medium mb-1.5">
-                Temple Recommend
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {["Active", "In progress", "Not right now"].map((item) => (
-                  <button
-                    key={item}
-                    type="button"
-                    onClick={() => setTempleRecommend(item)}
-                    className={pillClass(templeRecommend === item)}
-                  >
-                    {item}
-                  </button>
-                ))}
-              </div>
-            </div>
+          <Group title="In a Partner" footer="Private · used only to find compatible people.">
+            <SelectRow label="Temple recommend" value={templeImportance} options={IMPORTANCE_LEVELS} onChange={setTempleImportance} />
+            <MultiSelectRow label="Spiritual expectations" value={spiritualExpectations} options={SPIRITUAL_EXPECTATIONS} onChange={setSpiritualExpectations} emptyLabel="None" />
+            <SelectRow label="Partner with children" value={acceptsPartnerChildren} options={PREFERENCE_OPTIONS.acceptsPartnerChildren} onChange={setAcceptsPartnerChildren} />
+            <MultiSelectRow label="Languages" value={partnerLanguages} options={PARTNER_LANGUAGES} onChange={setPartnerLanguages} />
+            <SelectRow label="Sharing a language" value={languageImportance} options={LANGUAGE_IMPORTANCE} onChange={setLanguageImportance} />
+            <MultiSelectRow label="Culture" value={culturePreferences} options={CULTURES} onChange={setCulturePreferences} exclusive="No preference" />
+          </Group>
 
-            {/* Importancia en la pareja */}
-            <div>
-              <p className="text-[11px] text-zinc-400 font-medium mb-1.5">
-                Importance in Partner
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {["Very important", "Important", "Flexible"].map((item) => (
-                  <button
-                    key={item}
-                    type="button"
-                    onClick={() => setTempleImportance(item)}
-                    className={pillClass(templeImportance === item)}
-                  >
-                    {item}
-                  </button>
-                ))}
-              </div>
-            </div>
+          <Group title="Relationship & Marriage">
+            <MultiSelectRow label="Looking for" value={relationshipGoals} options={RELATIONSHIP_GOALS} onChange={setRelationshipGoals} emptyLabel="Choose" />
+            <SelectRow label="Marriage timeline" value={marriageTimeline} options={PREFERENCE_OPTIONS.marriageTimeline} onChange={setMarriageTimeline} />
+          </Group>
 
-            {/* Asistencia a la iglesia */}
-            <div>
-              <p className="text-[11px] text-zinc-400 font-medium mb-1.5">
-                Church Attendance
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {["Every week", "Sometimes", "Returning"].map((item) => (
-                  <button
-                    key={item}
-                    type="button"
-                    onClick={() => setChurchAttendance(item)}
-                    className={pillClass(churchAttendance === item)}
-                  >
-                    {item}
-                  </button>
-                ))}
-              </div>
-            </div>
+          <Group title="Family">
+            <SelectRow label="Children" value={childrenStatus} options={CHILDREN_STATUS} onChange={setChildrenStatus} />
+            <SelectRow label="Want children" value={wantsChildren} options={PREFERENCE_OPTIONS.wantsChildren} onChange={setWantsChildren} />
+          </Group>
 
-            {/* ¿Has servido una misión? */}
-            <div>
-              <p className="text-[11px] text-zinc-400 font-medium mb-1.5">
-                Served a Mission?
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {["Yes", "No", "Planning"].map((item) => (
-                  <button
-                    key={item}
-                    type="button"
-                    onClick={() => setServedMission(item)}
-                    className={pillClass(servedMission === item)}
-                  >
-                    {item}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
+          <Group title="Age & Distance" footer="Only your approximate location is used.">
+            <SliderRow label="Minimum age" value={minAge} min={21} max={70} onChange={(v) => setMinAge(Math.min(v, maxAge - 1))} />
+            <SliderRow label="Maximum age" value={maxAge} min={22} max={75} onChange={(v) => setMaxAge(Math.max(v, minAge + 1))} />
+            <SelectRow label="Maximum distance" value={maxDistance} options={PREFERENCE_OPTIONS.maxDistance} onChange={setMaxDistance} allowEmpty={false} />
+            <SelectRow label="Long-distance relationship" value={longDistance} options={YES_NO_MAYBE} onChange={setLongDistance} />
+          </Group>
 
-          {/* Sección 2: Familia e Intenciones */}
-          <div className="flex flex-col gap-3.5 pb-2 border-b border-white/5">
-            <div className="flex items-center gap-2 text-blue-400 font-bold text-xs uppercase tracking-wider">
-              <Heart className="w-4 h-4 text-blue-400" />
-              <span>Family & Intentions</span>
-            </div>
+          <Group title="Language & Culture">
+            <MultiSelectRow label="Languages I speak" value={languages} options={PARTNER_LANGUAGES} onChange={setLanguages} emptyLabel="Choose" />
+            <SelectRow label="Cultural background" value={culturalBackground} options={CULTURES.filter((c) => c !== "No preference")} onChange={setCulturalBackground} />
+          </Group>
 
-            {/* Meta de relación */}
-            <div>
-              <p className="text-[11px] text-zinc-400 font-medium mb-1.5">
-                Relationship Goal
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {["Marriage", "Committed dating", "Meeting people"].map((item) => (
-                  <button
-                    key={item}
-                    type="button"
-                    onClick={() => setRelationshipGoal(item)}
-                    className={pillClass(relationshipGoal === item)}
-                  >
-                    {item}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Hijos */}
-            <div>
-              <p className="text-[11px] text-zinc-400 font-medium mb-1.5">
-                Children
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {["Want children", "Already have", "Not sure yet"].map((item) => (
-                  <button
-                    key={item}
-                    type="button"
-                    onClick={() => setChildrenGoal(item)}
-                    className={pillClass(childrenGoal === item)}
-                  >
-                    {item}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Tiempo para casarse */}
-            <div>
-              <p className="text-[11px] text-zinc-400 font-medium mb-1.5">
-                Marriage Timeline
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {["< 1 year", "1 – 2 years", "No rush"].map((item) => (
-                  <button
-                    key={item}
-                    type="button"
-                    onClick={() => setMarriageTimeline(item)}
-                    className={pillClass(marriageTimeline === item)}
-                  >
-                    {item}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Sección 3: Logística */}
-          <div className="flex flex-col gap-3.5 pb-2 border-b border-white/5">
-            <div className="flex items-center gap-2 text-blue-400 font-bold text-xs uppercase tracking-wider">
-              <Languages className="w-4 h-4 text-blue-400" />
-              <span>Logistics</span>
-            </div>
-
-            {/* Rango de edad */}
-            <div>
-              <div className="flex items-center justify-between text-xs mb-1.5">
-                <span className="text-zinc-400 font-medium">Age range</span>
-                <span className="text-blue-400 font-semibold">{ageRange}</span>
-              </div>
-              <input
-                type="range"
-                min="18"
-                max="50"
-                defaultValue="26"
-                className="w-full accent-blue-500 cursor-pointer"
+          <Group title="Values" footer="How important is it that your partner shares each value?">
+            <MultiSelectRow label="My core values" value={coreValues} options={CORE_VALUES} onChange={setCoreValues} emptyLabel="Choose" />
+            {VALUE_KEYS.map((key) => (
+              <SelectRow
+                key={key}
+                label={key}
+                value={valuePriorities[key] ?? ""}
+                options={VALUE_PRIORITY}
+                onChange={(v) =>
+                  setValuePriorities((prev) => {
+                    const next = { ...prev };
+                    if (v) next[key] = v as ValuePriority;
+                    else delete next[key];
+                    return next;
+                  })
+                }
               />
-            </div>
+            ))}
+          </Group>
 
-            {/* Distancia máxima */}
-            <div>
-              <div className="flex items-center justify-between text-xs mb-1.5">
-                <span className="text-zinc-400 font-medium">Maximum distance</span>
-                <span className="text-blue-400 font-semibold">{maxDistance}</span>
-              </div>
-              <input
-                type="range"
-                min="5"
-                max="150"
-                defaultValue="40"
-                className="w-full accent-blue-500 cursor-pointer"
-              />
-            </div>
+          <Group title="About You">
+            <SelectRow label="Marital status" value={maritalStatus} options={PREFERENCE_OPTIONS.maritalStatus} onChange={setMaritalStatus} allowEmpty={false} />
+            <TextRow label="Occupation" value={occupation} onChange={setOccupation} placeholder="Optional" maxLength={80} />
+            <SelectRow label="Education" value={education} options={EDUCATION_LEVELS} onChange={setEducation} />
+            <MultiSelectRow label="Lifestyle" value={lifestyle} options={PREFERENCE_OPTIONS.lifestyle} onChange={setLifestyle} emptyLabel="None" />
+            <SelectRow label="Communication style" value={communication} options={PREFERENCE_OPTIONS.communication} onChange={setCommunication} />
+          </Group>
 
-            {/* Idiomas */}
-            <div>
-              <p className="text-[11px] text-zinc-400 font-medium mb-1.5">
-                Languages
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {["English", "Spanish", "English & Spanish"].map((item) => (
-                  <button
-                    key={item}
-                    type="button"
-                    onClick={() => setLanguages(item)}
-                    className={pillClass(languages === item)}
-                  >
-                    {item}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
+          <Group title="Safety">
+            <SelectRow label="Only meet verified people" value={onlyVerified} options={VERIFIED_ONLY} onChange={setOnlyVerified} allowEmpty={false} />
+            <ToggleRow label="Safe First Date" hint="Plan, trusted contact and check-in" checked={safeFirstDate} onChange={setSafeFirstDate} />
+          </Group>
 
-          {/* Sección 4: Seguridad y Valores */}
-          <div className="flex flex-col gap-3.5 pb-2 border-b border-white/5">
-            <div className="flex items-center gap-2 text-blue-400 font-bold text-xs uppercase tracking-wider">
-              <ShieldCheck className="w-4 h-4 text-blue-400" />
-              <span>Safety & Values</span>
-            </div>
-
-            {/* Valores principales */}
-            <div>
-              <p className="text-[11px] text-zinc-400 font-medium mb-1.5">
-                Core Values
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {[
-                  "Faith, honesty, service",
-                  "Family & loyalty",
-                  "Growth & humor",
-                ].map((item) => (
-                  <button
-                    key={item}
-                    type="button"
-                    onClick={() => setCoreValues(item)}
-                    className={pillClass(coreValues === item)}
-                  >
-                    {item}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Switches */}
-            <div className="flex items-center justify-between py-1">
-              <span className="text-xs text-zinc-300 font-medium">
-                Only verified profiles
-              </span>
-              <button
-                type="button"
-                onClick={() => setOnlyVerified(!onlyVerified)}
-                className={`w-11 h-6 rounded-full transition-colors relative p-0.5 cursor-pointer ${
-                  onlyVerified ? "bg-blue-600" : "bg-zinc-700"
-                }`}
-              >
-                <div
-                  className={`w-5 h-5 rounded-full bg-white transition-transform ${
-                    onlyVerified ? "translate-x-5" : "translate-x-0"
-                  }`}
-                />
-              </button>
-            </div>
-
-            <div className="flex items-center justify-between py-1">
-              <span className="text-xs text-zinc-300 font-medium">
-                Enable &ldquo;Safe First Date&rdquo; protocol
-              </span>
-              <button
-                type="button"
-                onClick={() => setSafeFirstDate(!safeFirstDate)}
-                className={`w-11 h-6 rounded-full transition-colors relative p-0.5 cursor-pointer ${
-                  safeFirstDate ? "bg-blue-600" : "bg-zinc-700"
-                }`}
-              >
-                <div
-                  className={`w-5 h-5 rounded-full bg-white transition-transform ${
-                    safeFirstDate ? "translate-x-5" : "translate-x-0"
-                  }`}
-                />
-              </button>
-            </div>
-          </div>
-
-          {/* Sección 5: Afinidad */}
-          <div className="flex flex-col gap-3.5 pb-2">
-            <div className="flex items-center gap-2 text-blue-400 font-bold text-xs uppercase tracking-wider">
-              <Sparkles className="w-4 h-4 text-blue-400" />
-              <span>Affinities</span>
-            </div>
-
-            {/* Intereses */}
-            <div>
-              <p className="text-[11px] text-zinc-400 font-medium mb-1.5">
-                Interests
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {[
-                  "Temple, music, outdoors",
-                  "Sports & travel",
-                  "Art & reading",
-                  "Fitness / Gym",
-                ].map((item) => (
-                  <button
-                    key={item}
-                    type="button"
-                    onClick={() => setInterests(item)}
-                    className={pillClass(interests === item)}
-                  >
-                    {item}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Compatibilidad mínima */}
-            <div>
-              <div className="flex items-center justify-between text-xs mb-1.5">
-                <span className="text-zinc-400 font-medium">
-                  Minimum compatibility score
-                </span>
-                <span className="text-blue-400 font-semibold">{compatibilityMin}%</span>
-              </div>
-              <input
-                type="range"
-                min="50"
-                max="95"
-                value={compatibilityMin}
-                onChange={(e) => setCompatibilityMin(Number(e.target.value))}
-                className="w-full accent-blue-500 cursor-pointer"
-              />
-            </div>
-          </div>
+          <Group title="Affinities">
+            <MultiSelectRow label="Interests" value={interests} options={PREFERENCE_OPTIONS.interests} onChange={setInterests} emptyLabel="None" />
+            <MultiSelectRow label="Ideal first date" value={dateTypes} options={PREFERENCE_OPTIONS.dateTypes} onChange={setDateTypes} emptyLabel="None" />
+            <SliderRow label="Minimum compatibility" value={compatibilityMin} min={50} max={95} onChange={setCompatibilityMin} format={(v) => `${v}%`} />
+          </Group>
         </motion.div>
 
-        {/* 3. Botón Continuar (Blanco Sólido) */}
-        <div className="w-full z-10 pb-2 pt-2">
-          <button
-            onClick={handleSubmit}
-            type="button"
-            className="w-full h-14 rounded-full bg-white hover:bg-zinc-100 text-black active:scale-[0.98] shadow-xl shadow-white/10 text-[15px] font-semibold transition-all duration-200 cursor-pointer flex items-center justify-center"
-          >
-            <span>Continue</span>
-          </button>
+        <div className="w-full z-10 pt-2">
+          <PrimaryButton onClick={handleSubmit}>Continue</PrimaryButton>
         </div>
-
       </div>
     </div>
   );

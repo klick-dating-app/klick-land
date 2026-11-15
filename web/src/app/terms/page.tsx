@@ -9,7 +9,7 @@ export default function TermsPage() {
     <SiteShell>
       <Prose title="Términos de servicio" updated="2026">
         <h2>1. Elegibilidad</h2>
-        <p>Debes tener 18 años o más y proporcionar información veraz. Una persona, una cuenta.</p>
+        <p>Debes tener 21 años o más y proporcionar información veraz. Una persona, una cuenta.</p>
         <h2>2. Conducta</h2>
         <ul>
           <li>Prohibido el acoso, la discriminación, las estafas, la suplantación y el contenido sexual explícito.</li>
