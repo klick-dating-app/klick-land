@@ -1,6 +1,8 @@
 "use client";
 
 import { sendMetaEvent } from "@/lib/meta-events";
+import Link from "next/link";
+import { subscribeHref } from "@/lib/payments/subscription-plans";
 import {
   Search,
   ClipboardCheck,
@@ -32,7 +34,7 @@ const paths = [
       { text: "Basic Location & Age Filters", icon: MapPin },
       { text: "Safety Profile Verification", icon: ShieldCheck },
     ],
-    href: "https://chat.whatsapp.com/GVlnQKclJuP63qZjeE0r24",
+    href: subscribeHref("basic"),
     buttonText: "Choose $9.99 Plan",
     highlighted: false,
     glowColor: "bg-white/20",
@@ -58,7 +60,7 @@ const paths = [
       },
       { text: "Incognito Mode & Total Privacy Control", icon: ShieldCheck },
     ],
-    href: "https://chat.whatsapp.com/GVlnQKclJuP63qZjeE0r24",
+    href: subscribeHref("premium"),
     buttonText: "Choose $29.99 Plan",
     highlighted: true,
     glowColor: "bg-blue-500/25",
@@ -81,7 +83,7 @@ const paths = [
       { text: "Verified Date Place & Outfit Concierge", icon: MapPin },
       { text: "VIP Trust & Safety Priority Support", icon: ShieldCheck },
     ],
-    href: "https://chat.whatsapp.com/GVlnQKclJuP63qZjeE0r24",
+    href: subscribeHref("vip"),
     buttonText: "Choose $49.99 Plan",
     highlighted: false,
     glowColor: "bg-purple-500/25",
@@ -161,10 +163,8 @@ export default function ChooseYourPath() {
 
                 {/* CTA Button */}
                 <div className="flex flex-col items-center gap-3 mt-2 mb-5 md:mb-8 w-full shrink-0">
-                  <a
+                  <Link
                     href={path.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
                     onClick={() =>
                       sendMetaEvent("Lead", {
                         source: `ChooseYourPath: ${path.title} (${path.price})`,
@@ -174,7 +174,7 @@ export default function ChooseYourPath() {
                     aria-label={`Ir a ${path.title}`}
                   >
                     {path.buttonText}
-                  </a>
+                  </Link>
                 </div>
 
                 <div className="space-y-4 md:space-y-5 flex-1">
