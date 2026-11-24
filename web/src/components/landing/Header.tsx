@@ -109,7 +109,6 @@ const menuData: MenuItemData[] = [
     }
   },
   { label: "FAQs", href: "/#faqs" },
-  { label: "LUXOR", href: "/luxor" },
 ];
 
 export default function Header() {
