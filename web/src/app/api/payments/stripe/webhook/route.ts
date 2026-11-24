@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getStripeClient } from '@/backend/payments/stripe';
 import { unlockPurchasesByEmail } from '@/backend/payments/unlock-purchase';
 import { PRODUCT_CATALOG } from '@/lib/payments/product-catalog';
+import { applySubscription } from '@/backend/payments/subscriptions';
+import type Stripe from 'stripe';
 
 export const runtime = 'nodejs';
 
@@ -41,7 +43,18 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    if (event.type === 'checkout.session.completed') {
+    // Suscripciones mensuales: activan, renuevan, degradan (past_due) o cancelan el plan.
+    if (event.type === 'customer.subscription.updated' || event.type === 'customer.subscription.deleted') {
+      await applySubscription(event.data.object as Stripe.Subscription);
+    }
+
+    if (event.type === 'checkout.session.completed' && event.data.object.mode === 'subscription') {
+      const subscriptionId = event.data.object.subscription;
+      if (subscriptionId) {
+        const id = typeof subscriptionId === 'string' ? subscriptionId : subscriptionId.id;
+        await applySubscription(await stripe.subscriptions.retrieve(id));
+      }
+    } else if (event.type === 'checkout.session.completed') {
       const session = event.data.object;
       const email =
         session.customer_details?.email ||

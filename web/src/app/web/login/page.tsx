@@ -8,6 +8,7 @@ import { useAuth } from '@/context/AuthContext';
 import { toast } from 'sonner';
 import KlickAuthFlow, { type AuthMode, type SocialProvider } from '@/components/klick/auth/KlickAuthFlow';
 import { feedHref, onboardingHref } from '@/lib/klick/routes';
+import { subscribeHref, takePendingPlan } from '@/lib/payments/subscription-plans';
 
 const AUTH_ERRORS: Record<string, string> = {
   'auth/popup-closed-by-user': 'Cerraste la ventana de Google antes de terminar.',
@@ -40,7 +41,10 @@ function WebLogin() {
   // Con sesión: quien ya completó su perfil va al feed; quien no, a llenar sus datos.
   useEffect(() => {
     if (loading || !user) return;
-    router.replace(profile?.onboarded ? feedHref('web') : onboardingHref('web'));
+    if (!profile?.onboarded) return router.replace(onboardingHref('web'));
+    // Si eligió un plan en la landing antes de entrar, retomamos el pago.
+    const plan = takePendingPlan();
+    router.replace(plan ? subscribeHref(plan) : feedHref('web'));
   }, [loading, user, profile?.onboarded, router]);
 
   const fail = (error: unknown) => {

@@ -7,6 +7,7 @@ import OnboardingFlow from "@/components/klick/onboarding/OnboardingFlow";
 import { useAuth } from "@/context/AuthContext";
 import { saveOnboardingProfile } from "@/lib/klick/save-profile";
 import { feedHref, loginHref } from "@/lib/klick/routes";
+import { subscribeHref, takePendingPlan } from "@/lib/payments/subscription-plans";
 
 export default function WebOnboardingPage() {
   const router = useRouter();
@@ -15,7 +16,10 @@ export default function WebOnboardingPage() {
   useEffect(() => {
     if (loading) return;
     if (!user) router.replace(loginHref("web"));
-    else if (profile?.onboarded) router.replace(feedHref("web"));
+    else if (profile?.onboarded) {
+      const plan = takePendingPlan();
+      router.replace(plan ? subscribeHref(plan) : feedHref("web"));
+    }
   }, [loading, user, profile?.onboarded, router]);
 
   if (loading || !user || profile?.onboarded) return <div className="min-h-[100dvh] bg-black" />;
