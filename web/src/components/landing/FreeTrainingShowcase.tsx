@@ -81,9 +81,7 @@ export default function FreeTrainingShowcase() {
                     
                     <Button asChild className="px-8 py-3 bg-transparent border border-black text-black rounded-full hover:bg-black/10 transition-all flex justify-center items-center hover:scale-105 hover:shadow-lg text-sm md:text-base font-medium">
                         <a 
-                            href="https://chat.whatsapp.com/GVlnQKclJuP63qZjeE0r24" 
-                            target="_blank" 
-                            rel="noopener noreferrer"
+                            href="/web/login"
                             onClick={() => sendMetaEvent('Lead', { source: 'FreeTrainingShowcase: Encontrar Pareja' })} 
                         >
                             Find my Partner now

@@ -16,6 +16,7 @@
     "emulators": "firebase emulators:start",
     "deploy:rules": "firebase deploy --only firestore,storage",
     "deploy:functions": "firebase deploy --only functions",
+    "deploy:signup": "firebase deploy --project klick-513516 --only firestore,storage,functions:saveProfile,functions:getCandidates,functions:swipe,functions:blockUser,functions:unblockUser,functions:reportUser,functions:requestVerification,functions:deleteAccount,functions:onMessageCreated",
     "deploy:web": "npm run build:web && firebase deploy --only hosting",
     "verify": "npm run typecheck && npm run backend:test && npm run build:web"
   }

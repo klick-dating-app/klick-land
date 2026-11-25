@@ -1,13 +1,13 @@
 'use client';
 
-import { useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ComponentType, type FormEvent } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Phone } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 
 export type AuthMode = 'register' | 'login';
-export type SocialProvider = 'google' | 'apple' | 'microsoft' | 'facebook' | 'x' | 'github' | 'phone';
+/** Únicas tres formas de registro con proveedor; además está correo + contraseña. */
+export type SocialProvider = 'google' | 'apple' | 'microsoft';
 
 interface KlickAuthFlowProps {
   /** `web`: pantalla completa. `app`: marco móvil de 430px con safe-areas. */
@@ -46,15 +46,20 @@ function Particles({ fixed }: { fixed: boolean }) {
       w: host ? host.clientWidth : window.innerWidth,
       h: host ? host.clientHeight : window.innerHeight,
     });
+    // En pantallas Retina el canvas a 1x se estira y difumina los puntos, lo que tiñe de morado el fondo negro.
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
     const resize = () => {
       const { w, h } = size();
-      canvas.width = w;
-      canvas.height = h;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      canvas.style.width = `${w}px`;
+      canvas.style.height = `${h}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
     resize();
 
     const { w, h } = size();
-    const count = Math.min(450, Math.round((w * h) / 4600));
+    const count = Math.min(220, Math.round((w * h) / 9000));
     const particles: Particle[] = Array.from({ length: count }, () => ({
       x: Math.random() * w,
       y: Math.random() * h,
@@ -66,15 +71,16 @@ function Particles({ fixed }: { fixed: boolean }) {
 
     let frame = 0;
     const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const { w, h } = size();
+      ctx.clearRect(0, 0, w, h);
       const t = Date.now() * 0.001;
       for (const p of particles) {
         p.x += p.vx + Math.sin(t + p.seed * 10) * 0.2;
         p.y += p.vy + Math.cos(t + p.seed * 10) * 0.2;
-        if (p.x < 0) p.x = canvas.width;
-        if (p.x > canvas.width) p.x = 0;
-        if (p.y < 0) p.y = canvas.height;
-        if (p.y > canvas.height) p.y = 0;
+        if (p.x < 0) p.x = w;
+        if (p.x > w) p.x = 0;
+        if (p.y < 0) p.y = h;
+        if (p.y > h) p.y = 0;
         ctx.fillStyle = `rgba(168, 85, 247, ${0.1 + p.seed * 0.3})`;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
@@ -184,66 +190,35 @@ const AppleIcon = () => (
   </svg>
 );
 
-function VerifiedBadge({ className }: { className?: string }) {
+function ConsentNotice({ className }: { className?: string }) {
   return (
-    <div className={cn('flex items-center justify-center gap-1.5 text-[11px] sm:text-xs text-zinc-400 font-medium', className)}>
-      <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" aria-hidden>
-        <polygon
-          points="12,1 14.12,4.08 17.5,2.47 17.8,6.2 21.53,6.5 19.92,9.88 23,12 19.92,14.12 21.53,17.5 17.8,17.8 17.5,21.53 14.12,19.92 12,23 9.88,19.92 6.5,21.53 6.2,17.8 2.47,17.5 4.08,14.12 1,12 4.08,9.88 2.47,6.5 6.2,6.2 6.5,2.47 9.88,4.08"
-          fill="#3B82F6"
-          stroke="#3B82F6"
-          strokeWidth="0.6"
-          strokeLinejoin="round"
-        />
-        <path d="m8.8 12.2 2.1 2.1 4.3-4.3" stroke="#FFFFFF" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-      <span>Verified LDS Community · 21+ Only</span>
-    </div>
+    <p className={cn('max-w-sm mx-auto text-center text-[11px] sm:text-xs leading-relaxed text-zinc-500', className)}>
+      By continuing, you acknowledge SafeMeet&apos;s{' '}
+      <a href="/privacy" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 text-zinc-400 hover:text-white">
+        Privacy Policy
+      </a>{' '}
+      and agree to get occasional promotional emails and notifications.
+    </p>
   );
 }
 
-const SECONDARY_PROVIDERS: { id: SocialProvider; label: string; icon: ReactNode }[] = [
-  {
-    id: 'microsoft',
-    label: 'Microsoft',
-    icon: (
-      <svg viewBox="0 0 448 512" width="16" height="16" aria-hidden>
-        <path fill="currentColor" d="M0 93.7l183.6-25.3v177.4H0V93.7zm0 324.6l183.6 25.3V268.4H0v149.9zm203.8 28L448 480V268.4H203.8v177.9zm0-380.6v180.1H448V32L203.8 65.7z" />
-      </svg>
-    ),
-  },
-  {
-    id: 'facebook',
-    label: 'Facebook',
-    icon: (
-      <svg viewBox="0 0 320 512" width="16" height="16" aria-hidden>
-        <path fill="currentColor" d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z" />
-      </svg>
-    ),
-  },
-  {
-    id: 'x',
-    label: 'X (Twitter)',
-    icon: (
-      <svg viewBox="0 0 512 512" width="14" height="14" aria-hidden>
-        <path fill="currentColor" d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" />
-      </svg>
-    ),
-  },
-  {
-    id: 'github',
-    label: 'GitHub',
-    icon: (
-      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden>
-        <path fill="currentColor" d="M12 .5C5.65.5.5 5.65.5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.7 5.4-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z" />
-      </svg>
-    ),
-  },
-  { id: 'phone', label: 'Phone', icon: <Phone className="w-4 h-4" aria-hidden /> },
+const MicrosoftIcon = () => (
+  <svg className="w-[18px] h-[18px] shrink-0" viewBox="0 0 23 23" aria-hidden>
+    <path fill="#F25022" d="M1 1h10v10H1z" />
+    <path fill="#7FBA00" d="M12 1h10v10H12z" />
+    <path fill="#00A4EF" d="M1 12h10v10H1z" />
+    <path fill="#FFB900" d="M12 12h10v10H12z" />
+  </svg>
+);
+
+const PROVIDERS: { id: SocialProvider; label: string; icon: ComponentType }[] = [
+  { id: 'google', label: 'Continue with Google', icon: GoogleIcon },
+  { id: 'apple', label: 'Continue with Apple', icon: AppleIcon },
+  { id: 'microsoft', label: 'Continue with Microsoft', icon: MicrosoftIcon },
 ];
 
-const COPY: Record<AuthMode, [string, string]> = {
-  register: ['Your journey starts today with Klick', "Let's create your account to get started"],
+const COPY: Record<AuthMode, string[]> = {
+  register: ['Your journey starts today with Klick'],
   login: ['Welcome Back!', 'Sign in to your account to continue'],
 };
 
@@ -260,23 +235,40 @@ export default function KlickAuthFlow({
   const isApp = variant === 'app';
   const [email, setEmail] = useState(initialEmail ?? '');
   const [password, setPassword] = useState('');
+  // Paso 1: solo el correo. Paso 2: aparece la contraseña para crear la cuenta o entrar.
+  const [emailStep, setEmailStep] = useState<'email' | 'password'>('email');
+  // En vez del globo nativo del navegador ("Please fill out this field"), el campo inválido se pinta de rojo.
+  const [invalid, setInvalid] = useState<'email' | 'password' | null>(null);
 
   useEffect(() => {
     if (initialEmail) setEmail(initialEmail);
   }, [initialEmail]);
 
+  useEffect(() => {
+    setEmailStep('email');
+    setPassword('');
+    setInvalid(null);
+  }, [mode]);
+
   const submit = (e: FormEvent) => {
     e.preventDefault();
-    onEmailSubmit(email, password);
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) return setInvalid('email');
+    if (emailStep === 'email') return setEmailStep('password');
+    if (password.length < (mode === 'register' ? 6 : 1)) return setInvalid('password');
+    onEmailSubmit(email.trim(), password);
   };
 
   // En el marco de la app no usamos breakpoints md: porque en escritorio inflarían el texto dentro del marco.
   const pill = cn(
-    'w-full h-14 rounded-full bg-white/5 border border-white/40 text-white hover:bg-white/10 hover:border-white/80 font-light text-xs tracking-widest transition-all duration-300 shadow-lg active:scale-[0.98]',
-    !isApp && 'md:text-sm hover:scale-105',
+    'w-full h-14 rounded-full bg-black border border-white/40 text-white hover:bg-white hover:text-black hover:border-white font-normal text-sm transition-all duration-300 shadow-lg active:scale-[0.98]',
+    !isApp && 'md:text-base hover:scale-105',
   );
-  const linkBtn =
-    'text-[9px] text-white/40 hover:text-white/80 transition-colors tracking-[0.3em] font-semibold uppercase';
+  const linkBtn = 'text-xs text-white/50 hover:text-white/80 transition-colors font-medium';
+  const outline =
+    'w-full h-12 rounded-full bg-black border border-white/40 text-white hover:bg-white hover:text-black hover:border-white disabled:opacity-50 disabled:hover:bg-black disabled:hover:text-white font-normal text-sm flex items-center justify-center transition-all duration-300 shadow-lg active:scale-[0.98]';
+  const invalidField = 'border-red-500 focus-visible:border-red-500 placeholder:text-red-400/70';
+  const field =
+    'bg-black border-white/10 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-white/40 rounded-full h-12 text-white placeholder:text-white/40 text-sm px-6 text-center read-only:text-white/60';
 
   const choice = (
     <motion.div
@@ -284,7 +276,7 @@ export default function KlickAuthFlow({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className={cn('w-full flex flex-col items-center', isApp ? 'min-h-full justify-between py-10' : 'gap-10')}
+      className={cn('w-full flex flex-col items-center', isApp ? 'min-h-full justify-between py-10' : 'gap-14')}
     >
       <div className={cn('flex flex-col items-center text-center gap-3', isApp ? 'flex-1 justify-center' : 'max-w-4xl')}>
         <RevealWords
@@ -295,19 +287,14 @@ export default function KlickAuthFlow({
         <KlickSlogan startDelay={0.6} className={isApp ? 'text-lg' : 'text-lg md:text-2xl'} />
       </div>
 
-      <div className="w-full max-w-sm flex flex-col items-center gap-4">
-        <RevealWords
-          text="Choose how you want to sign in"
-          delay={1.2}
-          className={cn('text-gray-400 font-light tracking-wide uppercase text-xs', !isApp && 'md:text-sm')}
-        />
+      <div className={cn('w-full max-w-md flex flex-col items-center gap-4', isApp && 'pt-8')}>
         <button type="button" onClick={() => onModeChange('register')} className={pill}>
-          GET STARTED WITH KLICK
+          Get started with Klick
         </button>
         <button type="button" onClick={() => onModeChange('login')} className={pill}>
-          I ALREADY HAVE A KLICK ACCOUNT
+          I already have a Klick account
         </button>
-        <VerifiedBadge className="pt-2" />
+        <ConsentNotice className="pt-2" />
         {onBackHome && (
           <button type="button" onClick={onBackHome} className={cn(linkBtn, 'pt-2')}>
             Back to home page
@@ -348,78 +335,65 @@ export default function KlickAuthFlow({
         transition={{ delay: 0.5, duration: 0.6 }}
         className="flex flex-col gap-3"
       >
-        <form onSubmit={submit} className="flex flex-col gap-3">
+        {PROVIDERS.map(({ id, label, icon: Icon }) => (
+          <button key={id} type="button" disabled={loading} onClick={() => onSocial(id)} className={cn(outline, 'gap-3')}>
+            <Icon />
+            <span>{label}</span>
+          </button>
+        ))}
+
+        <div className="relative flex items-center py-2">
+          <div className="flex-grow border-t border-white/10" />
+          <span className="flex-shrink-0 mx-4 text-white/40 text-xs font-medium">OR</span>
+          <div className="flex-grow border-t border-white/10" />
+        </div>
+
+        <form onSubmit={submit} noValidate className="flex flex-col gap-3">
           <Input
             type="email"
             autoComplete="email"
-            placeholder="Email address"
-            className="bg-white/5 border-white/10 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-white/40 rounded-full h-12 text-white placeholder:text-white/30 text-xs tracking-widest px-6 text-center"
+            placeholder="Enter your email"
+            className={cn(field, invalid === 'email' && invalidField)}
+            aria-invalid={invalid === 'email'}
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setInvalid(null);
+            }}
+            readOnly={emailStep === 'password'}
           />
-          <Input
-            type="password"
-            autoComplete={mode === 'register' ? 'new-password' : 'current-password'}
-            placeholder="Password"
-            className="bg-white/5 border-white/10 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-white/40 rounded-full h-12 text-white placeholder:text-white/30 text-xs tracking-widest px-6 text-center"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full h-12 rounded-full bg-transparent border border-white/40 text-white hover:bg-white/10 hover:border-white/80 font-light text-sm tracking-wider transition-all duration-300 shadow-lg disabled:opacity-50 mt-1"
-          >
-            {loading ? 'Syncing...' : mode === 'register' ? 'Create Account' : 'Sign In'}
+          {emailStep === 'password' && (
+            <Input
+              type="password"
+              autoFocus
+              autoComplete={mode === 'register' ? 'new-password' : 'current-password'}
+              placeholder={mode === 'register' ? 'Create a password (6+ characters)' : 'Password'}
+              className={cn(field, invalid === 'password' && invalidField)}
+              aria-invalid={invalid === 'password'}
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setInvalid(null);
+              }}
+            />
+          )}
+          <button type="submit" disabled={loading} className={outline}>
+            {loading
+              ? 'Syncing...'
+              : emailStep === 'email'
+                ? 'Continue with email'
+                : mode === 'register'
+                  ? 'Create account'
+                  : 'Sign in'}
           </button>
+          {emailStep === 'password' && (
+            <button type="button" onClick={() => setEmailStep('email')} className={linkBtn}>
+              Use a different email
+            </button>
+          )}
         </form>
 
-        <div className="relative flex items-center py-3">
-          <div className="flex-grow border-t border-white/10" />
-          <span className="flex-shrink-0 mx-4 text-white/30 text-[10px] tracking-widest uppercase font-semibold">
-            Or continue with
-          </span>
-          <div className="flex-grow border-t border-white/10" />
-        </div>
-
-        <button
-          type="button"
-          disabled={loading}
-          onClick={() => onSocial('google')}
-          className="w-full h-12 bg-white hover:bg-zinc-100 active:scale-[0.98] text-black font-semibold text-[14px] rounded-full flex items-center justify-center gap-3 shadow-lg shadow-white/5 transition-all duration-200 disabled:opacity-50"
-        >
-          <GoogleIcon />
-          <span>Continue with Google</span>
-        </button>
-        <button
-          type="button"
-          disabled={loading}
-          onClick={() => onSocial('apple')}
-          className="w-full h-12 bg-black hover:bg-white/[0.06] active:scale-[0.98] border border-white/10 text-white font-semibold text-[14px] rounded-full flex items-center justify-center gap-3 shadow-lg transition-all duration-200 disabled:opacity-50"
-        >
-          <AppleIcon />
-          <span>Continue with Apple ID</span>
-        </button>
-
-        <div className="flex items-center justify-center gap-2.5 pt-1">
-          {SECONDARY_PROVIDERS.map((p) => (
-            <button
-              key={p.id}
-              type="button"
-              disabled={loading}
-              onClick={() => onSocial(p.id)}
-              aria-label={`Continue with ${p.label}`}
-              title={p.label}
-              className="h-11 w-11 rounded-full bg-white/5 border border-white/10 text-white hover:bg-white/10 hover:border-white/30 active:scale-95 transition-all flex items-center justify-center disabled:opacity-50"
-            >
-              {p.icon}
-            </button>
-          ))}
-        </div>
-
-        <VerifiedBadge className="pt-3" />
+        <ConsentNotice className="pt-3" />
 
         <button type="button" onClick={() => onModeChange(null)} className={cn(linkBtn, 'pt-2')}>
           Back

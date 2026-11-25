@@ -37,7 +37,7 @@ export default function VipPlanShowcase() {
                 asChild
                 className="w-full sm:w-64 px-5 py-2.5 bg-transparent border border-black text-black rounded-full hover:bg-black/10 transition-all flex justify-center items-center hover:scale-105 hover:shadow-lg text-sm"
               >
-                <a href="https://chat.whatsapp.com/GVlnQKclJuP63qZjeE0r24" target="_blank" rel="noopener noreferrer" onClick={() => sendMetaEvent('Lead', { source: 'VipPlanShowcase: Encontrar Pareja' })}>Find my Partner now</a>
+                <a href="/web/login" onClick={() => sendMetaEvent('Lead', { source: 'VipPlanShowcase: Encontrar Pareja' })}>Find my Partner now</a>
               </Button>
               <Button
                 asChild
