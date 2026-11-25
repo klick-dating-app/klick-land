@@ -3,17 +3,8 @@
  * (`/web` = pantalla grande, `/app` = marco móvil / Capacitor).
  */
 export type Surface = 'web' | 'app';
-export type DemoGender = 'male' | 'female';
-
-const PERFIL: Record<DemoGender, string> = { male: 'hombre', female: 'mujer' };
 
 export const loginHref = (surface: Surface) => `/${surface}/login`;
 export const onboardingHref = (surface: Surface) => `/${surface}/onboarding`;
 
-/** Sin `gender` abre el feed del usuario; con `gender` abre el perfil de ejemplo. */
-export const feedHref = (surface: Surface, gender?: DemoGender) =>
-  gender ? `/${surface}/feed?perfil=${PERFIL[gender]}` : `/${surface}/feed`;
-
-/** `undefined` cuando no hay `?perfil=` (feed del usuario con sesión). */
-export const genderFromParam = (perfil: string | null): DemoGender | undefined =>
-  perfil === 'mujer' ? 'female' : perfil === 'hombre' ? 'male' : undefined;
+export const feedHref = (surface: Surface) => `/${surface}/feed`;

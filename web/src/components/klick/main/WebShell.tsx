@@ -18,7 +18,7 @@ import {
 import KlickLogo from "@/components/ui/KlickLogo";
 import { VerifiedStar } from "@/components/klick/main/badges";
 import type { KlickTab } from "@/components/klick/main/sections/BottomNavBar";
-import type { UserGenderRole, SafeDatePlan } from "@/context/KlickAppContext";
+import type { SafeDatePlan } from "@/context/KlickAppContext";
 import {
   FACTOR_LABELS,
   FACTOR_WEIGHTS,
@@ -44,11 +44,9 @@ interface WebSidebarProps {
   showFilterModal: boolean;
   matchesCount: number;
   chatsCount: number;
-  userRole: UserGenderRole;
   currentUser: KlickUserProfile;
   onSelectTab: (tab: KlickTab) => void;
   onOpenFilters: () => void;
-  onSwitchRole: (role: UserGenderRole) => void;
 }
 
 export function WebSidebar({
@@ -56,17 +54,12 @@ export function WebSidebar({
   showFilterModal,
   matchesCount,
   chatsCount,
-  userRole,
   currentUser,
   onSelectTab,
   onOpenFilters,
-  onSwitchRole,
 }: WebSidebarProps) {
-  const isMale = userRole !== "female";
   const router = useRouter();
-  const { user, profile, signOut } = useAuth();
-  // Con perfil real el molde lo fija el perfil; el selector Hombre/Mujer es solo para la demo.
-  const isSignedIn = !!user && !!profile?.onboarded;
+  const { signOut } = useAuth();
   const exitClass =
     "flex items-center gap-2 px-4 text-[10px] font-semibold uppercase tracking-[0.3em] text-white/40 hover:text-white/80 transition-colors";
   const item = (active: boolean) =>
@@ -105,39 +98,6 @@ export function WebSidebar({
       </div>
 
       <div className="flex flex-col gap-4">
-        {!isSignedIn && (
-        <div className="flex flex-col gap-2">
-          <span className="px-2 text-[10px] font-semibold uppercase tracking-[0.25em] text-zinc-500">
-            Demo profile
-          </span>
-          <div className="grid grid-cols-2 gap-2">
-            <button
-              type="button"
-              onClick={() => onSwitchRole("male_premium")}
-              className={cn(
-                "h-10 rounded-full text-xs font-bold transition-all",
-                isMale
-                  ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/25"
-                  : "bg-white/5 text-zinc-400 hover:text-white",
-              )}
-            >
-              Hombre
-            </button>
-            <button
-              type="button"
-              onClick={() => onSwitchRole("female")}
-              className={cn(
-                "h-10 rounded-full text-xs font-bold transition-all",
-                !isMale
-                  ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg shadow-pink-500/25"
-                  : "bg-white/5 text-zinc-400 hover:text-white",
-              )}
-            >
-              Mujer
-            </button>
-          </div>
-        </div>
-        )}
 
         <button
           type="button"
@@ -159,24 +119,17 @@ export function WebSidebar({
           </span>
         </button>
 
-        {isSignedIn ? (
-          <button
-            type="button"
-            onClick={async () => {
-              await signOut();
-              router.replace(loginHref("web"));
-            }}
-            className={exitClass}
-          >
-            <LogOut className="w-3.5 h-3.5" />
-            Sign out
-          </button>
-        ) : (
-          <Link href={loginHref("web")} className={exitClass}>
-            <LogOut className="w-3.5 h-3.5" />
-            Exit demo
-          </Link>
-        )}
+        <button
+          type="button"
+          onClick={async () => {
+            await signOut();
+            router.replace(loginHref("web"));
+          }}
+          className={exitClass}
+        >
+          <LogOut className="w-3.5 h-3.5" />
+          Sign out
+        </button>
       </div>
     </aside>
   );

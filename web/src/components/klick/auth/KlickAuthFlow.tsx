@@ -8,8 +8,6 @@ import { cn } from '@/lib/utils';
 
 export type AuthMode = 'register' | 'login';
 export type SocialProvider = 'google' | 'apple' | 'microsoft' | 'facebook' | 'x' | 'github' | 'phone';
-import type { DemoGender } from '@/lib/klick/routes';
-export type { DemoGender };
 
 interface KlickAuthFlowProps {
   /** `web`: pantalla completa. `app`: marco móvil de 430px con safe-areas. */
@@ -17,7 +15,6 @@ interface KlickAuthFlowProps {
   /** `null` = pantalla de elección; controlado por el padre para poder sincronizarlo con la URL. */
   mode: AuthMode | null;
   onModeChange: (mode: AuthMode | null) => void;
-  onDemoAccess: (gender: DemoGender) => void;
   onSocial: (provider: SocialProvider) => void;
   onEmailSubmit: (email: string, password: string) => void;
   onBackHome?: () => void;
@@ -254,7 +251,6 @@ export default function KlickAuthFlow({
   variant,
   mode,
   onModeChange,
-  onDemoAccess,
   onSocial,
   onEmailSubmit,
   onBackHome,
@@ -279,8 +275,6 @@ export default function KlickAuthFlow({
     'w-full h-14 rounded-full bg-white/5 border border-white/40 text-white hover:bg-white/10 hover:border-white/80 font-light text-xs tracking-widest transition-all duration-300 shadow-lg active:scale-[0.98]',
     !isApp && 'md:text-sm hover:scale-105',
   );
-  const capsule =
-    'w-full h-12 rounded-full text-white font-bold text-xs sm:text-[13px] flex items-center justify-center transition-all duration-200 hover:opacity-95 active:scale-[0.98]';
   const linkBtn =
     'text-[9px] text-white/40 hover:text-white/80 transition-colors tracking-[0.3em] font-semibold uppercase';
 
@@ -302,22 +296,6 @@ export default function KlickAuthFlow({
       </div>
 
       <div className="w-full max-w-sm flex flex-col items-center gap-4">
-        <div className="w-full grid grid-cols-2 gap-2.5">
-          <button
-            type="button"
-            onClick={() => onDemoAccess('male')}
-            className={cn(capsule, 'bg-gradient-to-r from-blue-600 to-indigo-600 shadow-lg shadow-blue-500/25')}
-          >
-            Perfil de Hombre
-          </button>
-          <button
-            type="button"
-            onClick={() => onDemoAccess('female')}
-            className={cn(capsule, 'bg-gradient-to-r from-purple-600 to-pink-600 shadow-lg shadow-pink-500/25')}
-          >
-            Perfil de Mujer
-          </button>
-        </div>
         <RevealWords
           text="Choose how you want to sign in"
           delay={1.2}
