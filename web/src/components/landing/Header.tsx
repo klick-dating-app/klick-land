@@ -155,7 +155,7 @@ export default function Header() {
           <div className="flex items-center gap-4 lg:gap-12 h-full">
             <Link href="/" className="flex items-center gap-2 z-50 shrink-0 group">
               <div className="w-7 h-7 relative transition-transform duration-300 group-hover:scale-110">
-                <img src="/klick-logo-circular.png" alt="Klick" className="object-cover w-full h-full rounded-full drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]" />
+                <img src="/klick-logo-circular.png" alt="Klick" className="object-cover w-full h-full rounded-full" />
               </div>
               <span className="text-lg font-medium tracking-tight text-white group-hover:text-white transition-colors">Klick</span>
             </Link>
@@ -193,8 +193,8 @@ export default function Header() {
           <div className="hidden lg:flex items-center gap-3 z-50">
 
             <Link href="/web/login">
-              <Button className="bg-white text-black hover:bg-white/90 rounded-full h-8 px-4 font-semibold text-xs transition-all duration-300 hover:scale-105 shadow-md">
-                Get Started
+              <Button className="bg-white text-black hover:bg-white/90 rounded-lg h-8 px-4 font-semibold text-xs transition-all duration-300 hover:scale-105 shadow-md">
+                Try Klick
               </Button>
             </Link>
           </div>
@@ -384,7 +384,7 @@ export default function Header() {
                   <div>
                     <Link href="/web/login" onClick={() => setIsMobileMenuOpen(false)} className="w-full block">
                       <Button className="w-full bg-white text-black hover:bg-white/90 h-12 text-sm font-semibold rounded-xl">
-                        Get Started
+                        Try Klick
                       </Button>
                     </Link>
                   </div>

@@ -2,7 +2,6 @@
 
 import { sendMetaEvent } from "@/lib/meta-events";
 import Link from "next/link";
-import { subscribeHref } from "@/lib/payments/subscription-plans";
 import {
   Search,
   ClipboardCheck,
@@ -19,6 +18,9 @@ import {
   Crown,
 } from "lucide-react";
 
+// Los planes llevan primero al registro; la suscripción se elige después dentro de la app.
+const SIGNUP_HREF = "/web/login?register=true";
+
 const paths = [
   {
     title: "Klick Basic",
@@ -34,13 +36,9 @@ const paths = [
       { text: "Basic Location & Age Filters", icon: MapPin },
       { text: "Safety Profile Verification", icon: ShieldCheck },
     ],
-    href: subscribeHref("basic"),
+    href: SIGNUP_HREF,
     buttonText: "Choose $9.99 Plan",
-    highlighted: false,
     glowColor: "bg-white/20",
-    tag: "Starter Plan",
-    tagColor:
-      "bg-transparent border-l border-b border-white/20 text-white font-semibold",
   },
   {
     title: "Klick Pro",
@@ -60,13 +58,9 @@ const paths = [
       },
       { text: "Incognito Mode & Total Privacy Control", icon: ShieldCheck },
     ],
-    href: subscribeHref("premium"),
+    href: SIGNUP_HREF,
     buttonText: "Choose $29.99 Plan",
-    highlighted: true,
-    glowColor: "bg-blue-500/25",
-    tag: "Most Popular!",
-    tagColor:
-      "bg-blue-600/20 border-l border-b border-blue-500/40 text-blue-300 font-semibold",
+    glowColor: "bg-white/20",
   },
   {
     title: "Klick VIP",
@@ -83,13 +77,9 @@ const paths = [
       { text: "Verified Date Place & Outfit Concierge", icon: MapPin },
       { text: "VIP Trust & Safety Priority Support", icon: ShieldCheck },
     ],
-    href: subscribeHref("vip"),
+    href: SIGNUP_HREF,
     buttonText: "Choose $49.99 Plan",
-    highlighted: false,
-    glowColor: "bg-purple-500/25",
-    tag: "VIP Experience",
-    tagColor:
-      "bg-purple-600/20 border-l border-b border-purple-500/40 text-purple-300 font-semibold",
+    glowColor: "bg-white/20",
   },
 ];
 
@@ -127,21 +117,10 @@ export default function ChooseYourPath() {
 
               {/* Card Content */}
               <div
-                className={`relative flex-1 bg-black border ${
-                  path.highlighted ? "border-blue-500/40" : "border-white/10"
-                } rounded-[2rem] p-5 md:p-6 lg:p-8 flex flex-col ring-1 ring-white/5 shadow-2xl overflow-hidden hover:bg-black transition-colors duration-300`}
+                className={`relative flex-1 bg-black border border-white/10 rounded-[2rem] p-5 md:p-6 lg:p-8 flex flex-col ring-1 ring-white/5 shadow-2xl overflow-hidden hover:bg-black transition-colors duration-300`}
               >
                 {/* Visual Accent */}
                 <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 blur-3xl" />
-
-                {/* Floating Tag */}
-                {path.tag && (
-                  <div
-                    className={`absolute top-0 right-0 ${path.tagColor} text-white text-[10px] font-medium uppercase tracking-widest px-3 py-1.5 md:px-5 md:py-2 rounded-bl-3xl shadow-lg z-20`}
-                  >
-                    {path.tag}
-                  </div>
-                )}
 
                 {/* Title, Price & Subtitle */}
                 <div className="flex flex-col items-center text-center mb-4 md:mb-6 min-h-[7.5rem] justify-start shrink-0 pt-2">

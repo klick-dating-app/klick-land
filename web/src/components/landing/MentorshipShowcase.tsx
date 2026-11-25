@@ -23,7 +23,7 @@ export default function MentorshipShowcase() {
                             Finding the right partner requires honesty, clarity in your goals, and shared interests. Our matchmaking coaching provides you with practical tools to optimize your profile, communicate your authenticity, and understand dating culture in different parts of the world.<br /><br />
                             Learn tips for engaging in deep conversations, having safe dates, and conveying confidence from the very first interaction.
                         </p>
-                        <a href="https://chat.whatsapp.com/GVlnQKclJuP63qZjeE0r24" target="_blank" rel="noopener noreferrer" onClick={() => sendMetaEvent('Lead', { source: 'MentorshipShowcase: Encontrar Pareja' })} className="w-full sm:w-auto">
+                        <a href="/web/login" onClick={() => sendMetaEvent('Lead', { source: 'MentorshipShowcase: Encontrar Pareja' })} className="w-full sm:w-auto">
                            <Button className="mt-2 w-full sm:w-64 px-5 py-2.5 bg-transparent border border-black text-black rounded-full hover:bg-black/10 transition-all flex justify-center items-center hover:scale-105 hover:shadow-lg text-sm">Find my Partner now</Button>
                         </a>
                     </div>

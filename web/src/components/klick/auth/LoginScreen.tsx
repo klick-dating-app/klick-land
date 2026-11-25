@@ -2,7 +2,7 @@
 
 import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { GoogleAuthProvider, OAuthProvider, signInWithPopup, type AuthProvider } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 import { useAuth } from '@/context/AuthContext';
 import { toast } from 'sonner';
@@ -15,10 +15,18 @@ const AUTH_ERRORS: Record<string, string> = {
   'auth/cancelled-popup-request': 'Cerraste la ventana de Google antes de terminar.',
   'auth/popup-blocked': 'El navegador bloqueó la ventana de Google. Permite las ventanas emergentes e inténtalo de nuevo.',
   'auth/operation-not-allowed': 'Este método de acceso aún no está activado en Firebase.',
+  'auth/account-exists-with-different-credential': 'Ya tienes una cuenta con ese correo usando otro método. Entra con ese método.',
   'auth/unauthorized-domain': 'Este dominio no está autorizado en Firebase Authentication.',
   'auth/email-already-in-use': 'Ya existe una cuenta con ese correo. Inicia sesión.',
   'auth/invalid-credential': 'Correo o contraseña incorrectos.',
   'auth/weak-password': 'La contraseña debe tener al menos 6 caracteres.',
+};
+
+// Cada proveedor debe estar habilitado en Firebase → Authentication → Sign-in method.
+const PROVIDERS: Record<SocialProvider, () => AuthProvider> = {
+  google: () => new GoogleAuthProvider(),
+  apple: () => new OAuthProvider('apple.com'),
+  microsoft: () => new OAuthProvider('microsoft.com'),
 };
 
 function Login({ surface }: { surface: Surface }) {
@@ -64,13 +72,9 @@ function Login({ surface }: { surface: Surface }) {
   };
 
   const handleSocial = async (provider: SocialProvider) => {
-    if (provider !== 'google') {
-      toast.info('Por ahora el acceso es con Google. Este método estará disponible pronto.');
-      return;
-    }
     setBusy(true);
     try {
-      await signInWithPopup(auth, new GoogleAuthProvider());
+      await signInWithPopup(auth, PROVIDERS[provider]());
     } catch (error) {
       fail(error);
     } finally {
