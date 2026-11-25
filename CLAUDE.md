@@ -29,15 +29,22 @@ firebase emulators:start     # auth, firestore, storage, functions (requiere Jav
 | `/app/login`, `/app/onboarding`, `/app/feed` | Marco móvil (y lo que abre Capacitor): botones abajo, barra inferior |
 
 - Los archivos de `src/app/web/*` y `src/app/app/*` son **solo rutas finas**: eligen `variant`/`layout` (`'web' | 'app'`) y navegan. Toda la UI vive una sola vez en `src/components/klick/`; un cambio se ve en ambas. Lo que deba diferir se resuelve con esa prop, nunca copiando componentes.
-- URLs centralizadas en `src/lib/klick/routes.ts` (`loginHref`, `onboardingHref`, `feedHref`). `?perfil=hombre|mujer` abre los perfiles de ejemplo sin sesión.
+- URLs centralizadas en `src/lib/klick/routes.ts` (`loginHref`, `onboardingHref`, `feedHref`). Ya no hay acceso demo (`?perfil=` y los botones "Perfil de Hombre/Mujer" se retiraron): todo entra por registro real.
 
-### Registro real (web) — código listo, falta desplegar
+### Registro real (web y app) — código listo, falta desplegar
+Las pantallas viven en `components/klick/auth/LoginScreen.tsx` y `components/klick/onboarding/OnboardingScreen.tsx` (prop `surface`); las rutas `/web/*` y `/app/*` solo las montan.
 1. `/web/login` → Google (`signInWithPopup`; los demás proveedores dicen "disponible pronto"; correo/contraseña también funciona).
 2. Sin perfil → `/web/onboarding` (`OnboardingFlow`, mismos pasos que la app). `BasicInfoStep` pide nombre (prellenado de Google), nacimiento (≥18), género, ciudad y estado.
 3. Al terminar, `lib/klick/save-profile.ts`: reduce y sube fotos a Storage `profiles/{uid}/…`, traduce las preferencias de la UI al `Questionnaire` y llama a la callable `saveProfile` (el cliente nunca escribe `users/`). Sin geolocalización usa coords de Salt Lake City.
-4. `AuthContext` detecta `profile.onboarded` → `/web/feed`. `FeedPage` exige sesión + perfil salvo con `?perfil=`.
-5. `KlickAppContext` (dentro de `AuthProvider` en `app/layout.tsx`) usa el perfil real como `currentUser` y fija el molde: mujer → `female`; hombre → `male_premium` si `entitlement.canChat`, si no `male_free`. Con sesión, `WebShell` oculta el selector Hombre/Mujer y muestra "Sign out".
-- **Sigue siendo de ejemplo:** candidatos, matches, chats y citas del feed (falta conectar `getCandidates`/`swipe`/`useKlickData`), y el cuestionario del perfil propio. En `/app/*` el login aún no autentica.
+4. `AuthContext` detecta `profile.onboarded` → `/web/feed`. `FeedPage` exige siempre sesión + perfil.
+5. `KlickAppContext` (dentro de `AuthProvider` en `app/layout.tsx`) usa el perfil real como `currentUser` y fija el molde: mujer → `female`; hombre → `male_premium` si `entitlement.canChat`, si no `male_free`. El género del perfil decide el pool: hombre ve solo mujeres y mujer solo hombres (igual que `getCandidates`). No hay forma de cambiar de molde desde la UI; los planes de pago van a `/web/subscribe` (Stripe).
+- **Sigue siendo de ejemplo:** candidatos, matches, chats y citas del feed (falta conectar `getCandidates`/`swipe`/`useKlickData`), y el cuestionario del perfil propio.
+
+### Suscripciones (Stripe, en Vercel)
+- Botones de `#planes` y del modal de planes → `/web/subscribe?plan=basic|premium|vip` (exige sesión y perfil; el plan pendiente se guarda en `localStorage` y se retoma tras login/onboarding).
+- `POST /api/payments/stripe/subscribe` crea Checkout (modo `subscription`, precio en línea o `STRIPE_PRICE_*`); `POST /api/payments/stripe/portal` abre el portal.
+- Webhook `/api/payments/stripe/webhook` (eventos `checkout.session.completed`, `customer.subscription.updated|deleted`) escribe `entitlements/{uid}` con Firebase Admin. La función `stripeWebhook` de `backend/` queda sin usar.
+- Variables: `web/.env.local` en local (Next.js lee **solo** de `web/`, no de la raíz) y Vercel → Environment Variables en producción.
 
 ### Despliegue pendiente (retomar aquí)
 Nada de lo anterior está publicado en Firebase todavía. `database/firestore.rules`, `storage.rules` y `firestore.indexes.json` se restauraron con las reglas de Klick (commit `e929564`; las del monorepo eran de otro producto) pero **no se han desplegado**.

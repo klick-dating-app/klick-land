@@ -26,19 +26,16 @@ import DiscoveryModals from "@/components/klick/main/modals/DiscoveryModals";
 import { WebSidebar, WebContextPanel } from "@/components/klick/main/WebShell";
 
 interface KlickMainProps {
-  initialGender?: "male" | "female";
   /** `app`: marco móvil con barra inferior. `web`: menú lateral + columna central + panel de contexto. */
   layout?: "app" | "web";
 }
 
 export default function KlickMain({
-  initialGender,
   layout = "app",
 }: KlickMainProps = {}) {
   const {
     currentUser,
     userRole,
-    setUserRole,
     candidatesWithScore,
     activeFilters,
     setFilters,
@@ -54,14 +51,6 @@ export default function KlickMain({
     reportUser,
     canInitiateChat,
   } = useKlickApp();
-
-  useEffect(() => {
-    if (initialGender === "male") {
-      setUserRole("male_premium");
-    } else if (initialGender === "female") {
-      setUserRole("female");
-    }
-  }, [initialGender, setUserRole]);
 
   const [profileIndex, setProfileIndex] = useState(0);
   const [photoIndex, setPhotoIndex] = useState(0);
@@ -452,7 +441,6 @@ export default function KlickMain({
           isLightMode={isLightMode}
           userState={currentUser.state}
           userRole={userRole}
-          setUserRole={setUserRole}
           showEditProfileModal={showEditProfileModal}
           onCloseEditProfile={() => setShowEditProfileModal(false)}
           editName={editName}
@@ -549,11 +537,9 @@ export default function KlickMain({
           showFilterModal={showFilterModal}
           matchesCount={matches.length}
           chatsCount={chats.length}
-          userRole={userRole}
           currentUser={currentUser}
           onSelectTab={setActiveTab}
           onOpenFilters={() => setShowFilterModal(true)}
-          onSwitchRole={setUserRole}
         />
         {/* Las secciones están diseñadas para ~500px; en pantalla grande se centran y el espacio lateral lo usan menú y panel. */}
         <main className="flex-1 min-w-0 flex justify-center bg-black">

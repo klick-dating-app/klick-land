@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
+import { subscribeHref } from "@/lib/payments/subscription-plans";
 import { UTAH_SAFE_FIRST_DATE_VENUES } from "@/lib/klick/mock-profiles";
 import {
   VerifiedStar,
@@ -44,7 +45,6 @@ interface ProfileModalsProps {
   isLightMode: boolean;
   userState: string;
   userRole: "female" | "male_free" | "male_premium";
-  setUserRole: (role: "female" | "male_free" | "male_premium") => void;
 
   // Edit Profile Modal
   showEditProfileModal: boolean;
@@ -104,7 +104,6 @@ export default function ProfileModals({
   isLightMode,
   userState,
   userRole,
-  setUserRole,
   showEditProfileModal,
   onCloseEditProfile,
   editName,
@@ -513,21 +512,21 @@ export default function ProfileModals({
                   price: "$9.99",
                   badge: "Starter Plan",
                   desc: "Daily likes, verified profiles & basic Utah filters",
-                  roleTarget: "male_free" as const,
+                  plan: "basic" as const,
                 },
                 {
                   name: "Klick Pro",
                   price: "$29.99",
                   badge: "Most Popular",
                   desc: "Unlimited likes, see who likes you & advanced filters",
-                  roleTarget: "male_premium" as const,
+                  plan: "premium" as const,
                 },
                 {
                   name: "Klick VIP",
                   price: "$49.99",
                   badge: "VIP Experience",
                   desc: "Unlimited Chat, Priority Safe Dates & Full 10-Pillar Radar",
-                  roleTarget: "male_premium" as const,
+                  plan: "vip" as const,
                 },
               ].map((planItem) => (
                 <div
@@ -568,11 +567,9 @@ export default function ProfileModals({
 
                   <button
                     type="button"
+                    // El plan solo se activa cuando el webhook de Stripe confirma el pago.
                     onClick={() => {
-                      setUserRole(planItem.roleTarget);
-                      toast.success(
-                        `${planItem.name} (${planItem.price}/mo) activated!`
-                      );
+                      window.location.href = subscribeHref(planItem.plan);
                     }}
                     className="klick-keep-white mt-0.5 w-full h-10 rounded-full bg-gradient-to-r from-[#008aff] via-[#7c3aed] to-[#ff007f] text-white font-semibold text-xs cursor-pointer shadow-md active:scale-98 transition-transform"
                   >
@@ -581,56 +578,6 @@ export default function ProfileModals({
                 </div>
               ))}
 
-              {/* Selector rápido de modo de suscripción */}
-              <div className="p-4 rounded-2xl bg-black border border-white/10 flex flex-col gap-2.5">
-                <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-zinc-400">
-                  Switch Membership Mode
-                </span>
-                <div className="grid grid-cols-3 gap-2">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setUserRole("female");
-                      toast.success("Switched to Woman (Free) mode");
-                    }}
-                    className={`py-2.5 px-2 rounded-xl text-[11px] font-semibold transition-all cursor-pointer ${
-                      userRole === "female"
-                        ? "klick-keep-white bg-blue-600 text-white shadow"
-                        : "bg-white/5 text-zinc-400 hover:bg-white/10"
-                    }`}
-                  >
-                    Woman Free
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setUserRole("male_free");
-                      toast.success("Switched to Man (Standard) mode");
-                    }}
-                    className={`py-2.5 px-2 rounded-xl text-[11px] font-semibold transition-all cursor-pointer ${
-                      userRole === "male_free"
-                        ? "klick-keep-white bg-blue-600 text-white shadow"
-                        : "bg-white/5 text-zinc-400 hover:bg-white/10"
-                    }`}
-                  >
-                    Man Free
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setUserRole("male_premium");
-                      toast.success("Switched to Man VIP mode");
-                    }}
-                    className={`py-2.5 px-2 rounded-xl text-[11px] font-semibold transition-all cursor-pointer ${
-                      userRole === "male_premium"
-                        ? "klick-keep-white bg-purple-600 text-white shadow"
-                        : "bg-white/5 text-zinc-400 hover:bg-white/10"
-                    }`}
-                  >
-                    Man VIP
-                  </button>
-                </div>
-              </div>
             </div>
 
             <button
